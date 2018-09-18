@@ -1,7 +1,7 @@
 class {{ className }} {{ classExtends interfaces }} {
   {{#each this}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
-  {{/if}}final {{ toPrimitive type}} {{name}};
+  {{/if}}final {{ resolveType type ../contextName ../contextModels }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
   {{className}}({
@@ -9,4 +9,8 @@ class {{ className }} {{ classExtends interfaces }} {
     {{~#if isRequired}}@required {{/if}}this.{{name}},
     {{/if}}{{/each}}
   });
+}
+
+@GenSerializer()
+class {{ className }}Serializer extends Serializer<{{ className }}> with _${{ className }}Serializer {
 }
