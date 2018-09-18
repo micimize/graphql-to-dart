@@ -1,0 +1,12 @@
+class {{ className }} {{#classExtends interfaces }} {
+  {{#each this}}
+  {{#if description }}{{ multilineComment description }}
+  final {{type}} {{name}};
+  {{/each~}}
+
+  {{className}}({
+    {{#each this}}
+    {{#if isRequired}}@required{{/if}} this.{{name}},
+    {{/each}}
+  })
+}

@@ -1,0 +1,55 @@
+import * as t from 'io-ts'
+type Integer = number
+
+import {
+{{#each scalars}}
+
+{{ multilineComment description }}
+  {{ name }},
+{{/each}}
+} from '{{ config.customScalars }}'
+
+{{> createEnum }}
+
+/* Enums */
+{{#each enums}}
+  {{> enum }}
+
+{{/each}}
+{{#each unions}}
+{{ toComment description }}
+export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/unless}}{{/each}};
+
+{{/each}}
+
+/* Input Types */
+{{#each inputTypes}}
+  {{> type }}
+
+{{/each}}
+
+/* Interfaces */
+{{#each interfaces}}
+  {{> type }}
+
+{{/each}}
+
+/* Types */
+{{#each types}}
+  {{> type }}
+
+{{/each}}
+{{!--
+{{~#each types}}
+  {{~#each fields}}
+    {{~# if hasArguments }}
+export interface {{ toPascalCase name }}{{ toPascalCase ../name }}Args {
+{{#each arguments}}
+  {{ name }}{{ getOptionals this }}: {{ convertedType this }}; {{ toComment description }}
+{{/each}}
+}
+    {{/if}}
+  {{/each}}
+{{/each}}
+--}}
+

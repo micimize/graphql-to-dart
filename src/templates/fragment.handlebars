@@ -1,0 +1,35 @@
+{{#*inline "fragments"}}
+{{#if hasFragmentsSpread}}{{#if hasFields}} & {{/if}}{{#each fragmentsSpread}}{{fragmentName}}.Fragment{{#unless @last}} & {{/unless}}{{/each}}{{/if}}{{#if hasInlineFragments}}{{#if hasFields}} & ({{/if}}{{#each inlineFragments}}{{onType}}{{#unless @last}} | {{/unless}}{{/each}}{{#if hasFields}}){{/if}}{{/if}}
+{{/inline}}
+
+{{#*inline "iotsFragments"}}
+{{#if hasFragmentsSpread}}{{#each fragmentsSpread}}{{fragmentName}}.Fragment{{#unless @last}},{{/unless}}
+{{/each}}{{/if}}{{#if hasInlineFragments}}{{#if hasFields}} & ({{/if}}{{#each inlineFragments}}{{onType}}{{#unless @last}} | {{/unless}}{{/each}}{{#if hasFields}}){{/if}}{{/if}}
+{{/inline}}
+
+export namespace {{name}} {
+  export type Fragment ={{#if hasFields}} {
+    __typename?: "{{ onType }}";
+    {{> tsFields fields }}
+  }{{/if}}{{> fragments this }}
+  /* model types */
+  {{#each innerModels }}
+  export type {{ modelType }} ={{#if hasFields}} {
+  {{#unless hasInlineFragments}}
+    __typename?: "{{ schemaBaseType }}";
+  {{else}}
+    __typename?: {{#each inlineFragments}}{{onType}}["__typename"]{{#unless @last}} | {{/unless}}{{/each}};
+  {{/unless}}
+    {{> tsFields fields }}
+  }{{/if}}{{> fragments this }}
+  {{/each}}
+  /* io-ts types */
+  {{> innerModels }}
+
+  /* Fragment */
+  export const Fragment = t.intersection([  
+    // t.type({ __typename: t.literal('{{ toPascalCase operationType }}') }),
+    {{> iotsFields fields typeName=(concat name 'Fragment') }},
+    {{> iotsFragments this }}])
+
+}
