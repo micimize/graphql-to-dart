@@ -1,4 +1,3 @@
-import * as createEnum from './createEnum.handlebars';
 import * as inputFields from './inputFields.handlebars';
 import * as iotsFields from './iotsFields.handlebars';
 import * as outputFields from './outputFields.handlebars';
@@ -17,7 +16,6 @@ import * as documents from './documents.handlebars';
 import * as index from './index.handlebars';
 
 export {
- createEnum,
  inputFields,
  iotsFields,
  outputFields,

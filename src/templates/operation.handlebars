@@ -6,7 +6,6 @@
 {{/each}}{{/if}}{{#if hasInlineFragments}}{{#if hasFields}} & ({{/if}}{{#each inlineFragments}}{{onType}}{{#unless @last}} | {{/unless}}{{/each}}{{#if hasFields}}){{/if}}{{/if}}
 {{/inline}}
 
-
 export namespace {{ toPascalCase name }} {
   export type Variables = {
     {{> tsFields variables}}

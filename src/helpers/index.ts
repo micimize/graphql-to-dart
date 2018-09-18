@@ -4,7 +4,7 @@ import iotsRecursive from './io-ts-recursive'
 import multilineComment from './multiline-comment'
 import subtypeOrPrimitive from './subtype-or-primitive'
 import concat from './concat'
-import classExtends from './extends'
+import classExtends from './class-extends'
 
 export {
   eachBackwards,

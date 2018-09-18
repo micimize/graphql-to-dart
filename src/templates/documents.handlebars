@@ -1,11 +1,12 @@
+/* TODO list for meta utils?
 {{#each fragments }}
   {{> fragment }}
   let __{{ name }} = {{ name }}
 {{/each}}
 
-export namespace Fragments {
+namespace Fragments {
   {{#each fragments }}
-    export const {{ name }} = __{{ name }}
+    {{ name }}
   {{/each }}
 }
 
@@ -37,3 +38,4 @@ export namespace Operations {
     | '{{ toPascalCase name }}' {{/each }}
 
 }
+*/

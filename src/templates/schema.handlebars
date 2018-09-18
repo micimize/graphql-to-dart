@@ -1,19 +1,9 @@
-import * as t from 'io-ts'
-type Integer = number
-
-import {
-{{#each scalars}}
-
-{{ multilineComment description }}
-  {{ name }},
-{{/each}}
-} from '{{ config.customScalars }}'
-
-{{> createEnum }}
+import 'package:meta/meta.dart';
+import '{{ config.customScalars }}';
 
 /* Enums */
 {{#each enums}}
-  {{> enum }}
+{{> enum }}
 
 {{/each}}
 {{#each unions}}
@@ -24,19 +14,19 @@ export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/u
 
 /* Input Types */
 {{#each inputTypes}}
-  {{> type }}
+{{> type }}
 
 {{/each}}
 
 /* Interfaces */
 {{#each interfaces}}
-  {{> type }}
+{{> type }}
 
 {{/each}}
 
 /* Types */
 {{#each types}}
-  {{> type }}
+{{> type }}
 
 {{/each}}
 {{!--
