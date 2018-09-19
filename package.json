@@ -1,7 +1,7 @@
 {
-  "name": "graphql-to-jaguar-dart",
-  "version": "0.0.1-prealpha",
-  "description": "generate dart jaguar_serializer classes using graphql-code-generator",
+  "name": "graphql-to-dart",
+  "version": "0.0.1-alpha",
+  "description": "generate dart json_serializable classes using graphql-code-generator",
   "dependencies": {
     "linewrap": "^0.2.1"
   },

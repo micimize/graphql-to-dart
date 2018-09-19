@@ -6,6 +6,7 @@ import subtypeOrPrimitive from './subtype-or-primitive'
 import concat from './concat'
 import classExtends from './class-extends'
 import resolveType from './resolve-type'
+import expectedGeneratedOut from './expected-generated-out'
 
 export {
   eachBackwards,
@@ -15,5 +16,6 @@ export {
   subtypeOrPrimitive,
   concat,
   classExtends,
-  resolveType
+  resolveType,
+  expectedGeneratedOut
 }

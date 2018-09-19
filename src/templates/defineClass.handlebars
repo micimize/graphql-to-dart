@@ -1,7 +1,9 @@
+@JsonSerializable()
 class {{ className }} {{ classExtends interfaces }} {
   {{#each this}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
-  {{/if}}final {{ resolveType type ../contextName ../contextModels }} {{name}};
+  {{/if}}
+  {{ resolveType type ../contextName ../contextModels @root.config.scalars isArray }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
   {{className}}({
@@ -9,8 +11,8 @@ class {{ className }} {{ classExtends interfaces }} {
     {{~#if isRequired}}@required {{/if}}this.{{name}},
     {{/if}}{{/each}}
   });
+
+  factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
+  Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 }
 
-@GenSerializer()
-class {{ className }}Serializer extends Serializer<{{ className }}> with _${{ className }}Serializer {
-}
