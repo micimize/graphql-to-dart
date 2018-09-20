@@ -6,6 +6,13 @@ const primitives = {
   Float: 'double',
   Boolean: 'bool',
   ID: 'String',
+
+  int: 'int',
+  bool: 'bool',
+  double: 'double',
+  num: 'num',
+  dynamic: 'dynamic',
+  // DateTime: 'DateTime'
 }
 
 function serializers(type){
@@ -25,9 +32,12 @@ export default function resolveType (type, contextName, contextModels = [], scal
 
   if (Object.keys(scalars).includes(fieldType)){
     fieldType = scalars[fieldType]
-    return new SafeString(serializers(fieldType) + `final ${wrap(isArray, fieldType)}`)
-  } else {
-    return new SafeString(`final ${wrap(isArray, fieldType)}`)
+    if (!(fieldType in primitives)) {
+      return new SafeString(serializers(fieldType) + wrap(isArray, fieldType))
+    } else {
+      fieldType = primitives[fieldType]
+    }
   }
+  return new SafeString(wrap(isArray, fieldType))
 }
 
