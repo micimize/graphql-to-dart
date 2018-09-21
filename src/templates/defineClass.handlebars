@@ -12,6 +12,21 @@ class {{ className }} {{ classExtends interfaces }} {
     {{/if}}{{/each}}
   });
 
+  {{className}} copyInto({{className}} into) {
+    {{~#each this~}}{{#if name}}
+    into.{{name}} = this.{{name}};
+    {{~/if}}{{/each}}
+    return into;
+  }
+
+  {{className}} copy() {
+    return {{className}}(
+      {{~#each this~}}{{#if name}}
+      {{name}}: this.{{name}},
+      {{~/if}}{{/each}}
+    );
+  }
+
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
   Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 }
