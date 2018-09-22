@@ -12,6 +12,7 @@ const primitives = {
   double: 'double',
   num: 'num',
   dynamic: 'dynamic',
+  Object: 'Object',
   // DateTime: 'DateTime'
 }
 
@@ -28,7 +29,7 @@ export default function resolveType (type, contextName, contextModels = [], scal
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type
-    : (primitives[type] || type || 'dynamic')
+    : (primitives[type] || type || 'Object')
 
   if (Object.keys(scalars).includes(fieldType)){
     fieldType = scalars[fieldType]
