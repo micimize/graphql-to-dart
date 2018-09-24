@@ -27,7 +27,6 @@ function wrap(isArray, fieldType){
 }
 
 export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray, json=true) {
-  console.log(type)
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type
