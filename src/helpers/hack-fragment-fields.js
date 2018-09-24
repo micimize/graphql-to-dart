@@ -2,25 +2,36 @@ const capitalize = lower => lower.replace(/^\w/, c => c.toUpperCase());
 
 var fragmentFields = {
 };
+
+function getFields(name){
+  let { nestedFragments, fields, ...context } = fragmentFields[name]
+  fields = fields.map(field => Object.assign(field, context))
+  nestedFragments.forEach(nested => {
+    fields = fields.concat(getFields(nested))
+  })
+  return fields
+}
 // Grab fragments and add them to inhereting classes
-export default function hackFragmentFields(action, nameOrFragments, fields, contextModels){
+export default function hackFragmentFields(action, nameOrFragments, fields, contextModels, nestedFragments = []){
+  if (action === 'ensure_unique'){
+    const name = nameOrFragments
+    return !(name in fragmentFields)
+  }
   if (action === 'add'){
     const name = nameOrFragments
-    const contextName = capitalize(name)
-    const context = {
-      contextName,
-      contextModels 
+    fragmentFields[name] = {
+      contextName: capitalize(name),
+      contextModels,
+      nestedFragments: nestedFragments.map(f => f.fragmentName),
+      fields
     }
-    fragmentFields[name] = fields.map(
-      field => Object.assign(field, context)
-    )
   }
   if (action === 'get'){
     const fragments = nameOrFragments
     return [
       ...fields,
       ...fragments.reduce((fragFields, frag) =>
-        fragFields.concat(fragmentFields[frag.fragmentName]), [])
+        fragFields.concat(getFields(frag.fragmentName)), [])
     ]
   }
 }

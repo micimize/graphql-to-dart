@@ -26,7 +26,7 @@ function wrap(isArray, fieldType){
   return isArray ? `List<${fieldType}>` : fieldType
 }
 
-export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray, json=true) {
+export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray) {
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type
@@ -35,7 +35,7 @@ export default function resolveType (type, contextName, contextModels = [], scal
   if (Object.keys(scalars).includes(fieldType)){
     fieldType = scalars[fieldType]
     if (!(fieldType in primitives)) {
-      return new SafeString((json ? serializers(fieldType) : fieldType) + wrap(isArray, fieldType))
+      return new SafeString(serializers(fieldType) + wrap(isArray, fieldType))
     } else {
       fieldType = primitives[fieldType]
     }

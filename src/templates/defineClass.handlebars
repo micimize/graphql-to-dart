@@ -1,5 +1,5 @@
-// manage inheritence with a "fields" layer to avoid typing issues
-class _{{ className }}Fields {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
+// manage inheritence with a "Data" layer to avoid typing issues
+class {{ className }}Data {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
@@ -8,14 +8,13 @@ class _{{ className }}Fields {{#if hasFragmentsSpread}}{{ classExtends fragments
       (takeFirst contextModels ../contextModels)
       @root.config.scalars
       isArray
-      json=false
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
 }
 
 @JsonSerializable()
-class {{ className }} extends _{{ className }}Fields {
+class {{ className }} extends {{ className }}Data {
 
   // we still need to copy all the fields though :-/
   {{#each fields}}{{#if type}}{{#if name}}

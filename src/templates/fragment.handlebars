@@ -1,5 +1,8 @@
+{{# if (hackFragmentFields "ensure_unique" name) ~}}
+
 {{#eachBackwards innerModels }}
-{{> defineClass this
+{{> defineClass
+      fields=(hackFragmentFields "get" fragmentsSpread fields )
       className=(concat (toPascalCase ../name) modelType)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
@@ -15,5 +18,10 @@
       contextName=(toPascalCase name)
 }}
 
-{{ hackFragmentFields "add" name fields innerModels }}
+{{~ hackFragmentFields "add" name
+    fields
+    innerModels
+    fragmentsSpread 
+~}}
 
+{{~/if}}
