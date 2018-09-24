@@ -12,8 +12,9 @@ const primitives = {
   double: 'double',
   num: 'num',
   dynamic: 'dynamic',
+
   Object: 'Object',
-  // DateTime: 'DateTime'
+  DateTime: 'DateTime'
 }
 
 function serializers(type){
@@ -25,7 +26,8 @@ function wrap(isArray, fieldType){
   return isArray ? `List<${fieldType}>` : fieldType
 }
 
-export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray) {
+export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray, json=true) {
+  console.log(type)
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type
@@ -34,7 +36,7 @@ export default function resolveType (type, contextName, contextModels = [], scal
   if (Object.keys(scalars).includes(fieldType)){
     fieldType = scalars[fieldType]
     if (!(fieldType in primitives)) {
-      return new SafeString(serializers(fieldType) + wrap(isArray, fieldType))
+      return new SafeString((json ? serializers(fieldType) : fieldType) + wrap(isArray, fieldType))
     } else {
       fieldType = primitives[fieldType]
     }

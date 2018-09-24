@@ -1,27 +1,54 @@
-@JsonSerializable()
-class {{ className }} {{ classExtends interfaces }} {
-  {{#each this}}{{#if type}}{{#if name}}
+// manage inheritence with a "fields" layer to avoid typing issues
+class _{{ className }}Fields {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
+  {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
-  {{ resolveType type ../contextName ../contextModels @root.config.scalars isArray }} {{name}};
+  {{ resolveType type
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      @root.config.scalars
+      isArray
+      json=false
+  }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
-  {{className}}({
-    {{#each this}}{{#if name}}
+}
+
+@JsonSerializable()
+class {{ className }} extends _{{ className }}Fields {
+
+  // we still need to copy all the fields though :-/
+  {{#each fields}}{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ resolveType type
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      @root.config.scalars
+      isArray
+  }} {{name}};
+  {{~/if}}{{/if}}{{/each}}
+
+  {{className}}(
+  {{~#if fields.length~}}
+  {
+    {{#each fields}}{{#if name}}
     {{~#if isRequired}}@required {{/if}}this.{{name}},
     {{/if}}{{/each}}
-  });
+  }
+  {{~/if}});
 
-  {{className}} copyInto({{className}} into) {
-    {{~#each this~}}{{#if name}}
+
+  C copyInto<C extends {{className}}>(C into) {
+    {{~#each fields~}}{{#if name}}
     into.{{name}} = this.{{name}};
     {{~/if}}{{/each}}
     return into;
   }
 
   {{className}} copy() {
-    return {{className}}(
-      {{~#each this~}}{{#if name}}
+     return {{className}}(
+      {{~#each fields~}}{{#if name}}
       {{name}}: this.{{name}},
       {{~/if}}{{/each}}
     );
@@ -30,4 +57,3 @@ class {{ className }} {{ classExtends interfaces }} {
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
   Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 }
-

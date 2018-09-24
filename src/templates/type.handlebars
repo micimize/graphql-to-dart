@@ -1,6 +1,9 @@
 {{ multilineComment description }}
-{{> defineClass fields className=name }}
+{{> defineClass this className=name }}
 
 {{#each fields}}{{# if hasArguments }}
-{{> defineClass arguments className=(concat ../name (toPascalCase name) "Args") }}
+{{> defineClass this
+  fields=arguments
+  className=(concat ../name (toPascalCase name) "Args")
+}}
 {{/if}}{{/each}}

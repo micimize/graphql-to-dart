@@ -1,7 +1,11 @@
-{{> defineClass variables className=(concat (toPascalCase name) "Variables") }}
+{{> defineClass
+  fields=variables
+  className=(concat (toPascalCase name) "Variables")
+}}
 
 {{#eachBackwards innerModels }}
-{{> defineClass fields
+{{> defineClass
+      fields=(hackFragmentFields "get" fragmentsSpread fields )
       className=(concat (toPascalCase ../name) modelType)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
@@ -10,7 +14,8 @@
 
 {{/eachBackwards}}
 
-{{> defineClass fields
+{{> defineClass
+  fields=(hackFragmentFields "get" fragmentsSpread fields )
   className=(concat (toPascalCase name) (toPascalCase operationType))
   contextModels=innerModels
   contextName=(toPascalCase name)

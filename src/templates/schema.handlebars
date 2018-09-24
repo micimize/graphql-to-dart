@@ -12,6 +12,7 @@ part '{{ expectedGeneratedOut config.outFile }}';
 
 {{/each}}
 {{#each unions}}
+// TODO I don't think unions are possible with dart
 {{ toComment description }}
 export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/unless}}{{/each}};
 
