@@ -1,4 +1,0 @@
-{{#each this}}
-{{#if description }}{{ multilineComment description }}
-{{/if}}{{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}}
-{{/each}}

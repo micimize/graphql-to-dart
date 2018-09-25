@@ -1,4 +1,0 @@
-{{#each this}}
-{{#if description }}{{ multilineComment description }}
-{{/if}}{{ name }}{{#unless isRequired}}?{{/unless}}: {{ subtypeOrPrimitive type subtype='.O' }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}}
-{{/each}}
