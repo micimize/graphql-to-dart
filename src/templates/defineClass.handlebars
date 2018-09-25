@@ -11,6 +11,13 @@ class {{ className }}Data {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpr
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
+  static C copyInto<C extends {{className}}Data>(C source, C into) {
+    {{~#each fields~}}{{#if name}}
+    into.{{name}} = source.{{name}};
+    {{~/if}}{{/each}}
+    return into;
+  }
+
 }
 
 @JsonSerializable()
@@ -38,7 +45,7 @@ class {{ className }} extends {{ className }}Data {
   {{~/if}});
 
 
-  C copyInto<C extends {{className}}>(C into) {
+  C copyInto<C extends {{className}}Data>(C into) {
     {{~#each fields~}}{{#if name}}
     into.{{name}} = this.{{name}};
     {{~/if}}{{/each}}

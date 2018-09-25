@@ -1,9 +1,9 @@
-# graphql-to-io-ts
-[Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating both native typescript and [io-ts](https://github.com/gcanti/io-ts) types.
+# graphql-to-dart
+[Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-io-ts@0.2.1
+yarn add -D graphql-code-generator graphql graphql-to-dart@0.0.1
 ```, then put something like the following in your `package.json`, then run `yarn generate-types`:
 ```json
 {
