@@ -26,13 +26,16 @@ function wrap(isArray, fieldType){
   return isArray ? `List<${fieldType}>` : fieldType
 }
 
-export default function resolveType (type, contextName, contextModels = [], scalars = {}, isArray) {
+export default function resolveType (type, contextName, contextModels = [], scalars = {}, replace = {}, isArray) {
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type
     : (primitives[type] || type || 'Object')
 
-  if (Object.keys(scalars).includes(fieldType)){
+  if (replace[fieldType]){
+    fieldType = replace[fieldType]
+  }
+  if (scalars[fieldType]){
     fieldType = scalars[fieldType]
     if (!(fieldType in primitives)) {
       return new SafeString(serializers(fieldType) + wrap(isArray, fieldType))

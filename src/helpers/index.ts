@@ -6,6 +6,7 @@ import classExtends from './class-extends'
 import resolveType from './resolve-type'
 import expectedGeneratedOut from './expected-generated-out'
 import hackFragmentFields from './hack-fragment-fields'
+import ignoreType from './ignore-type'
 
 export {
   eachBackwards,
@@ -16,4 +17,5 @@ export {
   resolveType,
   expectedGeneratedOut,
   hackFragmentFields,
+  ignoreType
 }

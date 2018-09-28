@@ -1,3 +1,4 @@
+{{#unless (ignoreType name @root.config.replaceTypes) }}
 {{ multilineComment description }}
 {{> defineClass this className=name }}
 
@@ -7,3 +8,4 @@
   className=(concat ../name (toPascalCase name) "Args")
 }}
 {{/if}}{{/each}}
+{{/unless}}
