@@ -22,8 +22,10 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
   }
   {{~/if}});
 
+  {{ className }}.empty();
 
-  static C _assign<C extends {{className}}>(C into, C source) {
+
+  static I _assign<I extends {{className}}, S extends {{className}}>(I into, S source) {
     {{~#each fields~}}{{#if name}}
     into.{{name}} = source.{{name}};
     {{~/if}}{{/each}}
@@ -33,11 +35,13 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
   /// Modeled after javascript's Object.assign.
   /// Copies the attributes from [source] into [target],
   /// then optionally does the same for each item in [vargs]
-  static C assign<C extends {{className}}>(C into, C source, [List<C> vargs]) {
-    into = _assign<C>(into, source);
+  static I assign<I extends {{className}}, S extends {{className}}>(
+    I into, S source, [List<S> vargs]
+  ) {
+    into = _assign(into, source);
     if (vargs != null){
       vargs.forEach((varg){
-        into = _assign<C>(into, varg);
+        into = _assign(into, varg);
       });
     }
     return into;
@@ -55,6 +59,4 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
   Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 }
-
-class _{{className}}Mixin extends {{className}} {}
 

@@ -54,9 +54,9 @@ flutter packages pub run build_runner build
 Obviously this is not the most user friendly process yet.
 
 # Sample result output
-I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, and `copy`. 
-Here's some sample output:
+I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, `copy`, and an `empty` constructor, mainly for downcasting. 
 ```dart
+/*  */
 @JsonSerializable()
 class TemporalId {
   String entityId;
@@ -68,7 +68,10 @@ class TemporalId {
     this.valid,
   });
 
-  static C _assign<C extends TemporalId>(C into, C source) {
+  TemporalId.empty();
+
+  static I _assign<I extends TemporalId, S extends TemporalId>(
+      I into, S source) {
     into.entityId = source.entityId;
     into.valid = source.valid;
     return into;
@@ -77,17 +80,18 @@ class TemporalId {
   /// Modeled after javascript's Object.assign.
   /// Copies the attributes from [source] into [target],
   /// then optionally does the same for each item in [vargs]
-  static C assign<C extends TemporalId>(C target, C source, [List<C> vargs]) {
-    into = _assign<C>(target, source);
+  static I assign<I extends TemporalId, S extends TemporalId>(I into, S source,
+      [List<S> vargs]) {
+    into = _assign(into, source);
     if (vargs != null) {
       vargs.forEach((varg) {
-        target = _assign<C>(target, varg);
+        into = _assign(into, varg);
       });
     }
-    return target;
+    return into;
   }
 
-  /// Clones and downcasts any inheriting [source] into a new [TemporalId]
+  /// Copies and downcasts any inheriting [source] into a new [TemporalId]
   static TemporalId copy<C extends TemporalId>(C source) {
     return TemporalId(
       entityId: source.entityId,
@@ -99,6 +103,7 @@ class TemporalId {
       _$TemporalIdFromJson(json);
   Map<String, dynamic> toJson() => _$TemporalIdToJson(this);
 }
-
-class _TemporalIdMixin extends TemporalId {}
+I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, and `copy`. 
+Here's some sample output:
+```dart
 ```
