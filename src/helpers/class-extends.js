@@ -6,8 +6,8 @@ export default function classExtends([ ext, ...fragments ] = [undefined]) {
     return ''
   }
   const baseClass = capitalize(ext.fragmentName);
-  const mixins = fragments.map(f => `${capitalize(f.fragmentName)}Data`)
-  return `extends ${baseClass}Data` + (
+  const mixins = fragments.map(f => `${capitalize(f.fragmentName)}`)
+  return `extends ${baseClass}` + (
     mixins.length ? ' with ' + mixins.join(', ') : ''
   )
 }

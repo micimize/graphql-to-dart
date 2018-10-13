@@ -1,28 +1,6 @@
-// manage inheritence with a "Data" layer to avoid typing issues
-class {{ className }}Data {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
-  {{#each fields}}{{#if type}}{{#if name}}
-  {{#if description }}{{ multilineComment description }}
-  {{/if}}
-  {{ resolveType type
-      (takeFirst contextName ../contextName)
-      (takeFirst contextModels ../contextModels)
-      @root.config.scalars
-      @root.config.replaceTypes
-      isArray
-  }} {{name}};
-  {{~/if}}{{/if}}{{/each}}
-
-  static C copyInto<C extends {{className}}Data>(C source, C into) {
-    {{~#each fields~}}{{#if name}}
-    into.{{name}} = source.{{name}};
-    {{~/if}}{{/each}}
-    return into;
-  }
-
-}
 
 @JsonSerializable()
-class {{ className }} extends {{ className }}Data {
+class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
 
   // we still need to copy all the fields though :-/
   {{#each fields}}{{#if type}}{{#if name}}
@@ -47,17 +25,27 @@ class {{ className }} extends {{ className }}Data {
   {{~/if}});
 
 
-  C copyInto<C extends {{className}}Data>(C into) {
+  static C _assign<C extends {{className}}>(C into, C source) {
     {{~#each fields~}}{{#if name}}
-    into.{{name}} = this.{{name}};
+    into.{{name}} = source.{{name}};
     {{~/if}}{{/each}}
     return into;
   }
 
-  {{className}} copy() {
+  static C assign<C extends {{className}}>(C into, C source, [List<C> vargs]) {
+    into = _assign<C>(into, source);
+    if (vargs != null){
+      vargs.forEach((varg){
+        into = _assign<C>(into, varg);
+      });
+    }
+    return into;
+  }
+
+  static {{className}} copy<C extends {{className}}>(C source) {
      return {{className}}(
       {{~#each fields~}}{{#if name}}
-      {{name}}: this.{{name}},
+      {{name}}: source.{{name}},
       {{~/if}}{{/each}}
     );
   }
