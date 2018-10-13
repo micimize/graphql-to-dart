@@ -54,26 +54,11 @@ flutter packages pub run build_runner build
 Obviously this is not the most user friendly process yet.
 
 # Sample result output
-I've built in some helper methods to the generated models to make the resulting instances easier to work with, currently called `copy` and `copyInto`. Each serializer extends from a base `${typename}Data` class to avoid inheritence problems with fragments, etc:
-
+I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, and `copy`. 
+Here's some sample output:
 ```dart
-// manage inheritence with a "Data" layer to avoid typing issues
-class TemporalIdData {
-  String entityId;
-  @JsonKey(fromJson: fromJsonToPGDateTime, toJson: fromPGDateTimeToJson)
-  PGDateTime valid;
-
-  static C copyInto<C extends TemporalIdData>(C source, C into) {
-    into.entityId = source.entityId;
-    into.valid = source.valid;
-    return into;
-  }
-}
-
 @JsonSerializable()
-class TemporalId extends TemporalIdData {
-  // we still need to copy all the fields though :-/
-
+class TemporalId {
   String entityId;
   @JsonKey(fromJson: fromJsonToPGDateTime, toJson: fromPGDateTimeToJson)
   PGDateTime valid;
@@ -83,16 +68,30 @@ class TemporalId extends TemporalIdData {
     this.valid,
   });
 
-  C copyInto<C extends TemporalIdData>(C into) {
-    into.entityId = this.entityId;
-    into.valid = this.valid;
+  static C _assign<C extends TemporalId>(C into, C source) {
+    into.entityId = source.entityId;
+    into.valid = source.valid;
     return into;
   }
 
-  TemporalId copy() {
+  /// Modeled after javascript's Object.assign.
+  /// Copies the attributes from [source] into [target],
+  /// then optionally does the same for each item in [vargs]
+  static C assign<C extends TemporalId>(C target, C source, [List<C> vargs]) {
+    into = _assign<C>(target, source);
+    if (vargs != null) {
+      vargs.forEach((varg) {
+        target = _assign<C>(target, varg);
+      });
+    }
+    return target;
+  }
+
+  /// Clones and downcasts any inheriting [source] into a new [TemporalId]
+  static TemporalId copy<C extends TemporalId>(C source) {
     return TemporalId(
-      entityId: this.entityId,
-      valid: this.valid,
+      entityId: source.entityId,
+      valid: source.valid,
     );
   }
 
@@ -100,4 +99,6 @@ class TemporalId extends TemporalIdData {
       _$TemporalIdFromJson(json);
   Map<String, dynamic> toJson() => _$TemporalIdToJson(this);
 }
+
+class _TemporalIdMixin extends TemporalId {}
 ```

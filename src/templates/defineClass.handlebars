@@ -1,8 +1,6 @@
 
 @JsonSerializable()
 class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
-
-  // we still need to copy all the fields though :-/
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
@@ -32,6 +30,9 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
     return into;
   }
 
+  /// Modeled after javascript's Object.assign.
+  /// Copies the attributes from [source] into [target],
+  /// then optionally does the same for each item in [vargs]
   static C assign<C extends {{className}}>(C into, C source, [List<C> vargs]) {
     into = _assign<C>(into, source);
     if (vargs != null){
@@ -42,6 +43,7 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
     return into;
   }
 
+  /// Copies and downcasts any inheriting [source] into a new [{{className}}]
   static {{className}} copy<C extends {{className}}>(C source) {
      return {{className}}(
       {{~#each fields~}}{{#if name}}
@@ -53,3 +55,6 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
   Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 }
+
+class _{{className}}Mixin extends {{className}} {}
+

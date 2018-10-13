@@ -6,7 +6,8 @@ export default function classExtends([ ext, ...fragments ] = [undefined]) {
     return ''
   }
   const baseClass = capitalize(ext.fragmentName);
-  const mixins = fragments.map(f => `${capitalize(f.fragmentName)}`)
+  // we need to strip constructors for mixins
+  const mixins = fragments.map(f => `_${capitalize(f.fragmentName)}Mixin`)
   return `extends ${baseClass}` + (
     mixins.length ? ' with ' + mixins.join(', ') : ''
   )
