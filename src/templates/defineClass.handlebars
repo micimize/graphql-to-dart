@@ -58,5 +58,8 @@ class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread 
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
   Map<String, dynamic> toJson() => _${{className}}ToJson(this);
+
+  static const staticFromJson = _${{className}}FromJson;
+  static const staticToJson = _${{className}}ToJson;
 }
 
