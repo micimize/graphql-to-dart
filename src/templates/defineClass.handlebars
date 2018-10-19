@@ -1,6 +1,12 @@
 
 @JsonSerializable()
-class {{ className }} {{#if hasFragmentsSpread}}{{ classExtends fragmentsSpread }}{{/if}} {
+class {{ className }} {{#if hasFragmentsSpread}}{{
+
+  classExtends
+    fragmentsSpread
+    @root.config.baseClass
+
+}}{{/if}} {
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}

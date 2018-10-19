@@ -9,10 +9,14 @@ write `gql-gen.json` to customize your build as needed:
 ```javascript
 {
   "generatorConfig": {
-    // relative to out file
-    "customScalars": "./scalars.dart",
-    // must be duplicated, for now
-    "outFile": "./graphql.dart",
+    "imports": [
+      // relative to out file
+      "./scalars.dart"
+    ],
+    "parts": [
+      // expected generated json_serializable part
+      "./graphql.g.dart"
+    ],
     // alias schema scalars to dart classes,
     // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
     // provided from scalars file
@@ -58,7 +62,7 @@ I've built in some static helper methods to the generated models to make the typ
 ```dart
 /*  */
 @JsonSerializable()
-class TemporalId {
+class TemporalId extends Base {
   String entityId;
   @JsonKey(fromJson: fromJsonToPGDateTime, toJson: fromPGDateTimeToJson)
   PGDateTime valid;

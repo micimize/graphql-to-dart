@@ -2,20 +2,30 @@
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '{{ config.customScalars }}';
 
-part '{{ expectedGeneratedOut config.outFile }}';
+{{#if config.imports}}
+{{#each config.imports}}
+import '{{this}}';
+{{/each}}
+{{/if}}
+
+{{#if config.parts}}
+{{#each config.parts}}
+part '{{this}}';
+{{/each}}
+{{/if}}
 
 /* Enums */
 {{#each enums}}
 {{> enum }}
 
 {{/each}}
+
 {{#each unions}}
 // TODO I don't think unions are possible with dart
+// perhaps https://github.com/fluttercommunity/dart_sealed_unions
+// Please PR if you need unions
 {{ toComment description }}
-export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/unless}}{{/each}};
-
 {{/each}}
 
 /* Input Types */
