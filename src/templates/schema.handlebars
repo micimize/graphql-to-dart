@@ -21,6 +21,10 @@ part '{{this}}';
 
 {{/each}}
 
+abstract class ToJson {
+  Map<String, dynamic> toJson();
+}
+
 {{#each unions}}
 // TODO I don't think unions are possible with dart
 // perhaps https://github.com/fluttercommunity/dart_sealed_unions
