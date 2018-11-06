@@ -3,8 +3,9 @@
 {{#eachBackwards innerModels }}
 
 {{> defineClass
-      fields=(hackFragmentFields "get" fragmentsSpread fields )
       className=(concat (toPascalCase ../name) modelType)
+      typeName=schemaBaseType
+      fields=(hackFragmentFields "get" fragmentsSpread fields )
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}
@@ -13,8 +14,9 @@
 {{/eachBackwards}}
 
 {{> defineClass
-      fields=(hackFragmentFields "get" fragmentsSpread fields)
       className=(concat (toPascalCase name) '')
+      typeName=onType
+      fields=(hackFragmentFields "get" fragmentsSpread fields)
       contextModels=innerModels
       contextName=(toPascalCase name)
 }}

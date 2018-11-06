@@ -7,6 +7,10 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
     @root.config.baseClass
 
 }}{{/if}} {
+  {{#if typeName }}
+  static final String typeName = "{{ typeName }}";
+  {{/if}}
+
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
@@ -63,9 +67,19 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   }
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
-  Map<String, dynamic> toJson() => _${{className}}ToJson(this);
 
-  static const staticFromJson = _${{className}}FromJson;
-  static const staticToJson = _${{className}}ToJson;
+  Map<String, dynamic> toJson() => serializeToJson(this);
+
+  static const deserializeFromJson = _${{className}}FromJson;
+  {{#if typeName }}
+  static Map<String, dynamic> serializeToJson({{className}} instance){
+    Map<String, dynamic> json = _${{className}}ToJson(instance);
+    json['__typename'] = typeName;
+    return json;
+  }
+  {{else}}
+  static const serializeToJson = _${{className}}ToJson;
+  {{/if}}
+
 }
 
