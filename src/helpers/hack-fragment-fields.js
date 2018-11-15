@@ -1,4 +1,4 @@
-const capitalize = lower => lower.replace(/^\w/, c => c.toUpperCase());
+import { capitalize } from './utils'
 
 var fragmentFields = {
 };

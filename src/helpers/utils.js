@@ -1,0 +1,33 @@
+export function logThis() {
+  console.log(this)
+}
+
+export function log(...args) {
+  args.pop() // remove handlebars metadata
+  console.log(...args)
+}
+
+export function capitalize(lower) {
+  return lower.replace(/^\w/, c => c.toUpperCase())
+}
+
+export function concat(...args) {
+  return args.slice(0, -1).join('')
+}
+
+export function eachBackwards(context, options) {
+  var ret = ''
+
+  for (var i = context.length - 1, j = 0; i >= j; i--) {
+    ret = ret + options.fn(context[i])
+  }
+
+  return ret
+}
+
+export function takeFirst(arg, b) {
+  if (arg !== null && arg !== undefined) {
+    return arg
+  }
+  return b
+}

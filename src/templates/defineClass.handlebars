@@ -1,10 +1,14 @@
 
+{{ log isInputType className }}
 @JsonSerializable()
 class {{ className }} {{#if hasFragmentsSpread}}{{
 
   classExtends
     fragmentsSpread
     @root.config.baseClass
+    @root.config.extendTypesFromInput
+    isInputType
+    className 
 
 }}{{/if}} {
   {{#if typeName }}

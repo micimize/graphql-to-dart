@@ -1,13 +1,13 @@
-import eachBackwards from './each-backwards'
+import * as utils from './utils'
 import multilineComment from './multiline-comment'
-import concat from './concat'
-import takeFirst from './take-first'
 import classExtends from './class-extends'
 import resolveType from './resolve-type'
 import hackFragmentFields from './hack-fragment-fields'
 import ignoreType from './ignore-type'
 
 export {
+  ...utils,
+
   eachBackwards,
   multilineComment,
   concat,
