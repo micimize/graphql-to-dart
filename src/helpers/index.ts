@@ -3,6 +3,7 @@ import classExtends from './class-extends'
 import resolveType from './resolve-type'
 import hackFragmentFields from './hack-fragment-fields'
 import ignoreType from './ignore-type'
+import withInputType, { registerInputType } from './with-input-type'
 
 import {
   log,
@@ -23,5 +24,7 @@ export {
   classExtends,
   resolveType,
   hackFragmentFields,
-  ignoreType
+  ignoreType,
+  withInputType,
+  registerInputType,
 }

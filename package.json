@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.0.3-alpha1",
+  "version": "0.0.3-alpha2",
   "description": "generate dart json_serializable classes using graphql-code-generator",
   "dependencies": {
     "linewrap": "^0.2.1"

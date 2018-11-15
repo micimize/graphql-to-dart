@@ -111,3 +111,6 @@ I've built in some static helper methods to the generated models to make the typ
 Here's some sample output:
 ```dart
 ```
+
+### TODOS
+* document fragment.assignTo{{type|input}}

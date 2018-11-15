@@ -5,6 +5,11 @@
 {{> defineClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
+      assignableTo=(
+        withInputType
+          schemaBaseType
+          @root.config.replaceTypes
+      )
       fields=(hackFragmentFields "get" fragmentsSpread fields )
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
@@ -16,6 +21,11 @@
 {{> defineClass
       className=(concat (toPascalCase name) '')
       typeName=onType
+      assignableTo=(
+        withInputType
+          onType
+          @root.config.replaceTypes
+      )
       fields=(hackFragmentFields "get" fragmentsSpread fields)
       contextModels=innerModels
       contextName=(toPascalCase name)
