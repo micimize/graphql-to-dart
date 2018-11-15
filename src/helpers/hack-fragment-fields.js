@@ -13,10 +13,12 @@ function getFields(name){
 }
 // Grab fragments and add them to inhereting classes
 export default function hackFragmentFields(action, nameOrFragments, fields, contextModels, nestedFragments = []){
+
   if (action === 'ensure_unique'){
     const name = nameOrFragments
     return !(name in fragmentFields)
   }
+  
   if (action === 'add'){
     const name = nameOrFragments
     fragmentFields[name] = {
@@ -26,6 +28,7 @@ export default function hackFragmentFields(action, nameOrFragments, fields, cont
       fields
     }
   }
+
   if (action === 'get'){
     const fragments = nameOrFragments
     return [
@@ -34,5 +37,6 @@ export default function hackFragmentFields(action, nameOrFragments, fields, cont
         fragFields.concat(getFields(frag.fragmentName)), [])
     ]
   }
+
 }
 
