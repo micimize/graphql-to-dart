@@ -4,6 +4,7 @@ import resolveType from './resolve-type'
 import hackFragmentFields from './hack-fragment-fields'
 import ignoreType from './ignore-type'
 import withInputType, { registerInputType } from './with-input-type'
+import fragmentFieldOnBaseType from './fragment-field-on-base-type'
 
 import {
   log,
@@ -27,4 +28,5 @@ export {
   ignoreType,
   withInputType,
   registerInputType,
+  fragmentFieldOnBaseType 
 }
