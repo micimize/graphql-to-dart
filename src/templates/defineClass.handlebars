@@ -22,6 +22,8 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
       @root.config.scalars
       @root.config.replaceTypes
       isArray
+      @root.config.irreducibleTypes
+      raw
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
@@ -37,8 +39,12 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   {{ className }}.empty();
 
 
-  static I _assign<I extends {{className}}>(I into, {{className}} source) {
-    {{~#each fields~}}{{#if name}} into.{{name}} = source.{{name}};
+  static I _assign<I extends {{className}}>(
+    I into,
+    {{className}} source,
+  ) {
+    {{~#each fields}}{{#if name}}
+    into.{{name}} = source.{{name}};
     {{~/if}}{{/each}}
     return into;
   }
@@ -61,21 +67,20 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   }
 
   {{#if assignableTo~}}
-  {{#if @root.config.generateFragmentAssignToHelpers~}}
+  {{~#if @root.config.generateFragmentAssignToHelpers~}}
   {{~#each assignableTo}}
   /// Modeled after javascript's Object.assign.
   /// Copies the attributes from [source] into [target]
   static {{this}} assignTo{{ this }}(
     {{this}} into,
-    {{../className}} source
+    {{../className}} source,
   ){
-    {{~#each ../fields~}}
-    {{~#if (
+    {{~#each ../fields}}{{~#if (
       fragmentFieldOnBaseType
         name
         @root.config.generateFragmentAssignToHelpers
       )
-    ~}}
+    }}
     into.{{name}} = source.{{name}};
     {{~/if}}{{/each}}
     return into;
@@ -87,7 +92,7 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   static {{className}} copy({{className}} source) {
      return {{className}}(
       {{~#each fields~}}{{#if name}}
-      {{name}}: source.{{name}},
+        {{name}}: source.{{name}},
       {{~/if}}{{/each}}
     );
   }

@@ -1,4 +1,11 @@
-export default function ignoreType(name, ignore = {}) {
-  return Object.keys(ignore).includes(name)
+export default function ignoreType(
+  name,
+  ignore = {},
+  baseType,
+  irreducibles
+) {
+  return Object.keys(ignore).includes(name) || (
+    baseType && irreducibles.includes(baseType)
+  )
 }
 

@@ -9,6 +9,8 @@
         withInputType
           schemaBaseType
           @root.config.replaceTypes
+          (concat (toPascalCase ../name) modelType)
+          @root.config.generateFragmentAssignToHelpers
       )
       fields=(hackFragmentFields "get" fragmentsSpread fields )
       contextModels=../innerModels
@@ -25,6 +27,8 @@
         withInputType
           onType
           @root.config.replaceTypes
+          (concat (toPascalCase name) '')
+          @root.config.generateFragmentAssignToHelpers
       )
       fields=(hackFragmentFields "get" fragmentsSpread fields)
       contextModels=innerModels

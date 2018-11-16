@@ -1,3 +1,5 @@
+import { shouldBeIncluded } from './fragment-field-on-base-type' 
+
 function typeReplacer(replace){
   return type => replace[type] || type
 }
@@ -8,7 +10,30 @@ export function registerInputType(inputType){
   inputTypes.push(inputType)
 }
 
-export default function withInputType(baseType, replaceMap) {
+
+function shouldExcludeOnType(baseType, config){
+  for (let exclude of config.excludeFields || []){
+    if (exclude.onType === baseType){
+      return true
+    }
+  }
+  return false
+}
+
+
+export default function withInputType(
+  baseType,
+  replaceMap,
+  className,
+  exclusionConfig
+) {
+  if (exclusionConfig && (
+      !shouldBeIncluded(className, exclusionConfig) ||
+      shouldExcludeOnType(baseType, exclusionConfig)
+  )){
+    return []
+  }
+
   const replace = typeReplacer(replaceMap)
 
   baseType = replace(baseType)

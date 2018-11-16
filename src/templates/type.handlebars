@@ -1,4 +1,10 @@
-{{#unless (ignoreType name @root.config.replaceTypes) }}
+{{#unless (
+  ignoreType
+    name
+      @root.config.replaceTypes
+      typeName
+      @root.config.irreducibleTypes
+)}}
 {{ multilineComment description }}
 {{> defineClass this className=name }}
 

@@ -26,7 +26,19 @@ function wrap(isArray, fieldType){
   return isArray ? `List<${fieldType}>` : fieldType
 }
 
-export default function resolveType (type, contextName, contextModels = [], scalars = {}, replace = {}, isArray) {
+export default function resolveType(
+  type,
+  contextName,
+  contextModels = [],
+  scalars = {},
+  replace = {},
+  isArray,
+  irreducibles = [],
+  rawTypeText
+) {
+  if (irreducibles.includes(rawTypeText.replace('!',''))) {
+    return rawTypeText.replace('!','')
+  }
 
   let fieldType = contextModels.filter(({ modelType }) => modelType === type).length
     ?  contextName + type

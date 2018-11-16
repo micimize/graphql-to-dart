@@ -4,6 +4,25 @@ const fragmentClass = f => capitalize(f.fragmentName)
 
 const builtinInterfaces = ['ToJson']
 
+export function shouldBeIncluded(fieldName, config){
+  for (let exclude of config.excludeFields || []){
+    if (typeof exclude === 'string'){
+      if (exclude === fieldName){
+        return false
+      }
+    } else {
+      const { prefix, suffix } = exclude || {}
+      if (
+        (prefix && fieldName.startsWith(prefix)) ||
+        (suffix && fieldName.endsWith(suffix))
+      ) {
+        return false
+      }
+    }
+  }
+  return true
+}
+
 // TODO stopgap for https://github.com/dotansimha/graphql-code-generator/issues/847
 export default function fragmentFieldOnBaseType(fieldName, config) {
   if (!config){
@@ -11,23 +30,7 @@ export default function fragmentFieldOnBaseType(fieldName, config) {
   }
   if (config === true) {
     return true
-  } else {
-    for (let exclude of config.excludeFields || []){
-      if (typeof exclude === 'string'){
-        if (exclude === fieldName){
-          return false
-        }
-      } else {
-        const { prefix, suffix } = exclude || {}
-        if (
-          (prefix && fieldName.startsWith(prefix)) ||
-          (suffix && fieldName.endsWith(suffix))
-        ) {
-          return false
-        }
-      }
-    }
   }
-  return true
+  return shouldBeIncluded(fieldName, config)
 }
 
