@@ -23,7 +23,6 @@ export default function fragmentFieldOnBaseType(fieldName, config) {
           (prefix && fieldName.startsWith(prefix)) ||
           (suffix && fieldName.endsWith(suffix))
         ) {
-          console.log(fieldName)
           return false
         }
       }
