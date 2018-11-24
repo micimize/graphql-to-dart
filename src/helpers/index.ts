@@ -1,6 +1,7 @@
 import multilineComment from './multiline-comment'
 import classExtends from './class-extends'
 import resolveType from './resolve-type'
+import resolveMixins from './resolve-mixins'
 import hackFragmentFields from './hack-fragment-fields'
 import ignoreType from './ignore-type'
 import withInputType, { registerInputType } from './with-input-type'
@@ -12,8 +13,7 @@ import {
   concat,
   eachBackwards,
   takeFirst,
-  stripSuffix,
-  inputBaseType
+  stripSuffix
 } from './utils'
 
 export {
@@ -23,11 +23,11 @@ export {
   eachBackwards,
   takeFirst,
   stripSuffix,
-  inputBaseType,
 
   multilineComment,
   classExtends,
   resolveType,
+  resolveMixins,
   hackFragmentFields,
   ignoreType,
   withInputType,

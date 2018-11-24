@@ -12,16 +12,18 @@ const builtinInterfaces = ['ToJson']
 //   right now we replace Node with Entity, which is hacky
 //   ex. Query becomes an "Entity"
 export default function classExtends(
-  fragments = [], interfaces = [], replace = {}
+  [base, ...mixins] = [],
+  fragments = [],
+  interfaces = [],
+  replace = {}
 ) {
-  return (
-    interfaces.length ? `extends ${
-      interfaces.map(i => replace[i] || i).join(', ')
-    } ` : ''
+  return (base ? `extends ${base} ` : '') + (
+    mixins.length ? `with ${mixins.join(', ')} ` : ''
   ) + `implements ${
-        builtinInterfaces.concat(
-          fragments.map(fragmentClass)
-        ).join(', ')
+        builtinInterfaces
+          .concat(interfaces)
+          .concat(fragments.map(fragmentClass))
+        .join(', ')
   }`
 }
 

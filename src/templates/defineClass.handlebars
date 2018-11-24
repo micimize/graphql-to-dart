@@ -2,6 +2,7 @@
 class {{ className }} {{
 
   classExtends
+    (resolveMixins @root.config.mixins fields)
     fragmentsSpread
     interfaces
     @root.config.replaceTypes
