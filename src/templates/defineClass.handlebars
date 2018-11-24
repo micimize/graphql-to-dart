@@ -1,14 +1,12 @@
 @JsonSerializable()
-class {{ className }} {{#if hasFragmentsSpread}}{{
+class {{ className }} {{
 
   classExtends
     fragmentsSpread
-    @root.config.baseClass
-    @root.config.extendTypesFromInput
-    isInputType
-    className 
+    interfaces
+    @root.config.replaceTypes
 
-}}{{/if}} {
+}} {
   {{#if typeName }}
   static final String typeName = "{{ typeName }}";
   {{/if}}
@@ -67,7 +65,7 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   }
 
   {{#if assignableTo~}}
-  {{~#if @root.config.generateFragmentAssignToHelpers~}}
+  {{~#if @root.config.generateFragmentHelpers~}}
   {{~#each assignableTo}}
   /// Modeled after javascript's Object.assign.
   /// Copies the attributes from [source] into [target]
@@ -78,7 +76,7 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
     {{~#each ../fields}}{{~#if (
       fragmentFieldOnBaseType
         name
-        @root.config.generateFragmentAssignToHelpers
+        @root.config.generateFragmentHelpers
       )
     }}
     into.{{name}} = source.{{name}};
@@ -87,15 +85,6 @@ class {{ className }} {{#if hasFragmentsSpread}}{{
   }
   {{/each~}}
   {{~/if}}{{~/if}}
-
-  /// Copies and downcasts any inheriting [source] into a new [{{className}}]
-  static {{className}} copy({{className}} source) {
-     return {{className}}(
-      {{~#each fields~}}{{#if name}}
-        {{name}}: source.{{name}},
-      {{~/if}}{{/each}}
-    );
-  }
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
 

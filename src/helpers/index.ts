@@ -11,7 +11,9 @@ import {
   logThis,
   concat,
   eachBackwards,
-  takeFirst
+  takeFirst,
+  stripSuffix,
+  inputBaseType
 } from './utils'
 
 export {
@@ -20,6 +22,8 @@ export {
   concat,
   eachBackwards,
   takeFirst,
+  stripSuffix,
+  inputBaseType,
 
   multilineComment,
   classExtends,

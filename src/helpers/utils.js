@@ -31,3 +31,13 @@ export function takeFirst(arg, b) {
   }
   return b
 }
+
+export function stripSuffix(name, suffix) {
+  return name.replace(
+    new RegExp(suffix + '$'), ''
+  )
+}
+
+export function inputBaseType(name) {
+  return stripSuffix(name, 'Input')
+}
