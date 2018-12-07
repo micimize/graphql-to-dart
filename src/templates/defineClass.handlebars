@@ -87,6 +87,15 @@ class {{ className }} {{
   {{/each~}}
   {{~/if}}{{~/if}}
 
+  /// Copies and downcasts any inheriting [source] into a new [{{className}}]
+  static {{className}} copy({{className}} source) {
+     return {{className}}(
+      {{~#each fields~}}{{#if name}}
+        {{name}}: source.{{name}},
+      {{~/if}}{{/each}}
+    );
+  }
+
   factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
