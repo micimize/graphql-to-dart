@@ -16,6 +16,15 @@ type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
 export interface DartConfig {
   scalars?: Partial<Scalars>;
+  imports?: Array<string>;
+  parts?: Array<string>;
+  // alias schema scalars to dart classes,
+  // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
+  // provided from scalars file
+  customScalars?: { [type: string]: string };
+  // don't emit classes for these types,
+  // merely alias their references
+  replaceTypes?: { [type: string]: string };
 }
 
 const defaultScalars: Scalars = {
@@ -52,8 +61,13 @@ export const plugin: PluginFunction<DartConfig> = async (
   });
   registerMapWith((...args) => Handlebars.registerPartial(...args), partials);
 
-  const scalars = { ...defaultScalars, ...(config.scalars || {}) };
-  const hbsContext = {
+  const scalars = Object.assign(
+    {},
+    defaultScalars,
+    config.scalars || {},
+    config.customScalars || {}
+  );
+  const handlebarsContext = {
     templateContext: {
       ...templateContext,
       config,
@@ -64,5 +78,5 @@ export const plugin: PluginFunction<DartConfig> = async (
     ...flattenDocuments
   };
 
-  return Handlebars.compile(indexTemplate)(hbsContext);
+  return Handlebars.compile(indexTemplate)(handlebarsContext);
 };
