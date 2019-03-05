@@ -1,11 +1,11 @@
-import multilineComment from './multiline-comment'
-import classExtends from './class-extends'
-import resolveType from './resolve-type'
-import resolveMixins from './resolve-mixins'
-import hackFragmentFields from './hack-fragment-fields'
-import ignoreType from './ignore-type'
-import withInputType, { registerInputType } from './with-input-type'
-import fragmentFieldOnBaseType from './fragment-field-on-base-type'
+import multilineComment from "./multiline-comment";
+import classExtends from "./class-extends";
+import resolveType from "./resolve-type";
+import resolveMixins from "./resolve-mixins";
+import hackFragmentFields from "./hack-fragment-fields";
+import ignoreType from "./ignore-type";
+import withInputType, { registerInputType } from "./with-input-type";
+import fragmentFieldOnBaseType from "./fragment-field-on-base-type";
 
 import {
   log,
@@ -14,7 +14,7 @@ import {
   eachBackwards,
   takeFirst,
   stripSuffix
-} from './utils'
+} from "./utils";
 
 export {
   log,
@@ -23,7 +23,6 @@ export {
   eachBackwards,
   takeFirst,
   stripSuffix,
-
   multilineComment,
   classExtends,
   resolveType,
@@ -32,5 +31,5 @@ export {
   ignoreType,
   withInputType,
   registerInputType,
-  fragmentFieldOnBaseType 
-}
+  fragmentFieldOnBaseType
+};
