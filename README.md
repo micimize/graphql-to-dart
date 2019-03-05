@@ -20,7 +20,7 @@ write `gql-gen.json` to customize your build as needed:
     // alias schema scalars to dart classes,
     // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
     // provided from scalars file
-    "scalars": {
+    "customScalars": {
       "Date": "DateTime",
       "Datetime": "PGDateTime",
       "FiniteDatetime": "DateTime",
