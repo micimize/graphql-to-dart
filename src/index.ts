@@ -14,10 +14,31 @@ import indexTemplate, * as partials from "./templates";
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
+interface MixinConfig {
+  // the name of the mixin class
+  name: string;
+  // condition by which to mixin
+  when?: {
+    fields: Array<string>;
+  };
+}
+
+// generate fragment-related utility methods
+// would strongly advise against using - will probably be deprecated
+interface GenerateFragmentHelpersConfig {
+  excludeFields?: Array<{
+    prefix?: string;
+    suffix?: string;
+    onType?: string;
+  }>;
+}
+
 export interface DartConfig {
   scalars?: Partial<Scalars>;
   imports?: Array<string>;
   parts?: Array<string>;
+  generateFragmentHelpers: boolean | GenerateFragmentHelpersConfig;
+  mixins?: Array<MixinConfig>;
   // alias schema scalars to dart classes,
   // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
   // provided from scalars file
@@ -25,6 +46,8 @@ export interface DartConfig {
   // don't emit classes for these types,
   // merely alias their references
   replaceTypes?: { [type: string]: string };
+
+  irreducibleTypes?: Array<string>;
 }
 
 const defaultScalars: Scalars = {
