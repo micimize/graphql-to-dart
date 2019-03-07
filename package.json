@@ -1,28 +1,32 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.0.4-alpha4",
+  "version": "0.1.0-alpha1",
   "description": "generate dart json_serializable classes using graphql-code-generator",
-  "dependencies": {
-    "linewrap": "^0.2.1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micimize/graphql-to-jaguar-dart.git"
   },
   "license": "MIT",
-  "author": "Michael Joseph Rosenthal",
   "scripts": {
     "prepublishOnly": "yarn build",
-    "build": "codegen-handlebars-templates-scripts build",
-    "pretest": "yarn build",
-    "test": "codegen-handlebars-templates-scripts test"
+    "build": "codegen-templates-scripts build",
+    "test": "codegen-templates-scripts test",
+    "test-server": "starwars-server",
+    "pretest": "yarn build"
+  },
+  "dependencies": {
+    "graphql-codegen-core": "0.18.0",
+    "graphql-codegen-plugin-helpers": "0.18.0",
+    "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
+    "linewrap": "^0.2.1",
+    "handlebars": "^4.1.0"
   },
   "devDependencies": {
-    "codegen-handlebars-templates-scripts": "0.9.2",
-    "graphql-codegen-core": "0.9.2",
-    "graphql-codegen-compiler": "0.9.2",
-    "graphql": "0.13.2",
-    "@types/graphql": "0.13.0"
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@types/node": "^11.10.4",
+    "codegen-templates-scripts": "0.18.0",
+    "graphql": "^14.1.1"
   },
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",
@@ -47,8 +51,5 @@
       "json",
       "node"
     ]
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }
