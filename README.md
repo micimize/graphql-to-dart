@@ -3,62 +3,63 @@
 
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-dart@0.0.1-alpha8
+yarn add -D graphql-code-generator graphql graphql-to-dart@0.1.0-alpha1
 ```
-write `gql-gen.json` to customize your build as needed:
-```javascript
-{
-  "generatorConfig": {
-    "imports": [
-      // relative to out file
-      "./scalars.dart"
-    ],
-    "parts": [
-      // expected generated json_serializable part
-      "./graphql.g.dart"
-    ],
-    // alias schema scalars to dart classes,
-    // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
-    // provided from scalars file
-    "customScalars": {
-      "Date": "DateTime",
-      "Datetime": "PGDateTime",
-      "FiniteDatetime": "DateTime",
-      "UUID": "String",
-      "Rrule": "String",
-      "Cursor": "String",
-      "MetricSpecification": "Object",
-      "MetricValue": "Object"
-    },
-    // don't emit classes for these types, 
-    // alias their references
-    "replaceTypes": {
-      "TemporalIdInput": "TemporalId"
-    }
-  }
-}
+write `codegen.yaml` to customize your build as needed:
+```yaml
+schema: "./schema.json"
+documents: 
+- "./lib/gql/raw/queries.gql"
+overwrite: true
+generates:
+  lib/serializers/graphql.dart:
+    plugins:
+      - graphql-to-dart
+config:
+  generateFragmentHelpers:
+    excludeFields:
+    - suffix: Through
+    - onType: EventMetric
+  mixins:
+  - when:
+      fields:
+      - entityId
+      - validFrom
+      - validUntil
+    name: Entity
+  imports:
+  - package:quiver/core.dart
+  - "./scalars.dart"
+  parts:
+  - "./base.dart"
+  - "./graphql.g.dart"
+  scalars:
+    Date: DateTime
+    Datetime: PGDateTime
+    FiniteDatetime: DateTime
+    UUID: String
+    Rrule: RecurrenceRule
+    Cursor: String
+    MetricSpecification: Object
+    MetricValue: Object
+  replaceTypes:
+    TemporalIdInput: TemporalId
+    TemporalId: TemporalId
+  irreducibleTypes:
+  - TemporalId
 ```
-Then generate the models:
-```bash
-gql-gen                                                \
-  --template graphql-to-dart                           \
-  --schema ./schema/__generated__/schema.json          \
-  # required even if specified in gql-gen.json
-  --out lib/serializers/graphql.dart                   \
-  # we can't extract graphql strings yet
-  ./lib/gql/raw/GetSchedule.gql                        \
-  ./lib/gql/raw/CreateEventRecord.gql                  \
-  # more options defined in gql-gen.json
-```
+Then generate with `yarn gql-gen` (or `gql-gen` if you have it globally installed)
 And theeeen generate the actual json serializers (`json_serializable` is a peer dependency, but on the flutter side):
 ```bash
 flutter packages pub run build_runner build
 ```
 
-Obviously this is not the most user friendly process yet.
+...Obviously this is not the most user friendly process yet.
 
 # Sample result output
-I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, `copy`, and an `empty` constructor, mainly for downcasting. 
+I've built in some static helper methods to the generated models to make the typed data easier to work with. Currently there's `assign`, similar to `Object.assign` in javascript, `copy`, and an `empty` constructor, mainly for downcasting. 
+
+Here's some sample output:
 ```dart
 /*  */
 @JsonSerializable()
@@ -107,9 +108,6 @@ class TemporalId extends Base {
       _$TemporalIdFromJson(json);
   Map<String, dynamic> toJson() => _$TemporalIdToJson(this);
 }
-I've built in some static helper methods to the generated models to make the typed data easier to work with. currently there's `assign`, similar to `Object.assign` in javascript, and `copy`. 
-Here's some sample output:
-```dart
 ```
 
 ### TODOS
