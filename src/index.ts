@@ -91,11 +91,8 @@ export const plugin: PluginFunction<DartConfig> = async (
     config.customScalars || {}
   );
   const handlebarsContext = {
-    templateContext: {
-      ...templateContext,
-      config,
-      primitives: scalars
-    },
+    config,
+    primitives: scalars,
     scalars,
     ...templateContext,
     ...flattenDocuments
