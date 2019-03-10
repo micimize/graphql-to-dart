@@ -1,8 +1,10 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.1.0-alpha3",
+  "version": "0.1.0-aplha4",
   "description": "generate dart json_serializable classes using graphql-code-generator",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micimize/graphql-to-jaguar-dart.git"
@@ -17,10 +19,10 @@
   },
   "dependencies": {
     "graphql-codegen-core": "0.18.0",
-    "graphql-codegen-plugin-helpers": "0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
-    "linewrap": "^0.2.1",
-    "handlebars": "^4.1.0"
+    "graphql-codegen-plugin-helpers": "0.18.0",
+    "handlebars": "^4.1.0",
+    "linewrap": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
