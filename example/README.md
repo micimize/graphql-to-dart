@@ -7,3 +7,4 @@ To run this example, run `yarn test-server` and `flutter run` in different termi
 
 This example uses `graphql_flutter` as well as some wrapper components, which I'll hopefully be able to integrate there at some point as well.
 
+<img width="395" alt="Screen Shot 2019-03-13 at 17 45 52" src="https://user-images.githubusercontent.com/8343799/54319826-e5032b80-45b8-11e9-962a-8a38192236d3.png">
