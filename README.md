@@ -1,14 +1,12 @@
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
-If you're 
-
 ## Current severe restrictions:
 * inline fragments don't work
 * no faculties for dealing with underscore-prefixed `_fields` in the schema
 * requires `build.yaml`, peer dependencies, etc
 
-The example is broken.
+The example is sparse.
 
 ### Current nusances:
 * You can have multiple inline fragments on the same document, but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
@@ -149,5 +147,3 @@ class TemporalId extends Base {
 }
 ```
 
-### TODOS
-* document fragment.assignTo{{type|input}}
