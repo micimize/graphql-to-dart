@@ -11,6 +11,10 @@ export function capitalize(lower) {
   return lower.replace(/^\w/, c => c.toUpperCase())
 }
 
+export function camelCase(str) {
+  return str.replace(/^\w/, c => c.toLowerCase())
+}
+
 export function concat(...args) {
   return args.slice(0, -1).join('')
 }

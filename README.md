@@ -1,9 +1,13 @@
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
+## Current severe restrictions:
+* inline fragments don't work
+* no faculties for dealing with underscore-prefixed `_fields` in the schema
+
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-dart@0.1.0-alpha1
+yarn add -D graphql-code-generator graphql graphql-to-dart@0.1.2-alpha
 ```
 write `codegen.yaml` to customize your build as needed:
 ```yaml
