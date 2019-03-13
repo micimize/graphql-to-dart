@@ -1,7 +1,10 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.1.0-alpha1",
+  "version": "0.2.0",
   "description": "generate dart json_serializable classes using graphql-code-generator",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micimize/graphql-to-jaguar-dart.git"
@@ -11,22 +14,28 @@
     "prepublishOnly": "yarn build",
     "build": "codegen-templates-scripts build",
     "test": "codegen-templates-scripts test",
-    "test-server": "starwars-server",
-    "pretest": "yarn build"
+    "test-server": "starwars-test-graphql-server",
+    "pretest": "yarn build",
+    "example:gql-gen": "cd example/ && gql-gen",
+    "example:source-gen": "cd example/ && flutter packages pub run build_runner build",
+    "example:format": "cd example/ && flutter format lib/starwars_graphql_serializers.dart",
+    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
   },
   "dependencies": {
     "graphql-codegen-core": "0.18.0",
-    "graphql-codegen-plugin-helpers": "0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
-    "linewrap": "^0.2.1",
-    "handlebars": "^4.1.0"
+    "graphql-codegen-plugin-helpers": "0.18.0",
+    "handlebars": "^4.1.0",
+    "linewrap": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "@types/node": "^11.10.4",
     "codegen-templates-scripts": "0.18.0",
-    "graphql": "^14.1.1"
+    "graphql": "^14.1.1",
+    "graphql-code-generator": "^0.18.0",
+    "starwars-test-graphql-server": "0.2.0-alpha3"
   },
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",

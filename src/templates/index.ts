@@ -2,6 +2,7 @@ import * as defineClass from "./defineClass.handlebars";
 
 import * as enumTemplate from "./enum.handlebars";
 import * as type from "./type.handlebars";
+import * as union from "./union.handlebars";
 import * as fragment from "./fragment.handlebars";
 import * as operation from "./operation.handlebars";
 
@@ -18,6 +19,7 @@ export {
   enumTemplate as enum,
   operation,
   type,
+  union,
   schema,
   documents
 };

@@ -1,0 +1,49 @@
+{{#if description }}{{ multilineComment description }}{{/if}}
+class {{ className }} {
+  {{#if typeName }}
+  static final String typeName = "{{ typeName }}";
+  {{/if}}
+  static const possibleTypes = const {
+    {{#each possibleTypes~}}
+    {{this}}{{#unless @last}},
+    {{/unless}}
+    {{~/each}}
+  };
+
+  {{#each possibleTypes}}
+  {{ this }} {{ camelCase this}};
+  {{/each}}
+
+
+  {{ className }}.empty();
+
+
+  ToJson get value => (
+    {{#each possibleTypes~}}
+    {{this}}{{#unless @last}} ??
+    {{/unless}}
+    {{~/each}}
+   ) as ToJson;
+
+  factory {{ className }}.fromJson(Map<String, dynamic> json)
+     => deserializeFromJson(json);
+
+  Map<String, dynamic> toJson() => value.toJson();
+
+
+  static {{ ../className }} deserializeFromJson(Map<String, dynamic> json){
+    {{ className }} instance = {{ className }}.empty();
+    switch (json['__typename']) {
+      {{#each possibleTypes}}
+      case '{{this}}':
+        return instance..{{ camelCase this}} = {{ this }}.fromJson(json);
+      {{/each}}
+      default:
+        return instance;
+    }
+  }
+
+  static Map<String, dynamic> serializeToJson({{className}} instance) => instance.value.toJson();
+
+}
+

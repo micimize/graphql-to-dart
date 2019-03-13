@@ -26,10 +26,10 @@ abstract class ToJson {
 }
 
 {{#each unions}}
-// TODO I don't think unions are possible with dart
-// perhaps https://github.com/fluttercommunity/dart_sealed_unions
-// Please PR if you need unions
-{{ toComment description }}
+// TODO unions in dart seem ugly by necessity atm
+{{> union this
+  className=(toPascalCase name)
+}}
 {{/each}}
 
 /* Input Types */

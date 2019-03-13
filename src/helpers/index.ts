@@ -13,15 +13,17 @@ import {
   concat,
   eachBackwards,
   takeFirst,
+  camelCase,
   stripSuffix
 } from "./utils";
 
 export {
   log,
   logThis,
+  takeFirst,
+  camelCase,
   concat,
   eachBackwards,
-  takeFirst,
   stripSuffix,
   multilineComment,
   classExtends,

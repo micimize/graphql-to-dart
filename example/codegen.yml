@@ -1,0 +1,13 @@
+schema: "http://localhost:8080/graphql"
+documents:
+  - "./lib/gql/HeroForEpisode.gql"
+overwrite: true
+generates:
+  lib/starwars_graphql_serializers.dart:
+    plugins:
+      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist
+      #- ../dist #graphql-to-dart
+      # TODO relative custom plugins seem to be buggy
+config:
+  parts:
+    - "./starwars_graphql_serializers.g.dart"
