@@ -1,16 +1,9 @@
 # starwars
 
-A new Flutter project.
+This is an example project for using `graphql-to-dart`. Note that this is still very rough around the edges. You'll need most of what's in the `pubspec.yaml`, `build.yaml`, and `codegen.yml`.
 
-## Getting Started
+The main integration point with the `graphql-to-dart` generated code is in `lib/episode.dart`.
+To run this example, run `yarn test-server` and `flutter run` in different terminals.
 
-This project is a starting point for a Flutter application.
+This example uses `graphql_flutter` as well as some wrapper components, which I'll hopefully be able to integrate there at some point as well.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
