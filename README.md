@@ -4,6 +4,9 @@
 ## Current severe restrictions:
 * inline fragments don't work
 * no faculties for dealing with underscore-prefixed `_fields` in the schema
+* requires `build.yaml`, peer dependencies, etc
+
+The example is broken.
 
 ## usage
 ```bash

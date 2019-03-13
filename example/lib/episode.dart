@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import './starwars_graphql_serializers.dart';
 import './typed_query.dart';
@@ -5,6 +6,7 @@ import './typed_query.dart';
 String format(DateTime date) =>
     '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
+// TODO this uses inline fragments and those are broken
 class HeroForEpisode extends StatelessWidget {
   final Episode episode;
 
@@ -24,26 +26,7 @@ class HeroForEpisode extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        final events = data.schedule.events.map(
-          (node) {
-            return EventOccurrence(
-              event: node.sourceEvent,
-              occurrence: node.occurrence,
-              start: node.start,
-              end: node.end,
-            );
-          },
-        ).toList();
-
-        final implicitMetrics = data.implicitMetrics.metrics
-            .map((metric) => FullMetric.copy(metric))
-            .toList();
-
-        return HeroForEpisodeRecorderList(
-          events: events,
-          implicitMetrics: implicitMetrics,
-          date: date,
-        );
+        return Text(getPrettyJSONString(data.toJson()));
       },
     );
   }
@@ -68,4 +51,9 @@ class HeroForEpisodeTypedQuery extends StatelessWidget {
       builder: builder,
     );
   }
+}
+
+String getPrettyJSONString(jsonObject) {
+  var encoder = new JsonEncoder.withIndent("  ");
+  return encoder.convert(jsonObject);
 }
