@@ -7,12 +7,18 @@ export function log(...args) {
   console.log(...args)
 }
 
+export function stripLeadingUnderscores(lower) {
+  return lower.replace('_', '', 'g')
+}
+
 export function capitalize(lower) {
   return lower.replace(/^\w/, c => c.toUpperCase())
 }
 
 export function camelCase(str) {
-  return str.replace(/^\w/, c => c.toLowerCase())
+  return str
+    .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+    .replace(/^\w/, c => c.toLowerCase())
 }
 
 export function concat(...args) {

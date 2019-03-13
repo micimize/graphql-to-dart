@@ -12,6 +12,8 @@ class {{ className }} {{
   static final String typeName = "{{ typeName }}";
   {{/if}}
 
+  String __typename;
+
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
@@ -25,6 +27,13 @@ class {{ className }} {{
       raw
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
+
+  {{#if hasInlineFragments~}}
+  {{#each inlineFragments}}
+    @JsonKey(ignore: true)
+    {{ concat ../contextName name }} {{ camelCase name}};
+  {{/each}}
+  {{~/if}}
 
   {{className}}(
   {{~#if fields.length~}}
@@ -96,20 +105,42 @@ class {{ className }} {{
     );
   }
 
-  factory {{className}}.fromJson(Map<String, dynamic> json) => _${{className}}FromJson(json);
+  factory {{className}}.fromJson(Map<String, dynamic> json) => 
+    deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _${{className}}FromJson;
-  {{#if typeName }}
+  static {{className}} deserializeFromJson(Map<String, dynamic> json){
+    {{className}} instance = _${{className}}FromJson(json);
+    // for handling inline fragment logic 
+    instance.__typename = json['__typename'] as String;
+
+    {{#if hasInlineFragments~}}
+    {{#each inlineFragments}}
+      if(instance.__typename  == null || instance.__typename  == {{ concat ../contextName name }}.typeName){
+        instance.{{ camelCase name}} = {{ concat ../contextName name }}.fromJson(json);
+      }
+    {{/each}}
+    {{~/if}}
+    return instance;
+  }
+
+
   static Map<String, dynamic> serializeToJson({{className}} instance){
     Map<String, dynamic> json = _${{className}}ToJson(instance);
-    json['__typename'] = typeName;
+    {{#if hasInlineFragments~}}
+    {{#each inlineFragments}}
+        if (instance.{{ camelCase name}} != null){
+           json.addAll(instance.{{ camelCase name}}.toJson());
+        }
+    {{/each}}
+    {{~/if}}
+
+    {{#if typeName }}
+      json['__typename'] = instance.__typename ?? typeName;
+    {{/if}}
     return json;
   }
-  {{else}}
-  static const serializeToJson = _${{className}}ToJson;
-  {{/if}}
 
 }
 

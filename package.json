@@ -19,7 +19,7 @@
     "example:gql-gen": "cd example/ && gql-gen",
     "example:source-gen": "cd example/ && flutter packages pub run build_runner build",
     "example:format": "cd example/ && flutter format lib/starwars_graphql_serializers.dart",
-    "example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
+    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
   },
   "dependencies": {
     "graphql-codegen-core": "0.18.0",

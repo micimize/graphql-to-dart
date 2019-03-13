@@ -17,15 +17,6 @@ class {{ className }} {
 
   {{ className }}.empty();
 
-  factory {{ className }}.fromJson(Map<String, dynamic> json){
-    switch (json['__typename']) {
-      {{#each possibleTypes}}
-      case '{{this}}':
-        return {{ ../className }}.empty()
-          ..{{ camelCase this}} = {{ this }}.fromJson(json);
-      {{/each}}
-    }
-  }
 
   ToJson get value => (
     {{#each possibleTypes~}}
@@ -34,8 +25,25 @@ class {{ className }} {
     {{~/each}}
    ) as ToJson;
 
+  factory {{ className }}.fromJson(Map<String, dynamic> json)
+     => deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => value.toJson();
+
+
+  static {{ ../className }} deserializeFromJson(Map<String, dynamic> json){
+    {{ className }} instance = {{ className }}.empty();
+    switch (json['__typename']) {
+      {{#each possibleTypes}}
+      case '{{this}}':
+        return instance..{{ camelCase this}} = {{ this }}.fromJson(json);
+      {{/each}}
+      default:
+        return instance;
+    }
+  }
+
+  static Map<String, dynamic> serializeToJson({{className}} instance) => instance.value.toJson();
 
 }
 

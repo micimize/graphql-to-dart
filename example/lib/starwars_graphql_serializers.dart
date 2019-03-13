@@ -24,6 +24,7 @@ abstract class ToJson {
 }
 
 // TODO unions in dart seem ugly by necessity atm
+
 class SearchResult {
   static const possibleTypes = const {Human, Droid, Starship};
 
@@ -33,26 +34,37 @@ class SearchResult {
 
   SearchResult.empty();
 
-  factory SearchResult.fromJson(Map<String, dynamic> json) {
+  ToJson get value => (Human ?? Droid ?? Starship) as ToJson;
+
+  factory SearchResult.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
+
+  Map<String, dynamic> toJson() => value.toJson();
+
+  static deserializeFromJson(Map<String, dynamic> json) {
+    SearchResult instance = SearchResult.empty();
     switch (json['__typename']) {
       case 'Human':
-        return SearchResult.empty()..human = Human.fromJson(json);
+        return instance..human = Human.fromJson(json);
       case 'Droid':
-        return SearchResult.empty()..droid = Droid.fromJson(json);
+        return instance..droid = Droid.fromJson(json);
       case 'Starship':
-        return SearchResult.empty()..starship = Starship.fromJson(json);
+        return instance..starship = Starship.fromJson(json);
+      default:
+        return instance;
     }
   }
 
-  ToJson get value => (Human ?? Droid ?? Starship) as ToJson;
-
-  Map<String, dynamic> toJson() => value.toJson();
+  static Map<String, dynamic> serializeToJson(SearchResult instance) =>
+      instance.value.toJson();
 }
 
 /* Input Types */
 /// The input object sent when someone is creating a new review
 @JsonSerializable()
 class ReviewInput implements ToJson {
+  String __typename;
+
   /// 0-5 stars
   int stars;
 
@@ -104,17 +116,30 @@ class ReviewInput implements ToJson {
   }
 
   factory ReviewInput.fromJson(Map<String, dynamic> json) =>
-      _$ReviewInputFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$ReviewInputFromJson;
-  static const serializeToJson = _$ReviewInputToJson;
+  static ReviewInput deserializeFromJson(Map<String, dynamic> json) {
+    ReviewInput instance = _$ReviewInputFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(ReviewInput instance) {
+    Map<String, dynamic> json = _$ReviewInputToJson(instance);
+
+    return json;
+  }
 }
 
 /// The input object sent when passing in a color
 @JsonSerializable()
 class ColorInput implements ToJson {
+  String __typename;
+
   int red;
   int green;
   int blue;
@@ -161,18 +186,31 @@ class ColorInput implements ToJson {
   }
 
   factory ColorInput.fromJson(Map<String, dynamic> json) =>
-      _$ColorInputFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$ColorInputFromJson;
-  static const serializeToJson = _$ColorInputToJson;
+  static ColorInput deserializeFromJson(Map<String, dynamic> json) {
+    ColorInput instance = _$ColorInputFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(ColorInput instance) {
+    Map<String, dynamic> json = _$ColorInputToJson(instance);
+
+    return json;
+  }
 }
 
 /* Interfaces */
 /// A character from the Star Wars universe
 @JsonSerializable()
 class Character implements ToJson {
+  String __typename;
+
   /// The ID of the character
   String id;
 
@@ -236,16 +274,29 @@ class Character implements ToJson {
   }
 
   factory Character.fromJson(Map<String, dynamic> json) =>
-      _$CharacterFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$CharacterFromJson;
-  static const serializeToJson = _$CharacterToJson;
+  static Character deserializeFromJson(Map<String, dynamic> json) {
+    Character instance = _$CharacterFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Character instance) {
+    Map<String, dynamic> json = _$CharacterToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class CharacterFriendsConnectionArgs implements ToJson {
+  String __typename;
+
   int first;
   String after;
 
@@ -290,18 +341,35 @@ class CharacterFriendsConnectionArgs implements ToJson {
   }
 
   factory CharacterFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
-      _$CharacterFriendsConnectionArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$CharacterFriendsConnectionArgsFromJson;
-  static const serializeToJson = _$CharacterFriendsConnectionArgsToJson;
+  static CharacterFriendsConnectionArgs deserializeFromJson(
+      Map<String, dynamic> json) {
+    CharacterFriendsConnectionArgs instance =
+        _$CharacterFriendsConnectionArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      CharacterFriendsConnectionArgs instance) {
+    Map<String, dynamic> json =
+        _$CharacterFriendsConnectionArgsToJson(instance);
+
+    return json;
+  }
 }
 
 /* Types */
 /// The query type, represents all of the entry points into our object graph
 @JsonSerializable()
 class Query implements ToJson {
+  String __typename;
+
   Character hero;
   List<Review> reviews;
   List<SearchResult> search;
@@ -362,16 +430,30 @@ class Query implements ToJson {
     );
   }
 
-  factory Query.fromJson(Map<String, dynamic> json) => _$QueryFromJson(json);
+  factory Query.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryFromJson;
-  static const serializeToJson = _$QueryToJson;
+  static Query deserializeFromJson(Map<String, dynamic> json) {
+    Query instance = _$QueryFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Query instance) {
+    Map<String, dynamic> json = _$QueryToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryHeroArgs implements ToJson {
+  String __typename;
+
   Episode episode;
 
   QueryHeroArgs({
@@ -410,16 +492,29 @@ class QueryHeroArgs implements ToJson {
   }
 
   factory QueryHeroArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryHeroArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryHeroArgsFromJson;
-  static const serializeToJson = _$QueryHeroArgsToJson;
+  static QueryHeroArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryHeroArgs instance = _$QueryHeroArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryHeroArgs instance) {
+    Map<String, dynamic> json = _$QueryHeroArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryReviewsArgs implements ToJson {
+  String __typename;
+
   Episode episode;
 
   QueryReviewsArgs({
@@ -458,16 +553,29 @@ class QueryReviewsArgs implements ToJson {
   }
 
   factory QueryReviewsArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryReviewsArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryReviewsArgsFromJson;
-  static const serializeToJson = _$QueryReviewsArgsToJson;
+  static QueryReviewsArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryReviewsArgs instance = _$QueryReviewsArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryReviewsArgs instance) {
+    Map<String, dynamic> json = _$QueryReviewsArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QuerySearchArgs implements ToJson {
+  String __typename;
+
   String text;
 
   QuerySearchArgs({
@@ -506,16 +614,29 @@ class QuerySearchArgs implements ToJson {
   }
 
   factory QuerySearchArgs.fromJson(Map<String, dynamic> json) =>
-      _$QuerySearchArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QuerySearchArgsFromJson;
-  static const serializeToJson = _$QuerySearchArgsToJson;
+  static QuerySearchArgs deserializeFromJson(Map<String, dynamic> json) {
+    QuerySearchArgs instance = _$QuerySearchArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QuerySearchArgs instance) {
+    Map<String, dynamic> json = _$QuerySearchArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryCharacterArgs implements ToJson {
+  String __typename;
+
   String id;
 
   QueryCharacterArgs({
@@ -555,16 +676,29 @@ class QueryCharacterArgs implements ToJson {
   }
 
   factory QueryCharacterArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryCharacterArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryCharacterArgsFromJson;
-  static const serializeToJson = _$QueryCharacterArgsToJson;
+  static QueryCharacterArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryCharacterArgs instance = _$QueryCharacterArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryCharacterArgs instance) {
+    Map<String, dynamic> json = _$QueryCharacterArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryDroidArgs implements ToJson {
+  String __typename;
+
   String id;
 
   QueryDroidArgs({
@@ -603,16 +737,29 @@ class QueryDroidArgs implements ToJson {
   }
 
   factory QueryDroidArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryDroidArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryDroidArgsFromJson;
-  static const serializeToJson = _$QueryDroidArgsToJson;
+  static QueryDroidArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryDroidArgs instance = _$QueryDroidArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryDroidArgs instance) {
+    Map<String, dynamic> json = _$QueryDroidArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryHumanArgs implements ToJson {
+  String __typename;
+
   String id;
 
   QueryHumanArgs({
@@ -651,16 +798,29 @@ class QueryHumanArgs implements ToJson {
   }
 
   factory QueryHumanArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryHumanArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryHumanArgsFromJson;
-  static const serializeToJson = _$QueryHumanArgsToJson;
+  static QueryHumanArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryHumanArgs instance = _$QueryHumanArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryHumanArgs instance) {
+    Map<String, dynamic> json = _$QueryHumanArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class QueryStarshipArgs implements ToJson {
+  String __typename;
+
   String id;
 
   QueryStarshipArgs({
@@ -699,17 +859,30 @@ class QueryStarshipArgs implements ToJson {
   }
 
   factory QueryStarshipArgs.fromJson(Map<String, dynamic> json) =>
-      _$QueryStarshipArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$QueryStarshipArgsFromJson;
-  static const serializeToJson = _$QueryStarshipArgsToJson;
+  static QueryStarshipArgs deserializeFromJson(Map<String, dynamic> json) {
+    QueryStarshipArgs instance = _$QueryStarshipArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(QueryStarshipArgs instance) {
+    Map<String, dynamic> json = _$QueryStarshipArgsToJson(instance);
+
+    return json;
+  }
 }
 
 /// A connection object for a character's friends
 @JsonSerializable()
 class FriendsConnection implements ToJson {
+  String __typename;
+
   /// The total number of friends
   int totalCount;
 
@@ -767,17 +940,30 @@ class FriendsConnection implements ToJson {
   }
 
   factory FriendsConnection.fromJson(Map<String, dynamic> json) =>
-      _$FriendsConnectionFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$FriendsConnectionFromJson;
-  static const serializeToJson = _$FriendsConnectionToJson;
+  static FriendsConnection deserializeFromJson(Map<String, dynamic> json) {
+    FriendsConnection instance = _$FriendsConnectionFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(FriendsConnection instance) {
+    Map<String, dynamic> json = _$FriendsConnectionToJson(instance);
+
+    return json;
+  }
 }
 
 /// An edge object for a character's friends
 @JsonSerializable()
 class FriendsEdge implements ToJson {
+  String __typename;
+
   /// A cursor used for pagination
   String cursor;
 
@@ -823,17 +1009,30 @@ class FriendsEdge implements ToJson {
   }
 
   factory FriendsEdge.fromJson(Map<String, dynamic> json) =>
-      _$FriendsEdgeFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$FriendsEdgeFromJson;
-  static const serializeToJson = _$FriendsEdgeToJson;
+  static FriendsEdge deserializeFromJson(Map<String, dynamic> json) {
+    FriendsEdge instance = _$FriendsEdgeFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(FriendsEdge instance) {
+    Map<String, dynamic> json = _$FriendsEdgeToJson(instance);
+
+    return json;
+  }
 }
 
 /// Information for paginating this connection
 @JsonSerializable()
 class PageInfo implements ToJson {
+  String __typename;
+
   String startCursor;
   String endCursor;
   bool hasNextPage;
@@ -880,17 +1079,30 @@ class PageInfo implements ToJson {
   }
 
   factory PageInfo.fromJson(Map<String, dynamic> json) =>
-      _$PageInfoFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$PageInfoFromJson;
-  static const serializeToJson = _$PageInfoToJson;
+  static PageInfo deserializeFromJson(Map<String, dynamic> json) {
+    PageInfo instance = _$PageInfoFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(PageInfo instance) {
+    Map<String, dynamic> json = _$PageInfoToJson(instance);
+
+    return json;
+  }
 }
 
 /// Represents a review for a movie
 @JsonSerializable()
 class Review implements ToJson {
+  String __typename;
+
   /// The movie
   Episode episode;
 
@@ -941,17 +1153,31 @@ class Review implements ToJson {
     );
   }
 
-  factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
+  factory Review.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$ReviewFromJson;
-  static const serializeToJson = _$ReviewToJson;
+  static Review deserializeFromJson(Map<String, dynamic> json) {
+    Review instance = _$ReviewFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Review instance) {
+    Map<String, dynamic> json = _$ReviewToJson(instance);
+
+    return json;
+  }
 }
 
 /// A humanoid creature from the Star Wars universe
 @JsonSerializable()
 class Human implements ToJson, Character {
+  String __typename;
+
   /// The ID of the human
   String id;
 
@@ -1037,16 +1263,30 @@ class Human implements ToJson, Character {
     );
   }
 
-  factory Human.fromJson(Map<String, dynamic> json) => _$HumanFromJson(json);
+  factory Human.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HumanFromJson;
-  static const serializeToJson = _$HumanToJson;
+  static Human deserializeFromJson(Map<String, dynamic> json) {
+    Human instance = _$HumanFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Human instance) {
+    Map<String, dynamic> json = _$HumanToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HumanHeightArgs implements ToJson {
+  String __typename;
+
   LengthUnit unit;
 
   HumanHeightArgs({
@@ -1085,16 +1325,29 @@ class HumanHeightArgs implements ToJson {
   }
 
   factory HumanHeightArgs.fromJson(Map<String, dynamic> json) =>
-      _$HumanHeightArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HumanHeightArgsFromJson;
-  static const serializeToJson = _$HumanHeightArgsToJson;
+  static HumanHeightArgs deserializeFromJson(Map<String, dynamic> json) {
+    HumanHeightArgs instance = _$HumanHeightArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(HumanHeightArgs instance) {
+    Map<String, dynamic> json = _$HumanHeightArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HumanFriendsConnectionArgs implements ToJson {
+  String __typename;
+
   int first;
   String after;
 
@@ -1138,17 +1391,33 @@ class HumanFriendsConnectionArgs implements ToJson {
   }
 
   factory HumanFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
-      _$HumanFriendsConnectionArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HumanFriendsConnectionArgsFromJson;
-  static const serializeToJson = _$HumanFriendsConnectionArgsToJson;
+  static HumanFriendsConnectionArgs deserializeFromJson(
+      Map<String, dynamic> json) {
+    HumanFriendsConnectionArgs instance =
+        _$HumanFriendsConnectionArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      HumanFriendsConnectionArgs instance) {
+    Map<String, dynamic> json = _$HumanFriendsConnectionArgsToJson(instance);
+
+    return json;
+  }
 }
 
 ///
 @JsonSerializable()
 class Starship implements ToJson {
+  String __typename;
+
   /// The ID of the starship
   String id;
 
@@ -1204,16 +1473,29 @@ class Starship implements ToJson {
   }
 
   factory Starship.fromJson(Map<String, dynamic> json) =>
-      _$StarshipFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$StarshipFromJson;
-  static const serializeToJson = _$StarshipToJson;
+  static Starship deserializeFromJson(Map<String, dynamic> json) {
+    Starship instance = _$StarshipFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Starship instance) {
+    Map<String, dynamic> json = _$StarshipToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class StarshipLengthArgs implements ToJson {
+  String __typename;
+
   LengthUnit unit;
 
   StarshipLengthArgs({
@@ -1253,17 +1535,30 @@ class StarshipLengthArgs implements ToJson {
   }
 
   factory StarshipLengthArgs.fromJson(Map<String, dynamic> json) =>
-      _$StarshipLengthArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$StarshipLengthArgsFromJson;
-  static const serializeToJson = _$StarshipLengthArgsToJson;
+  static StarshipLengthArgs deserializeFromJson(Map<String, dynamic> json) {
+    StarshipLengthArgs instance = _$StarshipLengthArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(StarshipLengthArgs instance) {
+    Map<String, dynamic> json = _$StarshipLengthArgsToJson(instance);
+
+    return json;
+  }
 }
 
 /// An autonomous mechanical character in the Star Wars universe
 @JsonSerializable()
 class Droid implements ToJson, Character {
+  String __typename;
+
   /// The ID of the droid
   String id;
 
@@ -1331,16 +1626,30 @@ class Droid implements ToJson, Character {
     );
   }
 
-  factory Droid.fromJson(Map<String, dynamic> json) => _$DroidFromJson(json);
+  factory Droid.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$DroidFromJson;
-  static const serializeToJson = _$DroidToJson;
+  static Droid deserializeFromJson(Map<String, dynamic> json) {
+    Droid instance = _$DroidFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Droid instance) {
+    Map<String, dynamic> json = _$DroidToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class DroidFriendsConnectionArgs implements ToJson {
+  String __typename;
+
   int first;
   String after;
 
@@ -1384,17 +1693,33 @@ class DroidFriendsConnectionArgs implements ToJson {
   }
 
   factory DroidFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
-      _$DroidFriendsConnectionArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$DroidFriendsConnectionArgsFromJson;
-  static const serializeToJson = _$DroidFriendsConnectionArgsToJson;
+  static DroidFriendsConnectionArgs deserializeFromJson(
+      Map<String, dynamic> json) {
+    DroidFriendsConnectionArgs instance =
+        _$DroidFriendsConnectionArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      DroidFriendsConnectionArgs instance) {
+    Map<String, dynamic> json = _$DroidFriendsConnectionArgsToJson(instance);
+
+    return json;
+  }
 }
 
 /// The mutation type, represents all updates we can make to our data
 @JsonSerializable()
 class Mutation implements ToJson {
+  String __typename;
+
   Review createReview;
 
   Mutation({
@@ -1433,16 +1758,29 @@ class Mutation implements ToJson {
   }
 
   factory Mutation.fromJson(Map<String, dynamic> json) =>
-      _$MutationFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$MutationFromJson;
-  static const serializeToJson = _$MutationToJson;
+  static Mutation deserializeFromJson(Map<String, dynamic> json) {
+    Mutation instance = _$MutationFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Mutation instance) {
+    Map<String, dynamic> json = _$MutationToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class MutationCreateReviewArgs implements ToJson {
+  String __typename;
+
   Episode episode;
   ReviewInput review;
 
@@ -1486,17 +1824,33 @@ class MutationCreateReviewArgs implements ToJson {
   }
 
   factory MutationCreateReviewArgs.fromJson(Map<String, dynamic> json) =>
-      _$MutationCreateReviewArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$MutationCreateReviewArgsFromJson;
-  static const serializeToJson = _$MutationCreateReviewArgsToJson;
+  static MutationCreateReviewArgs deserializeFromJson(
+      Map<String, dynamic> json) {
+    MutationCreateReviewArgs instance =
+        _$MutationCreateReviewArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      MutationCreateReviewArgs instance) {
+    Map<String, dynamic> json = _$MutationCreateReviewArgsToJson(instance);
+
+    return json;
+  }
 }
 
 /// The subscription type, represents all subscriptions we can make to our data
 @JsonSerializable()
 class Subscription implements ToJson {
+  String __typename;
+
   Review reviewAdded;
 
   Subscription({
@@ -1535,16 +1889,29 @@ class Subscription implements ToJson {
   }
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>
-      _$SubscriptionFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$SubscriptionFromJson;
-  static const serializeToJson = _$SubscriptionToJson;
+  static Subscription deserializeFromJson(Map<String, dynamic> json) {
+    Subscription instance = _$SubscriptionFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(Subscription instance) {
+    Map<String, dynamic> json = _$SubscriptionToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class SubscriptionReviewAddedArgs implements ToJson {
+  String __typename;
+
   Episode episode;
 
   SubscriptionReviewAddedArgs({
@@ -1584,16 +1951,32 @@ class SubscriptionReviewAddedArgs implements ToJson {
   }
 
   factory SubscriptionReviewAddedArgs.fromJson(Map<String, dynamic> json) =>
-      _$SubscriptionReviewAddedArgsFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$SubscriptionReviewAddedArgsFromJson;
-  static const serializeToJson = _$SubscriptionReviewAddedArgsToJson;
+  static SubscriptionReviewAddedArgs deserializeFromJson(
+      Map<String, dynamic> json) {
+    SubscriptionReviewAddedArgs instance =
+        _$SubscriptionReviewAddedArgsFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      SubscriptionReviewAddedArgs instance) {
+    Map<String, dynamic> json = _$SubscriptionReviewAddedArgsToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HeroForEpisodeVariables implements ToJson {
+  String __typename;
+
   Episode ep;
 
   HeroForEpisodeVariables({
@@ -1633,17 +2016,32 @@ class HeroForEpisodeVariables implements ToJson {
   }
 
   factory HeroForEpisodeVariables.fromJson(Map<String, dynamic> json) =>
-      _$HeroForEpisodeVariablesFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HeroForEpisodeVariablesFromJson;
-  static const serializeToJson = _$HeroForEpisodeVariablesToJson;
+  static HeroForEpisodeVariables deserializeFromJson(
+      Map<String, dynamic> json) {
+    HeroForEpisodeVariables instance = _$HeroForEpisodeVariablesFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      HeroForEpisodeVariables instance) {
+    Map<String, dynamic> json = _$HeroForEpisodeVariablesToJson(instance);
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HeroForEpisodeHumanInlineFragment implements ToJson {
   static final String typeName = "Human";
+
+  String __typename;
 
   double height;
   String homePlanet;
@@ -1690,17 +2088,26 @@ class HeroForEpisodeHumanInlineFragment implements ToJson {
 
   factory HeroForEpisodeHumanInlineFragment.fromJson(
           Map<String, dynamic> json) =>
-      _$HeroForEpisodeHumanInlineFragmentFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson =
-      _$HeroForEpisodeHumanInlineFragmentFromJson;
+  static HeroForEpisodeHumanInlineFragment deserializeFromJson(
+      Map<String, dynamic> json) {
+    HeroForEpisodeHumanInlineFragment instance =
+        _$HeroForEpisodeHumanInlineFragmentFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
   static Map<String, dynamic> serializeToJson(
       HeroForEpisodeHumanInlineFragment instance) {
     Map<String, dynamic> json =
         _$HeroForEpisodeHumanInlineFragmentToJson(instance);
-    json['__typename'] = typeName;
+
+    json['__typename'] = instance.__typename ?? typeName;
     return json;
   }
 }
@@ -1708,6 +2115,8 @@ class HeroForEpisodeHumanInlineFragment implements ToJson {
 @JsonSerializable()
 class HeroForEpisodeDroidInlineFragment implements ToJson {
   static final String typeName = "Droid";
+
+  String __typename;
 
   String primaryFunction;
 
@@ -1750,17 +2159,26 @@ class HeroForEpisodeDroidInlineFragment implements ToJson {
 
   factory HeroForEpisodeDroidInlineFragment.fromJson(
           Map<String, dynamic> json) =>
-      _$HeroForEpisodeDroidInlineFragmentFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson =
-      _$HeroForEpisodeDroidInlineFragmentFromJson;
+  static HeroForEpisodeDroidInlineFragment deserializeFromJson(
+      Map<String, dynamic> json) {
+    HeroForEpisodeDroidInlineFragment instance =
+        _$HeroForEpisodeDroidInlineFragmentFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
   static Map<String, dynamic> serializeToJson(
       HeroForEpisodeDroidInlineFragment instance) {
     Map<String, dynamic> json =
         _$HeroForEpisodeDroidInlineFragmentToJson(instance);
-    json['__typename'] = typeName;
+
+    json['__typename'] = instance.__typename ?? typeName;
     return json;
   }
 }
@@ -1769,7 +2187,14 @@ class HeroForEpisodeDroidInlineFragment implements ToJson {
 class HeroForEpisodeHero implements ToJson {
   static final String typeName = "Character";
 
+  String __typename;
+
   String name;
+
+  @JsonKey(ignore: true)
+  HeroForEpisodeDroidInlineFragment droidInlineFragment;
+  @JsonKey(ignore: true)
+  HeroForEpisodeHumanInlineFragment humanInlineFragment;
 
   HeroForEpisodeHero({
     @required this.name,
@@ -1808,14 +2233,38 @@ class HeroForEpisodeHero implements ToJson {
   }
 
   factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) =>
-      _$HeroForEpisodeHeroFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HeroForEpisodeHeroFromJson;
+  static HeroForEpisodeHero deserializeFromJson(Map<String, dynamic> json) {
+    HeroForEpisodeHero instance = _$HeroForEpisodeHeroFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    if (instance.__typename == null ||
+        instance.__typename == HeroForEpisodeDroidInlineFragment.typeName) {
+      instance.droidInlineFragment =
+          HeroForEpisodeDroidInlineFragment.fromJson(json);
+    }
+    if (instance.__typename == null ||
+        instance.__typename == HeroForEpisodeHumanInlineFragment.typeName) {
+      instance.humanInlineFragment =
+          HeroForEpisodeHumanInlineFragment.fromJson(json);
+    }
+    return instance;
+  }
+
   static Map<String, dynamic> serializeToJson(HeroForEpisodeHero instance) {
     Map<String, dynamic> json = _$HeroForEpisodeHeroToJson(instance);
-    json['__typename'] = typeName;
+    if (instance.droidInlineFragment != null) {
+      json.addAll(instance.droidInlineFragment.toJson());
+    }
+    if (instance.humanInlineFragment != null) {
+      json.addAll(instance.humanInlineFragment.toJson());
+    }
+
+    json['__typename'] = instance.__typename ?? typeName;
     return json;
   }
 }
@@ -1823,6 +2272,8 @@ class HeroForEpisodeHero implements ToJson {
 @JsonSerializable()
 class HeroForEpisodeQuery implements ToJson {
   static final String typeName = "HeroForEpisodeQuery";
+
+  String __typename;
 
   HeroForEpisodeHero hero;
 
@@ -1863,14 +2314,22 @@ class HeroForEpisodeQuery implements ToJson {
   }
 
   factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) =>
-      _$HeroForEpisodeQueryFromJson(json);
+      deserializeFromJson(json);
 
   Map<String, dynamic> toJson() => serializeToJson(this);
 
-  static const deserializeFromJson = _$HeroForEpisodeQueryFromJson;
+  static HeroForEpisodeQuery deserializeFromJson(Map<String, dynamic> json) {
+    HeroForEpisodeQuery instance = _$HeroForEpisodeQueryFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
   static Map<String, dynamic> serializeToJson(HeroForEpisodeQuery instance) {
     Map<String, dynamic> json = _$HeroForEpisodeQueryToJson(instance);
-    json['__typename'] = typeName;
+
+    json['__typename'] = instance.__typename ?? typeName;
     return json;
   }
 }

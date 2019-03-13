@@ -1,5 +1,7 @@
 query HeroForEpisode($ep: Episode!) {
   hero(episode: $ep) {
+    # without typename we can't really tell which fragments to parse
+    __typename
     name
     ... on Droid {
       primaryFunction

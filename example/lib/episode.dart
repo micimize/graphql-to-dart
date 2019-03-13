@@ -45,7 +45,7 @@ class HeroForEpisodeTypedQuery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TypedQuery<HeroForEpisodeQuery>(
-      documentName: 'GetHeroForEpisode',
+      documentName: 'HeroForEpisode',
       dataFromJson: wrapFromJsonMap(HeroForEpisodeQuery.deserializeFromJson),
       variables: variables.toJson(),
       builder: builder,
