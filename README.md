@@ -10,9 +10,7 @@ The example is sparse.
 
 ### Current nusances:
 * You can have multiple inline fragments on the same document, but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
-* The dart type system is hard to wrestle into graphql-like types
-* I am not happy with the generated helper utilities. We should generate things like `.with` and `.as{{fragment}}()` 
-* along those lines we should make use of covariants to get instance methods instead of class methods
+* The dart type system is hard to wrestle into graphql-like types (especially unions)
 * because of helpers like `.empty()`, having invalid types is easy. We should validate not null somehow
 
 
@@ -94,7 +92,7 @@ dependencies:
 ...Obviously this is not the most user friendly process yet.
 
 # Sample result output
-I've built in some static helper methods to the generated models to make the typed data easier to work with. Currently there's `assign`, similar to `Object.assign` in javascript, `copy`, and an `empty` constructor, mainly for downcasting. 
+I've built in some idiomatic dart helper methods to the generated models to make the typed data easier to work with. Currently there's `addAll` (modeled after `Map.addAll`), `copy`, `copyWith`, and an `empty` constructor. You can also set `generateFragmentHelpers` to generate `addAllFrom{baseType|inputType}` helpers.
 
 Here's some sample output:
 ```dart

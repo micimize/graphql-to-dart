@@ -66,6 +66,7 @@ class ReviewInput implements ToJson {
   String __typename;
 
   /// 0-5 stars
+  @JsonKey(disallowNullValue: true)
   int stars;
 
   /// Comment about the movie, optional
@@ -80,40 +81,46 @@ class ReviewInput implements ToJson {
     this.favorite_color,
   });
 
+  /// Construct an empty `ReviewInput`
   ReviewInput.empty();
 
-  static I _assign<I extends ReviewInput>(
-    I into,
-    ReviewInput source,
-  ) {
-    into.stars = source.stars;
-    into.commentary = source.commentary;
-    into.favorite_color = source.favorite_color;
-    return into;
-  }
+  /// Adds all fields from [other] to this `ReviewInput`.
+  //
+  // If a field from [other] is already in this `ReviewInput`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant ReviewInput other, {bool overwrite = true}) {
+    assert(other != null,
+        "ReviewInput.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      stars = other.stars ?? stars;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends ReviewInput>(I into, ReviewInput source,
-      [List<ReviewInput> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      commentary = other.commentary ?? commentary;
+
+      favorite_color = other.favorite_color ?? favorite_color;
+    } else {
+      stars ??= other.stars;
+
+      commentary ??= other.commentary;
+
+      favorite_color ??= other.favorite_color;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [ReviewInput]
-  static ReviewInput copy(ReviewInput source) {
+  /// Creates a copy of this `ReviewInput` but with the given fields replaced with the new values.
+  ReviewInput copyWith({
+    int stars,
+    String commentary,
+    ColorInput favorite_color,
+  }) {
     return ReviewInput(
-      stars: source.stars,
-      commentary: source.commentary,
-      favorite_color: source.favorite_color,
+      stars: stars ?? this.stars,
+      commentary: commentary ?? this.commentary,
+      favorite_color: favorite_color ?? this.favorite_color,
     );
   }
+
+  /// Creates a copy of this `ReviewInput`
+  ReviewInput copy() => copyWith();
 
   factory ReviewInput.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -140,8 +147,11 @@ class ReviewInput implements ToJson {
 class ColorInput implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   int red;
+  @JsonKey(disallowNullValue: true)
   int green;
+  @JsonKey(disallowNullValue: true)
   int blue;
 
   ColorInput({
@@ -150,40 +160,46 @@ class ColorInput implements ToJson {
     @required this.blue,
   });
 
+  /// Construct an empty `ColorInput`
   ColorInput.empty();
 
-  static I _assign<I extends ColorInput>(
-    I into,
-    ColorInput source,
-  ) {
-    into.red = source.red;
-    into.green = source.green;
-    into.blue = source.blue;
-    return into;
-  }
+  /// Adds all fields from [other] to this `ColorInput`.
+  //
+  // If a field from [other] is already in this `ColorInput`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant ColorInput other, {bool overwrite = true}) {
+    assert(
+        other != null, "ColorInput.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      red = other.red ?? red;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends ColorInput>(I into, ColorInput source,
-      [List<ColorInput> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      green = other.green ?? green;
+
+      blue = other.blue ?? blue;
+    } else {
+      red ??= other.red;
+
+      green ??= other.green;
+
+      blue ??= other.blue;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [ColorInput]
-  static ColorInput copy(ColorInput source) {
+  /// Creates a copy of this `ColorInput` but with the given fields replaced with the new values.
+  ColorInput copyWith({
+    int red,
+    int green,
+    int blue,
+  }) {
     return ColorInput(
-      red: source.red,
-      green: source.green,
-      blue: source.blue,
+      red: red ?? this.red,
+      green: green ?? this.green,
+      blue: blue ?? this.blue,
     );
   }
+
+  /// Creates a copy of this `ColorInput`
+  ColorInput copy() => copyWith();
 
   factory ColorInput.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -212,18 +228,22 @@ class Character implements ToJson {
   String __typename;
 
   /// The ID of the character
+  @JsonKey(disallowNullValue: true)
   String id;
 
   /// The name of the character
+  @JsonKey(disallowNullValue: true)
   String name;
 
   /// The friends of the character, or an empty list if they have none
   List<Character> friends;
 
   /// The friends of the character exposed as a connection with edges
+  @JsonKey(disallowNullValue: true)
   FriendsConnection friendsConnection;
 
   /// The movies this character appears in
+  @JsonKey(disallowNullValue: true)
   List<Episode> appearsIn;
 
   Character({
@@ -234,44 +254,58 @@ class Character implements ToJson {
     @required this.appearsIn,
   });
 
+  /// Construct an empty `Character`
   Character.empty();
 
-  static I _assign<I extends Character>(
-    I into,
-    Character source,
-  ) {
-    into.id = source.id;
-    into.name = source.name;
-    into.friends = source.friends;
-    into.friendsConnection = source.friendsConnection;
-    into.appearsIn = source.appearsIn;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Character`.
+  //
+  // If a field from [other] is already in this `Character`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Character other, {bool overwrite = true}) {
+    assert(
+        other != null, "Character.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Character>(I into, Character source,
-      [List<Character> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      name = other.name ?? name;
+
+      friends = other.friends ?? friends;
+
+      friendsConnection = other.friendsConnection ?? friendsConnection;
+
+      appearsIn = other.appearsIn ?? appearsIn;
+    } else {
+      id ??= other.id;
+
+      name ??= other.name;
+
+      friends ??= other.friends;
+
+      friendsConnection ??= other.friendsConnection;
+
+      appearsIn ??= other.appearsIn;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Character]
-  static Character copy(Character source) {
+  /// Creates a copy of this `Character` but with the given fields replaced with the new values.
+  Character copyWith({
+    String id,
+    String name,
+    List<Character> friends,
+    FriendsConnection friendsConnection,
+    List<Episode> appearsIn,
+  }) {
     return Character(
-      id: source.id,
-      name: source.name,
-      friends: source.friends,
-      friendsConnection: source.friendsConnection,
-      appearsIn: source.appearsIn,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      friends: friends ?? this.friends,
+      friendsConnection: friendsConnection ?? this.friendsConnection,
+      appearsIn: appearsIn ?? this.appearsIn,
     );
   }
+
+  /// Creates a copy of this `Character`
+  Character copy() => copyWith();
 
   factory Character.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -305,40 +339,41 @@ class CharacterFriendsConnectionArgs implements ToJson {
     this.after,
   });
 
+  /// Construct an empty `CharacterFriendsConnectionArgs`
   CharacterFriendsConnectionArgs.empty();
 
-  static I _assign<I extends CharacterFriendsConnectionArgs>(
-    I into,
-    CharacterFriendsConnectionArgs source,
-  ) {
-    into.first = source.first;
-    into.after = source.after;
-    return into;
-  }
+  /// Adds all fields from [other] to this `CharacterFriendsConnectionArgs`.
+  //
+  // If a field from [other] is already in this `CharacterFriendsConnectionArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant CharacterFriendsConnectionArgs other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "CharacterFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      first = other.first ?? first;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends CharacterFriendsConnectionArgs>(
-      I into, CharacterFriendsConnectionArgs source,
-      [List<CharacterFriendsConnectionArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      after = other.after ?? after;
+    } else {
+      first ??= other.first;
+
+      after ??= other.after;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [CharacterFriendsConnectionArgs]
-  static CharacterFriendsConnectionArgs copy(
-      CharacterFriendsConnectionArgs source) {
+  /// Creates a copy of this `CharacterFriendsConnectionArgs` but with the given fields replaced with the new values.
+  CharacterFriendsConnectionArgs copyWith({
+    int first,
+    String after,
+  }) {
     return CharacterFriendsConnectionArgs(
-      first: source.first,
-      after: source.after,
+      first: first ?? this.first,
+      after: after ?? this.after,
     );
   }
+
+  /// Creates a copy of this `CharacterFriendsConnectionArgs`
+  CharacterFriendsConnectionArgs copy() => copyWith();
 
   factory CharacterFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -388,47 +423,69 @@ class Query implements ToJson {
     this.starship,
   });
 
+  /// Construct an empty `Query`
   Query.empty();
 
-  static I _assign<I extends Query>(
-    I into,
-    Query source,
-  ) {
-    into.hero = source.hero;
-    into.reviews = source.reviews;
-    into.search = source.search;
-    into.character = source.character;
-    into.droid = source.droid;
-    into.human = source.human;
-    into.starship = source.starship;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Query`.
+  //
+  // If a field from [other] is already in this `Query`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Query other, {bool overwrite = true}) {
+    assert(other != null, "Query.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      hero = other.hero ?? hero;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Query>(I into, Query source, [List<Query> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      reviews = other.reviews ?? reviews;
+
+      search = other.search ?? search;
+
+      character = other.character ?? character;
+
+      droid = other.droid ?? droid;
+
+      human = other.human ?? human;
+
+      starship = other.starship ?? starship;
+    } else {
+      hero ??= other.hero;
+
+      reviews ??= other.reviews;
+
+      search ??= other.search;
+
+      character ??= other.character;
+
+      droid ??= other.droid;
+
+      human ??= other.human;
+
+      starship ??= other.starship;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Query]
-  static Query copy(Query source) {
+  /// Creates a copy of this `Query` but with the given fields replaced with the new values.
+  Query copyWith({
+    Character hero,
+    List<Review> reviews,
+    List<SearchResult> search,
+    Character character,
+    Droid droid,
+    Human human,
+    Starship starship,
+  }) {
     return Query(
-      hero: source.hero,
-      reviews: source.reviews,
-      search: source.search,
-      character: source.character,
-      droid: source.droid,
-      human: source.human,
-      starship: source.starship,
+      hero: hero ?? this.hero,
+      reviews: reviews ?? this.reviews,
+      search: search ?? this.search,
+      character: character ?? this.character,
+      droid: droid ?? this.droid,
+      human: human ?? this.human,
+      starship: starship ?? this.starship,
     );
   }
+
+  /// Creates a copy of this `Query`
+  Query copy() => copyWith();
 
   factory Query.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -460,36 +517,34 @@ class QueryHeroArgs implements ToJson {
     this.episode,
   });
 
+  /// Construct an empty `QueryHeroArgs`
   QueryHeroArgs.empty();
 
-  static I _assign<I extends QueryHeroArgs>(
-    I into,
-    QueryHeroArgs source,
-  ) {
-    into.episode = source.episode;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryHeroArgs>(I into, QueryHeroArgs source,
-      [List<QueryHeroArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryHeroArgs`.
+  //
+  // If a field from [other] is already in this `QueryHeroArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryHeroArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryHeroArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      episode = other.episode ?? episode;
+    } else {
+      episode ??= other.episode;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryHeroArgs]
-  static QueryHeroArgs copy(QueryHeroArgs source) {
+  /// Creates a copy of this `QueryHeroArgs` but with the given fields replaced with the new values.
+  QueryHeroArgs copyWith({
+    Episode episode,
+  }) {
     return QueryHeroArgs(
-      episode: source.episode,
+      episode: episode ?? this.episode,
     );
   }
+
+  /// Creates a copy of this `QueryHeroArgs`
+  QueryHeroArgs copy() => copyWith();
 
   factory QueryHeroArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -515,42 +570,41 @@ class QueryHeroArgs implements ToJson {
 class QueryReviewsArgs implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   Episode episode;
 
   QueryReviewsArgs({
     @required this.episode,
   });
 
+  /// Construct an empty `QueryReviewsArgs`
   QueryReviewsArgs.empty();
 
-  static I _assign<I extends QueryReviewsArgs>(
-    I into,
-    QueryReviewsArgs source,
-  ) {
-    into.episode = source.episode;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryReviewsArgs>(I into, QueryReviewsArgs source,
-      [List<QueryReviewsArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryReviewsArgs`.
+  //
+  // If a field from [other] is already in this `QueryReviewsArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryReviewsArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryReviewsArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      episode = other.episode ?? episode;
+    } else {
+      episode ??= other.episode;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryReviewsArgs]
-  static QueryReviewsArgs copy(QueryReviewsArgs source) {
+  /// Creates a copy of this `QueryReviewsArgs` but with the given fields replaced with the new values.
+  QueryReviewsArgs copyWith({
+    Episode episode,
+  }) {
     return QueryReviewsArgs(
-      episode: source.episode,
+      episode: episode ?? this.episode,
     );
   }
+
+  /// Creates a copy of this `QueryReviewsArgs`
+  QueryReviewsArgs copy() => copyWith();
 
   factory QueryReviewsArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -582,36 +636,34 @@ class QuerySearchArgs implements ToJson {
     this.text,
   });
 
+  /// Construct an empty `QuerySearchArgs`
   QuerySearchArgs.empty();
 
-  static I _assign<I extends QuerySearchArgs>(
-    I into,
-    QuerySearchArgs source,
-  ) {
-    into.text = source.text;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QuerySearchArgs>(I into, QuerySearchArgs source,
-      [List<QuerySearchArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QuerySearchArgs`.
+  //
+  // If a field from [other] is already in this `QuerySearchArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QuerySearchArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QuerySearchArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      text = other.text ?? text;
+    } else {
+      text ??= other.text;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QuerySearchArgs]
-  static QuerySearchArgs copy(QuerySearchArgs source) {
+  /// Creates a copy of this `QuerySearchArgs` but with the given fields replaced with the new values.
+  QuerySearchArgs copyWith({
+    String text,
+  }) {
     return QuerySearchArgs(
-      text: source.text,
+      text: text ?? this.text,
     );
   }
+
+  /// Creates a copy of this `QuerySearchArgs`
+  QuerySearchArgs copy() => copyWith();
 
   factory QuerySearchArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -637,43 +689,41 @@ class QuerySearchArgs implements ToJson {
 class QueryCharacterArgs implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   String id;
 
   QueryCharacterArgs({
     @required this.id,
   });
 
+  /// Construct an empty `QueryCharacterArgs`
   QueryCharacterArgs.empty();
 
-  static I _assign<I extends QueryCharacterArgs>(
-    I into,
-    QueryCharacterArgs source,
-  ) {
-    into.id = source.id;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryCharacterArgs>(
-      I into, QueryCharacterArgs source,
-      [List<QueryCharacterArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryCharacterArgs`.
+  //
+  // If a field from [other] is already in this `QueryCharacterArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryCharacterArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryCharacterArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
+    } else {
+      id ??= other.id;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryCharacterArgs]
-  static QueryCharacterArgs copy(QueryCharacterArgs source) {
+  /// Creates a copy of this `QueryCharacterArgs` but with the given fields replaced with the new values.
+  QueryCharacterArgs copyWith({
+    String id,
+  }) {
     return QueryCharacterArgs(
-      id: source.id,
+      id: id ?? this.id,
     );
   }
+
+  /// Creates a copy of this `QueryCharacterArgs`
+  QueryCharacterArgs copy() => copyWith();
 
   factory QueryCharacterArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -699,42 +749,41 @@ class QueryCharacterArgs implements ToJson {
 class QueryDroidArgs implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   String id;
 
   QueryDroidArgs({
     @required this.id,
   });
 
+  /// Construct an empty `QueryDroidArgs`
   QueryDroidArgs.empty();
 
-  static I _assign<I extends QueryDroidArgs>(
-    I into,
-    QueryDroidArgs source,
-  ) {
-    into.id = source.id;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryDroidArgs>(I into, QueryDroidArgs source,
-      [List<QueryDroidArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryDroidArgs`.
+  //
+  // If a field from [other] is already in this `QueryDroidArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryDroidArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryDroidArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
+    } else {
+      id ??= other.id;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryDroidArgs]
-  static QueryDroidArgs copy(QueryDroidArgs source) {
+  /// Creates a copy of this `QueryDroidArgs` but with the given fields replaced with the new values.
+  QueryDroidArgs copyWith({
+    String id,
+  }) {
     return QueryDroidArgs(
-      id: source.id,
+      id: id ?? this.id,
     );
   }
+
+  /// Creates a copy of this `QueryDroidArgs`
+  QueryDroidArgs copy() => copyWith();
 
   factory QueryDroidArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -760,42 +809,41 @@ class QueryDroidArgs implements ToJson {
 class QueryHumanArgs implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   String id;
 
   QueryHumanArgs({
     @required this.id,
   });
 
+  /// Construct an empty `QueryHumanArgs`
   QueryHumanArgs.empty();
 
-  static I _assign<I extends QueryHumanArgs>(
-    I into,
-    QueryHumanArgs source,
-  ) {
-    into.id = source.id;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryHumanArgs>(I into, QueryHumanArgs source,
-      [List<QueryHumanArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryHumanArgs`.
+  //
+  // If a field from [other] is already in this `QueryHumanArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryHumanArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryHumanArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
+    } else {
+      id ??= other.id;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryHumanArgs]
-  static QueryHumanArgs copy(QueryHumanArgs source) {
+  /// Creates a copy of this `QueryHumanArgs` but with the given fields replaced with the new values.
+  QueryHumanArgs copyWith({
+    String id,
+  }) {
     return QueryHumanArgs(
-      id: source.id,
+      id: id ?? this.id,
     );
   }
+
+  /// Creates a copy of this `QueryHumanArgs`
+  QueryHumanArgs copy() => copyWith();
 
   factory QueryHumanArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -821,42 +869,41 @@ class QueryHumanArgs implements ToJson {
 class QueryStarshipArgs implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   String id;
 
   QueryStarshipArgs({
     @required this.id,
   });
 
+  /// Construct an empty `QueryStarshipArgs`
   QueryStarshipArgs.empty();
 
-  static I _assign<I extends QueryStarshipArgs>(
-    I into,
-    QueryStarshipArgs source,
-  ) {
-    into.id = source.id;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends QueryStarshipArgs>(I into, QueryStarshipArgs source,
-      [List<QueryStarshipArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `QueryStarshipArgs`.
+  //
+  // If a field from [other] is already in this `QueryStarshipArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant QueryStarshipArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "QueryStarshipArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
+    } else {
+      id ??= other.id;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [QueryStarshipArgs]
-  static QueryStarshipArgs copy(QueryStarshipArgs source) {
+  /// Creates a copy of this `QueryStarshipArgs` but with the given fields replaced with the new values.
+  QueryStarshipArgs copyWith({
+    String id,
+  }) {
     return QueryStarshipArgs(
-      id: source.id,
+      id: id ?? this.id,
     );
   }
+
+  /// Creates a copy of this `QueryStarshipArgs`
+  QueryStarshipArgs copy() => copyWith();
 
   factory QueryStarshipArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -893,6 +940,7 @@ class FriendsConnection implements ToJson {
   List<Character> friends;
 
   /// Information for paginating this connection
+  @JsonKey(disallowNullValue: true)
   PageInfo pageInfo;
 
   FriendsConnection({
@@ -902,42 +950,52 @@ class FriendsConnection implements ToJson {
     @required this.pageInfo,
   });
 
+  /// Construct an empty `FriendsConnection`
   FriendsConnection.empty();
 
-  static I _assign<I extends FriendsConnection>(
-    I into,
-    FriendsConnection source,
-  ) {
-    into.totalCount = source.totalCount;
-    into.edges = source.edges;
-    into.friends = source.friends;
-    into.pageInfo = source.pageInfo;
-    return into;
-  }
+  /// Adds all fields from [other] to this `FriendsConnection`.
+  //
+  // If a field from [other] is already in this `FriendsConnection`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant FriendsConnection other, {bool overwrite = true}) {
+    assert(other != null,
+        "FriendsConnection.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      totalCount = other.totalCount ?? totalCount;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends FriendsConnection>(I into, FriendsConnection source,
-      [List<FriendsConnection> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      edges = other.edges ?? edges;
+
+      friends = other.friends ?? friends;
+
+      pageInfo = other.pageInfo ?? pageInfo;
+    } else {
+      totalCount ??= other.totalCount;
+
+      edges ??= other.edges;
+
+      friends ??= other.friends;
+
+      pageInfo ??= other.pageInfo;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [FriendsConnection]
-  static FriendsConnection copy(FriendsConnection source) {
+  /// Creates a copy of this `FriendsConnection` but with the given fields replaced with the new values.
+  FriendsConnection copyWith({
+    int totalCount,
+    List<FriendsEdge> edges,
+    List<Character> friends,
+    PageInfo pageInfo,
+  }) {
     return FriendsConnection(
-      totalCount: source.totalCount,
-      edges: source.edges,
-      friends: source.friends,
-      pageInfo: source.pageInfo,
+      totalCount: totalCount ?? this.totalCount,
+      edges: edges ?? this.edges,
+      friends: friends ?? this.friends,
+      pageInfo: pageInfo ?? this.pageInfo,
     );
   }
+
+  /// Creates a copy of this `FriendsConnection`
+  FriendsConnection copy() => copyWith();
 
   factory FriendsConnection.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -965,6 +1023,7 @@ class FriendsEdge implements ToJson {
   String __typename;
 
   /// A cursor used for pagination
+  @JsonKey(disallowNullValue: true)
   String cursor;
 
   /// The character represented by this friendship edge
@@ -975,38 +1034,40 @@ class FriendsEdge implements ToJson {
     this.node,
   });
 
+  /// Construct an empty `FriendsEdge`
   FriendsEdge.empty();
 
-  static I _assign<I extends FriendsEdge>(
-    I into,
-    FriendsEdge source,
-  ) {
-    into.cursor = source.cursor;
-    into.node = source.node;
-    return into;
-  }
+  /// Adds all fields from [other] to this `FriendsEdge`.
+  //
+  // If a field from [other] is already in this `FriendsEdge`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant FriendsEdge other, {bool overwrite = true}) {
+    assert(other != null,
+        "FriendsEdge.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      cursor = other.cursor ?? cursor;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends FriendsEdge>(I into, FriendsEdge source,
-      [List<FriendsEdge> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      node = other.node ?? node;
+    } else {
+      cursor ??= other.cursor;
+
+      node ??= other.node;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [FriendsEdge]
-  static FriendsEdge copy(FriendsEdge source) {
+  /// Creates a copy of this `FriendsEdge` but with the given fields replaced with the new values.
+  FriendsEdge copyWith({
+    String cursor,
+    Character node,
+  }) {
     return FriendsEdge(
-      cursor: source.cursor,
-      node: source.node,
+      cursor: cursor ?? this.cursor,
+      node: node ?? this.node,
     );
   }
+
+  /// Creates a copy of this `FriendsEdge`
+  FriendsEdge copy() => copyWith();
 
   factory FriendsEdge.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1035,6 +1096,7 @@ class PageInfo implements ToJson {
 
   String startCursor;
   String endCursor;
+  @JsonKey(disallowNullValue: true)
   bool hasNextPage;
 
   PageInfo({
@@ -1043,40 +1105,46 @@ class PageInfo implements ToJson {
     @required this.hasNextPage,
   });
 
+  /// Construct an empty `PageInfo`
   PageInfo.empty();
 
-  static I _assign<I extends PageInfo>(
-    I into,
-    PageInfo source,
-  ) {
-    into.startCursor = source.startCursor;
-    into.endCursor = source.endCursor;
-    into.hasNextPage = source.hasNextPage;
-    return into;
-  }
+  /// Adds all fields from [other] to this `PageInfo`.
+  //
+  // If a field from [other] is already in this `PageInfo`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant PageInfo other, {bool overwrite = true}) {
+    assert(
+        other != null, "PageInfo.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      startCursor = other.startCursor ?? startCursor;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends PageInfo>(I into, PageInfo source,
-      [List<PageInfo> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      endCursor = other.endCursor ?? endCursor;
+
+      hasNextPage = other.hasNextPage ?? hasNextPage;
+    } else {
+      startCursor ??= other.startCursor;
+
+      endCursor ??= other.endCursor;
+
+      hasNextPage ??= other.hasNextPage;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [PageInfo]
-  static PageInfo copy(PageInfo source) {
+  /// Creates a copy of this `PageInfo` but with the given fields replaced with the new values.
+  PageInfo copyWith({
+    String startCursor,
+    String endCursor,
+    bool hasNextPage,
+  }) {
     return PageInfo(
-      startCursor: source.startCursor,
-      endCursor: source.endCursor,
-      hasNextPage: source.hasNextPage,
+      startCursor: startCursor ?? this.startCursor,
+      endCursor: endCursor ?? this.endCursor,
+      hasNextPage: hasNextPage ?? this.hasNextPage,
     );
   }
+
+  /// Creates a copy of this `PageInfo`
+  PageInfo copy() => copyWith();
 
   factory PageInfo.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1107,6 +1175,7 @@ class Review implements ToJson {
   Episode episode;
 
   /// The number of stars this review gave, 1-5
+  @JsonKey(disallowNullValue: true)
   int stars;
 
   /// Comment about the movie
@@ -1118,40 +1187,45 @@ class Review implements ToJson {
     this.commentary,
   });
 
+  /// Construct an empty `Review`
   Review.empty();
 
-  static I _assign<I extends Review>(
-    I into,
-    Review source,
-  ) {
-    into.episode = source.episode;
-    into.stars = source.stars;
-    into.commentary = source.commentary;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Review`.
+  //
+  // If a field from [other] is already in this `Review`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Review other, {bool overwrite = true}) {
+    assert(other != null, "Review.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      episode = other.episode ?? episode;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Review>(I into, Review source,
-      [List<Review> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      stars = other.stars ?? stars;
+
+      commentary = other.commentary ?? commentary;
+    } else {
+      episode ??= other.episode;
+
+      stars ??= other.stars;
+
+      commentary ??= other.commentary;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Review]
-  static Review copy(Review source) {
+  /// Creates a copy of this `Review` but with the given fields replaced with the new values.
+  Review copyWith({
+    Episode episode,
+    int stars,
+    String commentary,
+  }) {
     return Review(
-      episode: source.episode,
-      stars: source.stars,
-      commentary: source.commentary,
+      episode: episode ?? this.episode,
+      stars: stars ?? this.stars,
+      commentary: commentary ?? this.commentary,
     );
   }
+
+  /// Creates a copy of this `Review`
+  Review copy() => copyWith();
 
   factory Review.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1179,9 +1253,11 @@ class Human implements ToJson, Character {
   String __typename;
 
   /// The ID of the human
+  @JsonKey(disallowNullValue: true)
   String id;
 
   /// What this human calls themselves
+  @JsonKey(disallowNullValue: true)
   String name;
 
   /// The home planet of the human, or null if unknown
@@ -1197,9 +1273,11 @@ class Human implements ToJson, Character {
   List<Character> friends;
 
   /// The friends of the human exposed as a connection with edges
+  @JsonKey(disallowNullValue: true)
   FriendsConnection friendsConnection;
 
   /// The movies this human appears in
+  @JsonKey(disallowNullValue: true)
   List<Episode> appearsIn;
 
   /// A list of starships this person has piloted, or an empty list if none
@@ -1217,51 +1295,81 @@ class Human implements ToJson, Character {
     this.starships,
   });
 
+  /// Construct an empty `Human`
   Human.empty();
 
-  static I _assign<I extends Human>(
-    I into,
-    Human source,
-  ) {
-    into.id = source.id;
-    into.name = source.name;
-    into.homePlanet = source.homePlanet;
-    into.height = source.height;
-    into.mass = source.mass;
-    into.friends = source.friends;
-    into.friendsConnection = source.friendsConnection;
-    into.appearsIn = source.appearsIn;
-    into.starships = source.starships;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Human`.
+  //
+  // If a field from [other] is already in this `Human`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Human other, {bool overwrite = true}) {
+    assert(other != null, "Human.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Human>(I into, Human source, [List<Human> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      name = other.name ?? name;
+
+      homePlanet = other.homePlanet ?? homePlanet;
+
+      height = other.height ?? height;
+
+      mass = other.mass ?? mass;
+
+      friends = other.friends ?? friends;
+
+      friendsConnection = other.friendsConnection ?? friendsConnection;
+
+      appearsIn = other.appearsIn ?? appearsIn;
+
+      starships = other.starships ?? starships;
+    } else {
+      id ??= other.id;
+
+      name ??= other.name;
+
+      homePlanet ??= other.homePlanet;
+
+      height ??= other.height;
+
+      mass ??= other.mass;
+
+      friends ??= other.friends;
+
+      friendsConnection ??= other.friendsConnection;
+
+      appearsIn ??= other.appearsIn;
+
+      starships ??= other.starships;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Human]
-  static Human copy(Human source) {
+  /// Creates a copy of this `Human` but with the given fields replaced with the new values.
+  Human copyWith({
+    String id,
+    String name,
+    String homePlanet,
+    double height,
+    double mass,
+    List<Character> friends,
+    FriendsConnection friendsConnection,
+    List<Episode> appearsIn,
+    List<Starship> starships,
+  }) {
     return Human(
-      id: source.id,
-      name: source.name,
-      homePlanet: source.homePlanet,
-      height: source.height,
-      mass: source.mass,
-      friends: source.friends,
-      friendsConnection: source.friendsConnection,
-      appearsIn: source.appearsIn,
-      starships: source.starships,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      homePlanet: homePlanet ?? this.homePlanet,
+      height: height ?? this.height,
+      mass: mass ?? this.mass,
+      friends: friends ?? this.friends,
+      friendsConnection: friendsConnection ?? this.friendsConnection,
+      appearsIn: appearsIn ?? this.appearsIn,
+      starships: starships ?? this.starships,
     );
   }
+
+  /// Creates a copy of this `Human`
+  Human copy() => copyWith();
 
   factory Human.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1293,36 +1401,34 @@ class HumanHeightArgs implements ToJson {
     this.unit,
   });
 
+  /// Construct an empty `HumanHeightArgs`
   HumanHeightArgs.empty();
 
-  static I _assign<I extends HumanHeightArgs>(
-    I into,
-    HumanHeightArgs source,
-  ) {
-    into.unit = source.unit;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HumanHeightArgs>(I into, HumanHeightArgs source,
-      [List<HumanHeightArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `HumanHeightArgs`.
+  //
+  // If a field from [other] is already in this `HumanHeightArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HumanHeightArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "HumanHeightArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      unit = other.unit ?? unit;
+    } else {
+      unit ??= other.unit;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HumanHeightArgs]
-  static HumanHeightArgs copy(HumanHeightArgs source) {
+  /// Creates a copy of this `HumanHeightArgs` but with the given fields replaced with the new values.
+  HumanHeightArgs copyWith({
+    LengthUnit unit,
+  }) {
     return HumanHeightArgs(
-      unit: source.unit,
+      unit: unit ?? this.unit,
     );
   }
+
+  /// Creates a copy of this `HumanHeightArgs`
+  HumanHeightArgs copy() => copyWith();
 
   factory HumanHeightArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1356,39 +1462,41 @@ class HumanFriendsConnectionArgs implements ToJson {
     this.after,
   });
 
+  /// Construct an empty `HumanFriendsConnectionArgs`
   HumanFriendsConnectionArgs.empty();
 
-  static I _assign<I extends HumanFriendsConnectionArgs>(
-    I into,
-    HumanFriendsConnectionArgs source,
-  ) {
-    into.first = source.first;
-    into.after = source.after;
-    return into;
-  }
+  /// Adds all fields from [other] to this `HumanFriendsConnectionArgs`.
+  //
+  // If a field from [other] is already in this `HumanFriendsConnectionArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HumanFriendsConnectionArgs other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "HumanFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      first = other.first ?? first;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HumanFriendsConnectionArgs>(
-      I into, HumanFriendsConnectionArgs source,
-      [List<HumanFriendsConnectionArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      after = other.after ?? after;
+    } else {
+      first ??= other.first;
+
+      after ??= other.after;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HumanFriendsConnectionArgs]
-  static HumanFriendsConnectionArgs copy(HumanFriendsConnectionArgs source) {
+  /// Creates a copy of this `HumanFriendsConnectionArgs` but with the given fields replaced with the new values.
+  HumanFriendsConnectionArgs copyWith({
+    int first,
+    String after,
+  }) {
     return HumanFriendsConnectionArgs(
-      first: source.first,
-      after: source.after,
+      first: first ?? this.first,
+      after: after ?? this.after,
     );
   }
+
+  /// Creates a copy of this `HumanFriendsConnectionArgs`
+  HumanFriendsConnectionArgs copy() => copyWith();
 
   factory HumanFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1419,9 +1527,11 @@ class Starship implements ToJson {
   String __typename;
 
   /// The ID of the starship
+  @JsonKey(disallowNullValue: true)
   String id;
 
   /// The name of the starship
+  @JsonKey(disallowNullValue: true)
   String name;
 
   /// Length of the starship, along the longest axis
@@ -1435,42 +1545,52 @@ class Starship implements ToJson {
     this.coordinates,
   });
 
+  /// Construct an empty `Starship`
   Starship.empty();
 
-  static I _assign<I extends Starship>(
-    I into,
-    Starship source,
-  ) {
-    into.id = source.id;
-    into.name = source.name;
-    into.length = source.length;
-    into.coordinates = source.coordinates;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Starship`.
+  //
+  // If a field from [other] is already in this `Starship`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Starship other, {bool overwrite = true}) {
+    assert(
+        other != null, "Starship.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Starship>(I into, Starship source,
-      [List<Starship> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      name = other.name ?? name;
+
+      length = other.length ?? length;
+
+      coordinates = other.coordinates ?? coordinates;
+    } else {
+      id ??= other.id;
+
+      name ??= other.name;
+
+      length ??= other.length;
+
+      coordinates ??= other.coordinates;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Starship]
-  static Starship copy(Starship source) {
+  /// Creates a copy of this `Starship` but with the given fields replaced with the new values.
+  Starship copyWith({
+    String id,
+    String name,
+    double length,
+    List<double> coordinates,
+  }) {
     return Starship(
-      id: source.id,
-      name: source.name,
-      length: source.length,
-      coordinates: source.coordinates,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      length: length ?? this.length,
+      coordinates: coordinates ?? this.coordinates,
     );
   }
+
+  /// Creates a copy of this `Starship`
+  Starship copy() => copyWith();
 
   factory Starship.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1502,37 +1622,34 @@ class StarshipLengthArgs implements ToJson {
     this.unit,
   });
 
+  /// Construct an empty `StarshipLengthArgs`
   StarshipLengthArgs.empty();
 
-  static I _assign<I extends StarshipLengthArgs>(
-    I into,
-    StarshipLengthArgs source,
-  ) {
-    into.unit = source.unit;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends StarshipLengthArgs>(
-      I into, StarshipLengthArgs source,
-      [List<StarshipLengthArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `StarshipLengthArgs`.
+  //
+  // If a field from [other] is already in this `StarshipLengthArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant StarshipLengthArgs other, {bool overwrite = true}) {
+    assert(other != null,
+        "StarshipLengthArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      unit = other.unit ?? unit;
+    } else {
+      unit ??= other.unit;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [StarshipLengthArgs]
-  static StarshipLengthArgs copy(StarshipLengthArgs source) {
+  /// Creates a copy of this `StarshipLengthArgs` but with the given fields replaced with the new values.
+  StarshipLengthArgs copyWith({
+    LengthUnit unit,
+  }) {
     return StarshipLengthArgs(
-      unit: source.unit,
+      unit: unit ?? this.unit,
     );
   }
+
+  /// Creates a copy of this `StarshipLengthArgs`
+  StarshipLengthArgs copy() => copyWith();
 
   factory StarshipLengthArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1560,18 +1677,22 @@ class Droid implements ToJson, Character {
   String __typename;
 
   /// The ID of the droid
+  @JsonKey(disallowNullValue: true)
   String id;
 
   /// What others call this droid
+  @JsonKey(disallowNullValue: true)
   String name;
 
   /// This droid's friends, or an empty list if they have none
   List<Character> friends;
 
   /// The friends of the droid exposed as a connection with edges
+  @JsonKey(disallowNullValue: true)
   FriendsConnection friendsConnection;
 
   /// The movies this droid appears in
+  @JsonKey(disallowNullValue: true)
   List<Episode> appearsIn;
 
   /// This droid's primary function
@@ -1586,45 +1707,63 @@ class Droid implements ToJson, Character {
     this.primaryFunction,
   });
 
+  /// Construct an empty `Droid`
   Droid.empty();
 
-  static I _assign<I extends Droid>(
-    I into,
-    Droid source,
-  ) {
-    into.id = source.id;
-    into.name = source.name;
-    into.friends = source.friends;
-    into.friendsConnection = source.friendsConnection;
-    into.appearsIn = source.appearsIn;
-    into.primaryFunction = source.primaryFunction;
-    return into;
-  }
+  /// Adds all fields from [other] to this `Droid`.
+  //
+  // If a field from [other] is already in this `Droid`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Droid other, {bool overwrite = true}) {
+    assert(other != null, "Droid.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      id = other.id ?? id;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Droid>(I into, Droid source, [List<Droid> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      name = other.name ?? name;
+
+      friends = other.friends ?? friends;
+
+      friendsConnection = other.friendsConnection ?? friendsConnection;
+
+      appearsIn = other.appearsIn ?? appearsIn;
+
+      primaryFunction = other.primaryFunction ?? primaryFunction;
+    } else {
+      id ??= other.id;
+
+      name ??= other.name;
+
+      friends ??= other.friends;
+
+      friendsConnection ??= other.friendsConnection;
+
+      appearsIn ??= other.appearsIn;
+
+      primaryFunction ??= other.primaryFunction;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Droid]
-  static Droid copy(Droid source) {
+  /// Creates a copy of this `Droid` but with the given fields replaced with the new values.
+  Droid copyWith({
+    String id,
+    String name,
+    List<Character> friends,
+    FriendsConnection friendsConnection,
+    List<Episode> appearsIn,
+    String primaryFunction,
+  }) {
     return Droid(
-      id: source.id,
-      name: source.name,
-      friends: source.friends,
-      friendsConnection: source.friendsConnection,
-      appearsIn: source.appearsIn,
-      primaryFunction: source.primaryFunction,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      friends: friends ?? this.friends,
+      friendsConnection: friendsConnection ?? this.friendsConnection,
+      appearsIn: appearsIn ?? this.appearsIn,
+      primaryFunction: primaryFunction ?? this.primaryFunction,
     );
   }
+
+  /// Creates a copy of this `Droid`
+  Droid copy() => copyWith();
 
   factory Droid.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1658,39 +1797,41 @@ class DroidFriendsConnectionArgs implements ToJson {
     this.after,
   });
 
+  /// Construct an empty `DroidFriendsConnectionArgs`
   DroidFriendsConnectionArgs.empty();
 
-  static I _assign<I extends DroidFriendsConnectionArgs>(
-    I into,
-    DroidFriendsConnectionArgs source,
-  ) {
-    into.first = source.first;
-    into.after = source.after;
-    return into;
-  }
+  /// Adds all fields from [other] to this `DroidFriendsConnectionArgs`.
+  //
+  // If a field from [other] is already in this `DroidFriendsConnectionArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant DroidFriendsConnectionArgs other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "DroidFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      first = other.first ?? first;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends DroidFriendsConnectionArgs>(
-      I into, DroidFriendsConnectionArgs source,
-      [List<DroidFriendsConnectionArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      after = other.after ?? after;
+    } else {
+      first ??= other.first;
+
+      after ??= other.after;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [DroidFriendsConnectionArgs]
-  static DroidFriendsConnectionArgs copy(DroidFriendsConnectionArgs source) {
+  /// Creates a copy of this `DroidFriendsConnectionArgs` but with the given fields replaced with the new values.
+  DroidFriendsConnectionArgs copyWith({
+    int first,
+    String after,
+  }) {
     return DroidFriendsConnectionArgs(
-      first: source.first,
-      after: source.after,
+      first: first ?? this.first,
+      after: after ?? this.after,
     );
   }
+
+  /// Creates a copy of this `DroidFriendsConnectionArgs`
+  DroidFriendsConnectionArgs copy() => copyWith();
 
   factory DroidFriendsConnectionArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1726,36 +1867,34 @@ class Mutation implements ToJson {
     this.createReview,
   });
 
+  /// Construct an empty `Mutation`
   Mutation.empty();
 
-  static I _assign<I extends Mutation>(
-    I into,
-    Mutation source,
-  ) {
-    into.createReview = source.createReview;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Mutation>(I into, Mutation source,
-      [List<Mutation> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `Mutation`.
+  //
+  // If a field from [other] is already in this `Mutation`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Mutation other, {bool overwrite = true}) {
+    assert(
+        other != null, "Mutation.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      createReview = other.createReview ?? createReview;
+    } else {
+      createReview ??= other.createReview;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Mutation]
-  static Mutation copy(Mutation source) {
+  /// Creates a copy of this `Mutation` but with the given fields replaced with the new values.
+  Mutation copyWith({
+    Review createReview,
+  }) {
     return Mutation(
-      createReview: source.createReview,
+      createReview: createReview ?? this.createReview,
     );
   }
+
+  /// Creates a copy of this `Mutation`
+  Mutation copy() => copyWith();
 
   factory Mutation.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1782,6 +1921,7 @@ class MutationCreateReviewArgs implements ToJson {
   String __typename;
 
   Episode episode;
+  @JsonKey(disallowNullValue: true)
   ReviewInput review;
 
   MutationCreateReviewArgs({
@@ -1789,39 +1929,41 @@ class MutationCreateReviewArgs implements ToJson {
     @required this.review,
   });
 
+  /// Construct an empty `MutationCreateReviewArgs`
   MutationCreateReviewArgs.empty();
 
-  static I _assign<I extends MutationCreateReviewArgs>(
-    I into,
-    MutationCreateReviewArgs source,
-  ) {
-    into.episode = source.episode;
-    into.review = source.review;
-    return into;
-  }
+  /// Adds all fields from [other] to this `MutationCreateReviewArgs`.
+  //
+  // If a field from [other] is already in this `MutationCreateReviewArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant MutationCreateReviewArgs other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "MutationCreateReviewArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      episode = other.episode ?? episode;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends MutationCreateReviewArgs>(
-      I into, MutationCreateReviewArgs source,
-      [List<MutationCreateReviewArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      review = other.review ?? review;
+    } else {
+      episode ??= other.episode;
+
+      review ??= other.review;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [MutationCreateReviewArgs]
-  static MutationCreateReviewArgs copy(MutationCreateReviewArgs source) {
+  /// Creates a copy of this `MutationCreateReviewArgs` but with the given fields replaced with the new values.
+  MutationCreateReviewArgs copyWith({
+    Episode episode,
+    ReviewInput review,
+  }) {
     return MutationCreateReviewArgs(
-      episode: source.episode,
-      review: source.review,
+      episode: episode ?? this.episode,
+      review: review ?? this.review,
     );
   }
+
+  /// Creates a copy of this `MutationCreateReviewArgs`
+  MutationCreateReviewArgs copy() => copyWith();
 
   factory MutationCreateReviewArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1857,36 +1999,34 @@ class Subscription implements ToJson {
     this.reviewAdded,
   });
 
+  /// Construct an empty `Subscription`
   Subscription.empty();
 
-  static I _assign<I extends Subscription>(
-    I into,
-    Subscription source,
-  ) {
-    into.reviewAdded = source.reviewAdded;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends Subscription>(I into, Subscription source,
-      [List<Subscription> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `Subscription`.
+  //
+  // If a field from [other] is already in this `Subscription`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant Subscription other, {bool overwrite = true}) {
+    assert(other != null,
+        "Subscription.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      reviewAdded = other.reviewAdded ?? reviewAdded;
+    } else {
+      reviewAdded ??= other.reviewAdded;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [Subscription]
-  static Subscription copy(Subscription source) {
+  /// Creates a copy of this `Subscription` but with the given fields replaced with the new values.
+  Subscription copyWith({
+    Review reviewAdded,
+  }) {
     return Subscription(
-      reviewAdded: source.reviewAdded,
+      reviewAdded: reviewAdded ?? this.reviewAdded,
     );
   }
+
+  /// Creates a copy of this `Subscription`
+  Subscription copy() => copyWith();
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1918,37 +2058,35 @@ class SubscriptionReviewAddedArgs implements ToJson {
     this.episode,
   });
 
+  /// Construct an empty `SubscriptionReviewAddedArgs`
   SubscriptionReviewAddedArgs.empty();
 
-  static I _assign<I extends SubscriptionReviewAddedArgs>(
-    I into,
-    SubscriptionReviewAddedArgs source,
-  ) {
-    into.episode = source.episode;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends SubscriptionReviewAddedArgs>(
-      I into, SubscriptionReviewAddedArgs source,
-      [List<SubscriptionReviewAddedArgs> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `SubscriptionReviewAddedArgs`.
+  //
+  // If a field from [other] is already in this `SubscriptionReviewAddedArgs`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant SubscriptionReviewAddedArgs other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "SubscriptionReviewAddedArgs.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      episode = other.episode ?? episode;
+    } else {
+      episode ??= other.episode;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [SubscriptionReviewAddedArgs]
-  static SubscriptionReviewAddedArgs copy(SubscriptionReviewAddedArgs source) {
+  /// Creates a copy of this `SubscriptionReviewAddedArgs` but with the given fields replaced with the new values.
+  SubscriptionReviewAddedArgs copyWith({
+    Episode episode,
+  }) {
     return SubscriptionReviewAddedArgs(
-      episode: source.episode,
+      episode: episode ?? this.episode,
     );
   }
+
+  /// Creates a copy of this `SubscriptionReviewAddedArgs`
+  SubscriptionReviewAddedArgs copy() => copyWith();
 
   factory SubscriptionReviewAddedArgs.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -1977,43 +2115,42 @@ class SubscriptionReviewAddedArgs implements ToJson {
 class HeroForEpisodeVariables implements ToJson {
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   Episode ep;
 
   HeroForEpisodeVariables({
     @required this.ep,
   });
 
+  /// Construct an empty `HeroForEpisodeVariables`
   HeroForEpisodeVariables.empty();
 
-  static I _assign<I extends HeroForEpisodeVariables>(
-    I into,
-    HeroForEpisodeVariables source,
-  ) {
-    into.ep = source.ep;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HeroForEpisodeVariables>(
-      I into, HeroForEpisodeVariables source,
-      [List<HeroForEpisodeVariables> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `HeroForEpisodeVariables`.
+  //
+  // If a field from [other] is already in this `HeroForEpisodeVariables`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HeroForEpisodeVariables other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "HeroForEpisodeVariables.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      ep = other.ep ?? ep;
+    } else {
+      ep ??= other.ep;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HeroForEpisodeVariables]
-  static HeroForEpisodeVariables copy(HeroForEpisodeVariables source) {
+  /// Creates a copy of this `HeroForEpisodeVariables` but with the given fields replaced with the new values.
+  HeroForEpisodeVariables copyWith({
+    Episode ep,
+  }) {
     return HeroForEpisodeVariables(
-      ep: source.ep,
+      ep: ep ?? this.ep,
     );
   }
+
+  /// Creates a copy of this `HeroForEpisodeVariables`
+  HeroForEpisodeVariables copy() => copyWith();
 
   factory HeroForEpisodeVariables.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -2051,40 +2188,41 @@ class HeroForEpisodeHumanInlineFragment implements ToJson {
     this.homePlanet,
   });
 
+  /// Construct an empty `HeroForEpisodeHumanInlineFragment`
   HeroForEpisodeHumanInlineFragment.empty();
 
-  static I _assign<I extends HeroForEpisodeHumanInlineFragment>(
-    I into,
-    HeroForEpisodeHumanInlineFragment source,
-  ) {
-    into.height = source.height;
-    into.homePlanet = source.homePlanet;
-    return into;
-  }
+  /// Adds all fields from [other] to this `HeroForEpisodeHumanInlineFragment`.
+  //
+  // If a field from [other] is already in this `HeroForEpisodeHumanInlineFragment`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HeroForEpisodeHumanInlineFragment other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "HeroForEpisodeHumanInlineFragment.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      height = other.height ?? height;
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HeroForEpisodeHumanInlineFragment>(
-      I into, HeroForEpisodeHumanInlineFragment source,
-      [List<HeroForEpisodeHumanInlineFragment> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+      homePlanet = other.homePlanet ?? homePlanet;
+    } else {
+      height ??= other.height;
+
+      homePlanet ??= other.homePlanet;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HeroForEpisodeHumanInlineFragment]
-  static HeroForEpisodeHumanInlineFragment copy(
-      HeroForEpisodeHumanInlineFragment source) {
+  /// Creates a copy of this `HeroForEpisodeHumanInlineFragment` but with the given fields replaced with the new values.
+  HeroForEpisodeHumanInlineFragment copyWith({
+    double height,
+    String homePlanet,
+  }) {
     return HeroForEpisodeHumanInlineFragment(
-      height: source.height,
-      homePlanet: source.homePlanet,
+      height: height ?? this.height,
+      homePlanet: homePlanet ?? this.homePlanet,
     );
   }
+
+  /// Creates a copy of this `HeroForEpisodeHumanInlineFragment`
+  HeroForEpisodeHumanInlineFragment copy() => copyWith();
 
   factory HeroForEpisodeHumanInlineFragment.fromJson(
           Map<String, dynamic> json) =>
@@ -2124,38 +2262,35 @@ class HeroForEpisodeDroidInlineFragment implements ToJson {
     this.primaryFunction,
   });
 
+  /// Construct an empty `HeroForEpisodeDroidInlineFragment`
   HeroForEpisodeDroidInlineFragment.empty();
 
-  static I _assign<I extends HeroForEpisodeDroidInlineFragment>(
-    I into,
-    HeroForEpisodeDroidInlineFragment source,
-  ) {
-    into.primaryFunction = source.primaryFunction;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HeroForEpisodeDroidInlineFragment>(
-      I into, HeroForEpisodeDroidInlineFragment source,
-      [List<HeroForEpisodeDroidInlineFragment> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `HeroForEpisodeDroidInlineFragment`.
+  //
+  // If a field from [other] is already in this `HeroForEpisodeDroidInlineFragment`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HeroForEpisodeDroidInlineFragment other,
+      {bool overwrite = true}) {
+    assert(other != null,
+        "HeroForEpisodeDroidInlineFragment.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      primaryFunction = other.primaryFunction ?? primaryFunction;
+    } else {
+      primaryFunction ??= other.primaryFunction;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HeroForEpisodeDroidInlineFragment]
-  static HeroForEpisodeDroidInlineFragment copy(
-      HeroForEpisodeDroidInlineFragment source) {
+  /// Creates a copy of this `HeroForEpisodeDroidInlineFragment` but with the given fields replaced with the new values.
+  HeroForEpisodeDroidInlineFragment copyWith({
+    String primaryFunction,
+  }) {
     return HeroForEpisodeDroidInlineFragment(
-      primaryFunction: source.primaryFunction,
+      primaryFunction: primaryFunction ?? this.primaryFunction,
     );
   }
+
+  /// Creates a copy of this `HeroForEpisodeDroidInlineFragment`
+  HeroForEpisodeDroidInlineFragment copy() => copyWith();
 
   factory HeroForEpisodeDroidInlineFragment.fromJson(
           Map<String, dynamic> json) =>
@@ -2189,6 +2324,7 @@ class HeroForEpisodeHero implements ToJson {
 
   String __typename;
 
+  @JsonKey(disallowNullValue: true)
   String name;
 
   @JsonKey(ignore: true)
@@ -2200,37 +2336,34 @@ class HeroForEpisodeHero implements ToJson {
     @required this.name,
   });
 
+  /// Construct an empty `HeroForEpisodeHero`
   HeroForEpisodeHero.empty();
 
-  static I _assign<I extends HeroForEpisodeHero>(
-    I into,
-    HeroForEpisodeHero source,
-  ) {
-    into.name = source.name;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HeroForEpisodeHero>(
-      I into, HeroForEpisodeHero source,
-      [List<HeroForEpisodeHero> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `HeroForEpisodeHero`.
+  //
+  // If a field from [other] is already in this `HeroForEpisodeHero`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HeroForEpisodeHero other, {bool overwrite = true}) {
+    assert(other != null,
+        "HeroForEpisodeHero.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      name = other.name ?? name;
+    } else {
+      name ??= other.name;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HeroForEpisodeHero]
-  static HeroForEpisodeHero copy(HeroForEpisodeHero source) {
+  /// Creates a copy of this `HeroForEpisodeHero` but with the given fields replaced with the new values.
+  HeroForEpisodeHero copyWith({
+    String name,
+  }) {
     return HeroForEpisodeHero(
-      name: source.name,
+      name: name ?? this.name,
     );
   }
+
+  /// Creates a copy of this `HeroForEpisodeHero`
+  HeroForEpisodeHero copy() => copyWith();
 
   factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);
@@ -2281,37 +2414,34 @@ class HeroForEpisodeQuery implements ToJson {
     this.hero,
   });
 
+  /// Construct an empty `HeroForEpisodeQuery`
   HeroForEpisodeQuery.empty();
 
-  static I _assign<I extends HeroForEpisodeQuery>(
-    I into,
-    HeroForEpisodeQuery source,
-  ) {
-    into.hero = source.hero;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends HeroForEpisodeQuery>(
-      I into, HeroForEpisodeQuery source,
-      [List<HeroForEpisodeQuery> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `HeroForEpisodeQuery`.
+  //
+  // If a field from [other] is already in this `HeroForEpisodeQuery`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant HeroForEpisodeQuery other, {bool overwrite = true}) {
+    assert(other != null,
+        "HeroForEpisodeQuery.addAll: Cannot addAll from null into $this");
+    if (overwrite != null && overwrite) {
+      hero = other.hero ?? hero;
+    } else {
+      hero ??= other.hero;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [HeroForEpisodeQuery]
-  static HeroForEpisodeQuery copy(HeroForEpisodeQuery source) {
+  /// Creates a copy of this `HeroForEpisodeQuery` but with the given fields replaced with the new values.
+  HeroForEpisodeQuery copyWith({
+    HeroForEpisodeHero hero,
+  }) {
     return HeroForEpisodeQuery(
-      hero: source.hero,
+      hero: hero ?? this.hero,
     );
   }
+
+  /// Creates a copy of this `HeroForEpisodeQuery`
+  HeroForEpisodeQuery copy() => copyWith();
 
   factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) =>
       deserializeFromJson(json);

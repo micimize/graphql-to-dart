@@ -18,6 +18,7 @@ class {{ className }} {{
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   {{ resolveType type
+      isRequired
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       @root.config.scalars
@@ -44,66 +45,90 @@ class {{ className }} {{
   }
   {{~/if}});
 
+  /// Construct an empty `{{ className }}`
   {{ className }}.empty();
 
 
-  static I _assign<I extends {{className}}>(
-    I into,
-    {{className}} source,
-  ) {
-    {{~#each fields}}{{#if name}}
-    into.{{name}} = source.{{name}};
-    {{~/if}}{{/each}}
-    return into;
+  /// Adds all fields from [other] to this `{{ className }}`.
+  //
+  // If a field from [other] is already in this `{{ className }}`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant {{ className }} other, { bool overwrite = true }) {
+     assert(other != null, "{{ className }}.addAll: Cannot addAll from null into $this");
+     if (overwrite != null && overwrite){
+        {{#each fields}}{{#if name}}
+        {{name}} = other.{{name}} ?? {{name}};
+        {{/if}}{{/each}}
+     } else {
+        {{#each fields}}{{#if name}}
+        {{name}} ??= other.{{name}};
+        {{/if}}{{/each}}
+     }
   }
 
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends {{className}}>(
-    I into,
-    {{className}} source,
-    [List<{{className}}> vargs]
-  ) {
-    into = _assign(into, source);
-    if (vargs != null){
-      vargs.forEach((varg){
-        into = _assign(into, varg);
-      });
+  /// Creates a copy of this `{{ className }}` but with the given fields replaced with the new values.
+  {{ className }} copyWith(
+  {{~#if fields.length~}}
+    {
+        {{~#each fields}}
+        {{#if type}}{{#if name}}
+            {{ resolveType type
+                "false"
+                (takeFirst contextName ../contextName)
+                (takeFirst contextModels ../contextModels)
+                @root.config.scalars
+                @root.config.replaceTypes
+                isArray
+                @root.config.irreducibleTypes
+                raw
+            }} {{name}},
+        {{~/if}}{{/if}}{{/each}}
     }
-    return into;
+  {{~/if~}}
+    ){
+        return {{ className }}(
+            {{#each fields}}{{#if type}}{{#if name}}
+            {{name}}: {{name}} ?? this.{{name}},
+            {{~/if}}{{/if}}{{/each}}
+        );
   }
+
+  /// Creates a copy of this `{{ className }}`
+  {{ className }} copy() => copyWith();
 
   {{#if assignableTo~}}
   {{~#if @root.config.generateFragmentHelpers~}}
   {{~#each assignableTo}}
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target]
-  static {{this}} assignTo{{ this }}(
-    {{this}} into,
-    {{../className}} source,
-  ){
-    {{~#each ../fields}}{{~#if (
-      fragmentFieldOnBaseType
-        name
-        @root.config.generateFragmentHelpers
-      )
-    }}
-    into.{{name}} = source.{{name}};
-    {{~/if}}{{/each}}
-    return into;
-  }
-  {{/each~}}
-  {{~/if}}{{~/if}}
 
-  /// Copies and downcasts any inheriting [source] into a new [{{className}}]
-  static {{className}} copy({{className}} source) {
-     return {{className}}(
-      {{~#each fields~}}{{#if name}}
-        {{name}}: source.{{name}},
-      {{~/if}}{{/each}}
-    );
+  /// Adds all fields from [other] to this `{{ className }}`.
+  //
+  // If a field from [other] is already in this `{{ className }}`,
+  // its value is overwritten, unless  `overwrite: true` is specified
+  void addAllFrom{{../className}}(covariant {{../className}} other, { bool overwrite = true }) {
+     assert(other != null, "{{ className }}.addAllFrom{{../className}}: Cannot addAll from null into $this");
+     if (overwrite != null && overwrite){
+        {{~#each ../fields}}{{~#if (
+        fragmentFieldOnBaseType
+            name
+            @root.config.generateFragmentHelpers
+        )
+        }}
+        {{name}} = other.{{name}} ?? {{name}};
+        {{/if}}{{/each}}
+     } else {
+        {{~#each ../fields}}{{~#if (
+        fragmentFieldOnBaseType
+            name
+            @root.config.generateFragmentHelpers
+        )
+        }}
+        {{name}} ??= other.{{name}};
+        {{/if}}{{/each}}
+     }
   }
+  {{~/each}}
+  {{~/if}}
+  {{~/if}}
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => 
     deserializeFromJson(json);

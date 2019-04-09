@@ -7,6 +7,7 @@ part of 'starwars_graphql_serializers.dart';
 // **************************************************************************
 
 ReviewInput _$ReviewInputFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['stars']);
   return new ReviewInput(
       stars: json['stars'] as int,
       commentary: json['commentary'] as String,
@@ -16,28 +17,51 @@ ReviewInput _$ReviewInputFromJson(Map<String, dynamic> json) {
               json['favorite_color'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$ReviewInputToJson(ReviewInput instance) =>
-    <String, dynamic>{
-      'stars': instance.stars,
-      'commentary': instance.commentary,
-      'favorite_color': instance.favorite_color?.toJson()
-    };
+Map<String, dynamic> _$ReviewInputToJson(ReviewInput instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stars', instance.stars);
+  val['commentary'] = instance.commentary;
+  val['favorite_color'] = instance.favorite_color?.toJson();
+  return val;
+}
 
 ColorInput _$ColorInputFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['red', 'green', 'blue']);
   return new ColorInput(
       red: json['red'] as int,
       green: json['green'] as int,
       blue: json['blue'] as int);
 }
 
-Map<String, dynamic> _$ColorInputToJson(ColorInput instance) =>
-    <String, dynamic>{
-      'red': instance.red,
-      'green': instance.green,
-      'blue': instance.blue
-    };
+Map<String, dynamic> _$ColorInputToJson(ColorInput instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('red', instance.red);
+  writeNotNull('green', instance.green);
+  writeNotNull('blue', instance.blue);
+  return val;
+}
 
 Character _$CharacterFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ]);
   return new Character(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -56,15 +80,26 @@ Character _$CharacterFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
-      'friendsConnection': instance.friendsConnection?.toJson(),
-      'appearsIn': instance.appearsIn
+Map<String, dynamic> _$CharacterToJson(Character instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  val['friends'] = instance.friends?.map((e) => e?.toJson())?.toList();
+  writeNotNull('friendsConnection', instance.friendsConnection?.toJson());
+  writeNotNull(
+      'appearsIn',
+      instance.appearsIn
           ?.map((e) => e?.toString()?.split('.')?.last)
-          ?.toList()
-    };
+          ?.toList());
+  return val;
+}
 
 CharacterFriendsConnectionArgs _$CharacterFriendsConnectionArgsFromJson(
     Map<String, dynamic> json) {
@@ -126,15 +161,24 @@ Map<String, dynamic> _$QueryHeroArgsToJson(QueryHeroArgs instance) =>
     };
 
 QueryReviewsArgs _$QueryReviewsArgsFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['episode']);
   return new QueryReviewsArgs(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String));
 }
 
-Map<String, dynamic> _$QueryReviewsArgsToJson(QueryReviewsArgs instance) =>
-    <String, dynamic>{
-      'episode': instance.episode?.toString()?.split('.')?.last
-    };
+Map<String, dynamic> _$QueryReviewsArgsToJson(QueryReviewsArgs instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('episode', instance.episode?.toString()?.split('.')?.last);
+  return val;
+}
 
 QuerySearchArgs _$QuerySearchArgsFromJson(Map<String, dynamic> json) {
   return new QuerySearchArgs(text: json['text'] as String);
@@ -144,34 +188,79 @@ Map<String, dynamic> _$QuerySearchArgsToJson(QuerySearchArgs instance) =>
     <String, dynamic>{'text': instance.text};
 
 QueryCharacterArgs _$QueryCharacterArgsFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['id']);
   return new QueryCharacterArgs(id: json['id'] as String);
 }
 
-Map<String, dynamic> _$QueryCharacterArgsToJson(QueryCharacterArgs instance) =>
-    <String, dynamic>{'id': instance.id};
+Map<String, dynamic> _$QueryCharacterArgsToJson(QueryCharacterArgs instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  return val;
+}
 
 QueryDroidArgs _$QueryDroidArgsFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['id']);
   return new QueryDroidArgs(id: json['id'] as String);
 }
 
-Map<String, dynamic> _$QueryDroidArgsToJson(QueryDroidArgs instance) =>
-    <String, dynamic>{'id': instance.id};
+Map<String, dynamic> _$QueryDroidArgsToJson(QueryDroidArgs instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  return val;
+}
 
 QueryHumanArgs _$QueryHumanArgsFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['id']);
   return new QueryHumanArgs(id: json['id'] as String);
 }
 
-Map<String, dynamic> _$QueryHumanArgsToJson(QueryHumanArgs instance) =>
-    <String, dynamic>{'id': instance.id};
+Map<String, dynamic> _$QueryHumanArgsToJson(QueryHumanArgs instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  return val;
+}
 
 QueryStarshipArgs _$QueryStarshipArgsFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['id']);
   return new QueryStarshipArgs(id: json['id'] as String);
 }
 
-Map<String, dynamic> _$QueryStarshipArgsToJson(QueryStarshipArgs instance) =>
-    <String, dynamic>{'id': instance.id};
+Map<String, dynamic> _$QueryStarshipArgsToJson(QueryStarshipArgs instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  return val;
+}
 
 FriendsConnection _$FriendsConnectionFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['pageInfo']);
   return new FriendsConnection(
       totalCount: json['totalCount'] as int,
       edges: (json['edges'] as List)
@@ -189,15 +278,25 @@ FriendsConnection _$FriendsConnectionFromJson(Map<String, dynamic> json) {
           : new PageInfo.fromJson(json['pageInfo'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$FriendsConnectionToJson(FriendsConnection instance) =>
-    <String, dynamic>{
-      'totalCount': instance.totalCount,
-      'edges': instance.edges?.map((e) => e?.toJson())?.toList(),
-      'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
-      'pageInfo': instance.pageInfo?.toJson()
-    };
+Map<String, dynamic> _$FriendsConnectionToJson(FriendsConnection instance) {
+  var val = <String, dynamic>{
+    'totalCount': instance.totalCount,
+    'edges': instance.edges?.map((e) => e?.toJson())?.toList(),
+    'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('pageInfo', instance.pageInfo?.toJson());
+  return val;
+}
 
 FriendsEdge _$FriendsEdgeFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['cursor']);
   return new FriendsEdge(
       cursor: json['cursor'] as String,
       node: json['node'] == null
@@ -205,26 +304,46 @@ FriendsEdge _$FriendsEdgeFromJson(Map<String, dynamic> json) {
           : new Character.fromJson(json['node'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$FriendsEdgeToJson(FriendsEdge instance) =>
-    <String, dynamic>{
-      'cursor': instance.cursor,
-      'node': instance.node?.toJson()
-    };
+Map<String, dynamic> _$FriendsEdgeToJson(FriendsEdge instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('cursor', instance.cursor);
+  val['node'] = instance.node?.toJson();
+  return val;
+}
 
 PageInfo _$PageInfoFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['hasNextPage']);
   return new PageInfo(
       startCursor: json['startCursor'] as String,
       endCursor: json['endCursor'] as String,
       hasNextPage: json['hasNextPage'] as bool);
 }
 
-Map<String, dynamic> _$PageInfoToJson(PageInfo instance) => <String, dynamic>{
-      'startCursor': instance.startCursor,
-      'endCursor': instance.endCursor,
-      'hasNextPage': instance.hasNextPage
-    };
+Map<String, dynamic> _$PageInfoToJson(PageInfo instance) {
+  var val = <String, dynamic>{
+    'startCursor': instance.startCursor,
+    'endCursor': instance.endCursor,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('hasNextPage', instance.hasNextPage);
+  return val;
+}
 
 Review _$ReviewFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['stars']);
   return new Review(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String),
@@ -232,13 +351,29 @@ Review _$ReviewFromJson(Map<String, dynamic> json) {
       commentary: json['commentary'] as String);
 }
 
-Map<String, dynamic> _$ReviewToJson(Review instance) => <String, dynamic>{
-      'episode': instance.episode?.toString()?.split('.')?.last,
-      'stars': instance.stars,
-      'commentary': instance.commentary
-    };
+Map<String, dynamic> _$ReviewToJson(Review instance) {
+  var val = <String, dynamic>{
+    'episode': instance.episode?.toString()?.split('.')?.last,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stars', instance.stars);
+  val['commentary'] = instance.commentary;
+  return val;
+}
 
 Human _$HumanFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ]);
   return new Human(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -265,19 +400,30 @@ Human _$HumanFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-Map<String, dynamic> _$HumanToJson(Human instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'homePlanet': instance.homePlanet,
-      'height': instance.height,
-      'mass': instance.mass,
-      'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
-      'friendsConnection': instance.friendsConnection?.toJson(),
-      'appearsIn': instance.appearsIn
+Map<String, dynamic> _$HumanToJson(Human instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  val['homePlanet'] = instance.homePlanet;
+  val['height'] = instance.height;
+  val['mass'] = instance.mass;
+  val['friends'] = instance.friends?.map((e) => e?.toJson())?.toList();
+  writeNotNull('friendsConnection', instance.friendsConnection?.toJson());
+  writeNotNull(
+      'appearsIn',
+      instance.appearsIn
           ?.map((e) => e?.toString()?.split('.')?.last)
-          ?.toList(),
-      'starships': instance.starships?.map((e) => e?.toJson())?.toList()
-    };
+          ?.toList());
+  val['starships'] = instance.starships?.map((e) => e?.toJson())?.toList();
+  return val;
+}
 
 HumanHeightArgs _$HumanHeightArgsFromJson(Map<String, dynamic> json) {
   return new HumanHeightArgs(
@@ -299,6 +445,7 @@ Map<String, dynamic> _$HumanFriendsConnectionArgsToJson(
     <String, dynamic>{'first': instance.first, 'after': instance.after};
 
 Starship _$StarshipFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['id', 'name']);
   return new Starship(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -308,12 +455,21 @@ Starship _$StarshipFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-Map<String, dynamic> _$StarshipToJson(Starship instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'length': instance.length,
-      'coordinates': instance.coordinates
-    };
+Map<String, dynamic> _$StarshipToJson(Starship instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  val['length'] = instance.length;
+  val['coordinates'] = instance.coordinates;
+  return val;
+}
 
 StarshipLengthArgs _$StarshipLengthArgsFromJson(Map<String, dynamic> json) {
   return new StarshipLengthArgs(
@@ -325,6 +481,12 @@ Map<String, dynamic> _$StarshipLengthArgsToJson(StarshipLengthArgs instance) =>
     <String, dynamic>{'unit': instance.unit?.toString()?.split('.')?.last};
 
 Droid _$DroidFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ]);
   return new Droid(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -344,16 +506,27 @@ Droid _$DroidFromJson(Map<String, dynamic> json) {
       primaryFunction: json['primaryFunction'] as String);
 }
 
-Map<String, dynamic> _$DroidToJson(Droid instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
-      'friendsConnection': instance.friendsConnection?.toJson(),
-      'appearsIn': instance.appearsIn
+Map<String, dynamic> _$DroidToJson(Droid instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  val['friends'] = instance.friends?.map((e) => e?.toJson())?.toList();
+  writeNotNull('friendsConnection', instance.friendsConnection?.toJson());
+  writeNotNull(
+      'appearsIn',
+      instance.appearsIn
           ?.map((e) => e?.toString()?.split('.')?.last)
-          ?.toList(),
-      'primaryFunction': instance.primaryFunction
-    };
+          ?.toList());
+  val['primaryFunction'] = instance.primaryFunction;
+  return val;
+}
 
 DroidFriendsConnectionArgs _$DroidFriendsConnectionArgsFromJson(
     Map<String, dynamic> json) {
@@ -377,6 +550,7 @@ Map<String, dynamic> _$MutationToJson(Mutation instance) =>
 
 MutationCreateReviewArgs _$MutationCreateReviewArgsFromJson(
     Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['review']);
   return new MutationCreateReviewArgs(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String),
@@ -386,11 +560,20 @@ MutationCreateReviewArgs _$MutationCreateReviewArgsFromJson(
 }
 
 Map<String, dynamic> _$MutationCreateReviewArgsToJson(
-        MutationCreateReviewArgs instance) =>
-    <String, dynamic>{
-      'episode': instance.episode?.toString()?.split('.')?.last,
-      'review': instance.review?.toJson()
-    };
+    MutationCreateReviewArgs instance) {
+  var val = <String, dynamic>{
+    'episode': instance.episode?.toString()?.split('.')?.last,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('review', instance.review?.toJson());
+  return val;
+}
 
 Subscription _$SubscriptionFromJson(Map<String, dynamic> json) {
   return new Subscription(
@@ -417,13 +600,24 @@ Map<String, dynamic> _$SubscriptionReviewAddedArgsToJson(
 
 HeroForEpisodeVariables _$HeroForEpisodeVariablesFromJson(
     Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['ep']);
   return new HeroForEpisodeVariables(
       ep: $enumDecodeNullable('Episode', Episode.values, json['ep'] as String));
 }
 
 Map<String, dynamic> _$HeroForEpisodeVariablesToJson(
-        HeroForEpisodeVariables instance) =>
-    <String, dynamic>{'ep': instance.ep?.toString()?.split('.')?.last};
+    HeroForEpisodeVariables instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('ep', instance.ep?.toString()?.split('.')?.last);
+  return val;
+}
 
 HeroForEpisodeHumanInlineFragment _$HeroForEpisodeHumanInlineFragmentFromJson(
     Map<String, dynamic> json) {
@@ -450,11 +644,22 @@ Map<String, dynamic> _$HeroForEpisodeDroidInlineFragmentToJson(
     <String, dynamic>{'primaryFunction': instance.primaryFunction};
 
 HeroForEpisodeHero _$HeroForEpisodeHeroFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, disallowNullValues: const ['name']);
   return new HeroForEpisodeHero(name: json['name'] as String);
 }
 
-Map<String, dynamic> _$HeroForEpisodeHeroToJson(HeroForEpisodeHero instance) =>
-    <String, dynamic>{'name': instance.name};
+Map<String, dynamic> _$HeroForEpisodeHeroToJson(HeroForEpisodeHero instance) {
+  var val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  return val;
+}
 
 HeroForEpisodeQuery _$HeroForEpisodeQueryFromJson(Map<String, dynamic> json) {
   return new HeroForEpisodeQuery(
