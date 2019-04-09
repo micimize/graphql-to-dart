@@ -40,8 +40,7 @@ config:
   # add the mixin {{name}} when the given fields are found in a model
   - when:
       fields:
-      - entityId
-      - validFrom
+      - entityId - validFrom
       - validUntil
     name: Entity
   imports:
@@ -94,54 +93,107 @@ dependencies:
 # Sample result output
 I've built in some idiomatic dart helper methods to the generated models to make the typed data easier to work with. Currently there's `addAll` (modeled after `Map.addAll`), `copy`, `copyWith`, and an `empty` constructor. You can also set `generateFragmentHelpers` to generate `addAllFrom{baseType|inputType}` helpers.
 
-Here's some sample output:
+Here's some sample output for a fragment on a base type "TemporalId":
 ```dart
-/*  */
 @JsonSerializable()
-class TemporalId extends Base {
+class VersionId implements ToJson {
+  static final String typeName = "TemporalId";
+
+  String __typename;
+
   String entityId;
-  @JsonKey(fromJson: fromJsonToPGDateTime, toJson: fromPGDateTimeToJson)
+  @JsonKey(
+    fromJson: fromJsonToPGDateTime,
+    toJson: fromPGDateTimeToJson,
+  )
   PGDateTime valid;
 
-  TemporalId({
+  VersionId({
     this.entityId,
     this.valid,
   });
 
-  TemporalId.empty();
+  /// Construct an empty `VersionId`
+  VersionId.empty();
 
-  static I _assign<I extends TemporalId, S extends TemporalId>(
-      I into, S source) {
-    into.entityId = source.entityId;
-    into.valid = source.valid;
-    return into;
-  }
-
-  /// Modeled after javascript's Object.assign.
-  /// Copies the attributes from [source] into [target],
-  /// then optionally does the same for each item in [vargs]
-  static I assign<I extends TemporalId, S extends TemporalId>(I into, S source,
-      [List<S> vargs]) {
-    into = _assign(into, source);
-    if (vargs != null) {
-      vargs.forEach((varg) {
-        into = _assign(into, varg);
-      });
+  /// Adds all fields from [other] to this `VersionId`.
+  ///
+  /// If a field from [other] is already in this `VersionId`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant VersionId other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
+    if (overwrite != null && overwrite) {
+      entityId = other.entityId ?? entityId;
+      valid = other.valid ?? valid;
+    } else {
+      entityId ??= other.entityId;
+      valid ??= other.valid;
     }
-    return into;
   }
 
-  /// Copies and downcasts any inheriting [source] into a new [TemporalId]
-  static TemporalId copy<C extends TemporalId>(C source) {
-    return TemporalId(
-      entityId: source.entityId,
-      valid: source.valid,
+  /// Creates a copy of this `VersionId` but with the given fields replaced with the new values.
+  VersionId copyWith({
+    String entityId,
+    PGDateTime valid,
+  }) {
+    return VersionId(
+      entityId: entityId ?? this.entityId,
+      valid: valid ?? this.valid,
     );
   }
 
-  factory TemporalId.fromJson(Map<String, dynamic> json) =>
-      _$TemporalIdFromJson(json);
-  Map<String, dynamic> toJson() => _$TemporalIdToJson(this);
+  /// Creates a copy of this `VersionId`
+  VersionId copy() => copyWith();
+
+  /// Adds all fields from [other] to this `VersionId`.
+  ///
+  /// If a field from [other] is already in this `VersionId`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAllFromTemporalId(
+    covariant TemporalId other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
+    if (overwrite != null && overwrite) {
+      entityId = other.entityId ?? entityId;
+      valid = other.valid ?? valid;
+    } else {
+      entityId ??= other.entityId;
+      valid ??= other.valid;
+    }
+  }
+
+  factory VersionId.fromJson(Map<String, dynamic> json) =>
+      deserializeFromJson(json);
+
+  Map<String, dynamic> toJson() => serializeToJson(this);
+
+  static VersionId deserializeFromJson(
+      Map<String, dynamic> json) {
+    VersionId instance =
+        _$VersionIdFromJson(json);
+    // for handling inline fragment logic
+    instance.__typename = json['__typename'] as String;
+
+    return instance;
+  }
+
+  static Map<String, dynamic> serializeToJson(
+      VersionId instance) {
+    Map<String, dynamic> json =
+        _$VersionIdToJson(instance);
+
+    json['__typename'] = instance.__typename ?? typeName;
+    return json;
+  }
 }
 ```
 
+# dev notes
+`generateFragmentHelpers` is super fickle, and by-and-large we're doing all kinds of hacks to get helpers to work 
+(caching the fragment info at declaration time, then plucking it back out later)
+also helpers often have different usages and the code is basically impossible even for me to follow.
+But it works!

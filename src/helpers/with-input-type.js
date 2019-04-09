@@ -19,12 +19,39 @@ function shouldExcludeOnType(baseType, config) {
   return false;
 }
 
+// this is really more fragment helper specific
 export default function withInputType(
   baseType,
   replaceMap,
   className,
-  exclusionConfig
+  exclusionConfig,
+  fields
 ) {
+  // we're hackily pulling fragment names from defineClass
+  // oh my god we're getting the fields from hackFragmentFields
+  // and leveraging the fact that they're in the same order to
+  // stitch the base type fields together
+  // TODO this is so bad
+  if (Array.isArray(baseType)) {
+    return baseType
+      .map((fragBaseType, i) => ({ fragBaseType, typeFields: fields[i] }))
+      .reduce((allTypes, { fragBaseType, typeFields }) => {
+        let seen = [];
+        for (let assignableTo of withInputType(
+          fragBaseType,
+          replaceMap,
+          className,
+          exclusionConfig,
+          typeFields
+        )) {
+          if (!seen.includes(assignableTo.className)) {
+            seen.push(assignableTo.className);
+            allTypes.push(assignableTo);
+          }
+        }
+        return allTypes;
+      }, []);
+  }
   if (
     exclusionConfig &&
     (!shouldBeIncluded(className, exclusionConfig) ||
@@ -40,8 +67,8 @@ export default function withInputType(
   const inputType = replace(`${baseType}Input`);
 
   if (!inputTypes.includes(inputType) || inputType === baseType) {
-    return [baseType];
+    return [{ className: baseType, fields }];
   }
 
-  return [baseType, inputType];
+  return [baseType, inputType].map(className => ({ className, fields }));
 }

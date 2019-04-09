@@ -66,7 +66,10 @@ class ReviewInput implements ToJson {
   String __typename;
 
   /// 0-5 stars
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   int stars;
 
   /// Comment about the movie, optional
@@ -85,23 +88,21 @@ class ReviewInput implements ToJson {
   ReviewInput.empty();
 
   /// Adds all fields from [other] to this `ReviewInput`.
-  //
-  // If a field from [other] is already in this `ReviewInput`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant ReviewInput other, {bool overwrite = true}) {
-    assert(other != null,
-        "ReviewInput.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `ReviewInput`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant ReviewInput other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       stars = other.stars ?? stars;
-
       commentary = other.commentary ?? commentary;
-
       favorite_color = other.favorite_color ?? favorite_color;
     } else {
       stars ??= other.stars;
-
       commentary ??= other.commentary;
-
       favorite_color ??= other.favorite_color;
     }
   }
@@ -147,11 +148,20 @@ class ReviewInput implements ToJson {
 class ColorInput implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   int red;
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   int green;
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   int blue;
 
   ColorInput({
@@ -164,23 +174,21 @@ class ColorInput implements ToJson {
   ColorInput.empty();
 
   /// Adds all fields from [other] to this `ColorInput`.
-  //
-  // If a field from [other] is already in this `ColorInput`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant ColorInput other, {bool overwrite = true}) {
-    assert(
-        other != null, "ColorInput.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `ColorInput`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant ColorInput other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       red = other.red ?? red;
-
       green = other.green ?? green;
-
       blue = other.blue ?? blue;
     } else {
       red ??= other.red;
-
       green ??= other.green;
-
       blue ??= other.blue;
     }
   }
@@ -228,22 +236,34 @@ class Character implements ToJson {
   String __typename;
 
   /// The ID of the character
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   /// The name of the character
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String name;
 
   /// The friends of the character, or an empty list if they have none
   List<Character> friends;
 
   /// The friends of the character exposed as a connection with edges
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   FriendsConnection friendsConnection;
 
   /// The movies this character appears in
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   List<Episode> appearsIn;
 
   Character({
@@ -258,31 +278,25 @@ class Character implements ToJson {
   Character.empty();
 
   /// Adds all fields from [other] to this `Character`.
-  //
-  // If a field from [other] is already in this `Character`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Character other, {bool overwrite = true}) {
-    assert(
-        other != null, "Character.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Character`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Character other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
-
       name = other.name ?? name;
-
       friends = other.friends ?? friends;
-
       friendsConnection = other.friendsConnection ?? friendsConnection;
-
       appearsIn = other.appearsIn ?? appearsIn;
     } else {
       id ??= other.id;
-
       name ??= other.name;
-
       friends ??= other.friends;
-
       friendsConnection ??= other.friendsConnection;
-
       appearsIn ??= other.appearsIn;
     }
   }
@@ -343,20 +357,19 @@ class CharacterFriendsConnectionArgs implements ToJson {
   CharacterFriendsConnectionArgs.empty();
 
   /// Adds all fields from [other] to this `CharacterFriendsConnectionArgs`.
-  //
-  // If a field from [other] is already in this `CharacterFriendsConnectionArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant CharacterFriendsConnectionArgs other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "CharacterFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `CharacterFriendsConnectionArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant CharacterFriendsConnectionArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       first = other.first ?? first;
-
       after = other.after ?? after;
     } else {
       first ??= other.first;
-
       after ??= other.after;
     }
   }
@@ -427,38 +440,29 @@ class Query implements ToJson {
   Query.empty();
 
   /// Adds all fields from [other] to this `Query`.
-  //
-  // If a field from [other] is already in this `Query`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Query other, {bool overwrite = true}) {
-    assert(other != null, "Query.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Query`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Query other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       hero = other.hero ?? hero;
-
       reviews = other.reviews ?? reviews;
-
       search = other.search ?? search;
-
       character = other.character ?? character;
-
       droid = other.droid ?? droid;
-
       human = other.human ?? human;
-
       starship = other.starship ?? starship;
     } else {
       hero ??= other.hero;
-
       reviews ??= other.reviews;
-
       search ??= other.search;
-
       character ??= other.character;
-
       droid ??= other.droid;
-
       human ??= other.human;
-
       starship ??= other.starship;
     }
   }
@@ -521,12 +525,14 @@ class QueryHeroArgs implements ToJson {
   QueryHeroArgs.empty();
 
   /// Adds all fields from [other] to this `QueryHeroArgs`.
-  //
-  // If a field from [other] is already in this `QueryHeroArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryHeroArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryHeroArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryHeroArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryHeroArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       episode = other.episode ?? episode;
     } else {
@@ -570,7 +576,10 @@ class QueryHeroArgs implements ToJson {
 class QueryReviewsArgs implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   Episode episode;
 
   QueryReviewsArgs({
@@ -581,12 +590,14 @@ class QueryReviewsArgs implements ToJson {
   QueryReviewsArgs.empty();
 
   /// Adds all fields from [other] to this `QueryReviewsArgs`.
-  //
-  // If a field from [other] is already in this `QueryReviewsArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryReviewsArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryReviewsArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryReviewsArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryReviewsArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       episode = other.episode ?? episode;
     } else {
@@ -640,12 +651,14 @@ class QuerySearchArgs implements ToJson {
   QuerySearchArgs.empty();
 
   /// Adds all fields from [other] to this `QuerySearchArgs`.
-  //
-  // If a field from [other] is already in this `QuerySearchArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QuerySearchArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QuerySearchArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QuerySearchArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QuerySearchArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       text = other.text ?? text;
     } else {
@@ -689,7 +702,10 @@ class QuerySearchArgs implements ToJson {
 class QueryCharacterArgs implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   QueryCharacterArgs({
@@ -700,12 +716,14 @@ class QueryCharacterArgs implements ToJson {
   QueryCharacterArgs.empty();
 
   /// Adds all fields from [other] to this `QueryCharacterArgs`.
-  //
-  // If a field from [other] is already in this `QueryCharacterArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryCharacterArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryCharacterArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryCharacterArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryCharacterArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
     } else {
@@ -749,7 +767,10 @@ class QueryCharacterArgs implements ToJson {
 class QueryDroidArgs implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   QueryDroidArgs({
@@ -760,12 +781,14 @@ class QueryDroidArgs implements ToJson {
   QueryDroidArgs.empty();
 
   /// Adds all fields from [other] to this `QueryDroidArgs`.
-  //
-  // If a field from [other] is already in this `QueryDroidArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryDroidArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryDroidArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryDroidArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryDroidArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
     } else {
@@ -809,7 +832,10 @@ class QueryDroidArgs implements ToJson {
 class QueryHumanArgs implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   QueryHumanArgs({
@@ -820,12 +846,14 @@ class QueryHumanArgs implements ToJson {
   QueryHumanArgs.empty();
 
   /// Adds all fields from [other] to this `QueryHumanArgs`.
-  //
-  // If a field from [other] is already in this `QueryHumanArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryHumanArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryHumanArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryHumanArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryHumanArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
     } else {
@@ -869,7 +897,10 @@ class QueryHumanArgs implements ToJson {
 class QueryStarshipArgs implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   QueryStarshipArgs({
@@ -880,12 +911,14 @@ class QueryStarshipArgs implements ToJson {
   QueryStarshipArgs.empty();
 
   /// Adds all fields from [other] to this `QueryStarshipArgs`.
-  //
-  // If a field from [other] is already in this `QueryStarshipArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant QueryStarshipArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "QueryStarshipArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `QueryStarshipArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant QueryStarshipArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
     } else {
@@ -940,7 +973,10 @@ class FriendsConnection implements ToJson {
   List<Character> friends;
 
   /// Information for paginating this connection
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   PageInfo pageInfo;
 
   FriendsConnection({
@@ -954,27 +990,23 @@ class FriendsConnection implements ToJson {
   FriendsConnection.empty();
 
   /// Adds all fields from [other] to this `FriendsConnection`.
-  //
-  // If a field from [other] is already in this `FriendsConnection`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant FriendsConnection other, {bool overwrite = true}) {
-    assert(other != null,
-        "FriendsConnection.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `FriendsConnection`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant FriendsConnection other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       totalCount = other.totalCount ?? totalCount;
-
       edges = other.edges ?? edges;
-
       friends = other.friends ?? friends;
-
       pageInfo = other.pageInfo ?? pageInfo;
     } else {
       totalCount ??= other.totalCount;
-
       edges ??= other.edges;
-
       friends ??= other.friends;
-
       pageInfo ??= other.pageInfo;
     }
   }
@@ -1023,7 +1055,10 @@ class FriendsEdge implements ToJson {
   String __typename;
 
   /// A cursor used for pagination
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String cursor;
 
   /// The character represented by this friendship edge
@@ -1038,19 +1073,19 @@ class FriendsEdge implements ToJson {
   FriendsEdge.empty();
 
   /// Adds all fields from [other] to this `FriendsEdge`.
-  //
-  // If a field from [other] is already in this `FriendsEdge`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant FriendsEdge other, {bool overwrite = true}) {
-    assert(other != null,
-        "FriendsEdge.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `FriendsEdge`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant FriendsEdge other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       cursor = other.cursor ?? cursor;
-
       node = other.node ?? node;
     } else {
       cursor ??= other.cursor;
-
       node ??= other.node;
     }
   }
@@ -1096,7 +1131,10 @@ class PageInfo implements ToJson {
 
   String startCursor;
   String endCursor;
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   bool hasNextPage;
 
   PageInfo({
@@ -1109,23 +1147,21 @@ class PageInfo implements ToJson {
   PageInfo.empty();
 
   /// Adds all fields from [other] to this `PageInfo`.
-  //
-  // If a field from [other] is already in this `PageInfo`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant PageInfo other, {bool overwrite = true}) {
-    assert(
-        other != null, "PageInfo.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `PageInfo`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant PageInfo other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       startCursor = other.startCursor ?? startCursor;
-
       endCursor = other.endCursor ?? endCursor;
-
       hasNextPage = other.hasNextPage ?? hasNextPage;
     } else {
       startCursor ??= other.startCursor;
-
       endCursor ??= other.endCursor;
-
       hasNextPage ??= other.hasNextPage;
     }
   }
@@ -1175,7 +1211,10 @@ class Review implements ToJson {
   Episode episode;
 
   /// The number of stars this review gave, 1-5
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   int stars;
 
   /// Comment about the movie
@@ -1191,22 +1230,21 @@ class Review implements ToJson {
   Review.empty();
 
   /// Adds all fields from [other] to this `Review`.
-  //
-  // If a field from [other] is already in this `Review`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Review other, {bool overwrite = true}) {
-    assert(other != null, "Review.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Review`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Review other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       episode = other.episode ?? episode;
-
       stars = other.stars ?? stars;
-
       commentary = other.commentary ?? commentary;
     } else {
       episode ??= other.episode;
-
       stars ??= other.stars;
-
       commentary ??= other.commentary;
     }
   }
@@ -1253,11 +1291,17 @@ class Human implements ToJson, Character {
   String __typename;
 
   /// The ID of the human
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   /// What this human calls themselves
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String name;
 
   /// The home planet of the human, or null if unknown
@@ -1273,11 +1317,17 @@ class Human implements ToJson, Character {
   List<Character> friends;
 
   /// The friends of the human exposed as a connection with edges
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   FriendsConnection friendsConnection;
 
   /// The movies this human appears in
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   List<Episode> appearsIn;
 
   /// A list of starships this person has piloted, or an empty list if none
@@ -1299,46 +1349,33 @@ class Human implements ToJson, Character {
   Human.empty();
 
   /// Adds all fields from [other] to this `Human`.
-  //
-  // If a field from [other] is already in this `Human`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Human other, {bool overwrite = true}) {
-    assert(other != null, "Human.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Human`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Human other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
-
       name = other.name ?? name;
-
       homePlanet = other.homePlanet ?? homePlanet;
-
       height = other.height ?? height;
-
       mass = other.mass ?? mass;
-
       friends = other.friends ?? friends;
-
       friendsConnection = other.friendsConnection ?? friendsConnection;
-
       appearsIn = other.appearsIn ?? appearsIn;
-
       starships = other.starships ?? starships;
     } else {
       id ??= other.id;
-
       name ??= other.name;
-
       homePlanet ??= other.homePlanet;
-
       height ??= other.height;
-
       mass ??= other.mass;
-
       friends ??= other.friends;
-
       friendsConnection ??= other.friendsConnection;
-
       appearsIn ??= other.appearsIn;
-
       starships ??= other.starships;
     }
   }
@@ -1405,12 +1442,14 @@ class HumanHeightArgs implements ToJson {
   HumanHeightArgs.empty();
 
   /// Adds all fields from [other] to this `HumanHeightArgs`.
-  //
-  // If a field from [other] is already in this `HumanHeightArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HumanHeightArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "HumanHeightArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HumanHeightArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HumanHeightArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       unit = other.unit ?? unit;
     } else {
@@ -1466,20 +1505,19 @@ class HumanFriendsConnectionArgs implements ToJson {
   HumanFriendsConnectionArgs.empty();
 
   /// Adds all fields from [other] to this `HumanFriendsConnectionArgs`.
-  //
-  // If a field from [other] is already in this `HumanFriendsConnectionArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HumanFriendsConnectionArgs other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "HumanFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HumanFriendsConnectionArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HumanFriendsConnectionArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       first = other.first ?? first;
-
       after = other.after ?? after;
     } else {
       first ??= other.first;
-
       after ??= other.after;
     }
   }
@@ -1527,11 +1565,17 @@ class Starship implements ToJson {
   String __typename;
 
   /// The ID of the starship
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   /// The name of the starship
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String name;
 
   /// Length of the starship, along the longest axis
@@ -1549,27 +1593,23 @@ class Starship implements ToJson {
   Starship.empty();
 
   /// Adds all fields from [other] to this `Starship`.
-  //
-  // If a field from [other] is already in this `Starship`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Starship other, {bool overwrite = true}) {
-    assert(
-        other != null, "Starship.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Starship`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Starship other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
-
       name = other.name ?? name;
-
       length = other.length ?? length;
-
       coordinates = other.coordinates ?? coordinates;
     } else {
       id ??= other.id;
-
       name ??= other.name;
-
       length ??= other.length;
-
       coordinates ??= other.coordinates;
     }
   }
@@ -1626,12 +1666,14 @@ class StarshipLengthArgs implements ToJson {
   StarshipLengthArgs.empty();
 
   /// Adds all fields from [other] to this `StarshipLengthArgs`.
-  //
-  // If a field from [other] is already in this `StarshipLengthArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant StarshipLengthArgs other, {bool overwrite = true}) {
-    assert(other != null,
-        "StarshipLengthArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `StarshipLengthArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant StarshipLengthArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       unit = other.unit ?? unit;
     } else {
@@ -1677,22 +1719,34 @@ class Droid implements ToJson, Character {
   String __typename;
 
   /// The ID of the droid
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String id;
 
   /// What others call this droid
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String name;
 
   /// This droid's friends, or an empty list if they have none
   List<Character> friends;
 
   /// The friends of the droid exposed as a connection with edges
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   FriendsConnection friendsConnection;
 
   /// The movies this droid appears in
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   List<Episode> appearsIn;
 
   /// This droid's primary function
@@ -1711,34 +1765,27 @@ class Droid implements ToJson, Character {
   Droid.empty();
 
   /// Adds all fields from [other] to this `Droid`.
-  //
-  // If a field from [other] is already in this `Droid`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Droid other, {bool overwrite = true}) {
-    assert(other != null, "Droid.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Droid`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Droid other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       id = other.id ?? id;
-
       name = other.name ?? name;
-
       friends = other.friends ?? friends;
-
       friendsConnection = other.friendsConnection ?? friendsConnection;
-
       appearsIn = other.appearsIn ?? appearsIn;
-
       primaryFunction = other.primaryFunction ?? primaryFunction;
     } else {
       id ??= other.id;
-
       name ??= other.name;
-
       friends ??= other.friends;
-
       friendsConnection ??= other.friendsConnection;
-
       appearsIn ??= other.appearsIn;
-
       primaryFunction ??= other.primaryFunction;
     }
   }
@@ -1801,20 +1848,19 @@ class DroidFriendsConnectionArgs implements ToJson {
   DroidFriendsConnectionArgs.empty();
 
   /// Adds all fields from [other] to this `DroidFriendsConnectionArgs`.
-  //
-  // If a field from [other] is already in this `DroidFriendsConnectionArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant DroidFriendsConnectionArgs other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "DroidFriendsConnectionArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `DroidFriendsConnectionArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant DroidFriendsConnectionArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       first = other.first ?? first;
-
       after = other.after ?? after;
     } else {
       first ??= other.first;
-
       after ??= other.after;
     }
   }
@@ -1871,12 +1917,14 @@ class Mutation implements ToJson {
   Mutation.empty();
 
   /// Adds all fields from [other] to this `Mutation`.
-  //
-  // If a field from [other] is already in this `Mutation`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Mutation other, {bool overwrite = true}) {
-    assert(
-        other != null, "Mutation.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Mutation`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Mutation other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       createReview = other.createReview ?? createReview;
     } else {
@@ -1921,7 +1969,10 @@ class MutationCreateReviewArgs implements ToJson {
   String __typename;
 
   Episode episode;
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   ReviewInput review;
 
   MutationCreateReviewArgs({
@@ -1933,20 +1984,19 @@ class MutationCreateReviewArgs implements ToJson {
   MutationCreateReviewArgs.empty();
 
   /// Adds all fields from [other] to this `MutationCreateReviewArgs`.
-  //
-  // If a field from [other] is already in this `MutationCreateReviewArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant MutationCreateReviewArgs other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "MutationCreateReviewArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `MutationCreateReviewArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant MutationCreateReviewArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       episode = other.episode ?? episode;
-
       review = other.review ?? review;
     } else {
       episode ??= other.episode;
-
       review ??= other.review;
     }
   }
@@ -2003,12 +2053,14 @@ class Subscription implements ToJson {
   Subscription.empty();
 
   /// Adds all fields from [other] to this `Subscription`.
-  //
-  // If a field from [other] is already in this `Subscription`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant Subscription other, {bool overwrite = true}) {
-    assert(other != null,
-        "Subscription.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `Subscription`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant Subscription other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       reviewAdded = other.reviewAdded ?? reviewAdded;
     } else {
@@ -2062,13 +2114,14 @@ class SubscriptionReviewAddedArgs implements ToJson {
   SubscriptionReviewAddedArgs.empty();
 
   /// Adds all fields from [other] to this `SubscriptionReviewAddedArgs`.
-  //
-  // If a field from [other] is already in this `SubscriptionReviewAddedArgs`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant SubscriptionReviewAddedArgs other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "SubscriptionReviewAddedArgs.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `SubscriptionReviewAddedArgs`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant SubscriptionReviewAddedArgs other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       episode = other.episode ?? episode;
     } else {
@@ -2115,7 +2168,10 @@ class SubscriptionReviewAddedArgs implements ToJson {
 class HeroForEpisodeVariables implements ToJson {
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   Episode ep;
 
   HeroForEpisodeVariables({
@@ -2126,13 +2182,14 @@ class HeroForEpisodeVariables implements ToJson {
   HeroForEpisodeVariables.empty();
 
   /// Adds all fields from [other] to this `HeroForEpisodeVariables`.
-  //
-  // If a field from [other] is already in this `HeroForEpisodeVariables`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HeroForEpisodeVariables other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "HeroForEpisodeVariables.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HeroForEpisodeVariables`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HeroForEpisodeVariables other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       ep = other.ep ?? ep;
     } else {
@@ -2192,20 +2249,19 @@ class HeroForEpisodeHumanInlineFragment implements ToJson {
   HeroForEpisodeHumanInlineFragment.empty();
 
   /// Adds all fields from [other] to this `HeroForEpisodeHumanInlineFragment`.
-  //
-  // If a field from [other] is already in this `HeroForEpisodeHumanInlineFragment`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HeroForEpisodeHumanInlineFragment other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "HeroForEpisodeHumanInlineFragment.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HeroForEpisodeHumanInlineFragment`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HeroForEpisodeHumanInlineFragment other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       height = other.height ?? height;
-
       homePlanet = other.homePlanet ?? homePlanet;
     } else {
       height ??= other.height;
-
       homePlanet ??= other.homePlanet;
     }
   }
@@ -2266,13 +2322,14 @@ class HeroForEpisodeDroidInlineFragment implements ToJson {
   HeroForEpisodeDroidInlineFragment.empty();
 
   /// Adds all fields from [other] to this `HeroForEpisodeDroidInlineFragment`.
-  //
-  // If a field from [other] is already in this `HeroForEpisodeDroidInlineFragment`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HeroForEpisodeDroidInlineFragment other,
-      {bool overwrite = true}) {
-    assert(other != null,
-        "HeroForEpisodeDroidInlineFragment.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HeroForEpisodeDroidInlineFragment`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HeroForEpisodeDroidInlineFragment other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       primaryFunction = other.primaryFunction ?? primaryFunction;
     } else {
@@ -2324,7 +2381,10 @@ class HeroForEpisodeHero implements ToJson {
 
   String __typename;
 
-  @JsonKey(disallowNullValue: true)
+  @JsonKey(
+    required: true,
+    disallowNullValue: true,
+  )
   String name;
 
   @JsonKey(ignore: true)
@@ -2340,12 +2400,14 @@ class HeroForEpisodeHero implements ToJson {
   HeroForEpisodeHero.empty();
 
   /// Adds all fields from [other] to this `HeroForEpisodeHero`.
-  //
-  // If a field from [other] is already in this `HeroForEpisodeHero`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HeroForEpisodeHero other, {bool overwrite = true}) {
-    assert(other != null,
-        "HeroForEpisodeHero.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HeroForEpisodeHero`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HeroForEpisodeHero other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       name = other.name ?? name;
     } else {
@@ -2418,12 +2480,14 @@ class HeroForEpisodeQuery implements ToJson {
   HeroForEpisodeQuery.empty();
 
   /// Adds all fields from [other] to this `HeroForEpisodeQuery`.
-  //
-  // If a field from [other] is already in this `HeroForEpisodeQuery`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant HeroForEpisodeQuery other, {bool overwrite = true}) {
-    assert(other != null,
-        "HeroForEpisodeQuery.addAll: Cannot addAll from null into $this");
+  ///
+  /// If a field from [other] is already in this `HeroForEpisodeQuery`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(
+    covariant HeroForEpisodeQuery other, {
+    bool overwrite = true,
+  }) {
+    assert(other != null, "Cannot add all from null into $this");
     if (overwrite != null && overwrite) {
       hero = other.hero ?? hero;
     } else {

@@ -26,8 +26,8 @@ function jsonKey({ type, required = false, addSerializers = false }) {
     (addSerializers
       ? `fromJson: fromJsonTo${type}, toJson: from${type}ToJson,`
       : "") +
-    (required ? "disallowNullValue: true" : "") +
-    ")"
+    (required ? "required: true, disallowNullValue: true," : "") +
+    ")\n    "
   );
 }
 
@@ -37,7 +37,7 @@ function wrap(isArray, fieldType) {
 
 export default function resolveType(
   type,
-  isRequired,
+  jsonKeyInfo,
   contextName,
   contextModels = [],
   scalars = {},
@@ -46,8 +46,13 @@ export default function resolveType(
   irreducibles = [],
   rawTypeText
 ) {
-  if (isRequired == "false") {
+  let isRequired = false;
+  let addSerializers = true;
+  if (jsonKeyInfo == "inline") {
     isRequired = false;
+    addSerializers = false;
+  } else {
+    isRequired = jsonKeyInfo;
   }
   if (irreducibles.includes(rawTypeText.replace("!", ""))) {
     return rawTypeText.replace("!", "");
@@ -68,7 +73,7 @@ export default function resolveType(
         jsonKey({
           type: fieldType,
           required: isRequired,
-          addSerializers: true
+          addSerializers
         }) + wrap(isArray, fieldType)
       );
     } else {

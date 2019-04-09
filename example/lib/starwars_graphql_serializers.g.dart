@@ -7,7 +7,8 @@ part of 'starwars_graphql_serializers.dart';
 // **************************************************************************
 
 ReviewInput _$ReviewInputFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['stars']);
+  $checkKeys(json,
+      requiredKeys: const ['stars'], disallowNullValues: const ['stars']);
   return new ReviewInput(
       stars: json['stars'] as int,
       commentary: json['commentary'] as String,
@@ -33,7 +34,9 @@ Map<String, dynamic> _$ReviewInputToJson(ReviewInput instance) {
 }
 
 ColorInput _$ColorInputFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['red', 'green', 'blue']);
+  $checkKeys(json,
+      requiredKeys: const ['red', 'green', 'blue'],
+      disallowNullValues: const ['red', 'green', 'blue']);
   return new ColorInput(
       red: json['red'] as int,
       green: json['green'] as int,
@@ -56,7 +59,12 @@ Map<String, dynamic> _$ColorInputToJson(ColorInput instance) {
 }
 
 Character _$CharacterFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const [
+  $checkKeys(json, requiredKeys: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ], disallowNullValues: const [
     'id',
     'name',
     'friendsConnection',
@@ -161,7 +169,8 @@ Map<String, dynamic> _$QueryHeroArgsToJson(QueryHeroArgs instance) =>
     };
 
 QueryReviewsArgs _$QueryReviewsArgsFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['episode']);
+  $checkKeys(json,
+      requiredKeys: const ['episode'], disallowNullValues: const ['episode']);
   return new QueryReviewsArgs(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String));
@@ -188,7 +197,8 @@ Map<String, dynamic> _$QuerySearchArgsToJson(QuerySearchArgs instance) =>
     <String, dynamic>{'text': instance.text};
 
 QueryCharacterArgs _$QueryCharacterArgsFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['id']);
+  $checkKeys(json,
+      requiredKeys: const ['id'], disallowNullValues: const ['id']);
   return new QueryCharacterArgs(id: json['id'] as String);
 }
 
@@ -206,7 +216,8 @@ Map<String, dynamic> _$QueryCharacterArgsToJson(QueryCharacterArgs instance) {
 }
 
 QueryDroidArgs _$QueryDroidArgsFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['id']);
+  $checkKeys(json,
+      requiredKeys: const ['id'], disallowNullValues: const ['id']);
   return new QueryDroidArgs(id: json['id'] as String);
 }
 
@@ -224,7 +235,8 @@ Map<String, dynamic> _$QueryDroidArgsToJson(QueryDroidArgs instance) {
 }
 
 QueryHumanArgs _$QueryHumanArgsFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['id']);
+  $checkKeys(json,
+      requiredKeys: const ['id'], disallowNullValues: const ['id']);
   return new QueryHumanArgs(id: json['id'] as String);
 }
 
@@ -242,7 +254,8 @@ Map<String, dynamic> _$QueryHumanArgsToJson(QueryHumanArgs instance) {
 }
 
 QueryStarshipArgs _$QueryStarshipArgsFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['id']);
+  $checkKeys(json,
+      requiredKeys: const ['id'], disallowNullValues: const ['id']);
   return new QueryStarshipArgs(id: json['id'] as String);
 }
 
@@ -260,7 +273,8 @@ Map<String, dynamic> _$QueryStarshipArgsToJson(QueryStarshipArgs instance) {
 }
 
 FriendsConnection _$FriendsConnectionFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['pageInfo']);
+  $checkKeys(json,
+      requiredKeys: const ['pageInfo'], disallowNullValues: const ['pageInfo']);
   return new FriendsConnection(
       totalCount: json['totalCount'] as int,
       edges: (json['edges'] as List)
@@ -296,7 +310,8 @@ Map<String, dynamic> _$FriendsConnectionToJson(FriendsConnection instance) {
 }
 
 FriendsEdge _$FriendsEdgeFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['cursor']);
+  $checkKeys(json,
+      requiredKeys: const ['cursor'], disallowNullValues: const ['cursor']);
   return new FriendsEdge(
       cursor: json['cursor'] as String,
       node: json['node'] == null
@@ -319,7 +334,9 @@ Map<String, dynamic> _$FriendsEdgeToJson(FriendsEdge instance) {
 }
 
 PageInfo _$PageInfoFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['hasNextPage']);
+  $checkKeys(json,
+      requiredKeys: const ['hasNextPage'],
+      disallowNullValues: const ['hasNextPage']);
   return new PageInfo(
       startCursor: json['startCursor'] as String,
       endCursor: json['endCursor'] as String,
@@ -343,7 +360,8 @@ Map<String, dynamic> _$PageInfoToJson(PageInfo instance) {
 }
 
 Review _$ReviewFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['stars']);
+  $checkKeys(json,
+      requiredKeys: const ['stars'], disallowNullValues: const ['stars']);
   return new Review(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String),
@@ -368,7 +386,12 @@ Map<String, dynamic> _$ReviewToJson(Review instance) {
 }
 
 Human _$HumanFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const [
+  $checkKeys(json, requiredKeys: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ], disallowNullValues: const [
     'id',
     'name',
     'friendsConnection',
@@ -445,7 +468,9 @@ Map<String, dynamic> _$HumanFriendsConnectionArgsToJson(
     <String, dynamic>{'first': instance.first, 'after': instance.after};
 
 Starship _$StarshipFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['id', 'name']);
+  $checkKeys(json,
+      requiredKeys: const ['id', 'name'],
+      disallowNullValues: const ['id', 'name']);
   return new Starship(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -481,7 +506,12 @@ Map<String, dynamic> _$StarshipLengthArgsToJson(StarshipLengthArgs instance) =>
     <String, dynamic>{'unit': instance.unit?.toString()?.split('.')?.last};
 
 Droid _$DroidFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const [
+  $checkKeys(json, requiredKeys: const [
+    'id',
+    'name',
+    'friendsConnection',
+    'appearsIn'
+  ], disallowNullValues: const [
     'id',
     'name',
     'friendsConnection',
@@ -550,7 +580,8 @@ Map<String, dynamic> _$MutationToJson(Mutation instance) =>
 
 MutationCreateReviewArgs _$MutationCreateReviewArgsFromJson(
     Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['review']);
+  $checkKeys(json,
+      requiredKeys: const ['review'], disallowNullValues: const ['review']);
   return new MutationCreateReviewArgs(
       episode: $enumDecodeNullable(
           'Episode', Episode.values, json['episode'] as String),
@@ -600,7 +631,8 @@ Map<String, dynamic> _$SubscriptionReviewAddedArgsToJson(
 
 HeroForEpisodeVariables _$HeroForEpisodeVariablesFromJson(
     Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['ep']);
+  $checkKeys(json,
+      requiredKeys: const ['ep'], disallowNullValues: const ['ep']);
   return new HeroForEpisodeVariables(
       ep: $enumDecodeNullable('Episode', Episode.values, json['ep'] as String));
 }
@@ -644,7 +676,8 @@ Map<String, dynamic> _$HeroForEpisodeDroidInlineFragmentToJson(
     <String, dynamic>{'primaryFunction': instance.primaryFunction};
 
 HeroForEpisodeHero _$HeroForEpisodeHeroFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, disallowNullValues: const ['name']);
+  $checkKeys(json,
+      requiredKeys: const ['name'], disallowNullValues: const ['name']);
   return new HeroForEpisodeHero(name: json['name'] as String);
 }
 

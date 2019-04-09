@@ -2,6 +2,9 @@
 
 {{#eachBackwards innerModels }}
 
+
+{{~ hackFragmentBaseTypes "add" (concat (toPascalCase ../name) modelType) schemaBaseType ~}}
+
 {{> defineClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
@@ -11,6 +14,7 @@
           @root.config.replaceTypes
           (concat (toPascalCase ../name) modelType)
           @root.config.generateFragmentHelpers
+          (hackFragmentFields "get" fragmentsSpread fields)
       )
       fields=(hackFragmentFields "get" fragmentsSpread fields )
       contextModels=../innerModels
@@ -19,16 +23,18 @@
 
 {{/eachBackwards}}
 
+{{~ hackFragmentBaseTypes "add" (toPascalCase name) onType ~}}
 
 {{> defineClass
-      className=(concat (toPascalCase name) '')
+      className=(toPascalCase name)
       typeName=onType
       assignableTo=(
         withInputType
           onType
           @root.config.replaceTypes
-          (concat (toPascalCase name) '')
+          (toPascalCase name)
           @root.config.generateFragmentHelpers
+          (hackFragmentFields "get" fragmentsSpread fields)
       )
       fields=(hackFragmentFields "get" fragmentsSpread fields)
       contextModels=innerModels

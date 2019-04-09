@@ -10,6 +10,14 @@
       typeName=schemaBaseType
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
+      assignableTo=(
+        withInputType
+          (hackFragmentBaseTypes "get" (fragmentClassNames fragmentsSpread))
+          @root.config.replaceTypes
+          (concat (toPascalCase ../name) modelType)
+          @root.config.generateFragmentHelpers
+          (hackFragmentFields "list" fragmentsSpread)
+      )
 }}
 
 
@@ -21,5 +29,13 @@
       typeName=(concat (toPascalCase name) (toPascalCase operationType))
       contextModels=innerModels
       contextName=(toPascalCase name)
+      assignableTo=(
+        withInputType
+          (hackFragmentBaseTypes "get" (fragmentClassNames fragmentsSpread))
+          @root.config.replaceTypes
+          (concat (toPascalCase name) (toPascalCase operationType))
+          @root.config.generateFragmentHelpers
+          (hackFragmentFields "list" fragmentsSpread)
+      )
 }}
 

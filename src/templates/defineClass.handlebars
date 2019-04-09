@@ -50,19 +50,19 @@ class {{ className }} {{
 
 
   /// Adds all fields from [other] to this `{{ className }}`.
-  //
-  // If a field from [other] is already in this `{{ className }}`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant {{ className }} other, { bool overwrite = true }) {
-     assert(other != null, "{{ className }}.addAll: Cannot addAll from null into $this");
+  /// 
+  /// If a field from [other] is already in this `{{ className }}`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+     assert(other != null, "Cannot add all from null into $this");
      if (overwrite != null && overwrite){
         {{#each fields}}{{#if name}}
         {{name}} = other.{{name}} ?? {{name}};
-        {{/if}}{{/each}}
+        {{~/if}}{{/each}}
      } else {
         {{#each fields}}{{#if name}}
         {{name}} ??= other.{{name}};
-        {{/if}}{{/each}}
+        {{~/if}}{{/each}}
      }
   }
 
@@ -73,7 +73,7 @@ class {{ className }} {{
         {{~#each fields}}
         {{#if type}}{{#if name}}
             {{ resolveType type
-                "false"
+                "inline"
                 (takeFirst contextName ../contextName)
                 (takeFirst contextModels ../contextModels)
                 @root.config.scalars
@@ -99,33 +99,38 @@ class {{ className }} {{
   {{#if assignableTo~}}
   {{~#if @root.config.generateFragmentHelpers~}}
   {{~#each assignableTo}}
+  {{~#if (fragmentFieldOnBaseType
+      this.fields
+      @root.config.generateFragmentHelpers
+  )}}
 
-  /// Adds all fields from [other] to this `{{ className }}`.
-  //
-  // If a field from [other] is already in this `{{ className }}`,
-  // its value is overwritten, unless  `overwrite: true` is specified
-  void addAllFrom{{../className}}(covariant {{../className}} other, { bool overwrite = true }) {
-     assert(other != null, "{{ className }}.addAllFrom{{../className}}: Cannot addAll from null into $this");
+  /// Adds all fields from [other] to this `{{ ../className }}`.
+  ///
+  /// If a field from [other] is already in this `{{  ../className }}`,
+  /// its value is overwritten, unless  `overwrite: true` is specified
+  void addAllFrom{{ this.className }}(covariant {{ this.className }} other, { bool overwrite = true, }) {
+     assert(other != null, "Cannot add all from null into $this");
      if (overwrite != null && overwrite){
-        {{~#each ../fields}}{{~#if (
+        {{~#each this.fields}}{{~#if (
         fragmentFieldOnBaseType
             name
             @root.config.generateFragmentHelpers
         )
-        }}
-        {{name}} = other.{{name}} ?? {{name}};
+        ~}}
+        {{name}} = other.{{schemaFieldName}} ?? {{name}};
         {{/if}}{{/each}}
      } else {
-        {{~#each ../fields}}{{~#if (
+        {{~#each this.fields}}{{~#if (
         fragmentFieldOnBaseType
             name
             @root.config.generateFragmentHelpers
         )
-        }}
-        {{name}} ??= other.{{name}};
+        ~}}
+        {{name}} ??= other.{{schemaFieldName}};
         {{/if}}{{/each}}
      }
   }
+  {{~/if~}}
   {{~/each}}
   {{~/if}}
   {{~/if}}

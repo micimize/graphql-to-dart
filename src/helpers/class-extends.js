@@ -1,11 +1,10 @@
-import { capitalize } from './utils'
+import { capitalize } from "./utils";
+import fragmentClassNames from "./fragment-class-names";
 
-const fragmentClass = f => capitalize(f.fragmentName)
-
-const builtinInterfaces = ['ToJson']
+const builtinInterfaces = ["ToJson"];
 
 // TODO inline fragment "onType" support
-// we extend from interfaces in dart to allow functionality 
+// we extend from interfaces in dart to allow functionality
 // piggybacking via replaceTypes
 // TODO base type / entity modeling
 //   should be done via postgraphile plugin
@@ -17,13 +16,12 @@ export default function classExtends(
   interfaces = [],
   replace = {}
 ) {
-  return (base ? `extends ${base} ` : '') + (
-    mixins.length ? `with ${mixins.join(', ')} ` : ''
-  ) + `implements ${
-        builtinInterfaces
-          .concat(interfaces)
-          .concat(fragments.map(fragmentClass))
-        .join(', ')
-  }`
+  return (
+    (base ? `extends ${base} ` : "") +
+    (mixins.length ? `with ${mixins.join(", ")} ` : "") +
+    `implements ${builtinInterfaces
+      .concat(interfaces)
+      .concat(fragmentClassNames(fragments))
+      .join(", ")}`
+  );
 }
-
