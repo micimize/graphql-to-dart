@@ -4,6 +4,13 @@
 }}
 
 {{#eachBackwards innerModels }}
+{{~#unless (
+  ignoreType
+    (concat (toPascalCase ../name) modelType)
+      @root.config.replaceTypes
+      schemaBaseType
+      @root.config.irreducibleTypes
+)}}
 {{> defineClass
       fields=(hackFragmentFields "get" fragmentsSpread fields )
       className=(concat (toPascalCase ../name) modelType)
@@ -20,7 +27,7 @@
       )
 }}
 
-
+{{/unless~}}
 {{/eachBackwards}}
 
 {{> defineClass

@@ -35,6 +35,12 @@ function wrap(isArray, fieldType) {
   return isArray ? `List<${fieldType}>` : fieldType;
 }
 
+function asIrreducible(rawTypeText, irreducibles) {
+  if (irreducibles.includes(rawTypeText.replace(/\[|\]|!/g, ""))) {
+    return rawTypeText.replace(/\[|\]|!/g, "");
+  }
+}
+
 export default function resolveType(
   type,
   jsonKeyInfo,
@@ -54,14 +60,11 @@ export default function resolveType(
   } else {
     isRequired = jsonKeyInfo;
   }
-  if (irreducibles.includes(rawTypeText.replace("!", ""))) {
-    return rawTypeText.replace("!", "");
-  }
-
-  let fieldType = contextModels.filter(({ modelType }) => modelType === type)
-    .length
-    ? contextName + type
-    : primitives[type] || type || "Object";
+  let fieldType =
+    asIrreducible(rawTypeText, irreducibles) ||
+    (contextModels.filter(({ modelType }) => modelType === type).length
+      ? contextName + type
+      : primitives[type] || type || "Object");
 
   if (replace[fieldType]) {
     fieldType = replace[fieldType];
