@@ -32,18 +32,23 @@ export default function withInputType(
   // and leveraging the fact that they're in the same order to
   // stitch the base type fields together
   // TODO this is so bad
+  // very coupled with hackFragmentBaseTypes
   if (Array.isArray(baseType)) {
     return baseType
-      .map((fragBaseType, i) => ({ fragBaseType, typeFields: fields[i] }))
-      .reduce((allTypes, { fragBaseType, typeFields }) => {
+      .map((classNames, i) => ({ ...classNames, typeFields: fields[i] }))
+      .reduce((allTypes, { fragmentClassName, baseTypes, typeFields }) => {
         let seen = [];
         for (let assignableTo of withInputType(
-          fragBaseType,
+          baseTypes,
           replaceMap,
           className,
           exclusionConfig,
           typeFields
         )) {
+          if (!seen.includes(fragmentClassName)) {
+            seen.push(fragmentClassName);
+            allTypes.push({ className: fragmentClassName, fields: typeFields });
+          }
           if (!seen.includes(assignableTo.className)) {
             seen.push(assignableTo.className);
             allTypes.push(assignableTo);

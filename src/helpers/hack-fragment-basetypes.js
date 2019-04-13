@@ -7,15 +7,18 @@ var fragmentBaseTypes = {};
 export default function hackFragmentBaseTypes(
   action,
   fragmentClassName,
-  baseType = undefined
+  baseTypes = undefined
 ) {
   if (action === "add") {
-    fragmentBaseTypes[fragmentClassName] = baseType;
+    fragmentBaseTypes[fragmentClassName] = baseTypes;
   }
 
   if (action === "get") {
     return Array.isArray(fragmentClassName)
-      ? fragmentClassName.map(cn => fragmentBaseTypes[cn])
-      : fragmentBaseTypes[fragmentClassName];
+      ? fragmentClassName.map(cn => ({
+          fragmentClassName: cn,
+          baseTypes: fragmentBaseTypes[cn]
+        }))
+      : { fragmentClassName, baseTypes: fragmentBaseTypes[fragmentClassName] };
   }
 }

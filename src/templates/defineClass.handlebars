@@ -131,6 +131,18 @@ class {{ className }} {{
         {{/if}}{{/each}}
      }
   }
+
+  /// Copy into a new `{{ this.className }}`
+  {{ this.className }} copyAs{{ this.className }}() => {{ this.className }}.empty()
+    {{#each fields}}{{~#if (
+    fragmentFieldOnBaseType
+        name
+        @root.config.generateFragmentHelpers
+    )
+    ~}}
+    ..{{schemaFieldName}} = {{name}}
+    {{/if}}{{/each}};
+
   {{~/if~}}
   {{~/each}}
   {{~/if}}
