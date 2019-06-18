@@ -192,7 +192,11 @@ class VersionId implements ToJson {
 }
 ```
 
-# dev notes
+# NOTES
+The helpers can't handle nested fragments atm, due to lack of awareness that the field is a fragment
+
+
+## dev notes
 `generateFragmentHelpers` is super fickle, and by-and-large we're doing all kinds of hacks to get helpers to work 
 (caching the fragment info at declaration time, then plucking it back out later)
 also helpers often have different usages and the code is basically impossible even for me to follow.

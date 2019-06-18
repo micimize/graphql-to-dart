@@ -20,7 +20,7 @@ class {{ className }} {
 
   ToJson get value => (
     {{#each possibleTypes~}}
-    {{this}}{{#unless @last}} ??
+    {{ camelCase this}}{{#unless @last}} ??
     {{/unless}}
     {{~/each}}
    ) as ToJson;
