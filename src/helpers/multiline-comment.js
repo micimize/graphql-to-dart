@@ -5,10 +5,15 @@ const wrap = linewrap(80, {
   lineBreak: '\n'
 })
 
+function flatMap(xs, f) {
+    return xs.map(f).reduce((a, b) => a.concat(b), []);
+}
 function safeDartCommentLineWrapped(comment) {
-    return comment
-        .split('\n')
-        .flatMap((value) => wrap(value).split('\n'))
+    
+    return flatMap(
+          comment.split('\n'),
+          (value) => wrap(value).split('\n')
+        )
         .map((value)=> `/// ${value}`)
         .join('\n')
 }
