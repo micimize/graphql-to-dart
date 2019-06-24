@@ -17,9 +17,12 @@ const primitives = {
   DateTime: "DateTime"
 };
 
-function jsonKey({ type, required = false, addSerializers = false }) {
+function jsonKey({ type, className, required = false, addSerializers = false }) {
   if (!required && !addSerializers) {
     return "";
+  }
+  if(["Query", "Mutation", "Subscription"].indexOf(className) > -1 ){
+    required = false;
   }
   return (
     "@JsonKey(" +
@@ -50,7 +53,8 @@ export default function resolveType(
   replace = {},
   isArray,
   irreducibles = [],
-  rawTypeText
+  rawTypeText,
+  className
 ) {
   let isRequired = false;
   let addSerializers = true;
@@ -75,6 +79,7 @@ export default function resolveType(
       return new SafeString(
         jsonKey({
           type: fieldType,
+          className: className,
           required: isRequired,
           addSerializers
         }) + wrap(isArray, fieldType)
@@ -84,7 +89,7 @@ export default function resolveType(
     }
   }
   return new SafeString(
-    jsonKey({ type: fieldType, required: isRequired }) +
+    jsonKey({ type: fieldType, required: isRequired, className: className }) +
       wrap(isArray, fieldType)
   );
 }
