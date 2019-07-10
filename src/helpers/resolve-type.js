@@ -54,7 +54,8 @@ export default function resolveType(
   isArray,
   irreducibles = [],
   rawTypeText,
-  className
+  className,
+  requiredFields 
 ) {
   let isRequired = false;
   let addSerializers = true;
@@ -62,7 +63,12 @@ export default function resolveType(
     isRequired = false;
     addSerializers = false;
   } else {
-    isRequired = jsonKeyInfo;
+    // default to true if not set
+    if(requiredFields !== false){
+      isRequired = jsonKeyInfo;
+    } else {
+      isRequired = false   
+    }
   }
   let fieldType =
     asIrreducible(rawTypeText, irreducibles) ||
