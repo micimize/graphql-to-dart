@@ -50,8 +50,8 @@ config:
   parts:
   - "./base.dart"
   - "./graphql.g.dart"
-  # the required fields feature can be disabled 
-  required_fields: false
+  # required annotations on base type fields can be disabled for dynamic queries
+  requiredFields: false
   scalars:
     Date: DateTime
     Datetime: PGDateTime
