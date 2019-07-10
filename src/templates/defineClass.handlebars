@@ -27,7 +27,7 @@ class {{ className }} {{
       @root.config.irreducibleTypes
       raw
       ../className
-      @root.config.required_fields
+      @root.config.requiredFields
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
@@ -84,7 +84,7 @@ class {{ className }} {{
                 @root.config.irreducibleTypes
                 raw
                 ../className
-                @root.config.required_fields
+                @root.config.requiredFields
             }} {{name}},
         {{~/if}}{{/if}}{{/each}}
     }
