@@ -55,7 +55,7 @@ export default function resolveType(
   irreducibles = [],
   rawTypeText,
   className,
-  required_keys 
+  requiredFields 
 ) {
   let isRequired = false;
   let addSerializers = true;
@@ -64,10 +64,9 @@ export default function resolveType(
     addSerializers = false;
   } else {
     // default to true if not set
-    if(required_keys !== false){
+    if(requiredFields !== false){
       isRequired = jsonKeyInfo;
-    }
-    else{
+    } else {
       isRequired = false   
     }
   }
