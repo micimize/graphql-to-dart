@@ -1,0 +1,86 @@
+{{#unless (
+  ignoreType
+    name
+      @root.config.replaceTypes
+      typeName
+      @root.config.irreducibleTypes
+)}}
+
+{{ multilineComment description }}
+class {{ name }} {{
+
+  classExtends
+    (resolveMixins @root.config.mixins fields)
+    fragmentsSpread
+    interfaces
+    @root.config.replaceTypes
+
+}} {
+  static final String typeName = "{{ typeName }}";
+
+  {{#each fields}}{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ resolveType type
+      isRequired
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      @root.config.scalars
+      @root.config.replaceTypes
+      isArray
+      @root.config.irreducibleTypes
+      raw
+      ../name
+      @root.config.requiredFields
+  }} _{{
+      transformCharacters name @root.config.transformCharacters
+  }};
+  {{~/if}}{{/if}}{{/each}}
+
+  {{name}}({
+    {{#each fields}}{{#if name}}
+        {{ resolveType type
+            isRequired
+            (takeFirst contextName ../contextName)
+            (takeFirst contextModels ../contextModels)
+            @root.config.scalars
+            @root.config.replaceTypes
+            isArray
+            @root.config.irreducibleTypes
+            raw
+            ../name
+            @root.config.requiredFields
+        }} {{
+            transformCharacters name @root.config.transformCharacters
+        }},
+    {{/if}}{{/each}}
+  }):
+    {{#each fields}}
+    _{{
+        transformCharacters name @root.config.transformCharacters
+    }} = {{
+        transformCharacters name @root.config.transformCharacters
+    }} {{#if @last}};{{#else}}, {{/if}}'
+    {{/each}};
+
+    Set<String> get _missingRequiredFields() {
+        Set<String> missingFields = {};
+        {{#each fields}}
+        {{~#if isRequired}}
+        if (_{{ transformCharacters name @root.config.transformCharacters }} == null){
+            missingFields.add(_{{ transformCharacters name @root.config.transformCharacters }});
+        }
+        {{/if}}
+        {{/each}}
+        return missingFields;
+    }
+    void validate(){
+        final missing = _missingRequiredFields;
+        assert(missing.isEmpty, "${this.runtimeType}#${hashCode} is missing required fields ${missing}"); 
+    }
+
+    bool isValid => _missingRequiredFields.isEmpty;
+
+}
+{{/unless}}
+

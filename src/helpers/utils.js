@@ -11,6 +11,18 @@ export function stripLeadingUnderscores(lower) {
   return lower.replace('_', '', 'g')
 }
 
+export function transformCharacters(str, characterMap) {
+    return Object.keys(characterMap).reduce(
+        (transformed, charToReplace) =>
+            transformed.replace(
+                charToReplace,
+                characterMap[charToReplace],
+                'g'
+            ),
+        str
+    )
+}
+
 export function capitalize(lower) {
   return lower.replace(/^\w/, c => c.toUpperCase())
 }

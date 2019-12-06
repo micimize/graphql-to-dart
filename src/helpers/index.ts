@@ -16,7 +16,8 @@ import {
   eachBackwards,
   takeFirst,
   camelCase,
-  stripSuffix
+  stripSuffix,
+  transformCharacters,
 } from "./utils";
 
 export {
@@ -37,5 +38,7 @@ export {
   withInputType,
   registerInputType,
   fragmentFieldOnBaseType,
-  fragmentClassNames
+  fragmentClassNames,
+
+  transformCharacters,
 };

@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "prepublishOnly": "yarn build",
-    "build": "codegen-templates-scripts build",
+    "build": "webpack",
     "test": "codegen-templates-scripts test",
     "test-server": "starwars-test-graphql-server",
     "pretest": "yarn build",
@@ -31,11 +31,13 @@
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
-    "@types/node": "^11.10.4",
     "codegen-templates-scripts": "0.18.0",
     "graphql": "^14.1.1",
     "graphql-code-generator": "^0.18.0",
-    "starwars-test-graphql-server": "0.2.0-alpha3"
+    "raw-loader": "^4.0.0",
+    "starwars-test-graphql-server": "0.2.0-alpha3",
+    "webpack-cli": "^3.3.10",
+    "webpack": "^4.41.2"
   },
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",
