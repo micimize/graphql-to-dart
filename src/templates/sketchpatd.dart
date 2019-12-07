@@ -40,7 +40,7 @@ class CalendarEvent extends Entity implements ToJson, Node {
     return null;
   }
 
-  _setField(CalendarEventField field, Object value){
+  _setField(CalendarEventField field, Object value, [bool raise = false]){
     switch(field){
       case CalendarEventField._typename:
         return __typename;

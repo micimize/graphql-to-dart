@@ -10,9 +10,8 @@ import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import { GraphQLSchema } from "graphql";
 import * as customHelpers from "./helpers";
-import indexTemplate, * as partials from "./templates/operations";
-
-import * as schemaPlugin from './schema-types';
+import documentsTemplate, * as partials from "./templates/documents";
+import { print } from "util";
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
@@ -111,5 +110,5 @@ export const plugin: PluginFunction<DartConfig> = async (
     ...flattenDocuments
   };
 
-  return Handlebars.compile(indexTemplate)(handlebarsContext);
+  return Handlebars.compile(documentsTemplate)(handlebarsContext);
 };

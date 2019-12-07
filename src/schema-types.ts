@@ -1,14 +1,16 @@
 import * as Handlebars from "handlebars";
 import {
-  PluginFunction,
   DocumentFile,
   schemaToTemplateContext,
   toPascalCase
 } from "graphql-codegen-core";
+
+import { PluginFunction  } from "@graphql-codegen/plugin-helpers";
+
 import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { GraphQLSchema } from "graphql";
 import * as customHelpers from "./helpers";
-import indexTemplate, * as partials from "./templates/schema";
+import schemaTemplate, * as partials from "./templates/schema";
 
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
@@ -95,5 +97,5 @@ export const plugin: PluginFunction<DartConfig> = async (
     ...templateContext,
   };
 
-  return Handlebars.compile(indexTemplate)(handlebarsContext);
+  return Handlebars.compile(schemaTemplate)(handlebarsContext);
 };

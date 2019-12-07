@@ -29,10 +29,7 @@ module.exports = {
   ],
   resolve: {
     mainFields: ['browser', 'main', 'module'],
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    alias: {
-      handlebars: 'handlebars/dist/handlebars.js'
-    }
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.handlebars'],
   },
   devtool: 'source-map',
   module: {

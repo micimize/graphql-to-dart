@@ -1,13 +1,16 @@
 schema: "http://localhost:8080/graphql"
-documents:
-  - "./lib/gql/HeroForEpisode.gql"
+documents: 'lib/**/*.graphql'
 overwrite: true
 generates:
-  lib/starwars_graphql_serializers.dart:
+  lib/graphql_types.dart:
+    #- graphql-to-dart/schema-types
+    - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/schema-types.js
+  lib/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .dart
+      baseTypesPath: types.ts
     plugins:
-      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist
-      #- ../dist #graphql-to-dart
-      # TODO relative custom plugins seem to be buggy
-config:
-  parts:
-    - "./starwars_graphql_serializers.g.dart"
+      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/index.js
+        #- graphql-to-dart
+

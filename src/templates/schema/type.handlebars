@@ -60,7 +60,7 @@ class {{ name }} {{
         transformCharacters name @root.config.transformCharacters
     }} = {{
         transformCharacters name @root.config.transformCharacters
-    }} {{#if @last}};{{#else}}, {{/if}}'
+    }} {{#if @last}};{{#else}}, {{/else}}{{/if}}'
     {{/each}};
 
     Set<String> get _missingRequiredFields() {
