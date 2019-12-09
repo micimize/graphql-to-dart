@@ -1,7 +1,18 @@
 import { capitalize } from "./utils";
 import fragmentClassNames from "./fragment-class-names";
 
-const builtinInterfaces = ["ToJson"];
+const builtinInterfaces = [
+    /*"ToJson"*/
+];
+
+// apply whatever inheritence keyword
+function inherit(inheritanceKeyword, ..._parents){
+    const parents = _parents.filter(p =>  p);
+    if (parents.length == 0){
+        return ''
+    }
+    return `${inheritanceKeyword} ${parents.join(', ')} `
+}
 
 // TODO inline fragment "onType" support
 // we extend from interfaces in dart to allow functionality
@@ -11,17 +22,21 @@ const builtinInterfaces = ["ToJson"];
 //   right now we replace Node with Entity, which is hacky
 //   ex. Query becomes an "Entity"
 export default function classExtends(
-  [base, ...mixins] = [],
+  baseType,
+  mixins = [],
   fragments = [],
   interfaces = [],
   replace = {}
 ) {
   return (
-    (base ? `extends ${base} ` : "") +
-    (mixins.length ? `with ${mixins.join(", ")} ` : "") +
-    `implements ${builtinInterfaces
-      .concat(interfaces)
-      .concat(fragmentClassNames(fragments))
-      .join(", ")}`
+    inherit('extends', baseType) +
+    inherit('with',
+        ...mixins,
+        ...fragmentClassNames(fragments),
+    ) +
+    inherit('implements',
+        ...builtinInterfaces,
+        ...interfaces, 
+    )
   );
 }

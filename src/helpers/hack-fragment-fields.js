@@ -35,13 +35,10 @@ export default function hackFragmentFields(
 
   if (action === "get") {
     const fragments = nameOrFragments;
-    return [
-      ...fields,
-      ...fragments.reduce(
+    return fragments.reduce(
         (fragFields, frag) => fragFields.concat(getFields(frag.fragmentName)),
         []
-      )
-    ];
+    );
   }
 
   if (action === "list") {

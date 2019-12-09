@@ -1,0 +1,30 @@
+{{#*inline "exposeField" ~}}
+{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
+  {{ type }} get {{ name }} => fields.{{ name }};
+  set {{ name }} ({{ type }} {{ name }}) => fields.{{ name }} = {{ name }};
+{{~/if}}{{/if}}
+{{~/inline}}
+
+{{#each fields}}
+{{> exposeField
+    this
+    description=descriptoin
+    name=( transformCharacters name @root.config.transformCharacters )
+    type=(
+        resolveType type
+            isRequired
+            (takeFirst contextName ../contextName)
+            (takeFirst contextModels ../contextModels)
+            @root.config.scalars
+            @root.config.replaceTypes
+            isArray
+            @root.config.irreducibleTypes
+            raw
+            ../name
+            @root.config.requiredFields
+    )
+}}
+{{/each}}

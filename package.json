@@ -16,7 +16,7 @@
     "test": "codegen-templates-scripts test",
     "test-server": "starwars-test-graphql-server",
     "pretest": "yarn build",
-    "example:gql-gen": "cd example/ && gql-gen",
+    "example:gql-gen": "cd example/ && graphql-codegen",
     "example:source-gen": "cd example/ && flutter packages pub run build_runner build",
     "example:format": "cd example/ && flutter format lib/starwars_graphql_serializers.dart",
     "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
@@ -24,6 +24,7 @@
   "dependencies": {
     "@graphql-codegen/cli": "^1.9.1",
     "@graphql-codegen/core": "^1.9.1",
+    "@graphql-codegen/near-operation-file-preset": "^1.9.1",
     "@graphql-codegen/plugin-helpers": "^1.9.1",
     "graphql-codegen-core": "^0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",

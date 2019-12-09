@@ -1,11 +1,10 @@
 import * as Handlebars from "handlebars";
 import {
   DocumentFile,
-  schemaToTemplateContext,
-  toPascalCase
+  schemaToTemplateContext
 } from "graphql-codegen-core";
 
-import { PluginFunction  } from "@graphql-codegen/plugin-helpers";
+import { PluginFunction, toPascalCase } from "@graphql-codegen/plugin-helpers";
 
 import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { GraphQLSchema } from "graphql";

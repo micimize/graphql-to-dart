@@ -34,6 +34,9 @@ export function camelCase(str) {
 }
 
 export function concat(...args) {
+  if (Array.isArray(args[0])){
+      return [].concat(...args);
+  }
   return args.slice(0, -1).join('')
 }
 
@@ -62,4 +65,9 @@ export function stripSuffix(name, suffix) {
 
 export function inputBaseType(name) {
   return stripSuffix(name, 'Input')
+}
+
+
+export function wrapFields(interfaces = []) {
+    return interfaces.map(i => `_${i}Fields`)
 }

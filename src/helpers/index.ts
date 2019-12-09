@@ -18,6 +18,7 @@ import {
   camelCase,
   stripSuffix,
   transformCharacters,
+  wrapFields
 } from "./utils";
 
 export {
@@ -41,4 +42,6 @@ export {
   fragmentClassNames,
 
   transformCharacters,
+  wrapFields,
 };
+

@@ -1,0 +1,62 @@
+@JsonSerializable()
+class {{ className }} {{
+
+  classExtends
+    typeName
+    (resolveMixins @root.config.mixins fields)
+    fragmentsSpread
+    interfaces
+    @root.config.replaceTypes
+
+}} {
+  {{#if typeName }}
+  static final String typeName = "{{ typeName }}";
+  {{/if}}
+
+  String __typename;
+
+
+  {{> selectionSet }}
+
+  {{#if hasInlineFragments~}}
+  {{#each inlineFragments}}
+    {{ printThis }}
+    @JsonKey(ignore: true)
+    {{ concat ../contextName name }} {{ camelCase name}};
+  {{/each}}
+  {{~/if}}
+
+  {{name}}({
+    {{#each (concat fields mixinFields)}}{{#if name}}
+        {{ resolveType type
+            isRequired
+            (takeFirst contextName ../contextName)
+            (takeFirst contextModels ../contextModels)
+            @root.config.scalars
+            @root.config.replaceTypes
+            isArray
+            @root.config.irreducibleTypes
+            raw
+            ../name
+            @root.config.requiredFields
+        }} {{
+            transformCharacters name @root.config.transformCharacters
+        }},
+    {{/if}}{{/each}}
+  }): super(
+    {{#each (concat fields mixinFields)}}
+    {{
+        transformCharacters name @root.config.transformCharacters
+    }}: {{
+        transformCharacters name @root.config.transformCharacters
+    }},
+    {{/each}}
+  )
+
+  factory {{className}}.fromJson(Map<String, dynamic> json) => 
+    _${{className}}FromJson(json);
+
+  Map<String, dynamic> toJson() => _${{className}}ToJson(instance);
+
+}
+

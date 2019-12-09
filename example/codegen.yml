@@ -1,5 +1,5 @@
 schema: "http://localhost:8080/graphql"
-documents: 'lib/**/*.graphql'
+documents: 'lib/**/*.gql'
 overwrite: true
 generates:
   lib/graphql_types.dart:
@@ -9,7 +9,7 @@ generates:
     preset: near-operation-file
     presetConfig:
       extension: .dart
-      baseTypesPath: types.ts
+      baseTypesPath: ./graphql_types.dart
     plugins:
       - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/index.js
         #- graphql-to-dart

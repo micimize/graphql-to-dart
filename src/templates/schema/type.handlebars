@@ -1,22 +1,14 @@
-{{#unless (
-  ignoreType
-    name
-      @root.config.replaceTypes
-      typeName
-      @root.config.irreducibleTypes
-)}}
-
+{{#*inline "fieldsClass" }}
 {{ multilineComment description }}
-class {{ name }} {{
+class {{ className }}  {{
 
   classExtends
     (resolveMixins @root.config.mixins fields)
     fragmentsSpread
-    interfaces
+    (wrapFields interfaces)
     @root.config.replaceTypes
 
 }} {
-  static final String typeName = "{{ typeName }}";
 
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
@@ -32,10 +24,93 @@ class {{ name }} {{
       raw
       ../name
       @root.config.requiredFields
-  }} _{{
+  }} {{
       transformCharacters name @root.config.transformCharacters
   }};
   {{~/if}}{{/if}}{{/each}}
+
+  {{ className }}({
+    {{#each fields}}{{#if name}}
+        this.{{
+            transformCharacters name @root.config.transformCharacters
+        }},
+    {{/if}}{{/each}}
+  });
+    /// Adds all fields from [other] to this `{{ className }}`.
+    /// 
+    /// If a field from [other] is already in this `{{ className }}`,
+    /// its value is not overwritten, unless  `overwrite: true` is specified
+    void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+        assert(other != null, "Cannot add all from null into $this");
+        if (overwrite != null && overwrite){
+            {{#each fields}}{{#if name}}
+            {{name}} = other.{{name}} ?? {{name}};
+            {{~/if}}{{/each}}
+        } else {
+            {{#each fields}}{{#if name}}
+            {{name}} ??= other.{{name}};
+            {{~/if}}{{/each}}
+        }
+    }
+
+  /// Creates a copy of this `{{ className }}` but with the given fields replaced with the new values.
+  {{ className }} copyWith(
+  {{~#if fields.length~}}
+    {
+        {{~#each fields}}
+        {{#if type}}{{#if name}}
+            {{ resolveType type
+                "inline"
+                (takeFirst contextName ../contextName)
+                (takeFirst contextModels ../contextModels)
+                @root.config.scalars
+                @root.config.replaceTypes
+                isArray
+                @root.config.irreducibleTypes
+                raw
+                ../className
+                @root.config.requiredFields
+            }} {{name}},
+        {{~/if}}{{/if}}{{/each}}
+    }
+  {{~/if~}}
+    ){
+        return {{ className }}(
+            {{#each fields}}{{#if type}}{{#if name}}
+            {{name}}: {{name}} ?? this.{{name}},
+            {{~/if}}{{/if}}{{/each}}
+        );
+  }
+
+  /// Creates a copy of this `{{ className }}`
+  {{ className }} copy() => copyWith();
+
+}
+{{/inline}}
+
+{{#unless (
+  ignoreType
+    name
+      @root.config.replaceTypes
+      typeName
+      @root.config.irreducibleTypes
+)}}
+
+{{> fieldsClass this className=(concat "_" name "Fields") }}
+
+class {{ name }} {{
+
+  classExtends
+    (resolveMixins @root.config.mixins fields)
+    fragmentsSpread
+    interfaces
+    @root.config.replaceTypes
+
+}} {
+  static final String typeName = "{{ takeFirst typeName name }}";
+
+  @protected
+  covariant _{{ name }}Fields fields;
 
   {{name}}({
     {{#each fields}}{{#if name}}
@@ -54,33 +129,37 @@ class {{ name }} {{
             transformCharacters name @root.config.transformCharacters
         }},
     {{/if}}{{/each}}
-  }):
+  }): fields = _{{ name }}Fields(
     {{#each fields}}
-    _{{
+    {{
         transformCharacters name @root.config.transformCharacters
-    }} = {{
+    }}: {{
         transformCharacters name @root.config.transformCharacters
-    }} {{#if @last}};{{#else}}, {{/else}}{{/if}}'
-    {{/each}};
+    }},
+    {{/each}}
+  );
 
-    Set<String> get _missingRequiredFields() {
-        Set<String> missingFields = {};
+
+    Set<String> get _missingRequiredFields {
+        Set<String> missingFields = Set();
         {{#each fields}}
         {{~#if isRequired}}
-        if (_{{ transformCharacters name @root.config.transformCharacters }} == null){
-            missingFields.add(_{{ transformCharacters name @root.config.transformCharacters }});
+        if (fields.{{ transformCharacters name @root.config.transformCharacters }} == null){
+            missingFields.add("{{ transformCharacters name @root.config.transformCharacters }}");
         }
         {{/if}}
         {{/each}}
         return missingFields;
     }
+
     void validate(){
         final missing = _missingRequiredFields;
-        assert(missing.isEmpty, "${this.runtimeType}#${hashCode} is missing required fields ${missing}"); 
+        assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
     }
 
-    bool isValid => _missingRequiredFields.isEmpty;
+    bool get isValid => _missingRequiredFields.isEmpty;
+
 
 }
-{{/unless}}
 
+{{/unless}}

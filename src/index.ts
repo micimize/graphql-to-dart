@@ -1,17 +1,19 @@
 import * as Handlebars from "handlebars";
 import {
-  PluginFunction,
   DocumentFile,
   schemaToTemplateContext,
   transformDocumentsFiles,
-  toPascalCase
 } from "graphql-codegen-core";
 import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
+import { PluginFunction, toPascalCase } from "@graphql-codegen/plugin-helpers";
+
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import { GraphQLSchema } from "graphql";
 import * as customHelpers from "./helpers";
 import documentsTemplate, * as partials from "./templates/documents";
 import { print } from "util";
+
+
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
@@ -87,7 +89,7 @@ export const plugin: PluginFunction<DartConfig> = async (
 
   registerMapWith((...args) => Handlebars.registerHelper(...args), {
     toPascalCase,
-    ...customHelpers
+    ...wrapHelpers(customHelpers)
   });
   registerMapWith((...args) => Handlebars.registerPartial(...args), partials);
 
@@ -110,5 +112,30 @@ export const plugin: PluginFunction<DartConfig> = async (
     ...flattenDocuments
   };
 
-  return Handlebars.compile(documentsTemplate)(handlebarsContext);
+  try {
+    return Handlebars.compile(documentsTemplate)(handlebarsContext);
+  } catch (e) {
+      console.trace(e);
+      throw e;
+  }
+};
+
+
+function wrapHelpers(helpers){
+    return Object.keys(helpers).reduce(
+        (wrapped, h) => (
+            wrapped[h] = _logErrors(helpers[h]),
+            wrapped
+        ), {})
+}
+
+function _logErrors(fn) {
+    return (...args) => {
+        try {
+            return fn(...args);
+        } catch(e) {
+            console.error( `ERROR ${e} thrown by helper ${fn.name}(${args})`)
+            throw e;
+        }
+    }
 };

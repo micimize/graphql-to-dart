@@ -1,3 +1,27 @@
+
+{{#*inline "exposeField" ~}}
+{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ type }} get {{ name }} => fields.{{ name }};
+  set {{ name }} ({{ type }} {{ name }}) => fields.{{ name }} = {{ name }};
+{{~/if}}{{/if}}
+{{~/inline}}
+
+{{#*inline "fragmentMixin" }}
+{{ multilineComment description }}
+mixin {{ className }} on {{ typeName }} {{
+  classExtends
+    typeName=""
+    fragmentsSpread=fragmentsSpread
+}} {
+  static final String typeName = "{{ typeName }}";
+
+  {{> selectionSet }}
+
+}
+{{/inline}}
+
 {{# if (hackFragmentFields "ensure_unique" name) ~}}
 
 {{#eachBackwards innerModels }}
@@ -5,18 +29,11 @@
 
 {{~ hackFragmentBaseTypes "add" (concat (toPascalCase ../name) modelType) schemaBaseType ~}}
 
-{{> defineClass
+{{> fragmentMixin
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
-      assignableTo=(
-        withInputType
-          schemaBaseType
-          @root.config.replaceTypes
-          (concat (toPascalCase ../name) modelType)
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "get" fragmentsSpread fields)
-      )
-      fields=(hackFragmentFields "get" fragmentsSpread fields )
+      fields=fields
+      fragmentsSpread=fragmentsSpread
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}
@@ -25,26 +42,21 @@
 
 {{~ hackFragmentBaseTypes "add" (toPascalCase name) onType ~}}
 
-{{> defineClass
+{{> fragmentMixin
       className=(toPascalCase name)
       typeName=onType
-      assignableTo=(
-        withInputType
-          onType
-          @root.config.replaceTypes
-          (toPascalCase name)
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "get" fragmentsSpread fields)
-      )
-      fields=(hackFragmentFields "get" fragmentsSpread fields)
+      fields=fields
+      fragmentsSpread=fragmentsSpread
       contextModels=innerModels
       contextName=(toPascalCase name)
 }}
+
 
 {{~ hackFragmentFields "add" name
     fields
     innerModels
     fragmentsSpread 
 ~}}
+
 
 {{/if}}

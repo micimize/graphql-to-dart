@@ -1,3 +1,7 @@
+fragment home on Human {
+    homePlanet
+}
+
 query HeroForEpisode($ep: Episode!) {
   hero(episode: $ep) {
     # without typename we can't really tell which fragments to parse
@@ -8,7 +12,7 @@ query HeroForEpisode($ep: Episode!) {
     }
     ... on Human {
       height
-      homePlanet
+      ...home
     }
   }
 }

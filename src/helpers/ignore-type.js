@@ -2,7 +2,7 @@ export default function ignoreType(
   name,
   ignore = {},
   baseType,
-  irreducibles
+  irreducibles=[]
 ) {
   return Object.keys(ignore).includes(name) || (
     baseType && irreducibles.includes(baseType)

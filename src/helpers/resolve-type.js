@@ -38,7 +38,7 @@ function wrap(isArray, fieldType) {
   return isArray ? `List<${fieldType}>` : fieldType;
 }
 
-function asIrreducible(rawTypeText, irreducibles) {
+function asIrreducible(rawTypeText, irreducibles = []) {
   if (irreducibles.includes(rawTypeText.replace(/\[|\]|!/g, ""))) {
     return rawTypeText.replace(/\[|\]|!/g, "");
   }
