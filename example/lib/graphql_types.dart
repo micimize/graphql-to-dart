@@ -47,16 +47,15 @@ starship   );
 
 
 /// The input object sent when someone is creating a new review
-class _ReviewInputFields  extends [object Object]  {
+class _ReviewInputFields   {
 
   
   /// 0-5 stars
-  @JsonKey(required: true, disallowNullValue: true,)
-    int stars;
+  int stars;
   /// Comment about the movie, optional
   String commentary;
   /// Favorite color, optional
-  ColorInput favoritecolor;
+  ColorInput favoriteColor;
 
   _ReviewInputFields({
     
@@ -64,7 +63,7 @@ class _ReviewInputFields  extends [object Object]  {
     
         this.commentary,
     
-        this.favoritecolor,
+        this.favoriteColor,
     
   });
     /// Adds all fields from [other] to this `_ReviewInputFields`.
@@ -77,12 +76,12 @@ class _ReviewInputFields  extends [object Object]  {
             
             stars = other.stars ?? stars;
             commentary = other.commentary ?? commentary;
-            favorite_color = other.favorite_color ?? favorite_color;
+            favoriteColor = other.favoriteColor ?? favoriteColor;
         } else {
             
             stars ??= other.stars;
             commentary ??= other.commentary;
-            favorite_color ??= other.favorite_color;
+            favoriteColor ??= other.favoriteColor;
         }
     }
 
@@ -90,13 +89,13 @@ class _ReviewInputFields  extends [object Object]  {
   _ReviewInputFields copyWith({        
             int stars,        
             String commentary,        
-            ColorInput favorite_color,
+            ColorInput favoriteColor,
     }){
         return _ReviewInputFields(
             
             stars: stars ?? this.stars,
             commentary: commentary ?? this.commentary,
-            favorite_color: favorite_color ?? this.favorite_color,
+            favoriteColor: favoriteColor ?? this.favoriteColor,
         );
   }
 
@@ -105,7 +104,7 @@ class _ReviewInputFields  extends [object Object]  {
 
 }
 
-class ReviewInput extends [object Object]  {
+class ReviewInput  {
   static final String typeName = "ReviewInput";
 
   @protected
@@ -113,23 +112,22 @@ class ReviewInput extends [object Object]  {
 
   ReviewInput({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    int stars,
+        int stars,
     
         String commentary,
     
-        ColorInput favoritecolor,
+        ColorInput favoriteColor,
     
   }): fields = _ReviewInputFields(
     stars: stars,
     commentary: commentary,
-    favoritecolor: favoritecolor,
+    favoriteColor: favoriteColor,
   );
 
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.stars == null){
+        if (fields.stars  == null){
             missingFields.add("stars");
         }
         return missingFields;
@@ -150,14 +148,11 @@ class ReviewInput extends [object Object]  {
 
 
 /// The input object sent when passing in a color
-class _ColorInputFields  extends [object Object]  {
+class _ColorInputFields   {
 
   
-    @JsonKey(required: true, disallowNullValue: true,)
     int red;
-    @JsonKey(required: true, disallowNullValue: true,)
     int green;
-    @JsonKey(required: true, disallowNullValue: true,)
     int blue;
 
   _ColorInputFields({
@@ -207,7 +202,7 @@ class _ColorInputFields  extends [object Object]  {
 
 }
 
-class ColorInput extends [object Object]  {
+class ColorInput  {
   static final String typeName = "ColorInput";
 
   @protected
@@ -215,14 +210,11 @@ class ColorInput extends [object Object]  {
 
   ColorInput({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    int red,
+        int red,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    int green,
+        int green,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    int blue,
+        int blue,
     
   }): fields = _ColorInputFields(
     red: red,
@@ -233,13 +225,13 @@ class ColorInput extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.red == null){
+        if (fields.red  == null){
             missingFields.add("red");
         }
-        if (fields.green == null){
+        if (fields.green  == null){
             missingFields.add("green");
         }
-        if (fields.blue == null){
+        if (fields.blue  == null){
             missingFields.add("blue");
         }
         return missingFields;
@@ -262,23 +254,19 @@ class ColorInput extends [object Object]  {
 
 
 /// A character from the Star Wars universe
-class _CharacterFields  extends [object Object]  {
+class _CharacterFields   {
 
   
   /// The ID of the character
-  @JsonKey(required: true, disallowNullValue: true,)
-    String id;
+  String id;
   /// The name of the character
-  @JsonKey(required: true, disallowNullValue: true,)
-    String name;
+  String name;
   /// The friends of the character, or an empty list if they have none
   List<Character> friends;
   /// The friends of the character exposed as a connection with edges
-  @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection;
+  FriendsConnection friendsConnection;
   /// The movies this character appears in
-  @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn;
+  List<Episode> appearsIn;
 
   _CharacterFields({
     
@@ -339,7 +327,7 @@ class _CharacterFields  extends [object Object]  {
 
 }
 
-class Character extends [object Object]  {
+class Character  {
   static final String typeName = "Character";
 
   @protected
@@ -347,19 +335,15 @@ class Character extends [object Object]  {
 
   Character({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String id,
+        String id,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String name,
+        String name,
     
         List<Character> friends,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection,
+        FriendsConnection friendsConnection,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn,
+        List<Episode> appearsIn,
     
   }): fields = _CharacterFields(
     id: id,
@@ -372,16 +356,16 @@ class Character extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.id == null){
+        if (fields.id  == null){
             missingFields.add("id");
         }
-        if (fields.name == null){
+        if (fields.name  == null){
             missingFields.add("name");
         }
-        if (fields.friendsConnection == null){
+        if (fields.friendsConnection  == null){
             missingFields.add("friendsConnection");
         }
-        if (fields.appearsIn == null){
+        if (fields.appearsIn  == null){
             missingFields.add("appearsIn");
         }
         return missingFields;
@@ -403,7 +387,7 @@ class Character extends [object Object]  {
 
 
 /// The query type, represents all of the entry points into our object graph
-class _QueryFields  extends [object Object]  {
+class _QueryFields   {
 
   
     Character hero;
@@ -485,7 +469,7 @@ class _QueryFields  extends [object Object]  {
 
 }
 
-class Query extends [object Object]  {
+class Query  {
   static final String typeName = "Query";
 
   @protected
@@ -537,7 +521,7 @@ class Query extends [object Object]  {
 
 
 /// A connection object for a character's friends
-class _FriendsConnectionFields  extends [object Object]  {
+class _FriendsConnectionFields   {
 
   
   /// The total number of friends
@@ -547,8 +531,7 @@ class _FriendsConnectionFields  extends [object Object]  {
   /// A list of the friends, as a convenience when edges are not needed.
   List<Character> friends;
   /// Information for paginating this connection
-  @JsonKey(required: true, disallowNullValue: true,)
-    PageInfo pageInfo;
+  PageInfo pageInfo;
 
   _FriendsConnectionFields({
     
@@ -603,7 +586,7 @@ class _FriendsConnectionFields  extends [object Object]  {
 
 }
 
-class FriendsConnection extends [object Object]  {
+class FriendsConnection  {
   static final String typeName = "FriendsConnection";
 
   @protected
@@ -617,8 +600,7 @@ class FriendsConnection extends [object Object]  {
     
         List<Character> friends,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    PageInfo pageInfo,
+        PageInfo pageInfo,
     
   }): fields = _FriendsConnectionFields(
     totalCount: totalCount,
@@ -630,7 +612,7 @@ class FriendsConnection extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.pageInfo == null){
+        if (fields.pageInfo  == null){
             missingFields.add("pageInfo");
         }
         return missingFields;
@@ -650,12 +632,11 @@ class FriendsConnection extends [object Object]  {
 
 
 /// An edge object for a character's friends
-class _FriendsEdgeFields  extends [object Object]  {
+class _FriendsEdgeFields   {
 
   
   /// A cursor used for pagination
-  @JsonKey(required: true, disallowNullValue: true,)
-    String cursor;
+  String cursor;
   /// The character represented by this friendship edge
   Character node;
 
@@ -700,7 +681,7 @@ class _FriendsEdgeFields  extends [object Object]  {
 
 }
 
-class FriendsEdge extends [object Object]  {
+class FriendsEdge  {
   static final String typeName = "FriendsEdge";
 
   @protected
@@ -708,8 +689,7 @@ class FriendsEdge extends [object Object]  {
 
   FriendsEdge({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String cursor,
+        String cursor,
     
         Character node,
     
@@ -721,7 +701,7 @@ class FriendsEdge extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.cursor == null){
+        if (fields.cursor  == null){
             missingFields.add("cursor");
         }
         return missingFields;
@@ -741,12 +721,11 @@ class FriendsEdge extends [object Object]  {
 
 
 /// Information for paginating this connection
-class _PageInfoFields  extends [object Object]  {
+class _PageInfoFields   {
 
   
     String startCursor;
     String endCursor;
-    @JsonKey(required: true, disallowNullValue: true,)
     bool hasNextPage;
 
   _PageInfoFields({
@@ -796,7 +775,7 @@ class _PageInfoFields  extends [object Object]  {
 
 }
 
-class PageInfo extends [object Object]  {
+class PageInfo  {
   static final String typeName = "PageInfo";
 
   @protected
@@ -808,8 +787,7 @@ class PageInfo extends [object Object]  {
     
         String endCursor,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    bool hasNextPage,
+        bool hasNextPage,
     
   }): fields = _PageInfoFields(
     startCursor: startCursor,
@@ -820,7 +798,7 @@ class PageInfo extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.hasNextPage == null){
+        if (fields.hasNextPage  == null){
             missingFields.add("hasNextPage");
         }
         return missingFields;
@@ -840,14 +818,13 @@ class PageInfo extends [object Object]  {
 
 
 /// Represents a review for a movie
-class _ReviewFields  extends [object Object]  {
+class _ReviewFields   {
 
   
   /// The movie
   Episode episode;
   /// The number of stars this review gave, 1-5
-  @JsonKey(required: true, disallowNullValue: true,)
-    int stars;
+  int stars;
   /// Comment about the movie
   String commentary;
 
@@ -898,7 +875,7 @@ class _ReviewFields  extends [object Object]  {
 
 }
 
-class Review extends [object Object]  {
+class Review  {
   static final String typeName = "Review";
 
   @protected
@@ -908,8 +885,7 @@ class Review extends [object Object]  {
     
         Episode episode,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    int stars,
+        int stars,
     
         String commentary,
     
@@ -922,7 +898,7 @@ class Review extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.stars == null){
+        if (fields.stars  == null){
             missingFields.add("stars");
         }
         return missingFields;
@@ -942,15 +918,13 @@ class Review extends [object Object]  {
 
 
 /// A humanoid creature from the Star Wars universe
-class _HumanFields  extends [object Object]  {
+class _HumanFields   {
 
   
   /// The ID of the human
-  @JsonKey(required: true, disallowNullValue: true,)
-    String id;
+  String id;
   /// What this human calls themselves
-  @JsonKey(required: true, disallowNullValue: true,)
-    String name;
+  String name;
   /// The home planet of the human, or null if unknown
   String homePlanet;
   /// Height in the preferred unit, default is meters
@@ -960,11 +934,9 @@ class _HumanFields  extends [object Object]  {
   /// This human's friends, or an empty list if they have none
   List<Character> friends;
   /// The friends of the human exposed as a connection with edges
-  @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection;
+  FriendsConnection friendsConnection;
   /// The movies this human appears in
-  @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn;
+  List<Episode> appearsIn;
   /// A list of starships this person has piloted, or an empty list if none
   List<Starship> starships;
 
@@ -1051,7 +1023,7 @@ class _HumanFields  extends [object Object]  {
 
 }
 
-class Human extends [object Object]  {
+class Human  {
   static final String typeName = "Human";
 
   @protected
@@ -1059,11 +1031,9 @@ class Human extends [object Object]  {
 
   Human({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String id,
+        String id,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String name,
+        String name,
     
         String homePlanet,
     
@@ -1073,11 +1043,9 @@ class Human extends [object Object]  {
     
         List<Character> friends,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection,
+        FriendsConnection friendsConnection,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn,
+        List<Episode> appearsIn,
     
         List<Starship> starships,
     
@@ -1096,16 +1064,16 @@ class Human extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.id == null){
+        if (fields.id  == null){
             missingFields.add("id");
         }
-        if (fields.name == null){
+        if (fields.name  == null){
             missingFields.add("name");
         }
-        if (fields.friendsConnection == null){
+        if (fields.friendsConnection  == null){
             missingFields.add("friendsConnection");
         }
-        if (fields.appearsIn == null){
+        if (fields.appearsIn  == null){
             missingFields.add("appearsIn");
         }
         return missingFields;
@@ -1125,15 +1093,13 @@ class Human extends [object Object]  {
 
 
 /// 
-class _StarshipFields  extends [object Object]  {
+class _StarshipFields   {
 
   
   /// The ID of the starship
-  @JsonKey(required: true, disallowNullValue: true,)
-    String id;
+  String id;
   /// The name of the starship
-  @JsonKey(required: true, disallowNullValue: true,)
-    String name;
+  String name;
   /// Length of the starship, along the longest axis
   double length;
     List<double> coordinates;
@@ -1191,7 +1157,7 @@ class _StarshipFields  extends [object Object]  {
 
 }
 
-class Starship extends [object Object]  {
+class Starship  {
   static final String typeName = "Starship";
 
   @protected
@@ -1199,11 +1165,9 @@ class Starship extends [object Object]  {
 
   Starship({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String id,
+        String id,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String name,
+        String name,
     
         double length,
     
@@ -1219,10 +1183,10 @@ class Starship extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.id == null){
+        if (fields.id  == null){
             missingFields.add("id");
         }
-        if (fields.name == null){
+        if (fields.name  == null){
             missingFields.add("name");
         }
         return missingFields;
@@ -1242,23 +1206,19 @@ class Starship extends [object Object]  {
 
 
 /// An autonomous mechanical character in the Star Wars universe
-class _DroidFields  extends [object Object]  {
+class _DroidFields   {
 
   
   /// The ID of the droid
-  @JsonKey(required: true, disallowNullValue: true,)
-    String id;
+  String id;
   /// What others call this droid
-  @JsonKey(required: true, disallowNullValue: true,)
-    String name;
+  String name;
   /// This droid's friends, or an empty list if they have none
   List<Character> friends;
   /// The friends of the droid exposed as a connection with edges
-  @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection;
+  FriendsConnection friendsConnection;
   /// The movies this droid appears in
-  @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn;
+  List<Episode> appearsIn;
   /// This droid's primary function
   String primaryFunction;
 
@@ -1327,7 +1287,7 @@ class _DroidFields  extends [object Object]  {
 
 }
 
-class Droid extends [object Object]  {
+class Droid  {
   static final String typeName = "Droid";
 
   @protected
@@ -1335,19 +1295,15 @@ class Droid extends [object Object]  {
 
   Droid({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String id,
+        String id,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String name,
+        String name,
     
         List<Character> friends,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    FriendsConnection friendsConnection,
+        FriendsConnection friendsConnection,
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    List<Episode> appearsIn,
+        List<Episode> appearsIn,
     
         String primaryFunction,
     
@@ -1363,16 +1319,16 @@ class Droid extends [object Object]  {
 
     Set<String> get _missingRequiredFields {
         Set<String> missingFields = Set();
-        if (fields.id == null){
+        if (fields.id  == null){
             missingFields.add("id");
         }
-        if (fields.name == null){
+        if (fields.name  == null){
             missingFields.add("name");
         }
-        if (fields.friendsConnection == null){
+        if (fields.friendsConnection  == null){
             missingFields.add("friendsConnection");
         }
-        if (fields.appearsIn == null){
+        if (fields.appearsIn  == null){
             missingFields.add("appearsIn");
         }
         return missingFields;
@@ -1392,7 +1348,7 @@ class Droid extends [object Object]  {
 
 
 /// The mutation type, represents all updates we can make to our data
-class _MutationFields  extends [object Object]  {
+class _MutationFields   {
 
   
     Review createReview;
@@ -1432,7 +1388,7 @@ class _MutationFields  extends [object Object]  {
 
 }
 
-class Mutation extends [object Object]  {
+class Mutation  {
   static final String typeName = "Mutation";
 
   @protected
@@ -1466,7 +1422,7 @@ class Mutation extends [object Object]  {
 
 
 /// The subscription type, represents all subscriptions we can make to our data
-class _SubscriptionFields  extends [object Object]  {
+class _SubscriptionFields   {
 
   
     Review reviewAdded;
@@ -1506,7 +1462,7 @@ class _SubscriptionFields  extends [object Object]  {
 
 }
 
-class Subscription extends [object Object]  {
+class Subscription  {
   static final String typeName = "Subscription";
 
   @protected

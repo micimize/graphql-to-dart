@@ -39,17 +39,11 @@ class {{ className }} {{
             raw
             ../name
             @root.config.requiredFields
-        }} {{
-            transformCharacters name @root.config.transformCharacters
-        }},
+        }} {{dartName name}},
     {{/if}}{{/each}}
   }): super(
     {{#each (concat fields mixinFields)}}
-    {{
-        transformCharacters name @root.config.transformCharacters
-    }}: {{
-        transformCharacters name @root.config.transformCharacters
-    }},
+    {{dartName name}}: {{dartName name}},
     {{/each}}
   )
 

@@ -28,6 +28,9 @@ export default function classExtends(
   interfaces = [],
   replace = {}
 ) {
+  if (typeof(baseType) != 'string'){
+      baseType = undefined;
+  }
   return (
     inherit('extends', baseType) +
     inherit('with',

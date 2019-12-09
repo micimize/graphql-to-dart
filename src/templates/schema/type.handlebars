@@ -14,7 +14,7 @@ class {{ className }}  {{
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   {{ resolveType type
-      isRequired
+      "inline"
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       @root.config.scalars
@@ -24,16 +24,12 @@ class {{ className }}  {{
       raw
       ../name
       @root.config.requiredFields
-  }} {{
-      transformCharacters name @root.config.transformCharacters
-  }};
+  }} {{ dartName name }};
   {{~/if}}{{/if}}{{/each}}
 
   {{ className }}({
     {{#each fields}}{{#if name}}
-        this.{{
-            transformCharacters name @root.config.transformCharacters
-        }},
+        this.{{ dartName name }},
     {{/if}}{{/each}}
   });
     /// Adds all fields from [other] to this `{{ className }}`.
@@ -44,11 +40,11 @@ class {{ className }}  {{
         assert(other != null, "Cannot add all from null into $this");
         if (overwrite != null && overwrite){
             {{#each fields}}{{#if name}}
-            {{name}} = other.{{name}} ?? {{name}};
+            {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
             {{~/if}}{{/each}}
         } else {
             {{#each fields}}{{#if name}}
-            {{name}} ??= other.{{name}};
+            {{ dartName name }} ??= other.{{ dartName name }};
             {{~/if}}{{/each}}
         }
     }
@@ -70,14 +66,14 @@ class {{ className }}  {{
                 raw
                 ../className
                 @root.config.requiredFields
-            }} {{name}},
+            }} {{ dartName name}},
         {{~/if}}{{/if}}{{/each}}
     }
   {{~/if~}}
     ){
         return {{ className }}(
             {{#each fields}}{{#if type}}{{#if name}}
-            {{name}}: {{name}} ?? this.{{name}},
+            {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
             {{~/if}}{{/if}}{{/each}}
         );
   }
@@ -115,7 +111,7 @@ class {{ name }} {{
   {{name}}({
     {{#each fields}}{{#if name}}
         {{ resolveType type
-            isRequired
+            "inline"
             (takeFirst contextName ../contextName)
             (takeFirst contextModels ../contextModels)
             @root.config.scalars
@@ -125,17 +121,11 @@ class {{ name }} {{
             raw
             ../name
             @root.config.requiredFields
-        }} {{
-            transformCharacters name @root.config.transformCharacters
-        }},
+        }} {{ dartName name }},
     {{/if}}{{/each}}
   }): fields = _{{ name }}Fields(
     {{#each fields}}
-    {{
-        transformCharacters name @root.config.transformCharacters
-    }}: {{
-        transformCharacters name @root.config.transformCharacters
-    }},
+    {{ dartName name }}: {{ dartName name }},
     {{/each}}
   );
 
@@ -144,8 +134,8 @@ class {{ name }} {{
         Set<String> missingFields = Set();
         {{#each fields}}
         {{~#if isRequired}}
-        if (fields.{{ transformCharacters name @root.config.transformCharacters }} == null){
-            missingFields.add("{{ transformCharacters name @root.config.transformCharacters }}");
+        if (fields.{{ dartName name }}  == null){
+            missingFields.add("{{ dartName name }}");
         }
         {{/if}}
         {{/each}}

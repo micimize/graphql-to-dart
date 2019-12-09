@@ -4,14 +4,13 @@ import {
   schemaToTemplateContext,
   transformDocumentsFiles,
 } from "graphql-codegen-core";
-import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
-import { PluginFunction, toPascalCase } from "@graphql-codegen/plugin-helpers";
+import { PluginFunction, isConfiguredOutput } from "@graphql-codegen/plugin-helpers";
 
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import { GraphQLSchema } from "graphql";
-import * as customHelpers from "./helpers";
 import documentsTemplate, * as partials from "./templates/documents";
 import { print } from "util";
+import configureHelpers from "./helpers";
 
 
 
@@ -52,9 +51,9 @@ export interface DartConfig {
 
   irreducibleTypes?: Array<string>;
 
-  // mapping of characters to replacement characters,
-  // i.e. "__": "u_" results in "__typename" -> "u_typename"
-  // or "_": "" results in "__typename" -> "typename"
+  // mapping of regexs to replacement characters,
+  // i.e. "^__": "u_" results in "__typename" -> "u_typename"
+  // or "^_": "" results in "__typename" -> "typename"
   // default is { "_": "" }
   transformCharacters?: { [type: string]: string }
 }
@@ -85,18 +84,12 @@ export const plugin: PluginFunction<DartConfig> = async (
 
   const flattenDocuments = flattenTypes(transformedDocuments);
 
-  registerMapWith((...args) => Handlebars.registerHelper(...args), helpers);
+  registerMapWith(
+      (...args: [string, Handlebars.HelperDelegate]) => Handlebars.registerHelper(...args),
+      configureHelpers(config)
+  );
 
-  registerMapWith((...args) => Handlebars.registerHelper(...args), {
-    toPascalCase,
-    ...wrapHelpers(customHelpers)
-  });
   registerMapWith((...args) => Handlebars.registerPartial(...args), partials);
-
-  if (!config.transformCharacters){
-      config.transformCharacters = { "_": "" }
-
-  }
 
   const scalars = Object.assign(
     {},
@@ -120,23 +113,3 @@ export const plugin: PluginFunction<DartConfig> = async (
   }
 };
 
-
-function wrapHelpers(helpers){
-    return Object.keys(helpers).reduce(
-        (wrapped, h) => (
-            wrapped[h] = _logErrors(helpers[h]),
-            wrapped
-        ), {})
-}
-
-function _logErrors(fn) {
-    return (...args) => {
-        try {
-            // console.log(fn.name, args.slice(0, -1))
-            return fn(...args);
-        } catch(e) {
-            console.error( `ERROR ${e} thrown by helper ${fn.name}(${args.slice(0, -1)})`)
-            throw e;
-        }
-    }
-};

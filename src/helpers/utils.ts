@@ -1,4 +1,4 @@
-export function logThis() {
+export function logThis(this: any) {
   console.log(this)
 }
 
@@ -11,16 +11,16 @@ export function stripLeadingUnderscores(lower) {
   return lower.replace('_', '', 'g')
 }
 
-export function transformCharacters(str, characterMap) {
+export function transformCharacters(str, characterMap = { "^_": "" }) {
     return Object.keys(characterMap).reduce(
-        (transformed, charToReplace) =>
+        (transformed, regex) =>
             transformed.replace(
-                charToReplace,
-                characterMap[charToReplace],
+                new RegExp(regex),
+                characterMap[regex],
                 'g'
             ),
         str
-    )
+    ).replace(/([-_]\w)/g, g => g[1].toUpperCase()) // snake to camel
 }
 
 export function capitalize(lower) {

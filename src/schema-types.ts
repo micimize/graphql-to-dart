@@ -4,11 +4,10 @@ import {
   schemaToTemplateContext
 } from "graphql-codegen-core";
 
-import { PluginFunction, toPascalCase } from "@graphql-codegen/plugin-helpers";
+import { PluginFunction } from "@graphql-codegen/plugin-helpers";
 
-import { helpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { GraphQLSchema } from "graphql";
-import * as customHelpers from "./helpers";
+import configureHelpers from "./helpers";
 import schemaTemplate, * as partials from "./templates/schema";
 
 
@@ -42,9 +41,9 @@ export interface DartConfig {
   irreducibleTypes?: Array<string>;
 
   // mapping of characters to replacement characters,
-  // i.e. "__": "u_" results in "__typename" -> "u_typename"
-  // or "_": "" results in "__typename" -> "typename"
-  // default is { "_": "" }
+  // i.e. "^__": "u_" results in "__typename" -> "u_typename"
+  // or "^_": "" results in "__typename" -> "typename"
+  // default is { "^_": "" }
   transformCharacters?: { [type: string]: string }
 }
 
@@ -70,18 +69,11 @@ export const plugin: PluginFunction<DartConfig> = async (
 ): Promise<string> => {
   const templateContext = schemaToTemplateContext(schema);
 
-  registerMapWith((...args) => Handlebars.registerHelper(...args), helpers);
-
-  registerMapWith((...args) => Handlebars.registerHelper(...args), {
-    toPascalCase,
-    ...customHelpers
-  });
-
+  registerMapWith(
+      (...args: [string, Handlebars.HelperDelegate]) => Handlebars.registerHelper(...args),
+      configureHelpers(config)
+  );
   registerMapWith((...args) => Handlebars.registerPartial(...args), partials);
-
-  if (!config.transformCharacters){
-      config.transformCharacters = { "_": "" }
-  }
 
   const scalars = Object.assign(
     {},
@@ -98,3 +90,4 @@ export const plugin: PluginFunction<DartConfig> = async (
 
   return Handlebars.compile(schemaTemplate)(handlebarsContext);
 };
+

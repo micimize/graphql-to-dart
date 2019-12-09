@@ -14,7 +14,7 @@ abstract class ToJson {
 
 
 /// 
-mixin Home on Human extends [object Object]  {
+mixin Home on Human  {
   static final String typeName = "Human";
 
   
@@ -50,7 +50,7 @@ class HeroForEpisodeVariables {
 
 
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment extends [object Object]  {
+class HeroForEpisodeHumanInlineFragment  {
   static final String typeName = "Human";
 
   String __typename;
@@ -84,7 +84,7 @@ class HeroForEpisodeHumanInlineFragment extends [object Object]  {
 
 
 @JsonSerializable()
-class HeroForEpisodeDroidInlineFragment extends [object Object]  {
+class HeroForEpisodeDroidInlineFragment  {
   static final String typeName = "Droid";
 
   String __typename;
@@ -115,7 +115,7 @@ class HeroForEpisodeDroidInlineFragment extends [object Object]  {
 
 
 @JsonSerializable()
-class HeroForEpisodeHero extends [object Object]  {
+class HeroForEpisodeHero  {
   static final String typeName = "Character";
 
   String __typename;
@@ -153,7 +153,7 @@ class HeroForEpisodeHero extends [object Object]  {
 
 
 @JsonSerializable()
-class HeroForEpisodeQuery extends [object Object]  {
+class HeroForEpisodeQuery  {
   static final String typeName = "query";
 
   String __typename;
