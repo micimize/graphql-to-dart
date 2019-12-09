@@ -4,12 +4,8 @@ import {
   schemaToTemplateContext,
   transformDocumentsFiles,
 } from "graphql-codegen-core";
-import { PluginFunction, isConfiguredOutput } from "@graphql-codegen/plugin-helpers";
-
+import { PluginFunction } from "@graphql-codegen/plugin-helpers";
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
-import { GraphQLSchema } from "graphql";
-import documentsTemplate, * as partials from "./templates/documents";
-import { print } from "util";
 import configureHelpers from "./helpers";
 
 
@@ -25,21 +21,10 @@ interface MixinConfig {
   };
 }
 
-// generate fragment-related utility methods
-// would strongly advise against using - will probably be deprecated
-interface GenerateFragmentHelpersConfig {
-  excludeFields?: Array<{
-    prefix?: string;
-    suffix?: string;
-    onType?: string;
-  }>;
-}
-
 export interface DartConfig {
   scalars?: Partial<Scalars>;
   imports?: Array<string>;
   parts?: Array<string>;
-  generateFragmentHelpers: boolean | GenerateFragmentHelpersConfig;
   mixins?: Array<MixinConfig>;
   // alias schema scalars to dart classes,
   // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
@@ -73,43 +58,48 @@ function registerMapWith<T>(
   Object.entries(object).forEach(([name, helper]) => registerFn(name, helper));
 }
 
-export const plugin: PluginFunction<DartConfig> = async (
-  schema: GraphQLSchema,
-  documents: DocumentFile[],
-  config: DartConfig
-): Promise<string> => {
-  const templateContext = schemaToTemplateContext(schema);
 
-  const transformedDocuments = transformDocumentsFiles(schema, documents);
+export default function buildPlugin(rootTemplate, partials): PluginFunction<DartConfig> {
+    return async (
+    schema,
+    documents: DocumentFile[],
+    config: DartConfig
+    ): Promise<string> => {
 
-  const flattenDocuments = flattenTypes(transformedDocuments);
+        const templateContext = schemaToTemplateContext(schema);
 
-  registerMapWith(
-      (...args: [string, Handlebars.HelperDelegate]) => Handlebars.registerHelper(...args),
-      configureHelpers(config)
-  );
+        const transformedDocuments = transformDocumentsFiles(schema, documents);
 
-  registerMapWith((...args) => Handlebars.registerPartial(...args), partials);
+        const flattenDocuments = flattenTypes(transformedDocuments);
 
-  const scalars = Object.assign(
-    {},
-    defaultScalars,
-    config.scalars || {},
-    config.customScalars || {}
-  );
-  const handlebarsContext = {
-    config,
-    primitives: scalars,
-    scalars,
-    ...templateContext,
-    ...flattenDocuments
-  };
+        registerMapWith<Handlebars.HelperDelegate>(
+            (...args) => Handlebars.registerHelper(...args),
+            configureHelpers(config)
+        );
 
-  try {
-    return Handlebars.compile(documentsTemplate)(handlebarsContext);
-  } catch (e) {
-      console.trace(e);
-      throw e;
-  }
-};
+        registerMapWith<Handlebars.Template<any>>((...args) => Handlebars.registerPartial(...args), partials);
 
+        const scalars = Object.assign(
+            {},
+            defaultScalars,
+            config.scalars || {},
+            config.customScalars || {}
+        );
+        const handlebarsContext = {
+            config,
+            primitives: scalars,
+            scalars,
+            ...templateContext,
+            ...flattenDocuments
+        };
+
+        try {
+            return Handlebars.compile(rootTemplate)(handlebarsContext);
+        } catch (e) {
+            console.trace(e);
+            throw e;
+        }
+
+    }
+
+}

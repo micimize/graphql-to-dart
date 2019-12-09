@@ -11,6 +11,6 @@ generates:
       extension: .dart
       baseTypesPath: ./graphql_types.dart
     plugins:
-      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/index.js
+      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/documents.js
         #- graphql-to-dart
 
