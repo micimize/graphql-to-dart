@@ -3,10 +3,10 @@
 class {{ className }}  {{
 
   classExtends
-    (resolveMixins @root.config.mixins fields)
-    fragmentsSpread
-    (wrapFields interfaces)
-    @root.config.replaceTypes
+    mixins=(resolveMixins @root.config.mixins fields)
+    fragments=fragmentsSpread
+    interfaces=(wrapFields interfaces)
+    replace=@root.config.replaceTypes
 
 }} {
 
@@ -101,10 +101,10 @@ class {{ className }}  {{
 class {{ name }} {{
 
   classExtends
-    (resolveMixins @root.config.mixins fields)
-    fragmentsSpread
-    interfaces
-    @root.config.replaceTypes
+    mixins=(resolveMixins @root.config.mixins fields)
+    fragments=fragmentsSpread
+    interfaces=interfaces
+    replace=@root.config.replaceTypes
 
 }} {
   static final String typeName = "{{ takeFirst typeName name }}";

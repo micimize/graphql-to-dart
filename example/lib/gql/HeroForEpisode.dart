@@ -14,7 +14,7 @@ abstract class ToJson {
 
 
 /// 
-mixin Home on Human {
+mixin Home on Human extends [object Object]  {
   static final String typeName = "Human";
 
   
@@ -26,7 +26,7 @@ mixin Home on Human {
 
 
 @JsonSerializable()
-class HeroForEpisodeVariables  {
+class HeroForEpisodeVariables {
 
   String __typename;
 
@@ -48,22 +48,31 @@ class HeroForEpisodeVariables  {
 }
 
 
+
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment with Home  {
+class HeroForEpisodeHumanInlineFragment extends [object Object]  {
   static final String typeName = "Human";
 
   String __typename;
 
+
   
-    double height;
-    String homePlanet;
+  
+      @JsonKey(required: false, disallowNullValue: false)
+    double get height => fields.height;
+    set height (double height) => fields.height = height;
 
 
-  HeroForEpisodeHumanInlineFragment({
-    this.height,
-    this.homePlanet,
+  ({
     
-  });
+        double height,
+    
+        String homePlanet,
+    
+  }): super(
+    height: height,
+    homePlanet: homePlanet,
+  )
 
   factory HeroForEpisodeHumanInlineFragment.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeHumanInlineFragmentFromJson(json);
@@ -73,20 +82,28 @@ class HeroForEpisodeHumanInlineFragment with Home  {
 }
 
 
+
 @JsonSerializable()
-class HeroForEpisodeDroidInlineFragment  {
+class HeroForEpisodeDroidInlineFragment extends [object Object]  {
   static final String typeName = "Droid";
 
   String __typename;
 
+
   
-    String primaryFunction;
+  
+      @JsonKey(required: false, disallowNullValue: false)
+    String get primaryFunction => fields.primaryFunction;
+    set primaryFunction (String primaryFunction) => fields.primaryFunction = primaryFunction;
 
 
-  HeroForEpisodeDroidInlineFragment({
-    this.primaryFunction,
+  ({
     
-  });
+        String primaryFunction,
+    
+  }): super(
+    primaryFunction: primaryFunction,
+  )
 
   factory HeroForEpisodeDroidInlineFragment.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeDroidInlineFragmentFromJson(json);
@@ -96,25 +113,35 @@ class HeroForEpisodeDroidInlineFragment  {
 }
 
 
+
 @JsonSerializable()
-class HeroForEpisodeHero  {
+class HeroForEpisodeHero extends [object Object]  {
   static final String typeName = "Character";
 
   String __typename;
 
-  
-    @JsonKey(required: true, disallowNullValue: true,)
-    String name;
 
+  
+  
+      @JsonKey(required: true, disallowNullValue: true)
+    @JsonKey(required: true, disallowNullValue: true,)
+      String get name => fields.name;
+    set name (@JsonKey(required: true, disallowNullValue: true,)
+      String name) => fields.name = name;
     @JsonKey(ignore: true)
     HeroForEpisodeDroidInlineFragment droidInlineFragment;
     @JsonKey(ignore: true)
     HeroForEpisodeHumanInlineFragment humanInlineFragment;
 
-  HeroForEpisodeHero({
-    @required this.name,
+
+  ({
     
-  });
+        @JsonKey(required: true, disallowNullValue: true,)
+    String name,
+    
+  }): super(
+    name: name,
+  )
 
   factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeHeroFromJson(json);
@@ -126,19 +153,26 @@ class HeroForEpisodeHero  {
 
 
 @JsonSerializable()
-class HeroForEpisodeQuery  {
-  static final String typeName = "HeroForEpisodeQuery";
+class HeroForEpisodeQuery extends [object Object]  {
+  static final String typeName = "query";
 
   String __typename;
 
+
   
-    HeroForEpisodeHero hero;
+  
+      @JsonKey(required: false, disallowNullValue: false)
+    HeroForEpisodeHero get hero => fields.hero;
+    set hero (HeroForEpisodeHero hero) => fields.hero = hero;
 
 
-  HeroForEpisodeQuery({
-    this.hero,
+  HeroForEpisode({
     
-  });
+        HeroForEpisodeHero hero,
+    
+  }): super(
+    hero: hero,
+  )
 
   factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeQueryFromJson(json);
@@ -146,6 +180,5 @@ class HeroForEpisodeQuery  {
   Map<String, dynamic> toJson() => _$HeroForEpisodeQueryToJson(instance);
 
 }
-
 
 

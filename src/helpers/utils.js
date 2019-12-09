@@ -35,7 +35,7 @@ export function camelCase(str) {
 
 export function concat(...args) {
   if (Array.isArray(args[0])){
-      return [].concat(...args);
+      return [].concat(...args.slice(0, -1));
   }
   return args.slice(0, -1).join('')
 }

@@ -2,11 +2,11 @@
 class {{ className }} {{
 
   classExtends
-    typeName
-    (resolveMixins @root.config.mixins fields)
-    fragmentsSpread
-    interfaces
-    @root.config.replaceTypes
+    baseType=typeName
+    mixins=(resolveMixins @root.config.mixins fields)
+    fragments=fragmentsSpread
+    interfaces=interfaces
+    replace=@root.config.replaceTypes
 
 }} {
   {{#if typeName }}
@@ -20,11 +20,11 @@ class {{ className }} {{
 
   {{#if hasInlineFragments~}}
   {{#each inlineFragments}}
-    {{ printThis }}
     @JsonKey(ignore: true)
     {{ concat ../contextName name }} {{ camelCase name}};
   {{/each}}
   {{~/if}}
+
 
   {{name}}({
     {{#each (concat fields mixinFields)}}{{#if name}}

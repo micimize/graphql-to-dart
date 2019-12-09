@@ -47,7 +47,7 @@ starship   );
 
 
 /// The input object sent when someone is creating a new review
-class _ReviewInputFields   {
+class _ReviewInputFields  extends [object Object]  {
 
   
   /// 0-5 stars
@@ -105,7 +105,7 @@ class _ReviewInputFields   {
 
 }
 
-class ReviewInput  {
+class ReviewInput extends [object Object]  {
   static final String typeName = "ReviewInput";
 
   @protected
@@ -150,7 +150,7 @@ class ReviewInput  {
 
 
 /// The input object sent when passing in a color
-class _ColorInputFields   {
+class _ColorInputFields  extends [object Object]  {
 
   
     @JsonKey(required: true, disallowNullValue: true,)
@@ -207,7 +207,7 @@ class _ColorInputFields   {
 
 }
 
-class ColorInput  {
+class ColorInput extends [object Object]  {
   static final String typeName = "ColorInput";
 
   @protected
@@ -262,7 +262,7 @@ class ColorInput  {
 
 
 /// A character from the Star Wars universe
-class _CharacterFields   {
+class _CharacterFields  extends [object Object]  {
 
   
   /// The ID of the character
@@ -339,7 +339,7 @@ class _CharacterFields   {
 
 }
 
-class Character  {
+class Character extends [object Object]  {
   static final String typeName = "Character";
 
   @protected
@@ -403,7 +403,7 @@ class Character  {
 
 
 /// The query type, represents all of the entry points into our object graph
-class _QueryFields   {
+class _QueryFields  extends [object Object]  {
 
   
     Character hero;
@@ -485,7 +485,7 @@ class _QueryFields   {
 
 }
 
-class Query  {
+class Query extends [object Object]  {
   static final String typeName = "Query";
 
   @protected
@@ -537,7 +537,7 @@ class Query  {
 
 
 /// A connection object for a character's friends
-class _FriendsConnectionFields   {
+class _FriendsConnectionFields  extends [object Object]  {
 
   
   /// The total number of friends
@@ -603,7 +603,7 @@ class _FriendsConnectionFields   {
 
 }
 
-class FriendsConnection  {
+class FriendsConnection extends [object Object]  {
   static final String typeName = "FriendsConnection";
 
   @protected
@@ -650,7 +650,7 @@ class FriendsConnection  {
 
 
 /// An edge object for a character's friends
-class _FriendsEdgeFields   {
+class _FriendsEdgeFields  extends [object Object]  {
 
   
   /// A cursor used for pagination
@@ -700,7 +700,7 @@ class _FriendsEdgeFields   {
 
 }
 
-class FriendsEdge  {
+class FriendsEdge extends [object Object]  {
   static final String typeName = "FriendsEdge";
 
   @protected
@@ -741,7 +741,7 @@ class FriendsEdge  {
 
 
 /// Information for paginating this connection
-class _PageInfoFields   {
+class _PageInfoFields  extends [object Object]  {
 
   
     String startCursor;
@@ -796,7 +796,7 @@ class _PageInfoFields   {
 
 }
 
-class PageInfo  {
+class PageInfo extends [object Object]  {
   static final String typeName = "PageInfo";
 
   @protected
@@ -840,7 +840,7 @@ class PageInfo  {
 
 
 /// Represents a review for a movie
-class _ReviewFields   {
+class _ReviewFields  extends [object Object]  {
 
   
   /// The movie
@@ -898,7 +898,7 @@ class _ReviewFields   {
 
 }
 
-class Review  {
+class Review extends [object Object]  {
   static final String typeName = "Review";
 
   @protected
@@ -942,7 +942,7 @@ class Review  {
 
 
 /// A humanoid creature from the Star Wars universe
-class _HumanFields  implements _CharacterFields  {
+class _HumanFields  extends [object Object]  {
 
   
   /// The ID of the human
@@ -1051,7 +1051,7 @@ class _HumanFields  implements _CharacterFields  {
 
 }
 
-class Human implements Character  {
+class Human extends [object Object]  {
   static final String typeName = "Human";
 
   @protected
@@ -1125,7 +1125,7 @@ class Human implements Character  {
 
 
 /// 
-class _StarshipFields   {
+class _StarshipFields  extends [object Object]  {
 
   
   /// The ID of the starship
@@ -1191,7 +1191,7 @@ class _StarshipFields   {
 
 }
 
-class Starship  {
+class Starship extends [object Object]  {
   static final String typeName = "Starship";
 
   @protected
@@ -1242,7 +1242,7 @@ class Starship  {
 
 
 /// An autonomous mechanical character in the Star Wars universe
-class _DroidFields  implements _CharacterFields  {
+class _DroidFields  extends [object Object]  {
 
   
   /// The ID of the droid
@@ -1327,7 +1327,7 @@ class _DroidFields  implements _CharacterFields  {
 
 }
 
-class Droid implements Character  {
+class Droid extends [object Object]  {
   static final String typeName = "Droid";
 
   @protected
@@ -1392,7 +1392,7 @@ class Droid implements Character  {
 
 
 /// The mutation type, represents all updates we can make to our data
-class _MutationFields   {
+class _MutationFields  extends [object Object]  {
 
   
     Review createReview;
@@ -1432,7 +1432,7 @@ class _MutationFields   {
 
 }
 
-class Mutation  {
+class Mutation extends [object Object]  {
   static final String typeName = "Mutation";
 
   @protected
@@ -1466,7 +1466,7 @@ class Mutation  {
 
 
 /// The subscription type, represents all subscriptions we can make to our data
-class _SubscriptionFields   {
+class _SubscriptionFields  extends [object Object]  {
 
   
     Review reviewAdded;
@@ -1506,7 +1506,7 @@ class _SubscriptionFields   {
 
 }
 
-class Subscription  {
+class Subscription extends [object Object]  {
   static final String typeName = "Subscription";
 
   @protected

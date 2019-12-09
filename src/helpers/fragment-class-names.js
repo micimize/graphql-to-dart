@@ -1,7 +1,13 @@
 import { capitalize } from "./utils";
 
-const fragmentClass = f => capitalize(f.fragmentName);
+function fragmentClass(f){
+    if (!f.fragmentName){
+        throw Error(`${f} is not a fragment definition`)
+        
+    }
+    return capitalize(f.fragmentName)
 
+}
 export default function fragmentClassNames(fragments = []) {
   return fragments.map(fragmentClass);
 }

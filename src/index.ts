@@ -132,9 +132,10 @@ function wrapHelpers(helpers){
 function _logErrors(fn) {
     return (...args) => {
         try {
+            // console.log(fn.name, args.slice(0, -1))
             return fn(...args);
         } catch(e) {
-            console.error( `ERROR ${e} thrown by helper ${fn.name}(${args})`)
+            console.error( `ERROR ${e} thrown by helper ${fn.name}(${args.slice(0, -1)})`)
             throw e;
         }
     }
