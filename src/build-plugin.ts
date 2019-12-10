@@ -1,15 +1,13 @@
 import * as Handlebars from "handlebars";
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema } from "graphql";
 import {
   DocumentFile,
   schemaToTemplateContext,
-  transformDocumentsFiles,
+  transformDocumentsFiles
 } from "graphql-codegen-core";
 import { PluginFunction } from "@graphql-codegen/plugin-helpers";
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import configureHelpers from "./helpers";
-
-
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
@@ -41,7 +39,7 @@ export interface DartConfig {
   // i.e. "^__": "u_" results in "__typename" -> "u_typename"
   // or "^_": "" results in "__typename" -> "typename"
   // default is { "_": "" }
-  transformCharacters?: { [type: string]: string }
+  transformCharacters?: { [type: string]: string };
 }
 
 const defaultScalars: Scalars = {
@@ -59,48 +57,50 @@ function registerMapWith<T>(
   Object.entries(object).forEach(([name, helper]) => registerFn(name, helper));
 }
 
-
-export default function buildPlugin(rootTemplate, partials): PluginFunction<DartConfig> {
-    return async (
+export default function buildPlugin(
+  rootTemplate,
+  partials
+): PluginFunction<DartConfig> {
+  return async (
     schema: GraphQLSchema,
     documents: DocumentFile[],
     config: DartConfig
-    ): Promise<string> => {
+  ): Promise<string> => {
+    const templateContext = schemaToTemplateContext(schema);
 
-        const templateContext = schemaToTemplateContext(schema);
+    const transformedDocuments = transformDocumentsFiles(schema, documents);
 
-        const transformedDocuments = transformDocumentsFiles(schema, documents);
+    const flattenDocuments = flattenTypes(transformedDocuments);
 
-        const flattenDocuments = flattenTypes(transformedDocuments);
+    registerMapWith<Handlebars.HelperDelegate>(
+      (...args) => Handlebars.registerHelper(...args),
+      configureHelpers(config)
+    );
 
-        registerMapWith<Handlebars.HelperDelegate>(
-            (...args) => Handlebars.registerHelper(...args),
-            configureHelpers(config)
-        );
+    registerMapWith<Handlebars.Template<any>>(
+      (...args) => Handlebars.registerPartial(...args),
+      partials
+    );
 
-        registerMapWith<Handlebars.Template<any>>((...args) => Handlebars.registerPartial(...args), partials);
+    const scalars = Object.assign(
+      {},
+      defaultScalars,
+      config.scalars || {},
+      config.customScalars || {}
+    );
+    const handlebarsContext = {
+      config,
+      primitives: scalars,
+      scalars,
+      ...templateContext,
+      ...flattenDocuments
+    };
 
-        const scalars = Object.assign(
-            {},
-            defaultScalars,
-            config.scalars || {},
-            config.customScalars || {}
-        );
-        const handlebarsContext = {
-            config,
-            primitives: scalars,
-            scalars,
-            ...templateContext,
-            ...flattenDocuments
-        };
-
-        try {
-            return Handlebars.compile(rootTemplate)(handlebarsContext);
-        } catch (e) {
-            console.trace(e);
-            throw e;
-        }
-
+    try {
+      return Handlebars.compile(rootTemplate)(handlebarsContext);
+    } catch (e) {
+      console.trace(e);
+      throw e;
     }
-
+  };
 }

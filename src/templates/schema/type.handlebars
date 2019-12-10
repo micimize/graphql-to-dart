@@ -130,7 +130,8 @@ class {{ name }} {{
   );
 
 
-    Set<String> get _missingRequiredFields {
+    @protected
+    Set<String> get missingRequiredFields {
         Set<String> missingFields = Set();
         {{#each fields}}
         {{~#if isRequired}}
@@ -143,11 +144,11 @@ class {{ name }} {{
     }
 
     void validate(){
-        final missing = _missingRequiredFields;
+        final missing = missingRequiredFields;
         assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
     }
 
-    bool get isValid => _missingRequiredFields.isEmpty;
+    bool get isValid => missingRequiredFields.isEmpty;
 
 
 }

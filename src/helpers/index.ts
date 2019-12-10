@@ -1,6 +1,7 @@
 import { helpers as gqlHelpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 
+import expectedGeneratedFileFor from "./expected-generated-file-for";
 import multilineComment from "./multiline-comment";
 import classExtends from "./class-extends";
 import resolveType from "./resolve-type";
@@ -67,6 +68,7 @@ const helpers = wrapHelpers({
   fragmentFieldOnBaseType,
   fragmentClassNames,
 
+  expectedGeneratedFileFor,
   transformCharacters,
   wrapFields
 });

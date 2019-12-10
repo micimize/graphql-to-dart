@@ -1,40 +1,53 @@
 @JsonSerializable()
 class {{ className }} {{
 
-  classExtends
-    baseType=typeName
-    mixins=(resolveMixins @root.config.mixins fields)
-    fragments=fragmentsSpread
-    interfaces=interfaces
-    replace=@root.config.replaceTypes
+    classExtends
+        baseType=typeName
+        mixins=(resolveMixins @root.config.mixins fields)
+        fragments=fragmentsSpread
+        interfaces=interfaces
+        replace=@root.config.replaceTypes
 
 }} {
-  {{#if typeName }}
-  static final String typeName = "{{ typeName }}";
-  {{/if}}
+    {{#if typeName }}
+    static final String typeName = "{{ typeName }}";
+    {{/if}}
 
-  {{> selectionSet }}
+    {{> selectionSet }}
 
-  {{className}}({
-    {{#each (concat fields mixinFields)}}{{#if name}}
-        {{ resolveType type
-            isRequired
-            (takeFirst contextName ../contextName)
-            (takeFirst contextModels ../contextModels)
-            @root.config.scalars
-            @root.config.replaceTypes
-            isArray
-            @root.config.irreducibleTypes
-            raw
-            ../name
-            @root.config.requiredFields
-        }} {{dartName name}},
-    {{/if}}{{/each}}
-  }): super(
-    {{#each (concat fields mixinFields)}}
-    {{dartName name}}: {{dartName name}},
-    {{/each}}
-  );
+    {{className}}({
+        {{#each (concat fields mixinFields)}}{{#if name}}
+            {{ resolveType type
+                isRequired
+                (takeFirst contextName ../contextName)
+                (takeFirst contextModels ../contextModels)
+                @root.config.scalars
+                @root.config.replaceTypes
+                isArray
+                @root.config.irreducibleTypes
+                raw
+                ../name
+                @root.config.requiredFields
+            }} {{dartName name}},
+        {{/if}}{{/each}}
+    }): super(
+        {{#each (concat fields mixinFields)}}
+        {{dartName name}}: {{dartName name}},
+        {{/each}}
+    );
+
+    @protected
+    Set<String> get missingRequiredFields {
+        Set<String> missingFields = Set();
+        {{#each (concat fields mixinFields)}}
+        {{~#if isRequired}}
+        if (fields.{{ dartName name }}  == null){
+            missingFields.add("{{ dartName name }}");
+        }
+        {{/if}}
+        {{/each}}
+        return missingFields;
+    }
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => 
     _${{className}}FromJson(json);
