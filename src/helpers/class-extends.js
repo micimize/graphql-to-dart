@@ -1,17 +1,17 @@
-import { capitalize } from "./utils";
+import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 import fragmentClassNames from "./fragment-class-names";
 
 const builtinInterfaces = [
-    /*"ToJson"*/
+  /*"ToJson"*/
 ];
 
 // apply whatever inheritence keyword
-function inherit(inheritanceKeyword, ..._parents){
-    const parents = _parents.filter(p =>  p);
-    if (parents.length == 0){
-        return ''
-    }
-    return `${inheritanceKeyword} ${parents.join(', ')} `
+function inherit(inheritanceKeyword, ..._parents) {
+  const parents = _parents.filter(p => p);
+  if (parents.length == 0) {
+    return "";
+  }
+  return `${inheritanceKeyword} ${parents.map(toPascalCase).join(", ")} `;
 }
 
 // TODO inline fragment "onType" support
@@ -21,25 +21,12 @@ function inherit(inheritanceKeyword, ..._parents){
 //   should be done via postgraphile plugin
 //   right now we replace Node with Entity, which is hacky
 //   ex. Query becomes an "Entity"
-export default function classExtends(
-  baseType,
-  mixins = [],
-  fragments = [],
-  interfaces = [],
-  replace = {}
-) {
-  if (typeof(baseType) != 'string'){
-      baseType = undefined;
-  }
+export default function classExtends({
+  hash: { baseType, mixins = [], fragments = [], interfaces = [], replace = {} }
+}) {
   return (
-    inherit('extends', baseType) +
-    inherit('with',
-        ...mixins,
-        ...fragmentClassNames(fragments),
-    ) +
-    inherit('implements',
-        ...builtinInterfaces,
-        ...interfaces, 
-    )
+    inherit("extends", baseType) +
+    inherit("with", ...mixins, ...fragmentClassNames(fragments)) +
+    inherit("implements", ...builtinInterfaces, ...interfaces)
   );
 }

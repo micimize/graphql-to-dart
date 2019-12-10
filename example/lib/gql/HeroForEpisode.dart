@@ -18,7 +18,6 @@ mixin Home on Human  {
   static final String typeName = "Human";
 
   
-  
       @JsonKey(required: false, disallowNullValue: false)
     String get homePlanet => fields.homePlanet;
     set homePlanet (String homePlanet) => fields.homePlanet = homePlanet;
@@ -28,10 +27,7 @@ mixin Home on Human  {
 @JsonSerializable()
 class HeroForEpisodeVariables {
 
-  String __typename;
-
   
-    @JsonKey(required: true, disallowNullValue: true,)
     Episode ep;
 
 
@@ -43,27 +39,22 @@ class HeroForEpisodeVariables {
   factory HeroForEpisodeVariables.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeVariablesFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeroForEpisodeVariablesToJson(instance);
+  Map<String, dynamic> toJson() => _$HeroForEpisodeVariablesToJson(this)
+    ;
 
 }
 
 
 
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment  {
+class HeroForEpisodeHumanInlineFragment extends Human with Home  {
   static final String typeName = "Human";
 
-  String __typename;
-
-
-  
   
       @JsonKey(required: false, disallowNullValue: false)
     double get height => fields.height;
     set height (double height) => fields.height = height;
-
-
-  ({
+  HeroForEpisodeHumanInlineFragment({
     
         double height,
     
@@ -72,113 +63,84 @@ class HeroForEpisodeHumanInlineFragment  {
   }): super(
     height: height,
     homePlanet: homePlanet,
-  )
+  );
 
   factory HeroForEpisodeHumanInlineFragment.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeHumanInlineFragmentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeroForEpisodeHumanInlineFragmentToJson(instance);
+  Map<String, dynamic> toJson() => _$HeroForEpisodeHumanInlineFragmentToJson(this)
+    ..['__typename'] = typeName;
 
 }
 
-
-
 @JsonSerializable()
-class HeroForEpisodeDroidInlineFragment  {
+class HeroForEpisodeDroidInlineFragment extends Droid  {
   static final String typeName = "Droid";
 
-  String __typename;
-
-
-  
   
       @JsonKey(required: false, disallowNullValue: false)
     String get primaryFunction => fields.primaryFunction;
     set primaryFunction (String primaryFunction) => fields.primaryFunction = primaryFunction;
-
-
-  ({
+  HeroForEpisodeDroidInlineFragment({
     
         String primaryFunction,
     
   }): super(
     primaryFunction: primaryFunction,
-  )
+  );
 
   factory HeroForEpisodeDroidInlineFragment.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeDroidInlineFragmentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeroForEpisodeDroidInlineFragmentToJson(instance);
+  Map<String, dynamic> toJson() => _$HeroForEpisodeDroidInlineFragmentToJson(this)
+    ..['__typename'] = typeName;
 
 }
 
-
-
 @JsonSerializable()
-class HeroForEpisodeHero  {
+class HeroForEpisodeHero extends Character  {
   static final String typeName = "Character";
 
-  String __typename;
-
-
-  
   
       @JsonKey(required: true, disallowNullValue: true)
-    @JsonKey(required: true, disallowNullValue: true,)
-      String get name => fields.name;
-    set name (@JsonKey(required: true, disallowNullValue: true,)
-      String name) => fields.name = name;
-    @JsonKey(ignore: true)
-    HeroForEpisodeDroidInlineFragment droidInlineFragment;
-    @JsonKey(ignore: true)
-    HeroForEpisodeHumanInlineFragment humanInlineFragment;
-
-
-  ({
+    String get name => fields.name;
+    set name (String name) => fields.name = name;
+  HeroForEpisodeHero({
     
-        @JsonKey(required: true, disallowNullValue: true,)
-    String name,
+        String name,
     
   }): super(
     name: name,
-  )
+  );
 
   factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeHeroFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeroForEpisodeHeroToJson(instance);
+  Map<String, dynamic> toJson() => _$HeroForEpisodeHeroToJson(this)
+    ..['__typename'] = typeName;
 
 }
 
-
-
 @JsonSerializable()
-class HeroForEpisodeQuery  {
+class HeroForEpisodeQuery extends Query  {
   static final String typeName = "query";
 
-  String __typename;
-
-
-  
   
       @JsonKey(required: false, disallowNullValue: false)
     HeroForEpisodeHero get hero => fields.hero;
     set hero (HeroForEpisodeHero hero) => fields.hero = hero;
-
-
-  HeroForEpisode({
+  HeroForEpisodeQuery({
     
         HeroForEpisodeHero hero,
     
   }): super(
     hero: hero,
-  )
+  );
 
   factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) => 
     _$HeroForEpisodeQueryFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeroForEpisodeQueryToJson(instance);
+  Map<String, dynamic> toJson() => _$HeroForEpisodeQueryToJson(this)
+    ..['__typename'] = typeName;
 
 }
-
-

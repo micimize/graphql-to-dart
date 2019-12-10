@@ -1,5 +1,11 @@
 const { SafeString } = require("handlebars");
 
+function interpolateTemplate(template, params) {
+  const names = Object.keys(params);
+  const vals = Object.values(params);
+  return new Function(...names, `return \`${template}\`;`)(...vals);
+}
+
 const primitives = {
   String: "String",
   Int: "int",
@@ -17,21 +23,16 @@ const primitives = {
   DateTime: "DateTime"
 };
 
-function jsonKey({ type, className, required = false, addSerializers = false }) {
-  if (!required && !addSerializers) {
+function jsonConverter(type, template = "@${type}Converter()") {
+  console.log(interpolateTemplate(template, { type }) + "\n");
+  return interpolateTemplate(template, { type }) + "\n";
+}
+
+function jsonKey({ type, addSerializers = false }) {
+  if (!addSerializers) {
     return "";
   }
-  if(["Query", "Mutation", "Subscription"].indexOf(className) > -1 ){
-    required = false;
-  }
-  return (
-    "@JsonKey(" +
-    (addSerializers
-      ? `fromJson: fromJsonTo${type}, toJson: from${type}ToJson,`
-      : "") +
-    (required ? "required: true, disallowNullValue: true," : "") +
-    ")\n    "
-  );
+  return jsonConverter(type);
 }
 
 function wrap(isArray, fieldType) {
@@ -55,7 +56,7 @@ export default function resolveType(
   irreducibles = [],
   rawTypeText,
   className,
-  requiredFields 
+  requiredFields
 ) {
   let isRequired = false;
   let addSerializers = true;
@@ -64,10 +65,10 @@ export default function resolveType(
     addSerializers = false;
   } else {
     // default to true if not set
-    if(requiredFields !== false){
+    if (requiredFields !== false) {
       isRequired = jsonKeyInfo;
     } else {
-      isRequired = false   
+      isRequired = false;
     }
   }
   let fieldType =

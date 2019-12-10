@@ -918,7 +918,7 @@ class Review  {
 
 
 /// A humanoid creature from the Star Wars universe
-class _HumanFields   {
+class _HumanFields  implements _CharacterFields  {
 
   
   /// The ID of the human
@@ -1023,7 +1023,7 @@ class _HumanFields   {
 
 }
 
-class Human  {
+class Human implements Character  {
   static final String typeName = "Human";
 
   @protected
@@ -1206,7 +1206,7 @@ class Starship  {
 
 
 /// An autonomous mechanical character in the Star Wars universe
-class _DroidFields   {
+class _DroidFields  implements _CharacterFields  {
 
   
   /// The ID of the droid
@@ -1287,7 +1287,7 @@ class _DroidFields   {
 
 }
 
-class Droid  {
+class Droid implements Character  {
   static final String typeName = "Droid";
 
   @protected

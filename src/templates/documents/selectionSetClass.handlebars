@@ -13,20 +13,9 @@ class {{ className }} {{
   static final String typeName = "{{ typeName }}";
   {{/if}}
 
-  String __typename;
-
-
   {{> selectionSet }}
 
-  {{#if hasInlineFragments~}}
-  {{#each inlineFragments}}
-    @JsonKey(ignore: true)
-    {{ concat ../contextName name }} {{ camelCase name}};
-  {{/each}}
-  {{~/if}}
-
-
-  {{name}}({
+  {{className}}({
     {{#each (concat fields mixinFields)}}{{#if name}}
         {{ resolveType type
             isRequired
@@ -45,12 +34,12 @@ class {{ className }} {{
     {{#each (concat fields mixinFields)}}
     {{dartName name}}: {{dartName name}},
     {{/each}}
-  )
+  );
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => 
     _${{className}}FromJson(json);
 
-  Map<String, dynamic> toJson() => _${{className}}ToJson(instance);
+  Map<String, dynamic> toJson() => _${{className}}ToJson(this){{#if typeName }}
+    ..['__typename'] = typeName{{/if}};
 
 }
-

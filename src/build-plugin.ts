@@ -1,4 +1,5 @@
 import * as Handlebars from "handlebars";
+import { GraphQLSchema } from 'graphql';
 import {
   DocumentFile,
   schemaToTemplateContext,
@@ -61,7 +62,7 @@ function registerMapWith<T>(
 
 export default function buildPlugin(rootTemplate, partials): PluginFunction<DartConfig> {
     return async (
-    schema,
+    schema: GraphQLSchema,
     documents: DocumentFile[],
     config: DartConfig
     ): Promise<string> => {

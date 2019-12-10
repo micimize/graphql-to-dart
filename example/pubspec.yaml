@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
-  json_annotation: ^0.2.3
+  json_annotation: ^3.0.0
   graphql_flutter:
     ^1.0.0-beta.1+1
     #path: /Users/mjr/Documents/code/libraries/graphql-flutter
@@ -35,8 +35,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^0.9.0
-  json_serializable: ^0.5.4
+  build_runner: ^1.7.2
+  json_serializable: ^3.2.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
