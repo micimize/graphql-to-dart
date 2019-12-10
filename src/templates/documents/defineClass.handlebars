@@ -7,6 +7,7 @@ class {{ className }} {
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
+  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
       isRequired
       (takeFirst contextName ../contextName)

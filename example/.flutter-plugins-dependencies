@@ -1,1 +1,1 @@
-{"dependencyGraph":[{"name":"path_provider","dependencies":[]}]}
+{"dependencyGraph":[{"name":"connectivity","dependencies":[]},{"name":"path_provider","dependencies":[]}]}

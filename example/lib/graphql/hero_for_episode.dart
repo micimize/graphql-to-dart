@@ -22,6 +22,7 @@ mixin Home on Human {
 
 @JsonSerializable()
 class HeroForEpisodeVariables {
+  @JsonKey(required: true, disallowNullValue: true)
   Episode ep;
 
   HeroForEpisodeVariables({

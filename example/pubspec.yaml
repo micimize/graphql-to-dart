@@ -25,8 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   json_annotation: ^3.0.0
-  graphql_flutter:
-    ^1.0.0-beta.1+1
+  graphql_flutter: ^2.1.1-beta.4
     #path: /Users/mjr/Documents/code/libraries/graphql-flutter
     #git:
     #  url: https://github.com/micimize/graphql-flutter.git
@@ -49,7 +48,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-   - lib/gql/
+   - lib/graphql/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -4,7 +4,8 @@ import './graphql/schema.dart';
 import './select_episode.dart';
 import './episode.dart';
 
-const String GRAPHQL_ENDPOINT = 'http://localhost:8080/graphql';
+const String GRAPHQL_ENDPOINT =
+    'http://1bfb03ba.ngrok.io/graphql'; //'http://localhost:8080/graphql';
 
 void main() => runApp(MyApp());
 

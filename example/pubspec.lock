@@ -120,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  connectivity:
+    dependency: transitive
+    description:
+      name: connectivity
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.6"
   convert:
     dependency: transitive
     description:
@@ -186,20 +193,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
+  gql:
+    dependency: transitive
+    description:
+      name: gql
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.1"
+  graphql:
+    dependency: transitive
+    description:
+      name: graphql
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1-beta.4"
   graphql_flutter:
     dependency: "direct main"
     description:
       name: graphql_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-beta.1+1"
-  graphql_parser:
-    dependency: transitive
-    description:
-      name: graphql_parser
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
+    version: "2.1.1-beta.4"
   graphs:
     dependency: transitive
     description:
@@ -220,7 +234,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.0+1"
+    version: "0.12.0+2"
   http_multi_server:
     dependency: transitive
     description:
@@ -332,7 +346,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0+1"
+    version: "1.5.0"
   pedantic:
     dependency: transitive
     description:
@@ -347,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   pool:
     dependency: transitive
     description:
@@ -375,6 +396,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.22.6"
   shelf:
     dependency: transitive
     description:
@@ -471,13 +499,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.0+5"
-  uuid:
+  uuid_enhanced:
     dependency: transitive
     description:
-      name: uuid
+      name: uuid_enhanced
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "3.0.2"
   vector_math:
     dependency: transitive
     description:
@@ -499,6 +527,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  websocket:
+    dependency: transitive
+    description:
+      name: websocket
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   xml:
     dependency: transitive
     description:
@@ -515,4 +550,4 @@ packages:
     version: "2.1.15"
 sdks:
   dart: ">=2.6.0-dev.8.0 <3.0.0"
-  flutter: ">=0.1.4 <2.0.0"
+  flutter: ">=1.9.1+hotfix.5 <2.0.0"

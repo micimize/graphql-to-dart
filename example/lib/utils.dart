@@ -7,7 +7,7 @@ RegExp importStatement = RegExp(r'^#import (\w+)\s*', multiLine: true);
 // TODO this is pretty slipshod - inlines `#import $name` calls
 // TODO dedupe names
 Future<String> loadGQL(String name) async {
-  String body = await rootBundle.loadString('lib/gql/$name.gql');
+  String body = await rootBundle.loadString('lib/graphql/$name.gql');
   for (Match dependency in importStatement.allMatches(body)) {
     String dep = await loadGQL(dependency.group(1));
     body = dep + '\n' + body;

@@ -28,16 +28,16 @@ class TypedQuery<Data> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GQLProvider(documentName, (context, gql, error) {
+    return GQLProvider(documentName, (context, query, error) {
       if (error != null) {
         return builder(loading: false, error: error);
       }
       return Query(
         options: QueryOptions(
-          document: gql,
+          documentNode: gql(query),
           variables: variables,
         ),
-        builder: (QueryResult result) {
+        builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.data == null && result.loading && catchLoading) {
             return Center(
               child: CircularProgressIndicator(),
@@ -49,13 +49,13 @@ class TypedQuery<Data> extends StatelessWidget {
               data = dataFromJson(result.data);
             }
           } catch (error, stack) {
-            print('dataFromJson error when decoding result from ${gql}!');
+            print('dataFromJson error when decoding result from $query!');
             print(error);
             print(stack);
           }
           return builder(
             loading: result.loading,
-            error: result.errors,
+            error: result.exception,
             data: data,
           );
         },
