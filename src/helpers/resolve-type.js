@@ -24,7 +24,6 @@ const primitives = {
 };
 
 function jsonConverter(type, template = "@${type}Converter()") {
-  console.log(interpolateTemplate(template, { type }) + "\n");
   return interpolateTemplate(template, { type }) + "\n";
 }
 
