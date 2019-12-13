@@ -17,13 +17,9 @@ class {{ className }}  {{
       "inline"
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
-      @root.config.scalars
-      @root.config.replaceTypes
       isArray
-      @root.config.irreducibleTypes
       raw
       ../name
-      @root.config.requiredFields
   }} {{ dartName name }};
   {{~/if}}{{/if}}{{/each}}
 
@@ -59,13 +55,9 @@ class {{ className }}  {{
                 "inline"
                 (takeFirst contextName ../contextName)
                 (takeFirst contextModels ../contextModels)
-                @root.config.scalars
-                @root.config.replaceTypes
                 isArray
-                @root.config.irreducibleTypes
                 raw
                 ../className
-                @root.config.requiredFields
             }} {{ dartName name}},
         {{~/if}}{{/if}}{{/each}}
     }
@@ -114,13 +106,9 @@ class {{ name }} {{
             "inline"
             (takeFirst contextName ../contextName)
             (takeFirst contextModels ../contextModels)
-            @root.config.scalars
-            @root.config.replaceTypes
             isArray
-            @root.config.irreducibleTypes
             raw
             ../name
-            @root.config.requiredFields
         }} {{ dartName name }},
     {{/if}}{{/each}}
   }): fields = _{{ name }}Fields(

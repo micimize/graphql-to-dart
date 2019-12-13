@@ -1,5 +1,7 @@
 schema: "http://localhost:8080/graphql"
-documents: 'lib/**/*.gql'
+documents:
+  - 'lib/**/_*.gql'
+  - 'lib/**/!(_)*.gql'
 overwrite: true
 generates:
   lib/graphql/schema.dart:
@@ -10,6 +12,9 @@ generates:
     presetConfig:
       extension: .dart
       baseTypesPath: graphql/schema.dart
+      importTypesTemplate: import '{{relativeImportPath}}.dart';
+      importFragmentsTemplate: import '{{fragmentImportPath}}.dart' show {{fragmentNames}};
+      fragmentImportSuffix: ' '
     plugins:
       - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/documents.js
         #- graphql-to-dart

@@ -12,13 +12,9 @@ class {{ className }} {
       isRequired
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
-      @root.config.scalars
-      @root.config.replaceTypes
       isArray
-      @root.config.irreducibleTypes
       raw
       ../className
-      @root.config.requiredFields
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 

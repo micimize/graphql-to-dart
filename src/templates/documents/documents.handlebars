@@ -2,17 +2,13 @@
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
+{{~#if operations.length }}
 
-part '{{ expectedGeneratedFileFor operations }}';
-
-abstract class ToJson {
-  Map<String, dynamic> toJson();
-}
-
+part '{{ expectedGeneratedFileFor operations }}'; {{!-- fragments don't require anything generated --}}
+{{~/if}}
 
 {{#each fragments }}
 {{> fragment }}
-
 {{/each}}
 
 {{#each operations}}

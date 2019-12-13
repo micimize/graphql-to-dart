@@ -3,9 +3,8 @@ import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 
 import expectedGeneratedFileFor from "./expected-generated-file-for";
 import multilineComment from "./multiline-comment";
-import classExtends from "./class-extends";
-import resolveType from "./resolve-type";
-import resolveMixins from "./resolve-mixins";
+import configureClassExtends from "./class-extends";
+import configureResolveType from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
 import hackFragmentBaseTypes from "./hack-fragment-basetypes";
 import ignoreType from "./ignore-type";
@@ -57,9 +56,6 @@ const helpers = wrapHelpers({
   eachBackwards,
   stripSuffix,
   multilineComment,
-  classExtends,
-  resolveType,
-  resolveMixins,
   hackFragmentFields,
   hackFragmentBaseTypes,
   ignoreType,
@@ -78,6 +74,8 @@ export default function configureHelpers(config) {
     ...helpers,
     dartName(name: string): string {
       return helpers.transformCharacters(name, config.transformCharacters);
-    }
+    },
+    resolveType: configureResolveType(config),
+    classExtends: configureClassExtends(config)
   };
 }

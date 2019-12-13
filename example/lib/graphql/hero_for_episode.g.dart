@@ -71,14 +71,14 @@ HeroForEpisodeHumanInlineFragment _$HeroForEpisodeHumanInlineFragmentFromJson(
     Map<String, dynamic> json) {
   return HeroForEpisodeHumanInlineFragment(
     height: (json['height'] as num)?.toDouble(),
-    homePlanet: json['homePlanet'] as String,
+    home: json['home'] as String,
   );
 }
 
 Map<String, dynamic> _$HeroForEpisodeHumanInlineFragmentToJson(
         HeroForEpisodeHumanInlineFragment instance) =>
     <String, dynamic>{
-      'homePlanet': instance.homePlanet,
+      'home': instance.home,
       'height': instance.height,
     };
 

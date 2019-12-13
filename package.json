@@ -24,7 +24,8 @@
   "dependencies": {
     "@graphql-codegen/cli": "^1.9.1",
     "@graphql-codegen/core": "^1.9.1",
-    "@graphql-codegen/near-operation-file-preset": "^1.9.1",
+    "@graphql-codegen/add": "^1.9.1",
+    "@graphql-codegen/near-operation-file-preset": "micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.2-alpha-gitpkg",
     "@graphql-codegen/plugin-helpers": "^1.9.1",
     "graphql-codegen-core": "^0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
@@ -35,7 +36,7 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "codegen-templates-scripts": "0.18.0",
-    "graphql": "^14.1.1",
+    "graphql": "14.5.8",
     "graphql-code-generator": "^0.18.0",
     "raw-loader": "^4.0.0",
     "starwars-test-graphql-server": "0.2.0-alpha3",

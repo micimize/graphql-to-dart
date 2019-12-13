@@ -21,18 +21,14 @@ class {{ className }} {{
                 isRequired
                 (takeFirst contextName ../contextName)
                 (takeFirst contextModels ../contextModels)
-                @root.config.scalars
-                @root.config.replaceTypes
                 isArray
-                @root.config.irreducibleTypes
                 raw
                 ../name
-                @root.config.requiredFields
             }} {{dartName name}},
         {{/if}}{{/each}}
     }): super(
         {{#each (concat fields mixinFields)}}
-        {{dartName name}}: {{dartName name}},
+        {{dartName schemaFieldName}}: {{dartName name}},
         {{/each}}
     );
 
@@ -42,7 +38,12 @@ class {{ className }} {{
         {{#each (concat fields mixinFields)}}
         {{~#if isRequired}}
         if (fields.{{ dartName name }}  == null){
-            missingFields.add("{{ dartName name }}");
+            missingFields.add("
+            {{~ dartName name ~}}
+            {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}
+            {{~/if~}}
+            ");
+            
         }
         {{/if}}
         {{/each}}

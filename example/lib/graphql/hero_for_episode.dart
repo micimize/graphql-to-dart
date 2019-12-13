@@ -1,24 +1,11 @@
 import './schema.dart';
+import './_home_fragment.dart' show Home;
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 part 'hero_for_episode.g.dart';
-
-abstract class ToJson {
-  Map<String, dynamic> toJson();
-}
-
-///
-mixin Home on Human {
-  static final String typeName = "Human";
-
-  @JsonKey(required: false, disallowNullValue: false)
-  String get homePlanet => fields.homePlanet;
-  set homePlanet(String homePlanet) => fields.homePlanet = homePlanet;
-}
 
 @JsonSerializable()
 class HeroForEpisodeVariables {
@@ -44,10 +31,10 @@ class HeroForEpisodeHumanInlineFragment extends Human with Home {
   set height(double height) => fields.height = height;
   HeroForEpisodeHumanInlineFragment({
     double height,
-    String homePlanet,
+    String home,
   }) : super(
           height: height,
-          homePlanet: homePlanet,
+          homePlanet: home,
         );
 
   @protected

@@ -3,28 +3,25 @@
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  {{ type }} get {{ name }} => fields.{{ name }};
-  set {{ name }} ({{ type }} {{ name }}) => fields.{{ name }} = {{ name }};
+  {{ type }} get {{ name }} => fields.{{ schemaFieldName }};
+  set {{ name }} ({{ type }} {{ name }}) => fields.{{ schemaFieldName }} = {{ name }};
 {{~/if}}{{/if}}
 {{~/inline}}
 
 {{~#each fields}}
 {{> exposeField
     this
-    description=descriptoin
+    description=description
     name=(dartName name)
+    schemaFieldName=(dartName schemaFieldName)
     type=(
         resolveType type
             isRequired
             (takeFirst contextName ../contextName)
             (takeFirst contextModels ../contextModels)
-            @root.config.scalars
-            @root.config.replaceTypes
             isArray
-            @root.config.irreducibleTypes
             raw
             ../name
-            @root.config.requiredFields
     )
 }}
 {{/each}}
