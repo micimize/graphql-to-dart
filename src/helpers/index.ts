@@ -8,8 +8,6 @@ import configureResolveType from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
 import hackFragmentBaseTypes from "./hack-fragment-basetypes";
 import ignoreType from "./ignore-type";
-import withInputType, { registerInputType } from "./with-input-type";
-import fragmentFieldOnBaseType from "./fragment-field-on-base-type";
 import fragmentClassNames from "./fragment-class-names";
 
 import {
@@ -59,9 +57,6 @@ const helpers = wrapHelpers({
   hackFragmentFields,
   hackFragmentBaseTypes,
   ignoreType,
-  withInputType,
-  registerInputType,
-  fragmentFieldOnBaseType,
   fragmentClassNames,
 
   expectedGeneratedFileFor,

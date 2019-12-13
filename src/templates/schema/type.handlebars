@@ -1,4 +1,4 @@
-{{#*inline "fieldsClass" }}
+{{~#*inline "fieldsClass" ~}}
 {{ multilineComment description }}
 class {{ className }}  {{
 
@@ -73,7 +73,23 @@ class {{ className }}  {{
   {{ className }} copy() => copyWith();
 
 }
-{{/inline}}
+{{~/inline~}}
+
+{{~#*inline "inputTypeHelpers" ~}}
+    {{ name }}.from{{ baseType }}({{ baseType }}):
+        fields = _{{ name }}Fields(
+            {{#each fields}}
+            {{ dartName name }}: {{ baseType }}.fields.{{ dartName name }},
+            {{/each}}
+        );
+
+    {{ baseType }} as{{ baseType }}() =>
+        {{ baseType }}(
+            {{#each fields}}
+            {{ dartName name }}: fields.{{ dartName name }},
+            {{/each}}
+        );
+{{~/inline~}}
 
 {{#unless (
   ignoreType
@@ -136,6 +152,13 @@ class {{ name }} {{
 
     bool get isValid => missingRequiredFields.isEmpty;
 
+    {{#if inputAsTypeHelpers ~}}
+    {{> inputTypeHelpers baseType=(inputBaseType name) }}
+    {/if inputAsTypeHelpers ~}}
+
+
+
+    {{/if}}
 
 }
 
