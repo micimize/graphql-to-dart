@@ -24,11 +24,15 @@ export interface DartConfig {
   scalars?: Partial<Scalars>;
   imports?: Array<string>;
   parts?: Array<string>;
+  // adds `with {{name}}` blocks to selection sets/fragments with the given fields,
+  // or all selection sets/fragments if `when` is not configured
   mixins?: Array<MixinConfig>;
+
   // alias schema scalars to dart classes,
   // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
   // provided from scalars file
   customScalars?: { [type: string]: string };
+
   // don't emit classes for these types,
   // merely alias their references
   replaceTypes?: { [type: string]: string };

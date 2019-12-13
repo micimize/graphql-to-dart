@@ -1,19 +1,24 @@
 import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 import fragmentClassNames from "./fragment-class-names";
 
+function dedupe(arr: string[]) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
+}
 // flilter configured mixins based on "when" fields
-function resolveMixins(mixins = [], fields = []) {
+export function resolveMixins(mixins = [], fields = []) {
   let fieldNames = fields.map(f => f.name);
-  return mixins
-    .filter(({ when = { fields: [] } }) => {
-      for (let requiredField of when.fields) {
-        if (!fieldNames.includes(requiredField)) {
-          return false;
+  return dedupe(
+    mixins
+      .filter(({ when = { fields: [] } }) => {
+        for (let requiredField of when.fields) {
+          if (!fieldNames.includes(requiredField)) {
+            return false;
+          }
         }
-      }
-      return true;
-    })
-    .map(mixin => mixin.name);
+        return true;
+      })
+      .map(mixin => mixin.name)
+  );
 }
 
 const builtinInterfaces = [
@@ -40,7 +45,7 @@ function inherit(inheritanceKeyword, ..._parents) {
 
 export default function configureClassExtends({ mixins }) {
   function classExtends({
-    hash: { baseType, fields, fragments = [], interfaces = [] }
+    hash: { baseType, mixins = [], fragments = [], interfaces = [] }
   }) {
     return (
       inherit("extends", baseType) +

@@ -6,7 +6,6 @@ class {{ className }}  {{
     mixins=(resolveMixins @root.config.mixins fields)
     fragments=fragmentsSpread
     interfaces=(wrapFields interfaces)
-    replace=@root.config.replaceTypes
 
 }} {
 
@@ -92,7 +91,6 @@ class {{ name }} {{
     mixins=(resolveMixins @root.config.mixins fields)
     fragments=fragmentsSpread
     interfaces=interfaces
-    replace=@root.config.replaceTypes
 
 }} {
   static final String typeName = "{{ takeFirst typeName name }}";
