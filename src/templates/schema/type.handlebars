@@ -3,7 +3,7 @@
 class {{ className }}  {{
 
   classExtends
-    mixins=(resolveMixins @root.config.mixins fields)
+    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
     interfaces=(wrapFields interfaces)
 
@@ -88,7 +88,7 @@ class {{ className }}  {{
 class {{ name }} {{
 
   classExtends
-    mixins=(resolveMixins @root.config.mixins fields)
+    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
     interfaces=interfaces
 

@@ -3,7 +3,7 @@ import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 
 import expectedGeneratedFileFor from "./expected-generated-file-for";
 import multilineComment from "./multiline-comment";
-import configureClassExtends, { resolveMixins } from "./class-extends";
+import configureClassExtends, { configureResolveMixins } from "./class-extends";
 import configureResolveType from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
 import hackFragmentBaseTypes from "./hack-fragment-basetypes";
@@ -64,7 +64,6 @@ const helpers = wrapHelpers({
   fragmentFieldOnBaseType,
   fragmentClassNames,
 
-  resolveMixins,
   expectedGeneratedFileFor,
   transformCharacters,
   wrapFields
@@ -77,6 +76,7 @@ export default function configureHelpers(config) {
       return helpers.transformCharacters(name, config.transformCharacters);
     },
     resolveType: configureResolveType(config),
-    classExtends: configureClassExtends(config)
+    classExtends: configureClassExtends(config),
+    resolveMixins: configureResolveMixins(config)
   };
 }
