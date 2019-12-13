@@ -3,7 +3,6 @@
 class {{ className }}  {{
 
   classExtends
-    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
     interfaces=(wrapFields interfaces)
 
@@ -76,15 +75,15 @@ class {{ className }}  {{
 {{~/inline~}}
 
 {{~#*inline "inputTypeHelpers" ~}}
-    {{ name }}.from{{ baseType }}({{ baseType }}):
+    {{ name }}.from{{ otherType }}({{ otherType }} instance):
         fields = _{{ name }}Fields(
             {{#each fields}}
-            {{ dartName name }}: {{ baseType }}.fields.{{ dartName name }},
+            {{ dartName name }}: instance.fields.{{ dartName name }},
             {{/each}}
         );
 
-    {{ baseType }} as{{ baseType }}() =>
-        {{ baseType }}(
+    {{ otherType }} as{{ otherType }}() =>
+        {{ otherType }}(
             {{#each fields}}
             {{ dartName name }}: fields.{{ dartName name }},
             {{/each}}
@@ -104,7 +103,6 @@ class {{ className }}  {{
 class {{ name }} {{
 
   classExtends
-    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
     interfaces=interfaces
 
@@ -152,13 +150,9 @@ class {{ name }} {{
 
     bool get isValid => missingRequiredFields.isEmpty;
 
-    {{#if inputAsTypeHelpers ~}}
-    {{> inputTypeHelpers baseType=(inputBaseType name) }}
-    {/if inputAsTypeHelpers ~}}
-
-
-
-    {{/if}}
+    {{#each inputHelpers ~}}
+    {{> inputTypeHelpers otherType=this }}
+    {{/each}}
 
 }
 

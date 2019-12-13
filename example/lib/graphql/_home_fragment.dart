@@ -4,6 +4,7 @@ import './schema.dart';
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
+import './example_mixin.dart';
 
 ///
 mixin Home on Human {

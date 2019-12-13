@@ -1,7 +1,17 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+{{~#*inline "directivesBlock" }}
+{{#if values.length}}
 
-import 'package:meta/meta.dart';
-import 'package:json_annotation/json_annotation.dart';
+{{#each values}}
+{{../directive}} '{{this}}';
+{{/each}}
+{{/if}}
+{{/inline~}}
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
+{{> directivesBlock values=@root.config.documents.imports directive='import'}}
+{{> directivesBlock values=@root.config.documents.exports directive='export'}}
+{{> directivesBlock values=@root.config.documents.parts directive='part'}}
+
 {{~#if operations.length }}
 
 part '{{ expectedGeneratedFileFor operations }}'; {{!-- fragments don't require anything generated --}}

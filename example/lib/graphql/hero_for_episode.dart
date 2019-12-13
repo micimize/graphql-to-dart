@@ -5,6 +5,8 @@ import './_home_fragment.dart' show Home;
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
+import './example_mixin.dart';
+
 part 'hero_for_episode.g.dart';
 
 @JsonSerializable()
@@ -82,7 +84,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
 }
 
 @JsonSerializable()
-class HeroForEpisodeHero extends Character {
+class HeroForEpisodeHero extends Character with HelloMixin {
   static final String typeName = "Character";
 
   @JsonKey(required: true, disallowNullValue: true)

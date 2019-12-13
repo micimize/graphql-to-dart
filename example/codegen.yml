@@ -6,7 +6,7 @@ overwrite: true
 generates:
   lib/graphql/schema.dart:
     #- graphql-to-dart/schema-types
-    - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/schema-types.js
+    - ../dist/schema-types.js
   lib/:
     preset: near-operation-file
     presetConfig:
@@ -16,6 +16,26 @@ generates:
       importFragmentsTemplate: import '{{fragmentImportPath}}.dart' show {{fragmentNames}};
       fragmentImportSuffix: ' '
     plugins:
-      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/documents.js
+      - ../dist/documents.js
         #- graphql-to-dart
+        #
+config:
+  schema:
+    parts: []
+    imports:
+      - ./example_mixin.dart
+    exports:
+      - ./example_mixin.dart
+  documents:
+    imports:
+      - ./example_mixin.dart
+  mixins:
+     - name: HelloMixin
+       when:
+        fields:
+          - name
+  addInputHelpers:
+    exceptFor:
+      - ReviewInput
+      - Color 
 

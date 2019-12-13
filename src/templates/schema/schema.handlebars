@@ -1,19 +1,16 @@
+{{~#*inline "directivesBlock" }}
+{{#if values.length}}
+
+{{#each values}}
+{{../directive}} '{{this}}';
+{{/each}}
+{{/if}}
+{{/inline~}}
+
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
-import 'package:meta/meta.dart';
-
-
-{{#if config.imports}}
-{{#each config.imports}}
-import '{{this}}';
-{{/each}}
-{{/if}}
-
-{{#if config.parts}}
-{{#each config.parts}}
-part '{{this}}';
-{{/each}}
-{{/if}}
+{{> directivesBlock values=@root.config.schema.imports directive='import'}}
+{{> directivesBlock values=@root.config.schema.exports directive='export'}}
+{{> directivesBlock values=@root.config.schema.parts directive='part'}}
 
 /* Enums */
 {{#each enums}}
@@ -30,8 +27,7 @@ part '{{this}}';
 
 /* Input Types */
 {{#each inputTypes}}
-{{> type }}
-{{~ registerInputType name }}
+{{> type inputHelpers=(addInputHelpers name) }}
 
 {{/each}}
 

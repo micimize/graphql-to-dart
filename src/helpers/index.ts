@@ -3,12 +3,18 @@ import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 
 import expectedGeneratedFileFor from "./expected-generated-file-for";
 import multilineComment from "./multiline-comment";
-import configureClassExtends, { configureResolveMixins } from "./class-extends";
+import configureClassExtends, {
+  configureResolveMixins,
+  MixinConfig
+} from "./class-extends";
 import configureResolveType from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
 import hackFragmentBaseTypes from "./hack-fragment-basetypes";
 import ignoreType from "./ignore-type";
 import fragmentClassNames from "./fragment-class-names";
+import configurAddInputHelpers, {
+  AddInputHelpersConfig
+} from "./add-input-helpers";
 
 import {
   log,
@@ -19,8 +25,10 @@ import {
   camelCase,
   stripSuffix,
   transformCharacters,
-  wrapFields
+  wrapFields,
+  inputBaseType
 } from "./utils";
+import addInputHelpers from "./add-input-helpers";
 
 function wrapHelpers<T>(helpers: T) {
   return Object.keys(helpers).reduce(
@@ -61,8 +69,11 @@ const helpers = wrapHelpers({
 
   expectedGeneratedFileFor,
   transformCharacters,
-  wrapFields
+  wrapFields,
+  inputBaseType
 });
+
+export interface Config extends AddInputHelpersConfig, MixinConfig {}
 
 export default function configureHelpers(config) {
   return {
@@ -72,6 +83,7 @@ export default function configureHelpers(config) {
     },
     resolveType: configureResolveType(config),
     classExtends: configureClassExtends(config),
-    resolveMixins: configureResolveMixins(config)
+    resolveMixins: configureResolveMixins(config),
+    addInputHelpers: configurAddInputHelpers(config)
   };
 }

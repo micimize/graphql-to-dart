@@ -1,73 +1,76 @@
 export function logThis(this: any) {
-  console.log(this)
+  console.log(this);
 }
 
 export function log(...args) {
-  args.pop() // remove handlebars metadata
-  console.log(...args)
+  args.pop(); // remove handlebars metadata
+  console.log(...args);
+}
+
+export function dedupe(arr: string[]) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
+}
+
+export function arrayify<T>(arr: T | T[]) {
+  return Array.isArray(arr) ? arr : [arr];
 }
 
 export function stripLeadingUnderscores(lower) {
-  return lower.replace('_', '', 'g')
+  return lower.replace("_", "", "g");
 }
 
 export function transformCharacters(str, characterMap = { "^_": "" }) {
-    return Object.keys(characterMap).reduce(
-        (transformed, regex) =>
-            transformed.replace(
-                new RegExp(regex),
-                characterMap[regex],
-                'g'
-            ),
-        str
-    ).replace(/([-_]\w)/g, g => g[1].toUpperCase()) // snake to camel
+  return Object.keys(characterMap)
+    .reduce(
+      (transformed, regex) =>
+        transformed.replace(new RegExp(regex), characterMap[regex], "g"),
+      str
+    )
+    .replace(/([-_]\w)/g, s => s[1].toUpperCase()); // snake to camel
 }
 
 export function capitalize(lower) {
-  return lower.replace(/^\w/, c => c.toUpperCase())
+  return lower.replace(/^\w/, c => c.toUpperCase());
 }
 
 export function camelCase(str) {
   return str
     .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-    .replace(/^\w/, c => c.toLowerCase())
+    .replace(/^\w/, c => c.toLowerCase());
 }
 
 export function concat(...args) {
-  if (Array.isArray(args[0])){
-      return [].concat(...args.slice(0, -1));
+  if (Array.isArray(args[0])) {
+    return [].concat(...args.slice(0, -1));
   }
-  return args.slice(0, -1).join('')
+  return args.slice(0, -1).join("");
 }
 
 export function eachBackwards(context, options) {
-  var ret = ''
+  var ret = "";
 
   for (var i = context.length - 1, j = 0; i >= j; i--) {
-    ret = ret + options.fn(context[i])
+    ret = ret + options.fn(context[i]);
   }
 
-  return ret
+  return ret;
 }
 
 export function takeFirst(arg, b) {
   if (arg !== null && arg !== undefined) {
-    return arg
+    return arg;
   }
-  return b
+  return b;
 }
 
 export function stripSuffix(name, suffix) {
-  return name.replace(
-    new RegExp(suffix + '$'), ''
-  )
+  return name.replace(new RegExp(suffix + "$"), "");
 }
 
 export function inputBaseType(name) {
-  return stripSuffix(name, 'Input')
+  return stripSuffix(name, "Input");
 }
 
-
 export function wrapFields(interfaces = []) {
-    return interfaces.map(i => `_${i}Fields`)
+  return interfaces.map(i => `_${i}Fields`);
 }

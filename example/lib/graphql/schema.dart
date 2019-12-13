@@ -1,6 +1,9 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 import 'package:meta/meta.dart';
+import './example_mixin.dart';
+
+export './example_mixin.dart';
 
 /* Enums */
 /// The episodes in the Star Wars trilogy

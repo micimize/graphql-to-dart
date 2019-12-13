@@ -7,27 +7,19 @@ import {
 } from "graphql-codegen-core";
 import { PluginFunction } from "@graphql-codegen/plugin-helpers";
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
-import configureHelpers from "./helpers";
+import configureHelpers, { Config as HelperConfig } from "./helpers";
+import { dedupe } from "./helpers/utils";
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
-interface MixinConfig {
-  // the name of the mixin class
-  name: string;
-  // condition by which to mixin
-  when?: {
-    fields: Array<string>;
-  };
-}
+type DartFileDirectives = {
+  imports?: string[];
+  parts?: string[];
+  exports?: string[];
+};
 
-export interface DartConfig {
+export type DartConfig = HelperConfig & {
   scalars?: Partial<Scalars>;
-  imports?: Array<string>;
-  parts?: Array<string>;
-  // adds `with {{name}}` blocks to selection sets/fragments with the given fields,
-  // or all selection sets/fragments if `when` is not configured
-  mixins?: Array<MixinConfig>;
-
   // alias schema scalars to dart classes,
   // decorate references with @JsonKey(fromJson: fromJsonToScalar, toJson: fromScalarToJson)
   // provided from scalars file
@@ -39,12 +31,17 @@ export interface DartConfig {
 
   irreducibleTypes?: Array<string>;
 
-  // mapping of regexs to replacement characters,
-  // i.e. "^__": "u_" results in "__typename" -> "u_typename"
-  // or "^_": "" results in "__typename" -> "typename"
-  // default is { "_": "" }
+  /**
+   * Mapping of regexs to replacement characters.
+   * @example `{ "^_": "underscored" }` results in "__typename" -> "underscoredTypename"
+   * @example `{ "^_": "u_" }` results in "__typename" -> "u_typename" for snakecase support
+   * @default `{ "^_+": "" }` resulting in  "typename" -> "typename"
+   */
   transformCharacters?: { [type: string]: string };
-}
+
+  schema?: DartFileDirectives;
+  documents?: DartFileDirectives;
+};
 
 const defaultScalars: Scalars = {
   String: "String",
@@ -62,14 +59,32 @@ function registerMapWith<T>(
 }
 
 export default function buildPlugin(
+  route: "schema" | "documents",
   rootTemplate,
-  partials
+  partials,
+  defaultDirectives: DartFileDirectives
 ): PluginFunction<DartConfig> {
   return async (
     schema: GraphQLSchema,
     documents: DocumentFile[],
     config: DartConfig
   ): Promise<string> => {
+    config[route] = Object.assign(
+      {
+        imports: [],
+        parts: [],
+        exports: []
+      },
+      config[route]
+    );
+
+    for (let directive of ["imports", "exports", "parts"]) {
+      config[route][directive] = dedupe([
+        ...(defaultDirectives[directive] || []),
+        ...(config[route][directive] || [])
+      ]);
+    }
+
     const templateContext = schemaToTemplateContext(schema);
 
     const transformedDocuments = transformDocumentsFiles(schema, documents);

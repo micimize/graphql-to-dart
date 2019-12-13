@@ -1,11 +1,30 @@
 import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 import fragmentClassNames from "./fragment-class-names";
+import { dedupe } from "./utils";
 
-function dedupe(arr: string[]) {
-  return arr.filter((item, index) => arr.indexOf(item) === index);
+export interface MixinConfig {
+  /**
+   * Adds `with {{name}}` blocks to selection sets/fragments with the given fields,
+   * or all selection sets/fragments if `when` is not configured
+   *
+   * @example { mixins: [{ name: "Entity", fields: [ "id" ] }
+   */
+  mixins?: Array<{
+    /**
+     * The name of the mixin class
+     */
+    name: string;
+    /**
+     * Condition by which to mixin
+     */
+    when?: {
+      fields: Array<string>;
+    };
+  }>;
 }
+
 // flilter configured mixins based on "when" fields
-export const configureResolveMixins = ({ mixins = [] }) =>
+export const configureResolveMixins = ({ mixins = [] }: MixinConfig & object) =>
   function resolveMixins(fields = []) {
     let fieldNames = fields.map(f => f.name);
     return dedupe(

@@ -11,7 +11,9 @@
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
 mixin {{ className }} on {{ typeName }} {{
-  classExtends fragments=fragmentsSpread
+  classExtends
+    mixins=(resolveMixins fields)
+    fragments=fragmentsSpread
 }} {
   static final String typeName = "{{ typeName }}";
 

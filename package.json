@@ -36,7 +36,6 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
     "codegen-templates-scripts": "0.18.0",
-    "graphql": "14.5.8",
     "graphql-code-generator": "^0.18.0",
     "raw-loader": "^4.0.0",
     "starwars-test-graphql-server": "0.2.0-alpha3",
