@@ -41,6 +41,23 @@ export type DartConfig = HelperConfig & {
 
   schema?: DartFileDirectives;
   documents?: DartFileDirectives;
+
+  /**
+   * build_runner generated file template
+   * @example "{{sourceFileBaseName}}.generated.dart"
+   * 
+   * commented out as it would mostly be misused
+  generatedFileTemplate?: string;
+  */
+};
+
+export const defaultDirectives = {
+  imports: [
+    "package:meta/meta.dart",
+    "package:json_annotation/json_annotation.dart"
+  ],
+  parts: [],
+  exports: []
 };
 
 const defaultScalars: Scalars = {
@@ -62,7 +79,7 @@ export default function buildPlugin(
   route: "schema" | "documents",
   rootTemplate,
   partials,
-  defaultDirectives: DartFileDirectives
+  dartDirectives: DartFileDirectives
 ): PluginFunction<DartConfig> {
   return async (
     schema: GraphQLSchema,
@@ -80,7 +97,7 @@ export default function buildPlugin(
 
     for (let directive of ["imports", "exports", "parts"]) {
       config[route][directive] = dedupe([
-        ...(defaultDirectives[directive] || []),
+        ...(dartDirectives[directive] || []),
         ...(config[route][directive] || [])
       ]);
     }

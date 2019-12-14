@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
 import './example_mixin.dart';
 
 export './example_mixin.dart';
@@ -34,6 +35,7 @@ class SearchResult {
 /* Input Types */
 
 /// The input object sent when someone is creating a new review
+@JsonSerializable()
 class _ReviewInputFields {
   /// 0-5 stars
   int stars;
@@ -119,9 +121,14 @@ class ReviewInput {
   }
 
   bool get isValid => missingRequiredFields.isEmpty;
+
+  factory.fromJson(Map<String, dynamic> json) => _$FromJson(json);
+
+  Map<String, dynamic> toJson() => _$ToJson(this);
 }
 
 /// The input object sent when passing in a color
+@JsonSerializable()
 class _ColorInputFields {
   int red;
   int green;
@@ -208,6 +215,10 @@ class ColorInput {
   }
 
   bool get isValid => missingRequiredFields.isEmpty;
+
+  factory.fromJson(Map<String, dynamic> json) => _$FromJson(json);
+
+  Map<String, dynamic> toJson() => _$ToJson(this);
 }
 
 /* Interfaces */

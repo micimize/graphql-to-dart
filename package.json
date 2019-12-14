@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.3.6",
+  "version": "1.0.0-alpha.1",
   "description": "generate dart json_serializable classes using graphql-code-generator",
   "files": [
     "dist"
@@ -19,7 +19,11 @@
     "example:gql-gen": "cd example/ && graphql-codegen",
     "example:source-gen": "cd example/ && flutter packages pub run build_runner build",
     "example:format": "cd example/ && flutter format lib/graphql/*.dart",
-    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
+    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format",
+
+    "_dist:prep": "yarn build && cp package.json dist && cp README.md dist;",
+    "_dist:post": "rm -f dist/package.json && rm -f dist/README.md",
+    "dist": "npm run _dist:prep && npm publish dist && npm run _dist:post"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.9.1",

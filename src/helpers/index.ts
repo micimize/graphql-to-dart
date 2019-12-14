@@ -67,7 +67,6 @@ const helpers = wrapHelpers({
   ignoreType,
   fragmentClassNames,
 
-  expectedGeneratedFileFor,
   transformCharacters,
   wrapFields,
   inputBaseType
@@ -84,6 +83,7 @@ export default function configureHelpers(config) {
     resolveType: configureResolveType(config),
     classExtends: configureClassExtends(config),
     resolveMixins: configureResolveMixins(config),
-    addInputHelpers: configurAddInputHelpers(config)
+    addInputHelpers: configurAddInputHelpers(config),
+    expectedGeneratedFileFor: expectedGeneratedFileFor(config)
   };
 }

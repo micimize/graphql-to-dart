@@ -10,7 +10,7 @@ generates:
   lib/:
     preset: near-operation-file
     presetConfig:
-      extension: .dart
+      extension: .gql.dart
       baseTypesPath: graphql/schema.dart
       importTypesTemplate: import '{{relativeImportPath}}.dart';
       importFragmentsTemplate: import '{{fragmentImportPath}}.dart' show {{fragmentNames}};

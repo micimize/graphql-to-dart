@@ -1,5 +1,8 @@
 {{~#*inline "fieldsClass" ~}}
 {{ multilineComment description }}
+{{#if jsonSerializable ~}}
+@JsonSerializable()
+{{~/if}}
 class {{ className }}  {{
 
   classExtends
@@ -153,6 +156,13 @@ class {{ name }} {{
     {{#each inputHelpers ~}}
     {{> inputTypeHelpers otherType=this }}
     {{/each}}
+
+    {{#if jsonSerializable ~}}
+    factory {{className}}.fromJson(Map<String, dynamic> json) => 
+        _${{className}}FromJson(json);
+
+    Map<String, dynamic> toJson() => _${{className}}ToJson(this);
+    {{~/if}}
 
 }
 

@@ -27,7 +27,7 @@
 
 /* Input Types */
 {{#each inputTypes}}
-{{> type inputHelpers=(addInputHelpers name) }}
+{{> type inputHelpers=(addInputHelpers name) jsonSerializable="true" }}
 
 {{/each}}
 
