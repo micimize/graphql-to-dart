@@ -8,8 +8,9 @@ query HeroForEpisode($ep: Episode!) {
       primaryFunction
     }
     ... on Human {
-      height
-      ...home
+      appearsIn
+      ...info
+      ...relationships
     }
   }
 }

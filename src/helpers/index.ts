@@ -9,7 +9,6 @@ import configureClassExtends, {
 } from "./class-extends";
 import configureResolveType from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
-import hackFragmentBaseTypes from "./hack-fragment-basetypes";
 import ignoreType from "./ignore-type";
 import fragmentClassNames from "./fragment-class-names";
 import configurAddInputHelpers, {
@@ -63,7 +62,6 @@ const helpers = wrapHelpers({
   stripSuffix,
   multilineComment,
   hackFragmentFields,
-  hackFragmentBaseTypes,
   ignoreType,
   fragmentClassNames,
 

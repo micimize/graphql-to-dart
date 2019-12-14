@@ -4,13 +4,14 @@ import { dedupe, arrayify, inputBaseType } from "./utils";
 export interface AddInputHelpersConfig {
   /**
    * Configures if and how input type casting helpers are generated
+   * NOTE: This only works for ObjectTypes
    * @default false
    */
   addInputHelpers?:
     | boolean
     | {
         /**
-         * Explicitly add the given converters for the given type classes to the class
+         * Explicitly add the given converters for the given object type classes to the class
          */
         explicitlyFor?: { [inputType: string]: string | string[] };
         /*

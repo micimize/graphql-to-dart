@@ -1,0 +1,23 @@
+fragment home on Human {
+  home: homePlanet
+}
+
+fragment dimensions on Human {
+  height
+  mass
+}
+
+fragment relationships on Human {
+  friends {
+    name
+  }
+  starships {
+    name
+    length
+  }
+}
+
+fragment info on Human {
+  ...dimensions
+  ...home
+}

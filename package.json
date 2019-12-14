@@ -21,7 +21,7 @@
     "example:format": "cd example/ && flutter format lib/graphql/*.dart",
     "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format",
 
-    "_dist:prep": "yarn build && cp package.json dist && cp README.md dist;",
+    "_dist:prep": "cp package.json dist && cp README.md dist;",
     "_dist:post": "rm -f dist/package.json && rm -f dist/README.md",
     "dist": "npm run _dist:prep && npm publish dist && npm run _dist:post"
   },

@@ -15,7 +15,7 @@
 {{> selectionSetClass
       typeName=schemaBaseType
       fields=fields 
-      mixinFields=(hackFragmentFields "get" fragmentsSpread)
+      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
       className=(concat (toPascalCase ../name) modelType)
       contextName=(toPascalCase ../name)
 }}
@@ -30,7 +30,7 @@
 {{> selectionSetClass
       typeName=operationType
       fields=fields 
-      mixinFields=(hackFragmentFields "get" fragmentsSpread)
+      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
 
       className=(concat (toPascalCase name) (toPascalCase operationType))
       contextModels=innerModels

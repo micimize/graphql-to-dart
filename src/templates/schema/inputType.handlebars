@@ -1,0 +1,126 @@
+{{~#*inline "inputTypeHelpers" ~}}
+    {{ name }}.from{{ objectType }}({{ objectType }} instance):
+        {{#each fields~}}
+        {{ dartName name }} = instance.fields.{{ dartName name }}{{#unless @last}},{{/unless}}
+        {{/each~}};
+
+    {{ objectType }} as{{ objectType }}() =>
+        {{ objectType }}(
+            {{#each fields}}
+            {{ dartName name }}: fields.{{ dartName name }},
+            {{/each}}
+        );
+{{~/inline~}}
+
+{{#unless (
+  ignoreType
+    name
+      @root.config.replaceTypes
+      typeName
+      @root.config.irreducibleTypes
+)}}
+
+{{!--
+    input types are currently very simple in graphql, see
+    https://github.com/graphql/graphql-spec/issues/114#issuecomment-550056235
+--}}
+@JsonSerializable()
+class {{ name }} {
+  static final String typeName = "{{ takeFirst typeName name }}";
+
+  {{#each fields}}{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ resolveType type
+      "inline"
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      isArray
+      raw
+      ../name
+  }} {{ dartName name }};
+  {{~/if}}{{/if}}{{/each}}
+
+  {{name}}({
+    {{#each fields}}{{#if name}}
+        this.{{ dartName name }}
+    {{/if}}{{/each}}
+  });
+
+    @protected
+    Set<String> get missingRequiredFields {
+        Set<String> missingFields = Set();
+        {{#each fields}}
+        {{~#if isRequired}}
+        if ({{ dartName name }}  == null){
+            missingFields.add("{{ dartName name }}");
+        }
+        {{/if}}
+        {{/each}}
+        return missingFields;
+    }
+
+    void validate(){
+        final missing = missingRequiredFields;
+        assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+    }
+
+    bool get isValid => missingRequiredFields.isEmpty;
+
+    /// Adds all fields from [other] to this `{{ name }}`.
+    /// 
+    /// If a field from [other] is already in this `{{ name }}`,
+    /// its value is not overwritten, unless  `overwrite: true` is specified
+    void addAll(covariant {{ name }} other, { bool overwrite = true, }) {
+        assert(other != null, "Cannot add all from null into $this");
+        if (overwrite != null && overwrite){
+            {{#each fields}}{{#if name}}
+            {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
+            {{~/if}}{{/each}}
+        } else {
+            {{#each fields}}{{#if name}}
+            {{ dartName name }} ??= other.{{ dartName name }};
+            {{~/if}}{{/each}}
+        }
+    }
+
+  /// Creates a copy of this `{{ name }}` but with the given fields replaced with the new values.
+  {{ name }} copyWith(
+  {{~#if fields.length~}}
+    {
+        {{~#each fields}}
+        {{#if type}}{{#if name}}
+            {{ resolveType type
+                "inline"
+                (takeFirst contextName ../contextName)
+                (takeFirst contextModels ../contextModels)
+                isArray
+                raw
+                ../name
+            }} {{ dartName name}},
+        {{~/if}}{{/if}}{{/each}}
+    }
+  {{~/if~}}
+    ){
+        return {{ name }}(
+            {{#each fields}}{{#if type}}{{#if name}}
+            {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
+            {{~/if}}{{/if}}{{/each}}
+        );
+  }
+
+  /// Creates a copy of this `{{ name }}`
+  {{ name }} copy() => copyWith();
+
+  {{#each (addInputHelpers name) ~}}
+  {{> inputTypeHelpers objectType=this }}
+  {{/each}}
+
+  factory {{name}}.fromJson(Map<String, dynamic> json) => 
+      _${{name}}FromJson(json);
+
+  Map<String, dynamic> toJson() => _${{name}}ToJson(this);
+
+}
+
+{{/unless}}

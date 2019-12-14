@@ -1,4 +1,4 @@
-import { capitalize } from "./utils";
+import { capitalize, dedupe } from "./utils";
 
 var fragmentFields = {};
 
@@ -30,18 +30,17 @@ function getFields(name) {
 // Grab fragments and add them to inhereting classes
 export default function hackFragmentFields(
   action,
-  nameOrFragments,
-  fields = [],
-  contextModels = [],
-  nestedFragments = []
+  {
+    hash: { name, fragments, fields, contextModels = [], nestedFragments = [] }
+  }
 ) {
   if (action === "ensure_unique") {
-    const name = nameOrFragments;
+    assert(typeof name === "string" && name != "", { action, name });
     return !(name in fragmentFields);
   }
 
   if (action === "add") {
-    const name = nameOrFragments;
+    assert(typeof name === "string" && name != "", { action, name });
     fragmentFields[name] = {
       contextName: capitalize(name),
       contextModels,
@@ -51,16 +50,27 @@ export default function hackFragmentFields(
   }
 
   if (action === "get") {
-    const fragments = nameOrFragments;
+    assert(!Array.isArray(fragments), { action, fragments });
 
-    return fragments.reduce(
-      (fragFields, frag) => fragFields.concat(getFields(frag.fragmentName)),
-      []
+    return dedupe(
+      fragments.reduce(
+        (fragFields, frag) => fragFields.concat(getFields(frag.fragmentName)),
+        fields
+      )
     );
   }
 
   if (action === "list") {
-    const fragments = nameOrFragments;
+    assert(!Array.isArray(fragments), { action, fragments });
     return fragments.map(frag => getFields(frag.fragmentName));
+  }
+}
+
+function assert(cond: boolean, { action, ...rest }): void {
+  if (!cond) {
+    const required = Object.keys(rest)[0];
+    throw Error(
+      `hackFragmentFields(${action}, ...) requires a ${required} argument, but received ${rest[required]}`
+    );
   }
 }

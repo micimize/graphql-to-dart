@@ -1,15 +1,6 @@
 {{~#*inline "fieldsClass" ~}}
 {{ multilineComment description }}
-{{#if jsonSerializable ~}}
-@JsonSerializable()
-{{~/if}}
-class {{ className }}  {{
-
-  classExtends
-    fragments=fragmentsSpread
-    interfaces=(wrapFields interfaces)
-
-}} {
+class {{ className }}  {{ classExtends interfaces=(wrapFields interfaces) }} {
 
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
@@ -77,22 +68,6 @@ class {{ className }}  {{
 }
 {{~/inline~}}
 
-{{~#*inline "inputTypeHelpers" ~}}
-    {{ name }}.from{{ otherType }}({{ otherType }} instance):
-        fields = _{{ name }}Fields(
-            {{#each fields}}
-            {{ dartName name }}: instance.fields.{{ dartName name }},
-            {{/each}}
-        );
-
-    {{ otherType }} as{{ otherType }}() =>
-        {{ otherType }}(
-            {{#each fields}}
-            {{ dartName name }}: fields.{{ dartName name }},
-            {{/each}}
-        );
-{{~/inline~}}
-
 {{#unless (
   ignoreType
     name
@@ -103,13 +78,7 @@ class {{ className }}  {{
 
 {{> fieldsClass this className=(concat "_" name "Fields") }}
 
-class {{ name }} {{
-
-  classExtends
-    fragments=fragmentsSpread
-    interfaces=interfaces
-
-}} {
+class {{ name }} {{ classExtends interfaces=interfaces }} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
   @protected
@@ -152,17 +121,6 @@ class {{ name }} {{
     }
 
     bool get isValid => missingRequiredFields.isEmpty;
-
-    {{#each inputHelpers ~}}
-    {{> inputTypeHelpers otherType=this }}
-    {{/each}}
-
-    {{#if jsonSerializable ~}}
-    factory {{className}}.fromJson(Map<String, dynamic> json) => 
-        _${{className}}FromJson(json);
-
-    Map<String, dynamic> toJson() => _${{className}}ToJson(this);
-    {{~/if}}
 
 }
 

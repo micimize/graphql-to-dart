@@ -62,11 +62,21 @@ function inherit(inheritanceKeyword, ..._parents) {
 //   ex. Query becomes an "Entity"
 export default function configureClassExtends({ mixins }) {
   function classExtends({
-    hash: { baseType, mixins = [], fragments = [], interfaces = [] }
+    hash: {
+      onMixin = false,
+      baseType,
+      mixins = [],
+      fragments = [],
+      interfaces = []
+    }
   }) {
     return (
-      inherit("extends", baseType) +
-      inherit("with", ...mixins, ...fragmentClassNames(fragments)) +
+      inherit(onMixin ? "on" : "extends", baseType) +
+      inherit(
+        onMixin ? "," : "with",
+        ...mixins,
+        ...fragmentClassNames(fragments)
+      ) +
       inherit("implements", ...builtinInterfaces, ...interfaces)
     );
   }

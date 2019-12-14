@@ -7,8 +7,17 @@ export function log(...args) {
   console.log(...args);
 }
 
-export function dedupe(arr: string[]) {
-  return arr.filter((item, index) => arr.indexOf(item) === index);
+// very innefficient structural dedupe
+export function dedupe<T = string>(arr: T[], hash = JSON.stringify) {
+  let seen: Set<string> = new Set();
+  return arr.filter(item => {
+    const hashed = hash(item);
+    if (seen.has(hashed)) {
+      return false; // already seen
+    }
+    seen.add(hashed);
+    return true; // fresh
+  });
 }
 
 export function arrayify<T>(arr: T | T[]) {

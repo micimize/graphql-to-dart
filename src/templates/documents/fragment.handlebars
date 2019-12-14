@@ -1,17 +1,9 @@
-
-{{#*inline "exposeField" ~}}
-{{#if type}}{{#if name}}
-  {{#if description }}{{ multilineComment description }}
-  {{/if}}
-  {{ type }} get {{ name }} => fields.{{ name }};
-  set {{ name }} ({{ type }} {{ name }}) => fields.{{ name }} = {{ name }};
-{{~/if}}{{/if}}
-{{~/inline~}}
-
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
-mixin {{ className }} on {{ typeName }} {{
+mixin {{ className }} {{
   classExtends
+    onMixin="true"
+    baseType=typeName
     mixins=(resolveMixins fields)
     fragments=fragmentsSpread
 }} {
@@ -22,19 +14,13 @@ mixin {{ className }} on {{ typeName }} {{
 }
 {{~/inline~}}
 
-{{~# if (hackFragmentFields "ensure_unique" name) ~}}
+{{~# if (hackFragmentFields "ensure_unique" name=name) ~}}
 
-{{!-- add all fragment definitions to the base type hacker --}}
-    {{~#eachBackwards innerModels ~}}
-        {{~ hackFragmentBaseTypes "add" (concat (toPascalCase ../name) modelType) schemaBaseType ~}}
-    {{~/eachBackwards~}}
-
-    {{~ hackFragmentBaseTypes "add" (toPascalCase name) onType ~}}
-
-    {{~ hackFragmentFields "add" name
-        fields
-        innerModels
-        fragmentsSpread 
+{{!-- add all fragment fields to the field hacker --}}
+    {{~ hackFragmentFields "add" name=name
+        fields=fields
+        fragments=fragmentsSpread 
+        contextModels=innerModels
     ~}}
 {{!-- --}}
 
@@ -53,7 +39,7 @@ mixin {{ className }} on {{ typeName }} {{
 {{> fragmentMixin
       className=(toPascalCase name)
       typeName=onType
-      fields=fields
+      fields=(hackFragmentFields 'get' fragments=fragmentsSpread fields=fields)
       fragmentsSpread=fragmentsSpread
       contextModels=innerModels
       contextName=(toPascalCase name)
