@@ -1,5 +1,5 @@
 export function logThis(this: any) {
-  console.log(this);
+  console.error(this);
 }
 
 export function log(...args) {

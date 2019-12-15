@@ -29,9 +29,15 @@ function getFields(name) {
 }
 // Grab fragments and add them to inhereting classes
 export default function hackFragmentFields(
-  action,
+  action: "ensure_unique" | "add" | "get",
   {
-    hash: { name, fragments, fields, contextModels = [], nestedFragments = [] }
+    hash: {
+      name,
+      fragments,
+      fields = [],
+      contextModels = [],
+      nestedFragments = []
+    }
   }
 ) {
   if (action === "ensure_unique") {
@@ -47,10 +53,11 @@ export default function hackFragmentFields(
       nestedFragments: nestedFragments.map(f => f.fragmentName),
       fields
     };
+    return "";
   }
 
   if (action === "get") {
-    assert(!Array.isArray(fragments), { action, fragments });
+    assert(Array.isArray(fragments), { action, fragments });
 
     return dedupe(
       fragments.reduce(
@@ -59,11 +66,14 @@ export default function hackFragmentFields(
       )
     );
   }
+  throw Error(`invalid hackFragmentFields action ${action}`);
 
+  /*
   if (action === "list") {
-    assert(!Array.isArray(fragments), { action, fragments });
+    assert(Array.isArray(fragments), { action, fragments });
     return fragments.map(frag => getFields(frag.fragmentName));
   }
+  */
 }
 
 function assert(cond: boolean, { action, ...rest }): void {

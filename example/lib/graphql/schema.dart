@@ -34,9 +34,10 @@ class SearchResult {
 
 /* Input Types */
 
-/// The input object sent when someone is creating a new review
 @JsonSerializable()
-class _ReviewInputFields {
+class ReviewInput {
+  static final String typeName = "ReviewInput";
+
   /// 0-5 stars
   int stars;
 
@@ -46,18 +47,35 @@ class _ReviewInputFields {
   /// Favorite color, optional
   ColorInput favoriteColor;
 
-  _ReviewInputFields({
+  ReviewInput({
     this.stars,
     this.commentary,
     this.favoriteColor,
   });
 
-  /// Adds all fields from [other] to this `_ReviewInputFields`.
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    if (stars == null) {
+      missingFields.add("stars");
+    }
+    return missingFields;
+  }
+
+  void validate() {
+    final missing = missingRequiredFields;
+    assert(missing.isEmpty,
+        "$runtimeType#$hashCode is missing required fields $missing");
+  }
+
+  bool get isValid => missingRequiredFields.isEmpty;
+
+  /// Adds all fields from [other] to this `ReviewInput`.
   ///
-  /// If a field from [other] is already in this `_ReviewInputFields`,
+  /// If a field from [other] is already in this `ReviewInput`,
   /// its value is not overwritten, unless  `overwrite: true` is specified
   void addAll(
-    covariant _ReviewInputFields other, {
+    covariant ReviewInput other, {
     bool overwrite = true,
   }) {
     assert(other != null, "Cannot add all from null into $this");
@@ -72,44 +90,52 @@ class _ReviewInputFields {
     }
   }
 
-  /// Creates a copy of this `_ReviewInputFields` but with the given fields replaced with the new values.
-  _ReviewInputFields copyWith({
+  /// Creates a copy of this `ReviewInput` but with the given fields replaced with the new values.
+  ReviewInput copyWith({
     int stars,
     String commentary,
     ColorInput favoriteColor,
-  }) {
-    return _ReviewInputFields(
-      stars: stars ?? this.stars,
-      commentary: commentary ?? this.commentary,
-      favoriteColor: favoriteColor ?? this.favoriteColor,
-    );
-  }
+  }) =>
+      ReviewInput(
+        stars: stars ?? this.stars,
+        commentary: commentary ?? this.commentary,
+        favoriteColor: favoriteColor ?? this.favoriteColor,
+      );
 
-  /// Creates a copy of this `_ReviewInputFields`
-  _ReviewInputFields copy() => copyWith();
+  /// Creates a copy of this `ReviewInput`
+  ReviewInput copy() => copyWith();
+
+  factory ReviewInput.fromJson(Map<String, dynamic> json) =>
+      _$ReviewInputFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReviewInputToJson(this);
 }
 
-class ReviewInput {
-  static final String typeName = "ReviewInput";
+@JsonSerializable()
+class ColorInput {
+  static final String typeName = "ColorInput";
 
-  @protected
-  covariant _ReviewInputFields fields;
+  int red;
+  int green;
+  int blue;
 
-  ReviewInput({
-    int stars,
-    String commentary,
-    ColorInput favoriteColor,
-  }) : fields = _ReviewInputFields(
-          stars: stars,
-          commentary: commentary,
-          favoriteColor: favoriteColor,
-        );
+  ColorInput({
+    this.red,
+    this.green,
+    this.blue,
+  });
 
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    if (fields.stars == null) {
-      missingFields.add("stars");
+    if (red == null) {
+      missingFields.add("red");
+    }
+    if (green == null) {
+      missingFields.add("green");
+    }
+    if (blue == null) {
+      missingFields.add("blue");
     }
     return missingFields;
   }
@@ -122,30 +148,12 @@ class ReviewInput {
 
   bool get isValid => missingRequiredFields.isEmpty;
 
-  factory.fromJson(Map<String, dynamic> json) => _$FromJson(json);
-
-  Map<String, dynamic> toJson() => _$ToJson(this);
-}
-
-/// The input object sent when passing in a color
-@JsonSerializable()
-class _ColorInputFields {
-  int red;
-  int green;
-  int blue;
-
-  _ColorInputFields({
-    this.red,
-    this.green,
-    this.blue,
-  });
-
-  /// Adds all fields from [other] to this `_ColorInputFields`.
+  /// Adds all fields from [other] to this `ColorInput`.
   ///
-  /// If a field from [other] is already in this `_ColorInputFields`,
+  /// If a field from [other] is already in this `ColorInput`,
   /// its value is not overwritten, unless  `overwrite: true` is specified
   void addAll(
-    covariant _ColorInputFields other, {
+    covariant ColorInput other, {
     bool overwrite = true,
   }) {
     assert(other != null, "Cannot add all from null into $this");
@@ -160,65 +168,25 @@ class _ColorInputFields {
     }
   }
 
-  /// Creates a copy of this `_ColorInputFields` but with the given fields replaced with the new values.
-  _ColorInputFields copyWith({
+  /// Creates a copy of this `ColorInput` but with the given fields replaced with the new values.
+  ColorInput copyWith({
     int red,
     int green,
     int blue,
-  }) {
-    return _ColorInputFields(
-      red: red ?? this.red,
-      green: green ?? this.green,
-      blue: blue ?? this.blue,
-    );
-  }
+  }) =>
+      ColorInput(
+        red: red ?? this.red,
+        green: green ?? this.green,
+        blue: blue ?? this.blue,
+      );
 
-  /// Creates a copy of this `_ColorInputFields`
-  _ColorInputFields copy() => copyWith();
-}
+  /// Creates a copy of this `ColorInput`
+  ColorInput copy() => copyWith();
 
-class ColorInput {
-  static final String typeName = "ColorInput";
+  factory ColorInput.fromJson(Map<String, dynamic> json) =>
+      _$ColorInputFromJson(json);
 
-  @protected
-  covariant _ColorInputFields fields;
-
-  ColorInput({
-    int red,
-    int green,
-    int blue,
-  }) : fields = _ColorInputFields(
-          red: red,
-          green: green,
-          blue: blue,
-        );
-
-  @protected
-  Set<String> get missingRequiredFields {
-    Set<String> missingFields = Set();
-    if (fields.red == null) {
-      missingFields.add("red");
-    }
-    if (fields.green == null) {
-      missingFields.add("green");
-    }
-    if (fields.blue == null) {
-      missingFields.add("blue");
-    }
-    return missingFields;
-  }
-
-  void validate() {
-    final missing = missingRequiredFields;
-    assert(missing.isEmpty,
-        "$runtimeType#$hashCode is missing required fields $missing");
-  }
-
-  bool get isValid => missingRequiredFields.isEmpty;
-
-  factory.fromJson(Map<String, dynamic> json) => _$FromJson(json);
-
-  Map<String, dynamic> toJson() => _$ToJson(this);
+  Map<String, dynamic> toJson() => _$ColorInputToJson(this);
 }
 
 /* Interfaces */

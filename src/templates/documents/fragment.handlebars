@@ -1,15 +1,38 @@
+{{!--
+    Leaving external mixins out of fragments because it overcomplicates things.  
+    Because "mixin on BaseType, Foo, Bar" basically defines a multi-parent interface
+    mixins=(resolveMixins fields)
+--}}
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
 mixin {{ className }} {{
   classExtends
     onMixin="true"
     baseType=typeName
-    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
 }} {
   static final String typeName = "{{ typeName }}";
 
   {{> selectionSet }}
+
+}
+
+{{!- we want to be able to both mixin fragments when they're spread into other fragments,
+     and treat them as their own nonoono you see you're treating the inner models of a fragment
+     as fragments - that is the issue. they are still _selection sets_ dufus that's the whole problem
+-}}
+{{> selectionSetClass
+      typeName=operationType
+      fields=fields 
+      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
+
+      className=(concat (toPascalCase name) (toPascalCase operationType))
+      contextModels=innerModels
+      contextName=(toPascalCase name)
+}}
+
+class {{ className }}Spread extends {{toPascalCase typeName}} with {{ className }} {
+  static final String typeName = "{{ typeName }}";
 
 }
 {{~/inline~}}

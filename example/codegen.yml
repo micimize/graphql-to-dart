@@ -13,7 +13,7 @@ generates:
       extension: .gql.dart
       baseTypesPath: graphql/schema.dart
       importTypesTemplate: import '{{relativeImportPath}}.dart';
-      importFragmentsTemplate: import '{{fragmentImportPath}}.dart' show {{fragmentNames}};
+      importFragmentsTemplate: import '{{fragmentImportPath}}.dart';
       fragmentImportSuffix: ' '
     plugins:
       - ../dist/documents.js

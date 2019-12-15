@@ -43,7 +43,7 @@ class {{ name }} {
 
   {{name}}({
     {{#each fields}}{{#if name}}
-        this.{{ dartName name }}
+        this.{{ dartName name }},
     {{/if}}{{/each}}
   });
 
@@ -101,13 +101,11 @@ class {{ name }} {
         {{~/if}}{{/if}}{{/each}}
     }
   {{~/if~}}
-    ){
-        return {{ name }}(
-            {{#each fields}}{{#if type}}{{#if name}}
-            {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
-            {{~/if}}{{/if}}{{/each}}
-        );
-  }
+    ) => {{ name }}(
+        {{#each fields}}{{#if type}}{{#if name}}
+        {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
+        {{~/if}}{{/if}}{{/each}}
+    );
 
   /// Creates a copy of this `{{ name }}`
   {{ name }} copy() => copyWith();

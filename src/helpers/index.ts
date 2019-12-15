@@ -19,6 +19,7 @@ import {
   log,
   logThis,
   concat,
+  arrayify,
   eachBackwards,
   takeFirst,
   camelCase,
@@ -64,6 +65,7 @@ const helpers = wrapHelpers({
   hackFragmentFields,
   ignoreType,
   fragmentClassNames,
+  arrayify,
 
   transformCharacters,
   wrapFields,

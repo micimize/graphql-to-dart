@@ -70,13 +70,23 @@ export default function configureClassExtends({ mixins }) {
       interfaces = []
     }
   }) {
+    if (onMixin) {
+      return (
+        inherit("on", baseType) +
+        inherit(",", ...mixins) +
+        inherit(
+          "implements",
+          // we copy all fragment fields to fragments that spread
+          // because dart has strange mixin inheritance
+          ...fragmentClassNames(fragments),
+          ...builtinInterfaces,
+          ...interfaces
+        )
+      );
+    }
     return (
-      inherit(onMixin ? "on" : "extends", baseType) +
-      inherit(
-        onMixin ? "," : "with",
-        ...mixins,
-        ...fragmentClassNames(fragments)
-      ) +
+      inherit("extends", baseType) +
+      inherit("with", ...mixins, ...fragmentClassNames(fragments)) +
       inherit("implements", ...builtinInterfaces, ...interfaces)
     );
   }
