@@ -1,13 +1,12 @@
-import './schema.dart';
-import './_human_fragment.gql.dart';
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import './example_mixin.dart';
+import 'package:starwars/graphql/schema.dart';
+import 'package:starwars/graphql/_human_fragment.gql.dart';
 
-part 'hero_for_episode.g.dart';
+part 'hero_for_episode.gql.g.dart';
 
 @JsonSerializable()
 class HeroForEpisodeVariables {

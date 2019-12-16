@@ -12,6 +12,8 @@
 {{> directivesBlock values=@root.config.schema.exports directive='export'}}
 {{> directivesBlock values=@root.config.schema.parts directive='part'}}
 
+part '{{ expectedGeneratedFileFor outputFile }}';
+
 /* Enums */
 {{#each enums}}
 {{> enum }}

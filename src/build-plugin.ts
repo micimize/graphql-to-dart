@@ -18,6 +18,22 @@ type DartFileDirectives = {
   exports?: string[];
 };
 
+export function mergeDirectives(
+  a: DartFileDirectives = {},
+  b: DartFileDirectives = {}
+) {
+  return ["imports", "exports", "parts"].reduce(
+    (merged, directive) => (
+      (merged[directive] = dedupe([
+        ...(a[directive] || []),
+        ...(b[directive] || [])
+      ])),
+      merged
+    ),
+    {}
+  );
+}
+
 export type DartConfig = HelperConfig & {
   scalars?: Partial<Scalars>;
   // alias schema scalars to dart classes,
@@ -41,14 +57,6 @@ export type DartConfig = HelperConfig & {
 
   schema?: DartFileDirectives;
   documents?: DartFileDirectives;
-
-  /**
-   * build_runner generated file template
-   * @example "{{sourceFileBaseName}}.generated.dart"
-   * 
-   * commented out as it would mostly be misused
-  generatedFileTemplate?: string;
-  */
 };
 
 export const defaultDirectives = {
@@ -84,23 +92,10 @@ export default function buildPlugin(
   return async (
     schema: GraphQLSchema,
     documents: DocumentFile[],
-    config: DartConfig
+    config: DartConfig,
+    { outputFile }
   ): Promise<string> => {
-    config[route] = Object.assign(
-      {
-        imports: [],
-        parts: [],
-        exports: []
-      },
-      config[route]
-    );
-
-    for (let directive of ["imports", "exports", "parts"]) {
-      config[route][directive] = dedupe([
-        ...(dartDirectives[directive] || []),
-        ...(config[route][directive] || [])
-      ]);
-    }
+    config[route] = mergeDirectives(dartDirectives, config[route]);
 
     const templateContext = schemaToTemplateContext(schema);
 
@@ -125,6 +120,7 @@ export default function buildPlugin(
       config.customScalars || {}
     );
     const handlebarsContext = {
+      outputFile,
       config,
       primitives: scalars,
       scalars,

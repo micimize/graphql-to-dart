@@ -69,7 +69,8 @@ const helpers = wrapHelpers({
 
   transformCharacters,
   wrapFields,
-  inputBaseType
+  inputBaseType,
+  expectedGeneratedFileFor
 });
 
 export interface Config extends AddInputHelpersConfig, MixinConfig {}
@@ -83,7 +84,6 @@ export default function configureHelpers(config) {
     resolveType: configureResolveType(config),
     classExtends: configureClassExtends(config),
     resolveMixins: configureResolveMixins(config),
-    addInputHelpers: configurAddInputHelpers(config),
-    expectedGeneratedFileFor: expectedGeneratedFileFor(config)
+    addInputHelpers: configurAddInputHelpers(config)
   };
 }

@@ -6,6 +6,8 @@ import './example_mixin.dart';
 
 export './example_mixin.dart';
 
+part 'schema.g.dart';
+
 /* Enums */
 /// The episodes in the Star Wars trilogy
 enum Episode {

@@ -16,25 +16,6 @@ mixin {{ className }} {{
   {{> selectionSet }}
 
 }
-
-{{!- we want to be able to both mixin fragments when they're spread into other fragments,
-     and treat them as their own nonoono you see you're treating the inner models of a fragment
-     as fragments - that is the issue. they are still _selection sets_ dufus that's the whole problem
--}}
-{{> selectionSetClass
-      typeName=operationType
-      fields=fields 
-      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
-
-      className=(concat (toPascalCase name) (toPascalCase operationType))
-      contextModels=innerModels
-      contextName=(toPascalCase name)
-}}
-
-class {{ className }}Spread extends {{toPascalCase typeName}} with {{ className }} {
-  static final String typeName = "{{ typeName }}";
-
-}
 {{~/inline~}}
 
 {{~# if (hackFragmentFields "ensure_unique" name=name) ~}}
@@ -48,11 +29,12 @@ class {{ className }}Spread extends {{toPascalCase typeName}} with {{ className 
 {{!-- --}}
 
 {{~#eachBackwards innerModels }}
-{{> fragmentMixin
+{{> selectionSetClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
-      fields=fields
+      fields=fields 
       fragmentsSpread=fragmentsSpread
+      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}

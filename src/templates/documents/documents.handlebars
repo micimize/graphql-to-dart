@@ -12,12 +12,7 @@
 {{> directivesBlock values=@root.config.documents.exports directive='export'}}
 {{> directivesBlock values=@root.config.documents.parts directive='part'}}
 
-part '
-{{~#if operations.length ~}}
-    {{~ expectedGeneratedFileFor operations ~}}
-{{!--~else~}} adding the json serializers to mixins doesn't really make sense.
-    {{~ expectedGeneratedFileFor fragments ~--}}
-{{~/if~}}';
+part '{{ expectedGeneratedFileFor outputFile }}';
 
 {{#each fragments }}
 {{> fragment }}

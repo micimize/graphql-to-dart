@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import './graphql/hero_for_episode.dart';
+import './graphql/hero_for_episode.gql.dart';
 import './graphql/schema.dart';
 import './typed_query.dart';
 

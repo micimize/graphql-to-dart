@@ -5,20 +5,15 @@ documents:
 overwrite: true
 generates:
   lib/graphql/schema.dart:
-    #- graphql-to-dart/schema-types
     - ../dist/schema-types.js
   lib/:
-    preset: near-operation-file
+    preset: ../dist/index.js
     presetConfig:
+      packageName: starwars
       extension: .gql.dart
-      baseTypesPath: graphql/schema.dart
-      importTypesTemplate: import '{{relativeImportPath}}.dart';
-      importFragmentsTemplate: import '{{fragmentImportPath}}.dart';
-      fragmentImportSuffix: ' '
+      schemaTypesPath: lib/graphql/schema.dart
     plugins:
       - ../dist/documents.js
-        #- graphql-to-dart
-        #
 config:
   schema:
     parts: []
