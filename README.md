@@ -88,7 +88,7 @@ So:
 ```bash
 yarn gql-gen
 flutter packages pub run build_runner build
-flutter format `ls lib/**/*graphql.dart` # you're gunna want this
+flutter format lib/**/*graphql.dart # you're gunna want this
 ```
 
 *Make sure you have a `build.yaml` like in the `example`, and the deps in the `pubspec.yaml`*:
