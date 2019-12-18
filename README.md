@@ -11,69 +11,84 @@ The example is sparse.
 ### Current nusances:
 * You can have multiple inline fragments on the same document, but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
 * The dart type system is hard to wrestle into graphql-like types (especially unions)
-* because of helpers like `.empty()`, having invalid types is easy. We should validate not null somehow
 
 
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-dart@0.1.2-alpha
+yarn add -D graphql-code-generator graphql graphql-to-dart@1.0.0-beta-stable
 ```
-write `codegen.yaml` to customize your build as needed:
+write `codegen.yaml` to customize your build as needed.
+This is the full working config I'm using in the wild:
 ```yaml
-schema: "./schema.json"
-documents: 
-- "./lib/gql/raw/queries.gql"
+schema: schema/__generated__/schema.json
+documents:
+  # fragments are _private and collected first
+  # so we can hack their fields
+  - '../app/lib/**/_*.graphql'
+  - '../app/lib/**/!(_)*.graphql'
 overwrite: true
 generates:
-  lib/serializers/graphql.dart:
+  ../app/lib/graphql/schema.dart:
+    - graphql-to-dart/schema-types
+  ../app/lib/:
+    # generate operation types next to their source files
+    # NOTE there's actually a coupling between the preset and plugin
+    # with respect to `integrateGqlCodeGenAst` atm
+    preset: graphql-to-dart
+    presetConfig:
+      # all required
+      extension: .graphql.dart
+      packageName: savvy_app
+      schemaTypesPath: ../app/lib/graphql/schema.dart
     plugins:
-      - graphql-to-dart
+      - graphql-to-dart/documents
 config:
-  # generate fragment helpers for
-  # moving data/attributes between types and their cooresponding fragments,
-  # except on types ending with `Through` and for the `EventMetric` type
-  generateFragmentHelpers:
-    excludeFields:
-    - suffix: Through
-    - onType: EventMetric
+  # re-export built gql_code_gen ast files
+  integrateGqlCodeGenAst: true
+  schema:
+    imports:
+      # import 'package:foo/bar.dart' show biz; works as well here
+      - package:savvy_app/graphql/scalars/scalars.dart
+      - package:savvy_app/graphql/base.dart
+    exports:
+      - package:savvy_app/graphql/scalars/scalars.dart
+      - package:savvy_app/graphql/base.dart
   mixins:
-  # add the mixin {{name}} when the given fields are found in a model
-  - when:
-      fields:
-      - entityId - validFrom
-      - validUntil
-    name: Entity
-  imports:
-  - package:quiver/core.dart
-  - "./scalars.dart"
-  # the generated .g.dart must be included as a part
-  parts:
-  - "./base.dart"
-  - "./graphql.g.dart"
-  # required annotations on base type fields can be disabled for dynamic queries
-  requiredFields: false
+    # add `with Entity` when a generated class has these fields
+    - when:
+        fields:
+        - entityId
+        - validFrom
+        - validUntil
+      name: Entity
   scalars:
     Date: DateTime
+    # requires a PGDateTimeProvider in the schema lib
     Datetime: PGDateTime
     FiniteDatetime: DateTime
     UUID: String
     Rrule: RecurrenceRule
     Cursor: String
-    MetricSpecification: Object
-    MetricValue: Object
+    JSON: Object
   replaceTypes:
     TemporalIdInput: TemporalId
+    # Replace with a reference, if I remember correctly
     TemporalId: TemporalId
+    GoogleSignInInput: GoogleSignIn
   irreducibleTypes:
-  - TemporalId
+   # I have a common in-fragment type
+   # that is always inherited the same way,
+   # so I just repace it's inputs and make my own irreducible.
+   - TemporalId
+
 ```
 Then generate with `yarn gql-gen` (or `gql-gen` if you have it globally installed),
-And theeeen generate the actual json serializers (`json_serializable` is a peer dependency, but on the flutter side).
+And theeeen generate the actual json serializers (`json_serializable` is a peer dependency, but on the flutter side, also `gql_code_gen` if you're using the ast integration).
 So:
 ```bash
 yarn gql-gen
 flutter packages pub run build_runner build
-flutter format $outfile # you're gunna want this
+flutter format `ls lib/**/*graphql.dart` # you're gunna want this
 ```
 
 *Make sure you have a `build.yaml` like in the `example`, and the deps in the `pubspec.yaml`*:
@@ -92,114 +107,11 @@ dependencies:
 
 ...Obviously this is not the most user friendly process yet.
 
-# Sample result output
-I've built in some idiomatic dart helper methods to the generated models to make the typed data easier to work with. Currently there's `addAll` (modeled after `Map.addAll`), `copy`, `copyWith`, and an `empty` constructor. You can also set `generateFragmentHelpers` to generate `addAllFrom{baseType|inputType}` helpers.
 
-Here's some sample output for a fragment on a base type "TemporalId":
-```dart
-@JsonSerializable()
-class VersionId implements ToJson {
-  static final String typeName = "TemporalId";
-
-  String __typename;
-
-  String entityId;
-  @JsonKey(
-    fromJson: fromJsonToPGDateTime,
-    toJson: fromPGDateTimeToJson,
-  )
-  PGDateTime valid;
-
-  VersionId({
-    this.entityId,
-    this.valid,
-  });
-
-  /// Construct an empty `VersionId`
-  VersionId.empty();
-
-  /// Adds all fields from [other] to this `VersionId`.
-  ///
-  /// If a field from [other] is already in this `VersionId`,
-  /// its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(
-    covariant VersionId other, {
-    bool overwrite = true,
-  }) {
-    assert(other != null, "Cannot add all from null into $this");
-    if (overwrite != null && overwrite) {
-      entityId = other.entityId ?? entityId;
-      valid = other.valid ?? valid;
-    } else {
-      entityId ??= other.entityId;
-      valid ??= other.valid;
-    }
-  }
-
-  /// Creates a copy of this `VersionId` but with the given fields replaced with the new values.
-  VersionId copyWith({
-    String entityId,
-    PGDateTime valid,
-  }) {
-    return VersionId(
-      entityId: entityId ?? this.entityId,
-      valid: valid ?? this.valid,
-    );
-  }
-
-  /// Creates a copy of this `VersionId`
-  VersionId copy() => copyWith();
-
-  /// Adds all fields from [other] to this `VersionId`.
-  ///
-  /// If a field from [other] is already in this `VersionId`,
-  /// its value is overwritten, unless  `overwrite: true` is specified
-  void addAllFromTemporalId(
-    covariant TemporalId other, {
-    bool overwrite = true,
-  }) {
-    assert(other != null, "Cannot add all from null into $this");
-    if (overwrite != null && overwrite) {
-      entityId = other.entityId ?? entityId;
-      valid = other.valid ?? valid;
-    } else {
-      entityId ??= other.entityId;
-      valid ??= other.valid;
-    }
-  }
-
-  factory VersionId.fromJson(Map<String, dynamic> json) =>
-      deserializeFromJson(json);
-
-  Map<String, dynamic> toJson() => serializeToJson(this);
-
-  static VersionId deserializeFromJson(
-      Map<String, dynamic> json) {
-    VersionId instance =
-        _$VersionIdFromJson(json);
-    // for handling inline fragment logic
-    instance.__typename = json['__typename'] as String;
-
-    return instance;
-  }
-
-  static Map<String, dynamic> serializeToJson(
-      VersionId instance) {
-    Map<String, dynamic> json =
-        _$VersionIdToJson(instance);
-
-    json['__typename'] = instance.__typename ?? typeName;
-    return json;
-  }
-}
-```
+Take a look at the example output to see how ti generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
 
 # NOTES
-The helpers can't handle nested fragments atm, due to lack of awareness that the field is a fragment
+* I probably won't touch this for a while once again
+* This depends on a PR I made to near-operation-files
+* I also use a fork of the ast generator atm that should hopefully be merged soon
 
-
-## dev notes
-`generateFragmentHelpers` is super fickle, and by-and-large we're doing all kinds of hacks to get helpers to work 
-(caching the fragment info at declaration time, then plucking it back out later)
-also helpers often have different usages and the code is basically impossible even for me to follow.
-But it works!

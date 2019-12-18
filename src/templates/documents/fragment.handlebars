@@ -23,7 +23,7 @@ mixin {{ className }} {{
 {{!-- add all fragment fields to the field hacker --}}
     {{~ hackFragmentFields "add" name=name
         fields=fields
-        fragments=fragmentsSpread 
+        nestedFragments=fragmentsSpread 
         contextModels=innerModels
     ~}}
 {{!-- --}}
@@ -41,9 +41,8 @@ mixin {{ className }} {{
 {{> selectionSetClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
-      fields=fields 
       fragmentsSpread=fragmentsSpread
-      mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
+      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}

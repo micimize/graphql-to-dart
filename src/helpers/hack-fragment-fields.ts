@@ -61,7 +61,7 @@ export default function hackFragmentFields(
 
     return dedupe(
       fragments.reduce(
-        (fragFields, frag) => fragFields.concat(getFields(frag.fragmentName)),
+        (fragFields, frag) => [...fragFields, ...getFields(frag.fragmentName)],
         fields
       )
     );
