@@ -1,5 +1,6 @@
 import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 import { dedupe, arrayify, inputBaseType } from "./utils";
+import { GraphQLSchema, visit, parse, printSchema } from "graphql";
 
 export interface AddInputHelpersConfig {
   /**
@@ -21,8 +22,20 @@ export interface AddInputHelpersConfig {
       };
 }
 
-export default ({ addInputHelpers = false }: AddInputHelpersConfig & object) =>
-  function configureAddInputHelpers(inputType: string) {
+export default (
+  schema: GraphQLSchema,
+  { addInputHelpers = false }: AddInputHelpersConfig & object
+) => {
+  let objectTypes = new Set<String>();
+
+  visit(parse(printSchema(schema)), {
+    leave: {
+      ObjectTypeDefinition(node) {
+        objectTypes.add(node.name.value);
+      }
+    }
+  });
+  return (inputType: string) => {
     if (!addInputHelpers) {
       return [];
     }
@@ -39,10 +52,16 @@ export default ({ addInputHelpers = false }: AddInputHelpersConfig & object) =>
       toPascalCase
     );
 
-    if (exceptFor.includes(baseType)) {
+    if (
+      exceptFor.includes(baseType) ||
+      baseType === inputType ||
+      !objectTypes.has(baseType)
+    ) {
       return generateHelpersFor;
     }
 
     generateHelpersFor.push(baseType);
+
     return dedupe(generateHelpersFor);
   };
+};

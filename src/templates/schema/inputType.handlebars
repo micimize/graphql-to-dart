@@ -1,13 +1,59 @@
+{{~#*inline "setField" ~}}
+    {{ dartName name }} = {{#if (
+        callMethod type
+            'endsWith'
+            'Input'
+        ) ~}}
+        {{type}}.from{{ inputBaseType type }}(instance.fields.{{ dartName name }})
+    {{~else~}}
+        instance.fields.{{ dartName name }}
+    {{~/if~}}
+{{/inline}}
+{{~#*inline "getField" ~}}
+    {{ dartName name }}: {{ dartName name ~}}
+    {{~#if (
+        callMethod type
+        'endsWith'
+        'Input'
+        ) ~}}
+        .as{{ inputBaseType type }}()
+    {{~/if~}},
+{{/inline}}
+
 {{~#*inline "inputTypeHelpers" ~}}
     {{ name }}.from{{ objectType }}({{ objectType }} instance):
         {{#each fields~}}
-        {{ dartName name }} = instance.fields.{{ dartName name }}{{#unless @last}},{{/unless}}
+            {{>setField type=(
+                callMethod (
+                    resolveType
+                        type
+                        "inline"
+                        (takeFirst contextName ../contextName)
+                        (takeFirst contextModels ../contextModels)
+                        isArray
+                        raw
+                        ../name
+                )
+                'toString'
+            )}}{{#unless @last}},{{/unless}}
         {{/each~}};
 
     {{ objectType }} as{{ objectType }}() =>
         {{ objectType }}(
             {{#each fields}}
-            {{ dartName name }}: fields.{{ dartName name }},
+            {{>getField type=(
+                callMethod (
+                    resolveType
+                        type
+                        "inline"
+                        (takeFirst contextName ../contextName)
+                        (takeFirst contextModels ../contextModels)
+                        isArray
+                        raw
+                        ../name
+                )
+                'toString'
+            )}}
             {{/each}}
         );
 {{~/inline~}}
@@ -111,7 +157,7 @@ class {{ name }} {
   {{ name }} copy() => copyWith();
 
   {{#each (addInputHelpers name) ~}}
-  {{> inputTypeHelpers objectType=this }}
+  {{> inputTypeHelpers .. objectType=this }}
   {{/each}}
 
   factory {{name}}.fromJson(Map<String, dynamic> json) => 

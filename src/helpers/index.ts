@@ -1,3 +1,5 @@
+import { GraphQLSchema } from "graphql";
+
 import { helpers as gqlHelpers } from "graphql-codegen-plugin-handlebars-helpers";
 import { toPascalCase } from "@graphql-codegen/plugin-helpers";
 
@@ -28,7 +30,8 @@ import {
   wrapFields,
   inputBaseType,
   takeLastWord,
-  dartDirective
+  dartDirective,
+  callMethod
 } from "./utils";
 import addInputHelpers from "./add-input-helpers";
 
@@ -75,12 +78,13 @@ const helpers = wrapHelpers({
   inputBaseType,
   takeLastWord,
   expectedGeneratedFileFor,
-  dartDirective
+  dartDirective,
+  callMethod
 });
 
 export interface Config extends AddInputHelpersConfig, MixinConfig {}
 
-export default function configureHelpers(config) {
+export default function configureHelpers(schema: GraphQLSchema, config) {
   return {
     ...helpers,
     dartName(name: string): string {
@@ -89,6 +93,6 @@ export default function configureHelpers(config) {
     resolveType: configureResolveType(config),
     classExtends: configureClassExtends(config),
     resolveMixins: configureResolveMixins(config),
-    addInputHelpers: configurAddInputHelpers(config)
+    addInputHelpers: configurAddInputHelpers(schema, config)
   };
 }

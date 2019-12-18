@@ -88,6 +88,15 @@ function ensureTrailing(s: string, substr: string) {
   return s.endsWith(substr) ? s : s + substr;
 }
 
+export function callMethod(o: object, method: string, ...args): boolean {
+  const last = args[args.length - 1];
+  if (last && last.name === "callMethod") {
+    args.pop(); // remove handlebars metadata
+  }
+
+  return o[method](...args);
+}
+
 export function dartDirective(directive: string, statement: string | string[]) {
   return new SafeString(
     arrayify(statement)

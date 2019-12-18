@@ -119,7 +119,7 @@ export default function buildPlugin(
 
     registerMapWith<Handlebars.HelperDelegate>(
       (...args) => Handlebars.registerHelper(...args),
-      configureHelpers(config)
+      configureHelpers(schema, config)
     );
 
     registerMapWith<Handlebars.Template<any>>(
