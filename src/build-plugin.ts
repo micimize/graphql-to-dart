@@ -9,13 +9,15 @@ import { PluginFunction } from "@graphql-codegen/plugin-helpers";
 import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import configureHelpers, { Config as HelperConfig } from "./helpers";
 import { dedupe } from "./helpers/utils";
+import { basename, extname } from "path";
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
+type Directive = string;
 type DartFileDirectives = {
-  imports?: string[];
-  parts?: string[];
-  exports?: string[];
+  imports?: Directive[];
+  parts?: Directive[];
+  exports?: Directive[];
 };
 
 export function mergeDirectives(
@@ -54,6 +56,12 @@ export type DartConfig = HelperConfig & {
    * @default `{ "^_+": "" }` resulting in  "typename" -> "typename"
    */
   transformCharacters?: { [type: string]: string };
+
+  /**
+   * Adds `export "./source_file.ast.dart" show document;` directives,
+   * @default false
+   */
+  integrateGqlCodeGenAst?: boolean;
 
   schema?: DartFileDirectives;
   documents?: DartFileDirectives;
@@ -96,6 +104,12 @@ export default function buildPlugin(
     { outputFile }
   ): Promise<string> => {
     config[route] = mergeDirectives(dartDirectives, config[route]);
+    if (route === "documents" && config.integrateGqlCodeGenAst) {
+      config[route].exports.push(
+        `export '${basename(documents[0].filePath, ".graphql") +
+          ".ast.g.dart"}' show document;`
+      );
+    }
 
     const templateContext = schemaToTemplateContext(schema);
 

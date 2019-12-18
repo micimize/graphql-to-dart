@@ -44,12 +44,29 @@ function asIrreducible(rawTypeText, irreducibles = []) {
   }
 }
 
+type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
+
+export type ResolveTypeConfig = {
+  scalars?: Partial<Scalars>;
+  /**
+   * Alias schema scalars to dart classes,
+   * decorates references with @ScalarConverter
+   * provided from scalars file
+   */
+  customScalars?: { [type: string]: string };
+
+  // don't emit classes for these types,
+  // merely alias their references
+  replaceTypes?: { [type: string]: string };
+
+  irreducibleTypes?: Array<string>;
+};
+
 export default function configureResolveType({
   scalars = {},
   replaceTypes = {},
-  irreducibles = [],
-  requiredFields = true
-}) {
+  irreducibleTypes = []
+}: ResolveTypeConfig) {
   function resolveType(
     type,
     jsonKeyInfo,
@@ -59,21 +76,9 @@ export default function configureResolveType({
     rawTypeText,
     className
   ) {
-    let isRequired = false;
-    let addSerializers = true;
-    if (jsonKeyInfo == "inline") {
-      isRequired = false;
-      addSerializers = false;
-    } else {
-      // default to true if not set
-      if (requiredFields !== false) {
-        isRequired = jsonKeyInfo;
-      } else {
-        isRequired = false;
-      }
-    }
+    let addSerializers = !(jsonKeyInfo == "inline");
     let fieldType =
-      asIrreducible(rawTypeText, irreducibles) ||
+      asIrreducible(rawTypeText, irreducibleTypes) ||
       (contextModels.filter(({ modelType }) => modelType === type).length
         ? contextName + type
         : primitives[type] || type || "Object");

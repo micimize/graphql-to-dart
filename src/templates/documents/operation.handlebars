@@ -18,6 +18,7 @@
       mixinFields=(hackFragmentFields "get" fragments=fragmentsSpread)
       className=(concat (toPascalCase ../name) modelType)
       contextName=(toPascalCase ../name)
+      contextModels=../innerModels
 }}
 
 {{/unless~}}

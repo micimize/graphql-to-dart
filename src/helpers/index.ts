@@ -26,11 +26,14 @@ import {
   stripSuffix,
   transformCharacters,
   wrapFields,
-  inputBaseType
+  inputBaseType,
+  takeLastWord,
+  dartDirective
 } from "./utils";
 import addInputHelpers from "./add-input-helpers";
 
 function wrapHelpers<T>(helpers: T) {
+  return helpers;
   return Object.keys(helpers).reduce(
     (wrapped, h) => ((wrapped[h] = _logErrors(helpers[h])), wrapped),
     {}
@@ -70,7 +73,9 @@ const helpers = wrapHelpers({
   transformCharacters,
   wrapFields,
   inputBaseType,
-  expectedGeneratedFileFor
+  takeLastWord,
+  expectedGeneratedFileFor,
+  dartDirective
 });
 
 export interface Config extends AddInputHelpersConfig, MixinConfig {}

@@ -29,6 +29,15 @@ mixin {{ className }} {{
 {{!-- --}}
 
 {{~#eachBackwards innerModels }}
+
+{{~#unless (
+  ignoreType
+    (concat (toPascalCase ../name) modelType)
+      @root.config.replaceTypes
+      schemaBaseType
+      @root.config.irreducibleTypes
+)}}
+
 {{> selectionSetClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
@@ -38,6 +47,8 @@ mixin {{ className }} {{
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}
+
+{{~/unless}}
 
 {{/eachBackwards~}}
 

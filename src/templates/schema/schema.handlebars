@@ -1,16 +1,9 @@
-{{~#*inline "directivesBlock" }}
-{{#if values.length}}
-
-{{#each values}}
-{{../directive}} '{{this}}';
-{{/each}}
-{{/if}}
-{{/inline~}}
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
-{{> directivesBlock values=@root.config.schema.imports directive='import'}}
-{{> directivesBlock values=@root.config.schema.exports directive='export'}}
-{{> directivesBlock values=@root.config.schema.parts directive='part'}}
+{{ dartDirective 'import' @root.config.schema.imports}}
+
+{{ dartDirective 'export' @root.config.schema.exports}}
+
+{{ dartDirective 'part' @root.config.schema.parts}}
 
 part '{{ expectedGeneratedFileFor outputFile }}';
 

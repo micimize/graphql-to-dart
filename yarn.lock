@@ -667,18 +667,18 @@
     "@graphql-toolkit/schema-merging" "0.7.4"
     tslib "1.10.0"
 
-"@graphql-codegen/near-operation-file-preset@micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta1-gitpkg":
-  version "1.9.3-beta1"
-  resolved "https://codeload.github.com/micimize/graphql-code-generator/tar.gz/58fdea063d38d71c3c2a2689faa019b171726b86"
+"@graphql-codegen/near-operation-file-preset@micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta3-gitpkg":
+  version "1.9.3-beta3"
+  resolved "https://codeload.github.com/micimize/graphql-code-generator/tar.gz/01e1bb88f79c464931c4d572a36d659cf2b5de01"
   dependencies:
     "@graphql-codegen/add" "1.9.1"
     "@graphql-codegen/plugin-helpers" "1.9.1"
     "@graphql-codegen/visitor-plugin-common" "1.9.1"
     tslib "1.10.0"
 
-"@graphql-codegen/near-operation-file-preset@micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta2-gitpkg":
-  version "1.9.3-beta2"
-  resolved "https://codeload.github.com/micimize/graphql-code-generator/tar.gz/97165220c81f1ea8761cf3807d56cccaf54ca3f7"
+"@graphql-codegen/near-operation-file-preset@micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-fraglevel-gitpkg":
+  version "1.9.3-fraglevel"
+  resolved "https://codeload.github.com/micimize/graphql-code-generator/tar.gz/0724bbf3348ab9c2ceaf6ef25d4b144dd7796f80"
   dependencies:
     "@graphql-codegen/add" "1.9.1"
     "@graphql-codegen/plugin-helpers" "1.9.1"

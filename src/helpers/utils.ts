@@ -1,3 +1,7 @@
+import { SafeString } from "handlebars";
+
+type String = SafeString | string;
+
 export function logThis(this: any) {
   console.error(this);
 }
@@ -70,6 +74,30 @@ export function takeFirst(arg, b) {
     return arg;
   }
   return b;
+}
+
+export function takeLastWord(str: String) {
+  const words = str
+    .toString()
+    .trim()
+    .split(/\s+/g);
+  return new SafeString(words[words.length - 1]);
+}
+
+function ensureTrailing(s: string, substr: string) {
+  return s.endsWith(substr) ? s : s + substr;
+}
+
+export function dartDirective(directive: string, statement: string | string[]) {
+  return new SafeString(
+    arrayify(statement)
+      .map(s =>
+        s.startsWith(directive)
+          ? ensureTrailing(s, ";")
+          : `${directive} '${s}';`
+      )
+      .join("\n")
+  );
 }
 
 export function stripSuffix(name, suffix) {

@@ -109,8 +109,6 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
           dartPackagePath = importSource.path
         ] = importSource.path.split("lib/");
         const importPath = `package:${join(packageName, dartPackagePath)}`;
-        return importPath;
-        /* We feed the imports to the plugin for management
         const importNames =
           importSource.names && importSource.names.length
             ? ` show ${importSource.names}`
@@ -118,19 +116,33 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         const importAlias = importSource.namespace
           ? ` as ${importSource.namespace}`
           : "";
-        return `import '${importPath}'${importAlias}${importNames};`;
-          */
+        return `import '${importPath}';`;
+        /* TODO rexport of nested fragments still an issue
+          ${ importAlias } ${ importNames };`;*/
       },
 
-      schemaTypesSource: schemaTypesPath
+      schemaTypesSource: schemaTypesPath,
+
+      importNestedFragments: true
     });
 
     return sources.map<Types.GenerateOptions>(
-      ({ importStatements, externalFragments, ...source }) => {
+      ({
+        importStatements: [typeImport, ...fragmentImports],
+        externalFragments,
+        ...source
+      }) => {
+        const toExport = options.config.integrateGqlCodeGenAst
+          ? i =>
+              i
+                .replace(/^import/, "export")
+                .replace(/\s*;?\s*$/, " hide document;")
+          : i => i.replace(/^import/, "export");
         const config = {
           ...options.config,
           documents: mergeDirectives(options.config.documents, {
-            imports: importStatements
+            imports: [typeImport, ...fragmentImports],
+            exports: fragmentImports.map(toExport) // re-export nested fragments
           }),
 
           // This is set here in order to make sure the fragment spreads sub types

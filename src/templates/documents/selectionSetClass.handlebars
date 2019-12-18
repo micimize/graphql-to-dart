@@ -36,7 +36,7 @@ class {{ className }} {{
         Set<String> missingFields = Set();
         {{#each (concat fields mixinFields)}}
         {{~#if isRequired}}
-        if (fields.{{ dartName name }}  == null){
+        if ({{ dartName name }} == null){
             missingFields.add("
             {{~ dartName name ~}}
             {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}

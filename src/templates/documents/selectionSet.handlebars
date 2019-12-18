@@ -4,7 +4,7 @@
   {{/if}}
   @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ type }} get {{ name }} => fields.{{ schemaFieldName }};
-  set {{ name }} ({{ type }} {{ name }}) => fields.{{ schemaFieldName }} = {{ name }};
+  set {{ name }} ({{ takeLastWord type }} {{ name }}) => fields.{{ schemaFieldName }} = {{ name }};
 {{~/if}}{{/if}}
 {{~/inline}}
 
