@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-dart",
-  "version": "1.0.1-alpha8",
+  "version": "1.0.1-alpha12",
   "description": "generate dart json_serializable classes using graphql-code-generator",
   "repository": {
     "type": "git",

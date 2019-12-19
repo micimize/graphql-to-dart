@@ -71,7 +71,9 @@
     https://github.com/graphql/graphql-spec/issues/114#issuecomment-550056235
 --}}
 @JsonSerializable()
-class {{ name }} {
+class {{ name }} {{
+    classExtends mixins=(resolveMixins fields)
+}} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
   {{#each fields}}{{#if type}}{{#if name}}
@@ -88,10 +90,13 @@ class {{ name }} {
   {{~/if}}{{/if}}{{/each}}
 
   {{name}}({
-    {{#each fields}}{{#if name}}
-        this.{{ dartName name }},
-    {{/if}}{{/each}}
+    {{#each fields}}{{#if name~}}
+      {{#if isRequired }}@required {{/if~}}
+      this.{{ dartName name }},
+    {{/if}}{{/each~}}
   });
+
+  {{name}}.empty();
 
     @protected
     Set<String> get missingRequiredFields {

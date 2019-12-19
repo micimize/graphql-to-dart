@@ -16,6 +16,7 @@ class {{ className }} {{
 
     {{className}}({
         {{#each fields}}{{#if name}}
+            {{#if isRequired }}@required {{/if~}}
             {{ resolveType type
                 isRequired
                 (takeFirst contextName ../contextName)
@@ -30,6 +31,8 @@ class {{ className }} {{
         {{dartName schemaFieldName}}: {{dartName name}},
         {{/each}}
     );
+
+    {{className}}.empty();
 
     @protected
     Set<String> get missingRequiredFields {
