@@ -9,6 +9,7 @@ mixin {{ className }} {{
   classExtends
     onMixin="true"
     baseType=typeName
+    mixins=(resolveMixins fields)
     fragments=fragmentsSpread
 }} {
   static final String typeName = "{{ typeName }}";

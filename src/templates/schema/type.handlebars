@@ -17,54 +17,25 @@ class {{ className }}  {{ classExtends interfaces=(wrapFields interfaces) }} {
 
   {{ className }}({
     {{#each fields}}{{#if name}}
-        this.{{ dartName name }},
+      this.{{ dartName name }},
     {{/if}}{{/each}}
   });
-    /// Adds all fields from [other] to this `{{ className }}`.
-    /// 
-    /// If a field from [other] is already in this `{{ className }}`,
-    /// its value is not overwritten, unless  `overwrite: true` is specified
-    void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
-        assert(other != null, "Cannot add all from null into $this");
-        if (overwrite != null && overwrite){
-            {{#each fields}}{{#if name}}
-            {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
-            {{~/if}}{{/each}}
-        } else {
-            {{#each fields}}{{#if name}}
-            {{ dartName name }} ??= other.{{ dartName name }};
-            {{~/if}}{{/each}}
-        }
-    }
 
-  /// Creates a copy of this `{{ className }}` but with the given fields replaced with the new values.
-  {{ className }} copyWith(
-  {{~#if fields.length~}}
-    {
-        {{~#each fields}}
-        {{#if type}}{{#if name}}
-            {{ resolveType type
-                "inline"
-                (takeFirst contextName ../contextName)
-                (takeFirst contextModels ../contextModels)
-                isArray
-                raw
-                ../className
-            }} {{ dartName name}},
-        {{~/if}}{{/if}}{{/each}}
+  /// Adds all fields from [other] to this `{{ className }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+    assert(other != null, "Cannot add all from null into $this");
+    if (overwrite != null && overwrite){
+      {{#each fields}}{{#if name}}
+      {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
+      {{~/if}}{{/each}}
+    } else {
+      {{#each fields}}{{#if name}}
+      {{ dartName name }} ??= other.{{ dartName name }};
+      {{~/if}}{{/each}}
     }
-  {{~/if~}}
-    ){
-        return {{ className }}(
-            {{#each fields}}{{#if type}}{{#if name}}
-            {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
-            {{~/if}}{{/if}}{{/each}}
-        );
   }
-
-  /// Creates a copy of this `{{ className }}`
-  {{ className }} copy() => copyWith();
-
 }
 {{~/inline~}}
 
@@ -78,6 +49,8 @@ class {{ className }}  {{ classExtends interfaces=(wrapFields interfaces) }} {
 
 {{> fieldsClass this className=(concat "_" name "Fields") }}
 
+{{ multilineComment description }}
+/// NOTE: You can add unexposed fields with `addAll` and `copyWith`
 class {{ name }} {{ classExtends interfaces=interfaces }} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
@@ -85,42 +58,75 @@ class {{ name }} {{ classExtends interfaces=interfaces }} {
   covariant _{{ name }}Fields fields;
 
   {{name}}({
-    {{#each fields}}{{#if name}}
-        {{ resolveType type
-            "inline"
-            (takeFirst contextName ../contextName)
-            (takeFirst contextModels ../contextModels)
-            isArray
-            raw
-            ../name
-        }} {{ dartName name }},
-    {{/if}}{{/each}}
+  {{#each fields}}{{#if name}}
+    {{ resolveType type
+      "inline"
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      isArray
+      raw
+      ../name
+    }} {{ dartName name }},
+  {{/if}}{{/each}}
   }): fields = _{{ name }}Fields(
     {{#each fields}}
     {{ dartName name }}: {{ dartName name }},
     {{/each}}
   );
 
+  /// Adds all fields from [other] to this `{{ name }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(covariant {{ name }} other, { bool overwrite = true, }) =>
+    fields.addAll(other.fields, overwrite: overwrite);
 
-    @protected
-    Set<String> get missingRequiredFields {
-        Set<String> missingFields = Set();
-        {{#each fields}}
-        {{~#if isRequired}}
-        if (fields.{{ dartName name }}  == null){
-            missingFields.add("{{ dartName name }}");
-        }
-        {{/if}}
-        {{/each}}
-        return missingFields;
+  /// Creates a copy of this `{{ name }}` but with the given fields replaced with the new values.
+  {{ name }} copyWith(
+  {{~#if fields.length~}}
+    {
+      {{~#each fields}}
+      {{#if type}}{{#if name}}
+        {{ resolveType type
+          "inline"
+          (takeFirst contextName ../contextName)
+          (takeFirst contextModels ../contextModels)
+          isArray
+          raw
+          ../name
+        }} {{ dartName name}},
+      {{~/if}}{{/if}}{{/each}}
     }
+  {{~/if~}}
+    ){
+    return {{ name }}(
+      {{#each fields}}{{#if type}}{{#if name}}
+      {{ dartName name}}: {{ dartName name}} ?? fields.{{ dartName name}},
+      {{~/if}}{{/if}}{{/each}}
+    );
+  }
 
-    void validate(){
-        final missing = missingRequiredFields;
-        assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+  /// Creates a copy of this `{{ name }}`
+  {{ name }} copy() => copyWith();
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    {{#each fields}}
+    {{~#if isRequired}}
+    if (fields.{{ dartName name }}  == null){
+        missingFields.add("{{ dartName name }}");
     }
+    {{/if}}
+    {{/each}}
+    return missingFields;
+  }
 
-    bool get isValid => missingRequiredFields.isEmpty;
+  void validate(){
+    final missing = missingRequiredFields;
+    assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+  }
+
+  bool get isValid => missingRequiredFields.isEmpty;
 
 }
 
