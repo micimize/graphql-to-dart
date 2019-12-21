@@ -1,8 +1,14 @@
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
-Models graphql-style "inheritance" by defining a protected `_$[Type}Fields` type along with every object type,
-which is then exposed by fragment mixins and selection sets.
+### Beta
+`npm install graphql-to-dart@1.1.0-beta` includes a number of updates, such as:
+* per-operation file generation (probably non-optional)
+*  [`gql_code_gen`](https://github.com/gql-dart/gql/tree/master/gql_code_gen) support via `integrateGqlCodeGenAst`
+* `transformCharacters` support for handling `_underscore_prefixed` fields
+   defaults to `{ "^_+": "" }`, resulting in `"__typename" -> "typename"`
+* Models graphql-style "inheritance" by defining a protected `_$[Type}Fields` type along with every object type,
+  which is then exposed by fragment mixins and selection sets.
 
 ## usage
 ```bash
@@ -100,16 +106,19 @@ dependencies:
 ...Obviously this is not the most user friendly process yet.
 
 
-Take a look at the example output to see how ti generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
+Take a look at the example output to see how it generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
+* all types have [`isValid`, `validate`, `addAll(ThisType other)`, and `copy` helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
+* selection set and fragments have [`from(BaseObjectType other)` and `empty` constructors](
+https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/hero_for_episode.gql.dart#L66-L75)
 
 # NOTES
 * Base types do not currently have json helpers, but it should probably be configurable
   in case of the configuration `replaceTypes: { "BaseTypeInput": "BaseType" }`
 * I probably won't touch this for a while once again.
 * Really what we want is for @klavs's `gql_code_gen` to become more mature,
-  but I keep sinking energy into this bad boy
-* This depends on a PR I made to near-operation-files
-* I also use a fork of the ast generator atm that should hopefully be merged soon
+  but I keep sinking energy into this because I can go fast here
+* This depends on a PR I made to [near-operation-files](https://github.com/dotansimha/graphql-code-generator/pull/3109), which I published with [gitpkg](https://github.com/ramasilveyra/gitpkg)
+* `#import "./fragment.graphql` bolton support has been merged into `gql_code_gen`
 * (possibly outdated): You can have multiple inline fragments on the same document,
   but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
 
