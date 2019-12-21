@@ -76,6 +76,9 @@ HeroForEpisodeHumanInlineFragment _$HeroForEpisodeHumanInlineFragmentFromJson(
     appearsIn: (json['appearsIn'] as List)
         ?.map((e) => _$enumDecodeNullable(_$EpisodeEnumMap, e))
         ?.toList(),
+    height: (json['height'] as num)?.toDouble(),
+    mass: (json['mass'] as num)?.toDouble(),
+    home: json['home'] as String,
     friends: (json['friends'] as List)
         ?.map((e) => e == null
             ? null
@@ -86,21 +89,12 @@ HeroForEpisodeHumanInlineFragment _$HeroForEpisodeHumanInlineFragmentFromJson(
             ? null
             : RelationshipsStarships.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-  )
-    ..height = (json['height'] as num)?.toDouble()
-    ..mass = (json['mass'] as num)?.toDouble()
-    ..home = json['home'] as String;
+  );
 }
 
 Map<String, dynamic> _$HeroForEpisodeHumanInlineFragmentToJson(
     HeroForEpisodeHumanInlineFragment instance) {
-  final val = <String, dynamic>{
-    'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
-    'starships': instance.starships?.map((e) => e?.toJson())?.toList(),
-    'height': instance.height,
-    'mass': instance.mass,
-    'home': instance.home,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -110,6 +104,11 @@ Map<String, dynamic> _$HeroForEpisodeHumanInlineFragmentToJson(
 
   writeNotNull('appearsIn',
       instance.appearsIn?.map((e) => _$EpisodeEnumMap[e])?.toList());
+  val['height'] = instance.height;
+  val['mass'] = instance.mass;
+  val['home'] = instance.home;
+  val['friends'] = instance.friends?.map((e) => e?.toJson())?.toList();
+  val['starships'] = instance.starships?.map((e) => e?.toJson())?.toList();
   return val;
 }
 

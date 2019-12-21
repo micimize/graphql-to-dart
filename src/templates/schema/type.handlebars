@@ -50,7 +50,7 @@ class {{ className }}  {{ classExtends interfaces=(wrapFields interfaces) }} {
 {{> fieldsClass this className=(concat "_" name "Fields") }}
 
 {{ multilineComment description }}
-/// NOTE: You can add unexposed fields with `addAll` and `copyWith`
+/// NOTE: You can add unexposed fields with `addAll`
 class {{ name }} {{ classExtends interfaces=interfaces }} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
@@ -80,33 +80,8 @@ class {{ name }} {{ classExtends interfaces=interfaces }} {
   void addAll(covariant {{ name }} other, { bool overwrite = true, }) =>
     fields.addAll(other.fields, overwrite: overwrite);
 
-  /// Creates a copy of this `{{ name }}` but with the given fields replaced with the new values.
-  {{ name }} copyWith(
-  {{~#if fields.length~}}
-    {
-      {{~#each fields}}
-      {{#if type}}{{#if name}}
-        {{ resolveType type
-          "inline"
-          (takeFirst contextName ../contextName)
-          (takeFirst contextModels ../contextModels)
-          isArray
-          raw
-          ../name
-        }} {{ dartName name}},
-      {{~/if}}{{/if}}{{/each}}
-    }
-  {{~/if~}}
-    ){
-    return {{ name }}(
-      {{#each fields}}{{#if type}}{{#if name}}
-      {{ dartName name}}: {{ dartName name}} ?? fields.{{ dartName name}},
-      {{~/if}}{{/if}}{{/each}}
-    );
-  }
-
   /// Creates a copy of this `{{ name }}`
-  {{ name }} copy() => copyWith();
+  {{ name }} copy() => {{ name }}()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {

@@ -79,8 +79,9 @@ class {{ name }} {{
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
+  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
-      "inline"
+      'withSerializers'
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       isArray
@@ -135,31 +136,8 @@ class {{ name }} {{
         }
     }
 
-  /// Creates a copy of this `{{ name }}` but with the given fields replaced with the new values.
-  {{ name }} copyWith(
-  {{~#if fields.length~}}
-    {
-        {{~#each fields}}
-        {{#if type}}{{#if name}}
-            {{ resolveType type
-                "inline"
-                (takeFirst contextName ../contextName)
-                (takeFirst contextModels ../contextModels)
-                isArray
-                raw
-                ../name
-            }} {{ dartName name}},
-        {{~/if}}{{/if}}{{/each}}
-    }
-  {{~/if~}}
-    ) => {{ name }}(
-        {{#each fields}}{{#if type}}{{#if name}}
-        {{ dartName name}}: {{ dartName name}} ?? this.{{ dartName name}},
-        {{~/if}}{{/if}}{{/each}}
-    );
-
   /// Creates a copy of this `{{ name }}`
-  {{ name }} copy() => copyWith();
+  {{ name }} copy() => {{name}}.empty()..addAll(this);
 
   {{#each (addInputHelpers name) ~}}
   {{> inputTypeHelpers .. objectType=this }}

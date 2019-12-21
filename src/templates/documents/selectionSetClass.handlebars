@@ -8,49 +8,56 @@ class {{ className }} {{
         interfaces=interfaces
 
 }} {
-    {{#if typeName }}
-    static final String typeName = "{{ typeName }}";
-    {{/if}}
+  {{#if typeName }}
+  static final String typeName = "{{ typeName }}";
+  {{/if}}
 
-    {{> selectionSet }}
+  {{> selectionSet }}
 
-    {{className}}({
-        {{#each fields}}{{#if name}}
-            {{#if isRequired }}@required {{/if~}}
-            {{ resolveType type
-                isRequired
-                (takeFirst contextName ../contextName)
-                (takeFirst contextModels ../contextModels)
-                isArray
-                raw
-                ../name
-            }} {{dartName name}},
-        {{/if}}{{/each}}
-    }): super(
-        {{#each fields}}
-        {{dartName schemaFieldName}}: {{dartName name}},
-        {{/each}}
-    );
+  {{className}}({
+      {{#each fields}}{{#if name}}
+          {{#if isRequired }}@required {{/if~}}
+          {{ resolveType type
+              isRequired
+              (takeFirst contextName ../contextName)
+              (takeFirst contextModels ../contextModels)
+              isArray
+              raw
+              ../name
+          }} {{dartName name}},
+      {{/if}}{{/each}}
+  }): super(
+      {{#each fields}}
+      {{dartName schemaFieldName}}: {{dartName name}},
+      {{/each}}
+  );
 
-    {{className}}.empty();
+  {{className}}.empty();
 
-    @protected
-    Set<String> get missingRequiredFields {
-        Set<String> missingFields = Set();
-        {{#each fields}}
-        {{~#if isRequired}}
-        if ({{ dartName name }} == null){
-            missingFields.add("
-            {{~ dartName name ~}}
-            {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}
-            {{~/if~}}
-            ");
-            
-        }
-        {{/if}}
-        {{/each}}
-        return missingFields;
+  /// Creates a copy of this `{{ className }}`
+  {{ className }} copy() => {{className}}.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `{{ className }}`
+  {{className}}.from({{ toPascalCase typeName }} other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    {{#each fields}}
+    {{~#if isRequired}}
+    if ({{ dartName name }} == null){
+      missingFields.add("
+      {{~ dartName name ~}}
+      {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}
+      {{~/if~}}
+      ");
     }
+    {{/if}}
+    {{/each}}
+    return missingFields;
+  }
 
   factory {{className}}.fromJson(Map<String, dynamic> json) => 
     _${{className}}FromJson(json);

@@ -1,5 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import './example_mixin.dart';
@@ -39,17 +38,27 @@ class RelationshipsStarships extends Starship with HelloMixin {
   double get length => fields.length;
   set length(double length) => fields.length = length;
   RelationshipsStarships({
-    String name,
+    @required String name,
     double length,
   }) : super(
           name: name,
           length: length,
         );
 
+  RelationshipsStarships.empty();
+
+  /// Creates a copy of this `RelationshipsStarships`
+  RelationshipsStarships copy() => RelationshipsStarships.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `RelationshipsStarships`
+  RelationshipsStarships.from(Starship other) {
+    addAll(other);
+  }
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    if (fields.name == null) {
+    if (name == null) {
       missingFields.add("name");
     }
     return missingFields;
@@ -70,15 +79,25 @@ class RelationshipsFriends extends Character with HelloMixin {
   String get name => fields.name;
   set name(String name) => fields.name = name;
   RelationshipsFriends({
-    String name,
+    @required String name,
   }) : super(
           name: name,
         );
 
+  RelationshipsFriends.empty();
+
+  /// Creates a copy of this `RelationshipsFriends`
+  RelationshipsFriends copy() => RelationshipsFriends.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `RelationshipsFriends`
+  RelationshipsFriends.from(Character other) {
+    addAll(other);
+  }
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    if (fields.name == null) {
+    if (name == null) {
       missingFields.add("name");
     }
     return missingFields;

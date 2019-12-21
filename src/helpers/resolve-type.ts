@@ -23,8 +23,10 @@ const primitives = {
   DateTime: "DateTime"
 };
 
-function jsonConverter(type, template = "@${type}Converter()") {
-  return interpolateTemplate(template, { type }) + "\n";
+const JSON_CONVERTER_TEMPLATE = "@${type}Converter()";
+
+function jsonConverter(type: string) {
+  return interpolateTemplate(JSON_CONVERTER_TEMPLATE, { type }) + "\n";
 }
 
 function jsonKey({ type, addSerializers = false }) {
@@ -73,8 +75,7 @@ export default function configureResolveType({
     contextName,
     contextModels = [],
     isArray,
-    rawTypeText,
-    className
+    rawTypeText
   ) {
     let addSerializers = !(jsonKeyInfo == "inline");
     let fieldType =

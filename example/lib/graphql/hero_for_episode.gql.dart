@@ -1,10 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import './example_mixin.dart';
 import 'package:starwars/graphql/schema.dart';
 import 'package:starwars/graphql/_human_fragment.gql.dart';
+
+export 'package:starwars/graphql/_human_fragment.gql.dart';
 
 part 'hero_for_episode.gql.g.dart';
 
@@ -30,20 +31,53 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
   @JsonKey(required: true, disallowNullValue: true)
   List<Episode> get appearsIn => fields.appearsIn;
   set appearsIn(List<Episode> appearsIn) => fields.appearsIn = appearsIn;
+  @JsonKey(required: false, disallowNullValue: false)
+  double get height => fields.height;
+  set height(double height) => fields.height = height;
+  @JsonKey(required: false, disallowNullValue: false)
+  double get mass => fields.mass;
+  set mass(double mass) => fields.mass = mass;
+  @JsonKey(required: false, disallowNullValue: false)
+  String get home => fields.homePlanet;
+  set home(String home) => fields.homePlanet = home;
+  @JsonKey(required: false, disallowNullValue: false)
+  List<RelationshipsFriends> get friends => fields.friends;
+  set friends(List<RelationshipsFriends> friends) => fields.friends = friends;
+  @JsonKey(required: false, disallowNullValue: false)
+  List<RelationshipsStarships> get starships => fields.starships;
+  set starships(List<RelationshipsStarships> starships) =>
+      fields.starships = starships;
   HeroForEpisodeHumanInlineFragment({
-    List<Episode> appearsIn,
+    @required List<Episode> appearsIn,
+    double height,
+    double mass,
+    String home,
     List<RelationshipsFriends> friends,
     List<RelationshipsStarships> starships,
   }) : super(
           appearsIn: appearsIn,
+          height: height,
+          mass: mass,
+          homePlanet: home,
           friends: friends,
           starships: starships,
         );
 
+  HeroForEpisodeHumanInlineFragment.empty();
+
+  /// Creates a copy of this `HeroForEpisodeHumanInlineFragment`
+  HeroForEpisodeHumanInlineFragment copy() =>
+      HeroForEpisodeHumanInlineFragment.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeHumanInlineFragment`
+  HeroForEpisodeHumanInlineFragment.from(Human other) {
+    addAll(other);
+  }
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    if (fields.appearsIn == null) {
+    if (appearsIn == null) {
       missingFields.add("appearsIn");
     }
     return missingFields;
@@ -72,6 +106,17 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
           primaryFunction: primaryFunction,
         );
 
+  HeroForEpisodeDroidInlineFragment.empty();
+
+  /// Creates a copy of this `HeroForEpisodeDroidInlineFragment`
+  HeroForEpisodeDroidInlineFragment copy() =>
+      HeroForEpisodeDroidInlineFragment.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeDroidInlineFragment`
+  HeroForEpisodeDroidInlineFragment.from(Droid other) {
+    addAll(other);
+  }
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -95,15 +140,25 @@ class HeroForEpisodeHero extends Character with HelloMixin {
   String get name => fields.name;
   set name(String name) => fields.name = name;
   HeroForEpisodeHero({
-    String name,
+    @required String name,
   }) : super(
           name: name,
         );
 
+  HeroForEpisodeHero.empty();
+
+  /// Creates a copy of this `HeroForEpisodeHero`
+  HeroForEpisodeHero copy() => HeroForEpisodeHero.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeHero`
+  HeroForEpisodeHero.from(Character other) {
+    addAll(other);
+  }
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    if (fields.name == null) {
+    if (name == null) {
       missingFields.add("name");
     }
     return missingFields;
@@ -128,6 +183,16 @@ class HeroForEpisodeQuery extends Query {
   }) : super(
           hero: hero,
         );
+
+  HeroForEpisodeQuery.empty();
+
+  /// Creates a copy of this `HeroForEpisodeQuery`
+  HeroForEpisodeQuery copy() => HeroForEpisodeQuery.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeQuery`
+  HeroForEpisodeQuery.from(Query other) {
+    addAll(other);
+  }
 
   @protected
   Set<String> get missingRequiredFields {

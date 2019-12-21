@@ -1,5 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
 import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import './example_mixin.dart';
@@ -41,19 +40,24 @@ class ReviewInput {
   static final String typeName = "ReviewInput";
 
   /// 0-5 stars
+  @JsonKey(required: true, disallowNullValue: true)
   int stars;
 
   /// Comment about the movie, optional
+  @JsonKey(required: false, disallowNullValue: false)
   String commentary;
 
   /// Favorite color, optional
+  @JsonKey(required: false, disallowNullValue: false)
   ColorInput favoriteColor;
 
   ReviewInput({
-    this.stars,
+    @required this.stars,
     this.commentary,
     this.favoriteColor,
   });
+
+  ReviewInput.empty();
 
   @protected
   Set<String> get missingRequiredFields {
@@ -92,20 +96,8 @@ class ReviewInput {
     }
   }
 
-  /// Creates a copy of this `ReviewInput` but with the given fields replaced with the new values.
-  ReviewInput copyWith({
-    int stars,
-    String commentary,
-    ColorInput favoriteColor,
-  }) =>
-      ReviewInput(
-        stars: stars ?? this.stars,
-        commentary: commentary ?? this.commentary,
-        favoriteColor: favoriteColor ?? this.favoriteColor,
-      );
-
   /// Creates a copy of this `ReviewInput`
-  ReviewInput copy() => copyWith();
+  ReviewInput copy() => ReviewInput.empty()..addAll(this);
 
   factory ReviewInput.fromJson(Map<String, dynamic> json) =>
       _$ReviewInputFromJson(json);
@@ -117,15 +109,20 @@ class ReviewInput {
 class ColorInput {
   static final String typeName = "ColorInput";
 
+  @JsonKey(required: true, disallowNullValue: true)
   int red;
+  @JsonKey(required: true, disallowNullValue: true)
   int green;
+  @JsonKey(required: true, disallowNullValue: true)
   int blue;
 
   ColorInput({
-    this.red,
-    this.green,
-    this.blue,
+    @required this.red,
+    @required this.green,
+    @required this.blue,
   });
+
+  ColorInput.empty();
 
   @protected
   Set<String> get missingRequiredFields {
@@ -170,20 +167,8 @@ class ColorInput {
     }
   }
 
-  /// Creates a copy of this `ColorInput` but with the given fields replaced with the new values.
-  ColorInput copyWith({
-    int red,
-    int green,
-    int blue,
-  }) =>
-      ColorInput(
-        red: red ?? this.red,
-        green: green ?? this.green,
-        blue: blue ?? this.blue,
-      );
-
   /// Creates a copy of this `ColorInput`
-  ColorInput copy() => copyWith();
+  ColorInput copy() => ColorInput.empty()..addAll(this);
 
   factory ColorInput.fromJson(Map<String, dynamic> json) =>
       _$ColorInputFromJson(json);
@@ -220,8 +205,7 @@ class _CharacterFields {
 
   /// Adds all fields from [other] to this `_CharacterFields`.
   ///
-  /// If a field from [other] is already in this `_CharacterFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _CharacterFields other, {
     bool overwrite = true,
@@ -241,28 +225,10 @@ class _CharacterFields {
       appearsIn ??= other.appearsIn;
     }
   }
-
-  /// Creates a copy of this `_CharacterFields` but with the given fields replaced with the new values.
-  _CharacterFields copyWith({
-    String id,
-    String name,
-    List<Character> friends,
-    FriendsConnection friendsConnection,
-    List<Episode> appearsIn,
-  }) {
-    return _CharacterFields(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      friends: friends ?? this.friends,
-      friendsConnection: friendsConnection ?? this.friendsConnection,
-      appearsIn: appearsIn ?? this.appearsIn,
-    );
-  }
-
-  /// Creates a copy of this `_CharacterFields`
-  _CharacterFields copy() => copyWith();
 }
 
+/// A character from the Star Wars universe
+/// NOTE: You can add unexposed fields with `addAll`
 class Character {
   static final String typeName = "Character";
 
@@ -282,6 +248,18 @@ class Character {
           friendsConnection: friendsConnection,
           appearsIn: appearsIn,
         );
+
+  /// Adds all fields from [other] to this `Character`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Character other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Character`
+  Character copy() => Character()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -334,8 +312,7 @@ class _QueryFields {
 
   /// Adds all fields from [other] to this `_QueryFields`.
   ///
-  /// If a field from [other] is already in this `_QueryFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _QueryFields other, {
     bool overwrite = true,
@@ -359,32 +336,10 @@ class _QueryFields {
       starship ??= other.starship;
     }
   }
-
-  /// Creates a copy of this `_QueryFields` but with the given fields replaced with the new values.
-  _QueryFields copyWith({
-    Character hero,
-    List<Review> reviews,
-    List<SearchResult> search,
-    Character character,
-    Droid droid,
-    Human human,
-    Starship starship,
-  }) {
-    return _QueryFields(
-      hero: hero ?? this.hero,
-      reviews: reviews ?? this.reviews,
-      search: search ?? this.search,
-      character: character ?? this.character,
-      droid: droid ?? this.droid,
-      human: human ?? this.human,
-      starship: starship ?? this.starship,
-    );
-  }
-
-  /// Creates a copy of this `_QueryFields`
-  _QueryFields copy() => copyWith();
 }
 
+/// The query type, represents all of the entry points into our object graph
+/// NOTE: You can add unexposed fields with `addAll`
 class Query {
   static final String typeName = "Query";
 
@@ -408,6 +363,18 @@ class Query {
           human: human,
           starship: starship,
         );
+
+  /// Adds all fields from [other] to this `Query`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Query other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Query`
+  Query copy() => Query()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -447,8 +414,7 @@ class _FriendsConnectionFields {
 
   /// Adds all fields from [other] to this `_FriendsConnectionFields`.
   ///
-  /// If a field from [other] is already in this `_FriendsConnectionFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _FriendsConnectionFields other, {
     bool overwrite = true,
@@ -466,26 +432,10 @@ class _FriendsConnectionFields {
       pageInfo ??= other.pageInfo;
     }
   }
-
-  /// Creates a copy of this `_FriendsConnectionFields` but with the given fields replaced with the new values.
-  _FriendsConnectionFields copyWith({
-    int totalCount,
-    List<FriendsEdge> edges,
-    List<Character> friends,
-    PageInfo pageInfo,
-  }) {
-    return _FriendsConnectionFields(
-      totalCount: totalCount ?? this.totalCount,
-      edges: edges ?? this.edges,
-      friends: friends ?? this.friends,
-      pageInfo: pageInfo ?? this.pageInfo,
-    );
-  }
-
-  /// Creates a copy of this `_FriendsConnectionFields`
-  _FriendsConnectionFields copy() => copyWith();
 }
 
+/// A connection object for a character's friends
+/// NOTE: You can add unexposed fields with `addAll`
 class FriendsConnection {
   static final String typeName = "FriendsConnection";
 
@@ -503,6 +453,18 @@ class FriendsConnection {
           friends: friends,
           pageInfo: pageInfo,
         );
+
+  /// Adds all fields from [other] to this `FriendsConnection`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant FriendsConnection other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `FriendsConnection`
+  FriendsConnection copy() => FriendsConnection()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -537,8 +499,7 @@ class _FriendsEdgeFields {
 
   /// Adds all fields from [other] to this `_FriendsEdgeFields`.
   ///
-  /// If a field from [other] is already in this `_FriendsEdgeFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _FriendsEdgeFields other, {
     bool overwrite = true,
@@ -552,22 +513,10 @@ class _FriendsEdgeFields {
       node ??= other.node;
     }
   }
-
-  /// Creates a copy of this `_FriendsEdgeFields` but with the given fields replaced with the new values.
-  _FriendsEdgeFields copyWith({
-    String cursor,
-    Character node,
-  }) {
-    return _FriendsEdgeFields(
-      cursor: cursor ?? this.cursor,
-      node: node ?? this.node,
-    );
-  }
-
-  /// Creates a copy of this `_FriendsEdgeFields`
-  _FriendsEdgeFields copy() => copyWith();
 }
 
+/// An edge object for a character's friends
+/// NOTE: You can add unexposed fields with `addAll`
 class FriendsEdge {
   static final String typeName = "FriendsEdge";
 
@@ -581,6 +530,18 @@ class FriendsEdge {
           cursor: cursor,
           node: node,
         );
+
+  /// Adds all fields from [other] to this `FriendsEdge`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant FriendsEdge other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `FriendsEdge`
+  FriendsEdge copy() => FriendsEdge()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -614,8 +575,7 @@ class _PageInfoFields {
 
   /// Adds all fields from [other] to this `_PageInfoFields`.
   ///
-  /// If a field from [other] is already in this `_PageInfoFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _PageInfoFields other, {
     bool overwrite = true,
@@ -631,24 +591,10 @@ class _PageInfoFields {
       hasNextPage ??= other.hasNextPage;
     }
   }
-
-  /// Creates a copy of this `_PageInfoFields` but with the given fields replaced with the new values.
-  _PageInfoFields copyWith({
-    String startCursor,
-    String endCursor,
-    bool hasNextPage,
-  }) {
-    return _PageInfoFields(
-      startCursor: startCursor ?? this.startCursor,
-      endCursor: endCursor ?? this.endCursor,
-      hasNextPage: hasNextPage ?? this.hasNextPage,
-    );
-  }
-
-  /// Creates a copy of this `_PageInfoFields`
-  _PageInfoFields copy() => copyWith();
 }
 
+/// Information for paginating this connection
+/// NOTE: You can add unexposed fields with `addAll`
 class PageInfo {
   static final String typeName = "PageInfo";
 
@@ -664,6 +610,18 @@ class PageInfo {
           endCursor: endCursor,
           hasNextPage: hasNextPage,
         );
+
+  /// Adds all fields from [other] to this `PageInfo`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant PageInfo other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `PageInfo`
+  PageInfo copy() => PageInfo()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -702,8 +660,7 @@ class _ReviewFields {
 
   /// Adds all fields from [other] to this `_ReviewFields`.
   ///
-  /// If a field from [other] is already in this `_ReviewFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _ReviewFields other, {
     bool overwrite = true,
@@ -719,24 +676,10 @@ class _ReviewFields {
       commentary ??= other.commentary;
     }
   }
-
-  /// Creates a copy of this `_ReviewFields` but with the given fields replaced with the new values.
-  _ReviewFields copyWith({
-    Episode episode,
-    int stars,
-    String commentary,
-  }) {
-    return _ReviewFields(
-      episode: episode ?? this.episode,
-      stars: stars ?? this.stars,
-      commentary: commentary ?? this.commentary,
-    );
-  }
-
-  /// Creates a copy of this `_ReviewFields`
-  _ReviewFields copy() => copyWith();
 }
 
+/// Represents a review for a movie
+/// NOTE: You can add unexposed fields with `addAll`
 class Review {
   static final String typeName = "Review";
 
@@ -752,6 +695,18 @@ class Review {
           stars: stars,
           commentary: commentary,
         );
+
+  /// Adds all fields from [other] to this `Review`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Review other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Review`
+  Review copy() => Review()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -814,8 +769,7 @@ class _HumanFields implements _CharacterFields {
 
   /// Adds all fields from [other] to this `_HumanFields`.
   ///
-  /// If a field from [other] is already in this `_HumanFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _HumanFields other, {
     bool overwrite = true,
@@ -843,36 +797,10 @@ class _HumanFields implements _CharacterFields {
       starships ??= other.starships;
     }
   }
-
-  /// Creates a copy of this `_HumanFields` but with the given fields replaced with the new values.
-  _HumanFields copyWith({
-    String id,
-    String name,
-    String homePlanet,
-    double height,
-    double mass,
-    List<Character> friends,
-    FriendsConnection friendsConnection,
-    List<Episode> appearsIn,
-    List<Starship> starships,
-  }) {
-    return _HumanFields(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      homePlanet: homePlanet ?? this.homePlanet,
-      height: height ?? this.height,
-      mass: mass ?? this.mass,
-      friends: friends ?? this.friends,
-      friendsConnection: friendsConnection ?? this.friendsConnection,
-      appearsIn: appearsIn ?? this.appearsIn,
-      starships: starships ?? this.starships,
-    );
-  }
-
-  /// Creates a copy of this `_HumanFields`
-  _HumanFields copy() => copyWith();
 }
 
+/// A humanoid creature from the Star Wars universe
+/// NOTE: You can add unexposed fields with `addAll`
 class Human implements Character {
   static final String typeName = "Human";
 
@@ -900,6 +828,18 @@ class Human implements Character {
           appearsIn: appearsIn,
           starships: starships,
         );
+
+  /// Adds all fields from [other] to this `Human`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Human other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Human`
+  Human copy() => Human()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -949,8 +889,7 @@ class _StarshipFields {
 
   /// Adds all fields from [other] to this `_StarshipFields`.
   ///
-  /// If a field from [other] is already in this `_StarshipFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _StarshipFields other, {
     bool overwrite = true,
@@ -968,26 +907,10 @@ class _StarshipFields {
       coordinates ??= other.coordinates;
     }
   }
-
-  /// Creates a copy of this `_StarshipFields` but with the given fields replaced with the new values.
-  _StarshipFields copyWith({
-    String id,
-    String name,
-    double length,
-    List<double> coordinates,
-  }) {
-    return _StarshipFields(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      length: length ?? this.length,
-      coordinates: coordinates ?? this.coordinates,
-    );
-  }
-
-  /// Creates a copy of this `_StarshipFields`
-  _StarshipFields copy() => copyWith();
 }
 
+///
+/// NOTE: You can add unexposed fields with `addAll`
 class Starship {
   static final String typeName = "Starship";
 
@@ -1005,6 +928,18 @@ class Starship {
           length: length,
           coordinates: coordinates,
         );
+
+  /// Adds all fields from [other] to this `Starship`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Starship other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Starship`
+  Starship copy() => Starship()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1058,8 +993,7 @@ class _DroidFields implements _CharacterFields {
 
   /// Adds all fields from [other] to this `_DroidFields`.
   ///
-  /// If a field from [other] is already in this `_DroidFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _DroidFields other, {
     bool overwrite = true,
@@ -1081,30 +1015,10 @@ class _DroidFields implements _CharacterFields {
       primaryFunction ??= other.primaryFunction;
     }
   }
-
-  /// Creates a copy of this `_DroidFields` but with the given fields replaced with the new values.
-  _DroidFields copyWith({
-    String id,
-    String name,
-    List<Character> friends,
-    FriendsConnection friendsConnection,
-    List<Episode> appearsIn,
-    String primaryFunction,
-  }) {
-    return _DroidFields(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      friends: friends ?? this.friends,
-      friendsConnection: friendsConnection ?? this.friendsConnection,
-      appearsIn: appearsIn ?? this.appearsIn,
-      primaryFunction: primaryFunction ?? this.primaryFunction,
-    );
-  }
-
-  /// Creates a copy of this `_DroidFields`
-  _DroidFields copy() => copyWith();
 }
 
+/// An autonomous mechanical character in the Star Wars universe
+/// NOTE: You can add unexposed fields with `addAll`
 class Droid implements Character {
   static final String typeName = "Droid";
 
@@ -1126,6 +1040,18 @@ class Droid implements Character {
           appearsIn: appearsIn,
           primaryFunction: primaryFunction,
         );
+
+  /// Adds all fields from [other] to this `Droid`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Droid other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Droid`
+  Droid copy() => Droid()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1164,8 +1090,7 @@ class _MutationFields {
 
   /// Adds all fields from [other] to this `_MutationFields`.
   ///
-  /// If a field from [other] is already in this `_MutationFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _MutationFields other, {
     bool overwrite = true,
@@ -1177,20 +1102,10 @@ class _MutationFields {
       createReview ??= other.createReview;
     }
   }
-
-  /// Creates a copy of this `_MutationFields` but with the given fields replaced with the new values.
-  _MutationFields copyWith({
-    Review createReview,
-  }) {
-    return _MutationFields(
-      createReview: createReview ?? this.createReview,
-    );
-  }
-
-  /// Creates a copy of this `_MutationFields`
-  _MutationFields copy() => copyWith();
 }
 
+/// The mutation type, represents all updates we can make to our data
+/// NOTE: You can add unexposed fields with `addAll`
 class Mutation {
   static final String typeName = "Mutation";
 
@@ -1202,6 +1117,18 @@ class Mutation {
   }) : fields = _MutationFields(
           createReview: createReview,
         );
+
+  /// Adds all fields from [other] to this `Mutation`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Mutation other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Mutation`
+  Mutation copy() => Mutation()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1228,8 +1155,7 @@ class _SubscriptionFields {
 
   /// Adds all fields from [other] to this `_SubscriptionFields`.
   ///
-  /// If a field from [other] is already in this `_SubscriptionFields`,
-  /// its value is not overwritten, unless  `overwrite: true` is specified
+  /// pre-existing values are not overwritten unless `overwrite: true`
   void addAll(
     covariant _SubscriptionFields other, {
     bool overwrite = true,
@@ -1241,20 +1167,10 @@ class _SubscriptionFields {
       reviewAdded ??= other.reviewAdded;
     }
   }
-
-  /// Creates a copy of this `_SubscriptionFields` but with the given fields replaced with the new values.
-  _SubscriptionFields copyWith({
-    Review reviewAdded,
-  }) {
-    return _SubscriptionFields(
-      reviewAdded: reviewAdded ?? this.reviewAdded,
-    );
-  }
-
-  /// Creates a copy of this `_SubscriptionFields`
-  _SubscriptionFields copy() => copyWith();
 }
 
+/// The subscription type, represents all subscriptions we can make to our data
+/// NOTE: You can add unexposed fields with `addAll`
 class Subscription {
   static final String typeName = "Subscription";
 
@@ -1266,6 +1182,18 @@ class Subscription {
   }) : fields = _SubscriptionFields(
           reviewAdded: reviewAdded,
         );
+
+  /// Adds all fields from [other] to this `Subscription`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant Subscription other, {
+    bool overwrite = true,
+  }) =>
+      fields.addAll(other.fields, overwrite: overwrite);
+
+  /// Creates a copy of this `Subscription`
+  Subscription copy() => Subscription()..addAll(this);
 
   @protected
   Set<String> get missingRequiredFields {

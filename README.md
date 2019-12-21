@@ -1,21 +1,12 @@
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
-## Current severe restrictions:
-* inline fragments don't work
-* no faculties for dealing with underscore-prefixed `_fields` in the schema
-* requires `build.yaml`, peer dependencies, etc
-
-The example is sparse.
-
-### Current nusances:
-* You can have multiple inline fragments on the same document, but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
-* The dart type system is hard to wrestle into graphql-like types (especially unions)
-
+Models graphql-style "inheritance" by defining a protected `_$[Type}Fields` type along with every object type,
+which is then exposed by fragment mixins and selection sets.
 
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-dart@1.0.0-beta-stable
+yarn add -D graphql-code-generator graphql graphql-to-dart@1.1.0-beta
 ```
 write `codegen.yaml` to customize your build as needed.
 This is the full working config I'm using in the wild:
@@ -89,6 +80,7 @@ So:
 yarn gql-gen
 flutter packages pub run build_runner build
 flutter format lib/**/*graphql.dart # you're gunna want this
+# or npm install globstar && globstar -- flutter format "lib/**/*.graphql.dart"
 ```
 
 *Make sure you have a `build.yaml` like in the `example`, and the deps in the `pubspec.yaml`*:
@@ -111,7 +103,14 @@ dependencies:
 Take a look at the example output to see how ti generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
 
 # NOTES
-* I probably won't touch this for a while once again
+* Base types do not currently have json helpers, but it should probably be configurable
+  in case of the configuration `replaceTypes: { "BaseTypeInput": "BaseType" }`
+* I probably won't touch this for a while once again.
+* Really what we want is for @klavs's `gql_code_gen` to become more mature,
+  but I keep sinking energy into this bad boy
 * This depends on a PR I made to near-operation-files
 * I also use a fork of the ast generator atm that should hopefully be merged soon
+* (possibly outdated): You can have multiple inline fragments on the same document,
+  but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly
+
 
