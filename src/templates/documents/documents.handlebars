@@ -1,6 +1,14 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+{{ dartDirective 'import' @root.config.documents.imports}}
+
+{{ dartDirective 'export' @root.config.documents.exports}}
+
+{{ dartDirective 'part' @root.config.documents.parts}}
+
+part '{{ expectedGeneratedFileFor outputFile }}';
+
 {{#each fragments }}
 {{> fragment }}
-
 {{/each}}
 
 {{#each operations}}

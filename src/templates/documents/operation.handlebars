@@ -11,38 +11,27 @@
       schemaBaseType
       @root.config.irreducibleTypes
 )}}
-{{> defineClass
-      fields=(hackFragmentFields "get" fragmentsSpread fields )
-      className=(concat (toPascalCase ../name) modelType)
+
+{{> selectionSetClass
       typeName=schemaBaseType
-      contextModels=../innerModels
+      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+      className=(concat (toPascalCase ../name) modelType)
       contextName=(toPascalCase ../name)
-      assignableTo=(
-        withInputType
-          (hackFragmentBaseTypes "get" (fragmentClassNames fragmentsSpread))
-          @root.config.replaceTypes
-          (concat (toPascalCase ../name) modelType)
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "list" fragmentsSpread)
-      )
+      contextModels=../innerModels
 }}
 
 {{/unless~}}
 {{/eachBackwards}}
 
-{{> defineClass
-      fields=(hackFragmentFields "get" fragmentsSpread fields )
-      className=(concat (toPascalCase name) (toPascalCase operationType))
+{{!--
+    used to be this but idk if that's right
       typeName=(concat (toPascalCase name) (toPascalCase operationType))
+--}}
+{{> selectionSetClass
+      typeName=operationType
+      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+
+      className=(concat (toPascalCase name) (toPascalCase operationType))
       contextModels=innerModels
       contextName=(toPascalCase name)
-      assignableTo=(
-        withInputType
-          (hackFragmentBaseTypes "get" (fragmentClassNames fragmentsSpread))
-          @root.config.replaceTypes
-          (concat (toPascalCase name) (toPascalCase operationType))
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "list" fragmentsSpread)
-      )
 }}
-

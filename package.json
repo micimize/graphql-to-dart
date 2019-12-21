@@ -1,50 +1,55 @@
 {
   "name": "graphql-to-dart",
-  "version": "0.3.6",
+  "version": "1.0.1-alpha17",
   "description": "generate dart json_serializable classes using graphql-code-generator",
-  "files": [
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/micimize/graphql-to-jaguar-dart.git"
   },
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "yarn build",
     "build": "webpack",
     "test": "codegen-templates-scripts test",
     "test-server": "starwars-test-graphql-server",
     "pretest": "yarn build",
-    "example:gql-gen": "cd example/ && gql-gen",
+    "example:gql-gen": "cd example/ && graphql-codegen",
     "example:source-gen": "cd example/ && flutter packages pub run build_runner build",
-    "example:format": "cd example/ && flutter format lib/starwars_graphql_serializers.dart",
-    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format"
+    "example:format": "cd example/ && flutter format lib/graphql/*.dart",
+    "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format",
+    "prepublishOnly": "if [[ ! $PWD =~ dist$ ]]; then npm run _dist:nopublish; fi",
+    "_dist:nopublish": "echo 'Use `npm run dist` instead of `npm publish`!' && exit 1",
+    "_dist:prep": "yarn build && cp package.json dist && cp README.md dist",
+    "_dist:post": "rm -f dist/package.json && rm -f dist/README.md",
+    "dist": "npm run _dist:prep && npm publish dist && npm run _dist:post"
   },
   "dependencies": {
+    "@graphql-codegen/add": "^1.9.1",
     "@graphql-codegen/cli": "^1.9.1",
     "@graphql-codegen/core": "^1.9.1",
+    "@graphql-codegen/near-operation-file-preset": "micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta3-gitpkg",
     "@graphql-codegen/plugin-helpers": "^1.9.1",
     "graphql-codegen-core": "^0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
     "graphql-codegen-plugin-helpers": "^0.18.2",
-    "linewrap": "^0.2.1"
+    "linewrap": "^0.2.1",
+    "typescript": "3.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
+    "awesome-typescript-loader": "^5.2.1",
     "codegen-templates-scripts": "0.18.0",
-    "graphql": "^14.1.1",
+    "graphql": "14.1.1",
     "graphql-code-generator": "^0.18.0",
     "raw-loader": "^4.0.0",
     "starwars-test-graphql-server": "0.2.0-alpha3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
-  "main": "./dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "./index.js",
+  "typings": "./index.d.ts",
   "typescript": {
-    "definition": "dist/index.d.ts"
+    "definition": "./index.d.ts"
   },
   "jest": {
     "globals": {

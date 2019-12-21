@@ -1,3 +1,44 @@
+{{~#*inline "fieldsClass" ~}}
+{{ multilineComment description }}
+class {{ className }}  {{ classExtends interfaces=(wrapFields interfaces) }} {
+
+  {{#each fields}}{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ resolveType type
+      "inline"
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      isArray
+      raw
+      ../name
+  }} {{ dartName name }};
+  {{~/if}}{{/if}}{{/each}}
+
+  {{ className }}({
+    {{#each fields}}{{#if name}}
+      this.{{ dartName name }},
+    {{/if}}{{/each}}
+  });
+
+  /// Adds all fields from [other] to this `{{ className }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+    assert(other != null, "Cannot add all from null into $this");
+    if (overwrite != null && overwrite){
+      {{#each fields}}{{#if name}}
+      {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
+      {{~/if}}{{/each}}
+    } else {
+      {{#each fields}}{{#if name}}
+      {{ dartName name }} ??= other.{{ dartName name }};
+      {{~/if}}{{/each}}
+    }
+  }
+}
+{{~/inline~}}
+
 {{#unless (
   ignoreType
     name
@@ -6,81 +47,62 @@
       @root.config.irreducibleTypes
 )}}
 
+{{> fieldsClass this className=(concat "_" name "Fields") }}
+
 {{ multilineComment description }}
-class {{ name }} {{
+/// NOTE: You can add unexposed fields with `addAll`
+class {{ name }} {{ classExtends interfaces=interfaces }} {
+  static final String typeName = "{{ takeFirst typeName name }}";
 
-  classExtends
-    (resolveMixins @root.config.mixins fields)
-    fragmentsSpread
-    interfaces
-    @root.config.replaceTypes
-
-}} {
-  static final String typeName = "{{ typeName }}";
-
-  {{#each fields}}{{#if type}}{{#if name}}
-  {{#if description }}{{ multilineComment description }}
-  {{/if}}
-  {{ resolveType type
-      isRequired
-      (takeFirst contextName ../contextName)
-      (takeFirst contextModels ../contextModels)
-      @root.config.scalars
-      @root.config.replaceTypes
-      isArray
-      @root.config.irreducibleTypes
-      raw
-      ../name
-      @root.config.requiredFields
-  }} _{{
-      transformCharacters name @root.config.transformCharacters
-  }};
-  {{~/if}}{{/if}}{{/each}}
+  @protected
+  covariant _{{ name }}Fields fields;
 
   {{name}}({
-    {{#each fields}}{{#if name}}
-        {{ resolveType type
-            isRequired
-            (takeFirst contextName ../contextName)
-            (takeFirst contextModels ../contextModels)
-            @root.config.scalars
-            @root.config.replaceTypes
-            isArray
-            @root.config.irreducibleTypes
-            raw
-            ../name
-            @root.config.requiredFields
-        }} {{
-            transformCharacters name @root.config.transformCharacters
-        }},
-    {{/if}}{{/each}}
-  }):
+  {{#each fields}}{{#if name}}
+    {{ resolveType type
+      "inline"
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      isArray
+      raw
+      ../name
+    }} {{ dartName name }},
+  {{/if}}{{/each}}
+  }): fields = _{{ name }}Fields(
     {{#each fields}}
-    _{{
-        transformCharacters name @root.config.transformCharacters
-    }} = {{
-        transformCharacters name @root.config.transformCharacters
-    }} {{#if @last}};{{#else}}, {{/else}}{{/if}}'
-    {{/each}};
+    {{ dartName name }}: {{ dartName name }},
+    {{/each}}
+  );
 
-    Set<String> get _missingRequiredFields() {
-        Set<String> missingFields = {};
-        {{#each fields}}
-        {{~#if isRequired}}
-        if (_{{ transformCharacters name @root.config.transformCharacters }} == null){
-            missingFields.add(_{{ transformCharacters name @root.config.transformCharacters }});
-        }
-        {{/if}}
-        {{/each}}
-        return missingFields;
-    }
-    void validate(){
-        final missing = _missingRequiredFields;
-        assert(missing.isEmpty, "${this.runtimeType}#${hashCode} is missing required fields ${missing}"); 
-    }
+  /// Adds all fields from [other] to this `{{ name }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(covariant {{ name }} other, { bool overwrite = true, }) =>
+    fields.addAll(other.fields, overwrite: overwrite);
 
-    bool isValid => _missingRequiredFields.isEmpty;
+  /// Creates a copy of this `{{ name }}`
+  {{ name }} copy() => {{ name }}()..addAll(this);
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    {{#each fields}}
+    {{~#if isRequired}}
+    if (fields.{{ dartName name }}  == null){
+        missingFields.add("{{ dartName name }}");
+    }
+    {{/if}}
+    {{/each}}
+    return missingFields;
+  }
+
+  void validate(){
+    final missing = missingRequiredFields;
+    assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+  }
+
+  bool get isValid => missingRequiredFields.isEmpty;
 
 }
-{{/unless}}
 
+{{/unless}}

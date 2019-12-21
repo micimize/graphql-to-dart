@@ -7,11 +7,13 @@ targets:
           # `@JsonSerializable`-annotated class in the package.
           #
           # The default value for each is listed.
-          #
-          # For usage information, reference the corresponding field in
-          # `JsonSerializableGenerator`.
-          use_wrappers: false
           any_map: false
           checked: false
+          create_factory: true
+          create_to_json: true
+          disallow_unrecognized_keys: false
           explicit_to_json: true
-          generate_to_json_function: true
+          field_rename: none
+          ignore_unannotated: true
+          include_if_null: true
+          nullable: true

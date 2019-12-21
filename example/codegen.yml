@@ -1,16 +1,36 @@
 schema: "http://localhost:8080/graphql"
-documents: 'lib/**/*.graphql'
+documents:
+  - 'lib/**/_*.gql'
+  - 'lib/**/!(_)*.gql'
 overwrite: true
 generates:
-  lib/graphql_types.dart:
-    #- graphql-to-dart/schema-types
-    - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/schema-types.js
+  lib/graphql/schema.dart:
+    - ../dist/schema-types.js
   lib/:
-    preset: near-operation-file
+    preset: ../dist/index.js
     presetConfig:
-      extension: .dart
-      baseTypesPath: types.ts
+      packageName: starwars
+      extension: .gql.dart
+      schemaTypesPath: lib/graphql/schema.dart
     plugins:
-      - /Users/mjr/Documents/code/libraries/graphql-to-dart/dist/index.js
-        #- graphql-to-dart
+      - ../dist/documents.js
+config:
+  schema:
+    parts: []
+    imports:
+      - ./example_mixin.dart
+    exports:
+      - ./example_mixin.dart
+  documents:
+    imports:
+      - ./example_mixin.dart
+  mixins:
+     - name: HelloMixin
+       when:
+        fields:
+          - name
+  addInputHelpers:
+    exceptFor:
+      - ReviewInput
+      - Color 
 

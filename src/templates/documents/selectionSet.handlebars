@@ -1,0 +1,27 @@
+{{#*inline "exposeField" ~}}
+{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
+  {{ type }} get {{ name }} => fields.{{ schemaFieldName }};
+  set {{ name }} ({{ takeLastWord type }} {{ name }}) => fields.{{ schemaFieldName }} = {{ name }};
+{{~/if}}{{/if}}
+{{~/inline}}
+
+{{~#each fields}}
+{{> exposeField
+    this
+    description=description
+    name=(dartName name)
+    schemaFieldName=(dartName schemaFieldName)
+    type=(
+        resolveType type
+            isRequired
+            (takeFirst contextName ../contextName)
+            (takeFirst contextModels ../contextModels)
+            isArray
+            raw
+            ../name
+    )
+}}
+{{/each}}

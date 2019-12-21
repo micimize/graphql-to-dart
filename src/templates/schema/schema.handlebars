@@ -1,19 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+{{ dartDirective 'import' @root.config.schema.imports}}
 
-import 'package:meta/meta.dart';
-import 'package:json_annotation/json_annotation.dart';
+{{ dartDirective 'export' @root.config.schema.exports}}
 
-{{#if config.imports}}
-{{#each config.imports}}
-import '{{this}}';
-{{/each}}
-{{/if}}
+{{ dartDirective 'part' @root.config.schema.parts}}
 
-{{#if config.parts}}
-{{#each config.parts}}
-part '{{this}}';
-{{/each}}
-{{/if}}
+part '{{ expectedGeneratedFileFor outputFile }}';
 
 /* Enums */
 {{#each enums}}
@@ -30,8 +22,7 @@ part '{{this}}';
 
 /* Input Types */
 {{#each inputTypes}}
-{{> type }}
-{{~ registerInputType name }}
+{{> inputType }}
 
 {{/each}}
 

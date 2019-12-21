@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './starwars_graphql_serializers.dart' show Episode;
+import './graphql/schema.dart';
 
 typedef void OnSelect(Episode episode);
 

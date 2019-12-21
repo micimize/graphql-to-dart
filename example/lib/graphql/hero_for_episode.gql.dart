@@ -1,0 +1,208 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
+import './example_mixin.dart';
+import 'package:starwars/graphql/schema.dart';
+import 'package:starwars/graphql/_human_fragment.gql.dart';
+
+export 'package:starwars/graphql/_human_fragment.gql.dart';
+
+part 'hero_for_episode.gql.g.dart';
+
+@JsonSerializable()
+class HeroForEpisodeVariables {
+  @JsonKey(required: true, disallowNullValue: true)
+  Episode ep;
+
+  HeroForEpisodeVariables({
+    @required this.ep,
+  });
+
+  factory HeroForEpisodeVariables.fromJson(Map<String, dynamic> json) =>
+      _$HeroForEpisodeVariablesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HeroForEpisodeVariablesToJson(this);
+}
+
+@JsonSerializable()
+class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
+  static final String typeName = "Human";
+
+  @JsonKey(required: true, disallowNullValue: true)
+  List<Episode> get appearsIn => fields.appearsIn;
+  set appearsIn(List<Episode> appearsIn) => fields.appearsIn = appearsIn;
+  @JsonKey(required: false, disallowNullValue: false)
+  double get height => fields.height;
+  set height(double height) => fields.height = height;
+  @JsonKey(required: false, disallowNullValue: false)
+  double get mass => fields.mass;
+  set mass(double mass) => fields.mass = mass;
+  @JsonKey(required: false, disallowNullValue: false)
+  String get home => fields.homePlanet;
+  set home(String home) => fields.homePlanet = home;
+  @JsonKey(required: false, disallowNullValue: false)
+  List<RelationshipsFriends> get friends => fields.friends;
+  set friends(List<RelationshipsFriends> friends) => fields.friends = friends;
+  @JsonKey(required: false, disallowNullValue: false)
+  List<RelationshipsStarships> get starships => fields.starships;
+  set starships(List<RelationshipsStarships> starships) =>
+      fields.starships = starships;
+  HeroForEpisodeHumanInlineFragment({
+    @required List<Episode> appearsIn,
+    double height,
+    double mass,
+    String home,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+  }) : super(
+          appearsIn: appearsIn,
+          height: height,
+          mass: mass,
+          homePlanet: home,
+          friends: friends,
+          starships: starships,
+        );
+
+  HeroForEpisodeHumanInlineFragment.empty();
+
+  /// Creates a copy of this `HeroForEpisodeHumanInlineFragment`
+  HeroForEpisodeHumanInlineFragment copy() =>
+      HeroForEpisodeHumanInlineFragment.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeHumanInlineFragment`
+  HeroForEpisodeHumanInlineFragment.from(Human other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    if (appearsIn == null) {
+      missingFields.add("appearsIn");
+    }
+    return missingFields;
+  }
+
+  factory HeroForEpisodeHumanInlineFragment.fromJson(
+          Map<String, dynamic> json) =>
+      _$HeroForEpisodeHumanInlineFragmentFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$HeroForEpisodeHumanInlineFragmentToJson(this)
+        ..['__typename'] = typeName;
+}
+
+@JsonSerializable()
+class HeroForEpisodeDroidInlineFragment extends Droid {
+  static final String typeName = "Droid";
+
+  @JsonKey(required: false, disallowNullValue: false)
+  String get primaryFunction => fields.primaryFunction;
+  set primaryFunction(String primaryFunction) =>
+      fields.primaryFunction = primaryFunction;
+  HeroForEpisodeDroidInlineFragment({
+    String primaryFunction,
+  }) : super(
+          primaryFunction: primaryFunction,
+        );
+
+  HeroForEpisodeDroidInlineFragment.empty();
+
+  /// Creates a copy of this `HeroForEpisodeDroidInlineFragment`
+  HeroForEpisodeDroidInlineFragment copy() =>
+      HeroForEpisodeDroidInlineFragment.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeDroidInlineFragment`
+  HeroForEpisodeDroidInlineFragment.from(Droid other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory HeroForEpisodeDroidInlineFragment.fromJson(
+          Map<String, dynamic> json) =>
+      _$HeroForEpisodeDroidInlineFragmentFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$HeroForEpisodeDroidInlineFragmentToJson(this)
+        ..['__typename'] = typeName;
+}
+
+@JsonSerializable()
+class HeroForEpisodeHero extends Character with HelloMixin {
+  static final String typeName = "Character";
+
+  @JsonKey(required: true, disallowNullValue: true)
+  String get name => fields.name;
+  set name(String name) => fields.name = name;
+  HeroForEpisodeHero({
+    @required String name,
+  }) : super(
+          name: name,
+        );
+
+  HeroForEpisodeHero.empty();
+
+  /// Creates a copy of this `HeroForEpisodeHero`
+  HeroForEpisodeHero copy() => HeroForEpisodeHero.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeHero`
+  HeroForEpisodeHero.from(Character other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    if (name == null) {
+      missingFields.add("name");
+    }
+    return missingFields;
+  }
+
+  factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) =>
+      _$HeroForEpisodeHeroFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$HeroForEpisodeHeroToJson(this)..['__typename'] = typeName;
+}
+
+@JsonSerializable()
+class HeroForEpisodeQuery extends Query {
+  static final String typeName = "query";
+
+  @JsonKey(required: false, disallowNullValue: false)
+  HeroForEpisodeHero get hero => fields.hero;
+  set hero(HeroForEpisodeHero hero) => fields.hero = hero;
+  HeroForEpisodeQuery({
+    HeroForEpisodeHero hero,
+  }) : super(
+          hero: hero,
+        );
+
+  HeroForEpisodeQuery.empty();
+
+  /// Creates a copy of this `HeroForEpisodeQuery`
+  HeroForEpisodeQuery copy() => HeroForEpisodeQuery.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HeroForEpisodeQuery`
+  HeroForEpisodeQuery.from(Query other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) =>
+      _$HeroForEpisodeQueryFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$HeroForEpisodeQueryToJson(this)..['__typename'] = typeName;
+}

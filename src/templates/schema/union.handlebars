@@ -15,9 +15,15 @@ class {{ className }} {
   {{/each}}
 
 
-  {{ className }}.empty();
+  Object get value => (
+    {{#each possibleTypes~}}
+    {{ camelCase this}}{{#unless @last}} ??
+    {{/unless}}
+    {{~/each}}
+   );
 
 
+  {{!-- 
   ToJson get value => (
     {{#each possibleTypes~}}
     {{ camelCase this}}{{#unless @last}} ??
@@ -44,6 +50,7 @@ class {{ className }} {
   }
 
   static Map<String, dynamic> serializeToJson({{className}} instance) => instance.value.toJson();
+  --}}
 
 }
 

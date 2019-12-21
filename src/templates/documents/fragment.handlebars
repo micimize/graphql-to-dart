@@ -1,50 +1,64 @@
-{{# if (hackFragmentFields "ensure_unique" name) ~}}
+{{!--
+    Leaving external mixins out of fragments because it overcomplicates things.  
+    Because "mixin on BaseType, Foo, Bar" basically defines a multi-parent interface
+    mixins=(resolveMixins fields)
+--}}
+{{#*inline "fragmentMixin" ~}}
+{{ multilineComment description }}
+mixin {{ className }} {{
+  classExtends
+    onMixin="true"
+    baseType=typeName
+    mixins=(resolveMixins fields)
+    fragments=fragmentsSpread
+}} {
+  static final String typeName = "{{ typeName }}";
 
-{{#eachBackwards innerModels }}
+  {{> selectionSet }}
 
+}
+{{~/inline~}}
 
-{{~ hackFragmentBaseTypes "add" (concat (toPascalCase ../name) modelType) schemaBaseType ~}}
+{{~# if (hackFragmentFields "ensure_unique" name=name) ~}}
 
-{{> defineClass
+{{!-- add all fragment fields to the field hacker --}}
+    {{~ hackFragmentFields "add" name=name
+        fields=fields
+        nestedFragments=fragmentsSpread 
+        contextModels=innerModels
+    ~}}
+{{!-- --}}
+
+{{~#eachBackwards innerModels }}
+
+{{~#unless (
+  ignoreType
+    (concat (toPascalCase ../name) modelType)
+      @root.config.replaceTypes
+      schemaBaseType
+      @root.config.irreducibleTypes
+)}}
+
+{{> selectionSetClass
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
-      assignableTo=(
-        withInputType
-          schemaBaseType
-          @root.config.replaceTypes
-          (concat (toPascalCase ../name) modelType)
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "get" fragmentsSpread fields)
-      )
-      fields=(hackFragmentFields "get" fragmentsSpread fields )
+      fragmentsSpread=fragmentsSpread
+      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}
 
-{{/eachBackwards}}
+{{~/unless}}
 
-{{~ hackFragmentBaseTypes "add" (toPascalCase name) onType ~}}
+{{/eachBackwards~}}
 
-{{> defineClass
+{{> fragmentMixin
       className=(toPascalCase name)
       typeName=onType
-      assignableTo=(
-        withInputType
-          onType
-          @root.config.replaceTypes
-          (toPascalCase name)
-          @root.config.generateFragmentHelpers
-          (hackFragmentFields "get" fragmentsSpread fields)
-      )
-      fields=(hackFragmentFields "get" fragmentsSpread fields)
+      fields=(hackFragmentFields 'get' fragments=fragmentsSpread fields=fields)
+      fragmentsSpread=fragmentsSpread
       contextModels=innerModels
       contextName=(toPascalCase name)
 }}
 
-{{~ hackFragmentFields "add" name
-    fields
-    innerModels
-    fragmentsSpread 
-~}}
-
-{{/if}}
+{{~/if~}}

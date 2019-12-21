@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './client_provider.dart';
-import './starwars_graphql_serializers.dart' show Episode;
+import './graphql/schema.dart';
 import './select_episode.dart';
 import './episode.dart';
 

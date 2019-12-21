@@ -1,0 +1,23 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.exclude": {
+    "app/.flutter-plugins": true,
+    "app/.packages": true,
+    "app/.idea": true,
+    ".git*": true,
+    "**/.*.swp": true,
+    "**/.*.swo": true,
+    "**/.*.swm": true,
+    "node_modules": true,
+    "build": true,
+    "android": true,
+    "ios": true,
+    "yarn.lock": true,
+    ".*config": true,
+    ".vscode": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  }
+}

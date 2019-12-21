@@ -1,33 +1,20 @@
 @JsonSerializable()
-class {{ className }} {{
-
-  classExtends
-    (resolveMixins @root.config.mixins fields)
-    fragmentsSpread
-    interfaces
-    @root.config.replaceTypes
-
-}} {
+class {{ className }} {
   {{#if typeName }}
   static final String typeName = "{{ typeName }}";
   {{/if}}
 
-  String __typename;
-
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
+  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
       isRequired
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
-      @root.config.scalars
-      @root.config.replaceTypes
       isArray
-      @root.config.irreducibleTypes
       raw
       ../className
-      @root.config.requiredFields
   }} {{name}};
   {{~/if}}{{/if}}{{/each}}
 
@@ -47,146 +34,11 @@ class {{ className }} {{
   }
   {{~/if}});
 
-  /// Construct an empty `{{ className }}`
-  {{ className }}.empty();
-
-
-  /// Adds all fields from [other] to this `{{ className }}`.
-  /// 
-  /// If a field from [other] is already in this `{{ className }}`,
-  /// its value is overwritten, unless  `overwrite: true` is specified
-  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
-     assert(other != null, "Cannot add all from null into $this");
-     if (overwrite != null && overwrite){
-        {{#each fields}}{{#if name}}
-        {{name}} = other.{{name}} ?? {{name}};
-        {{~/if}}{{/each}}
-     } else {
-        {{#each fields}}{{#if name}}
-        {{name}} ??= other.{{name}};
-        {{~/if}}{{/each}}
-     }
-  }
-
-  /// Creates a copy of this `{{ className }}` but with the given fields replaced with the new values.
-  {{ className }} copyWith(
-  {{~#if fields.length~}}
-    {
-        {{~#each fields}}
-        {{#if type}}{{#if name}}
-            {{ resolveType type
-                "inline"
-                (takeFirst contextName ../contextName)
-                (takeFirst contextModels ../contextModels)
-                @root.config.scalars
-                @root.config.replaceTypes
-                isArray
-                @root.config.irreducibleTypes
-                raw
-                ../className
-                @root.config.requiredFields
-            }} {{name}},
-        {{~/if}}{{/if}}{{/each}}
-    }
-  {{~/if~}}
-    ){
-        return {{ className }}(
-            {{#each fields}}{{#if type}}{{#if name}}
-            {{name}}: {{name}} ?? this.{{name}},
-            {{~/if}}{{/if}}{{/each}}
-        );
-  }
-
-  /// Creates a copy of this `{{ className }}`
-  {{ className }} copy() => copyWith();
-
-  {{#if assignableTo~}}
-  {{~#if @root.config.generateFragmentHelpers~}}
-  {{~#each assignableTo}}
-  {{~#if (fragmentFieldOnBaseType
-      this.fields
-      @root.config.generateFragmentHelpers
-  )}}
-
-  /// Adds all fields from [other] to this `{{ ../className }}`.
-  ///
-  /// If a field from [other] is already in this `{{  ../className }}`,
-  /// its value is overwritten, unless  `overwrite: true` is specified
-  void addAllFrom{{ this.className }}(covariant {{ this.className }} other, { bool overwrite = true, }) {
-     assert(other != null, "Cannot add all from null into $this");
-     if (overwrite != null && overwrite){
-        {{~#each this.fields}}{{~#if (
-        fragmentFieldOnBaseType
-            name
-            @root.config.generateFragmentHelpers
-        )
-        ~}}
-        {{name}} = other.{{schemaFieldName}} ?? {{name}};
-        {{/if}}{{/each}}
-     } else {
-        {{~#each this.fields}}{{~#if (
-        fragmentFieldOnBaseType
-            name
-            @root.config.generateFragmentHelpers
-        )
-        ~}}
-        {{name}} ??= other.{{schemaFieldName}};
-        {{/if}}{{/each}}
-     }
-  }
-
-  /// Copy into a new `{{ this.className }}`
-  {{ this.className }} copyAs{{ this.className }}() => {{ this.className }}.empty()
-    {{#each fields}}{{~#if (
-    fragmentFieldOnBaseType
-        name
-        @root.config.generateFragmentHelpers
-    )
-    ~}}
-    ..{{schemaFieldName}} = {{name}}
-    {{/if}}{{/each}};
-
-  {{~/if~}}
-  {{~/each}}
-  {{~/if}}
-  {{~/if}}
-
   factory {{className}}.fromJson(Map<String, dynamic> json) => 
-    deserializeFromJson(json);
+    _${{className}}FromJson(json);
 
-  Map<String, dynamic> toJson() => serializeToJson(this);
-
-  static {{className}} deserializeFromJson(Map<String, dynamic> json){
-    {{className}} instance = _${{className}}FromJson(json);
-    // for handling inline fragment logic 
-    instance.__typename = json['__typename'] as String;
-
-    {{#if hasInlineFragments~}}
-    {{#each inlineFragments}}
-      if(instance.__typename  == null || instance.__typename  == {{ concat ../contextName name }}.typeName){
-        instance.{{ camelCase name}} = {{ concat ../contextName name }}.fromJson(json);
-      }
-    {{/each}}
-    {{~/if}}
-    return instance;
-  }
-
-
-  static Map<String, dynamic> serializeToJson({{className}} instance){
-    Map<String, dynamic> json = _${{className}}ToJson(instance);
-    {{#if hasInlineFragments~}}
-    {{#each inlineFragments}}
-        if (instance.{{ camelCase name}} != null){
-           json.addAll(instance.{{ camelCase name}}.toJson());
-        }
-    {{/each}}
-    {{~/if}}
-
-    {{#if typeName }}
-      json['__typename'] = instance.__typename ?? typeName;
-    {{/if}}
-    return json;
-  }
+  Map<String, dynamic> toJson() => _${{className}}ToJson(this)
+    {{#if typeName }}..['__typename'] = typeName{{/if}};
 
 }
 

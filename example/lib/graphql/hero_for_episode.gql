@@ -1,3 +1,4 @@
+#import "./homeFragment.gql"
 query HeroForEpisode($ep: Episode!) {
   hero(episode: $ep) {
     # without typename we can't really tell which fragments to parse
@@ -7,8 +8,9 @@ query HeroForEpisode($ep: Episode!) {
       primaryFunction
     }
     ... on Human {
-      height
-      homePlanet
+      appearsIn
+      ...info
+      ...relationships
     }
   }
 }

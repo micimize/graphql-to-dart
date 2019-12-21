@@ -5,7 +5,8 @@ const path = require('path');
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    index: './index.ts',
+    'index': './index.ts',
+    'documents': './documents.ts',
     'schema-types': './schema-types.ts',
   },
   output: {

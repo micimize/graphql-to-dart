@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import './starwars_graphql_serializers.dart';
+import './graphql/hero_for_episode.gql.dart';
+import './graphql/schema.dart';
 import './typed_query.dart';
 
 String format(DateTime date) =>
@@ -45,8 +46,9 @@ class HeroForEpisodeTypedQuery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TypedQuery<HeroForEpisodeQuery>(
-      documentName: 'HeroForEpisode',
-      dataFromJson: wrapFromJsonMap(HeroForEpisodeQuery.deserializeFromJson),
+      documentName: 'hero_for_episode',
+      dataFromJson:
+          wrapFromJsonMap((json) => HeroForEpisodeQuery.fromJson(json)),
       variables: variables.toJson(),
       builder: builder,
     );
