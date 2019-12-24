@@ -5,6 +5,7 @@
 --}}
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
+/// See [{{ className }}SelectionSet] for the full stand-alone class
 mixin {{ className }} {{
   classExtends
     onMixin="true"
@@ -16,7 +17,26 @@ mixin {{ className }} {{
 
   {{> selectionSet }}
 
+  /// Copies fields from [other] into a new `{{ className }}`
+  static {{concat className 'SelectionSet'}} from({{ toPascalCase typeName }} other) =>
+    {{concat className 'SelectionSet'}}.from(other);
+
+  static {{concat className 'SelectionSet'}} fromJson(Map<String, dynamic> json) =>
+    {{concat className 'SelectionSet'}}.fromJson(json);
+
 }
+
+{{!-- don't need to pass fields in because we're extending the mixin --}}
+/// Materialized class that implements the fragment [{{ className }}]
+///
+/// Gives access to all the usual selection set helpers
+{{> selectionSetClass
+      className=(concat className 'SelectionSet')
+      typeName=typeName
+      fragmentsSpread=(arrayify className)
+      fields=''
+      allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+}}
 {{~/inline~}}
 
 {{~# if (hackFragmentFields "ensure_unique" name=name) ~}}
@@ -43,7 +63,8 @@ mixin {{ className }} {{
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
       fragmentsSpread=fragmentsSpread
-      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+      fields=fields
+      allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
 }}

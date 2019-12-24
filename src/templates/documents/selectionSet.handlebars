@@ -8,6 +8,7 @@
 {{~/if}}{{/if}}
 {{~/inline}}
 
+{{#if fields}}
 {{~#each fields}}
 {{> exposeField
     this
@@ -25,3 +26,4 @@
     )
 }}
 {{/each}}
+{{/if}}

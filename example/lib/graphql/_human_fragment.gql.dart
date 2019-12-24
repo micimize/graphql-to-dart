@@ -13,6 +13,48 @@ mixin Home on Human {
   @JsonKey(required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   set home(String home) => fields.homePlanet = home;
+
+  /// Copies fields from [other] into a new `Home`
+  static HomeSelectionSet from(Human other) => HomeSelectionSet.from(other);
+
+  static HomeSelectionSet fromJson(Map<String, dynamic> json) =>
+      HomeSelectionSet.fromJson(json);
+}
+
+/// Materialized class that implements the fragment [Home]
+///
+/// Gives access to all the usual selection set helpers
+@JsonSerializable()
+class HomeSelectionSet extends Human with Home {
+  static final String typeName = "Human";
+
+  HomeSelectionSet({
+    String home,
+  }) : super(
+          homePlanet: home,
+        );
+
+  HomeSelectionSet.empty();
+
+  /// Creates a copy of this `HomeSelectionSet`
+  HomeSelectionSet copy() => HomeSelectionSet.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `HomeSelectionSet`
+  HomeSelectionSet.from(Human other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory HomeSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$HomeSelectionSetFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$HomeSelectionSetToJson(this)..['__typename'] = typeName;
 }
 
 ///
@@ -25,6 +67,51 @@ mixin Dimensions on Human {
   @JsonKey(required: false, disallowNullValue: false)
   double get mass => fields.mass;
   set mass(double mass) => fields.mass = mass;
+
+  /// Copies fields from [other] into a new `Dimensions`
+  static DimensionsSelectionSet from(Human other) =>
+      DimensionsSelectionSet.from(other);
+
+  static DimensionsSelectionSet fromJson(Map<String, dynamic> json) =>
+      DimensionsSelectionSet.fromJson(json);
+}
+
+/// Materialized class that implements the fragment [Dimensions]
+///
+/// Gives access to all the usual selection set helpers
+@JsonSerializable()
+class DimensionsSelectionSet extends Human with Dimensions {
+  static final String typeName = "Human";
+
+  DimensionsSelectionSet({
+    double height,
+    double mass,
+  }) : super(
+          height: height,
+          mass: mass,
+        );
+
+  DimensionsSelectionSet.empty();
+
+  /// Creates a copy of this `DimensionsSelectionSet`
+  DimensionsSelectionSet copy() => DimensionsSelectionSet.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `DimensionsSelectionSet`
+  DimensionsSelectionSet.from(Human other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory DimensionsSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$DimensionsSelectionSetFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$DimensionsSelectionSetToJson(this)..['__typename'] = typeName;
 }
 
 @JsonSerializable()
@@ -121,6 +208,52 @@ mixin Relationships on Human {
   List<RelationshipsStarships> get starships => fields.starships;
   set starships(List<RelationshipsStarships> starships) =>
       fields.starships = starships;
+
+  /// Copies fields from [other] into a new `Relationships`
+  static RelationshipsSelectionSet from(Human other) =>
+      RelationshipsSelectionSet.from(other);
+
+  static RelationshipsSelectionSet fromJson(Map<String, dynamic> json) =>
+      RelationshipsSelectionSet.fromJson(json);
+}
+
+/// Materialized class that implements the fragment [Relationships]
+///
+/// Gives access to all the usual selection set helpers
+@JsonSerializable()
+class RelationshipsSelectionSet extends Human with Relationships {
+  static final String typeName = "Human";
+
+  RelationshipsSelectionSet({
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+  }) : super(
+          friends: friends,
+          starships: starships,
+        );
+
+  RelationshipsSelectionSet.empty();
+
+  /// Creates a copy of this `RelationshipsSelectionSet`
+  RelationshipsSelectionSet copy() =>
+      RelationshipsSelectionSet.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `RelationshipsSelectionSet`
+  RelationshipsSelectionSet.from(Human other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory RelationshipsSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$RelationshipsSelectionSetFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$RelationshipsSelectionSetToJson(this)..['__typename'] = typeName;
 }
 
 ///
@@ -136,4 +269,50 @@ mixin Info on Human implements Dimensions, Home {
   @JsonKey(required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   set home(String home) => fields.homePlanet = home;
+
+  /// Copies fields from [other] into a new `Info`
+  static InfoSelectionSet from(Human other) => InfoSelectionSet.from(other);
+
+  static InfoSelectionSet fromJson(Map<String, dynamic> json) =>
+      InfoSelectionSet.fromJson(json);
+}
+
+/// Materialized class that implements the fragment [Info]
+///
+/// Gives access to all the usual selection set helpers
+@JsonSerializable()
+class InfoSelectionSet extends Human with Info {
+  static final String typeName = "Human";
+
+  InfoSelectionSet({
+    double height,
+    double mass,
+    String home,
+  }) : super(
+          height: height,
+          mass: mass,
+          homePlanet: home,
+        );
+
+  InfoSelectionSet.empty();
+
+  /// Creates a copy of this `InfoSelectionSet`
+  InfoSelectionSet copy() => InfoSelectionSet.empty()..addAll(this);
+
+  /// Copies fields from [other] into a new `InfoSelectionSet`
+  InfoSelectionSet.from(Human other) {
+    addAll(other);
+  }
+
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    return missingFields;
+  }
+
+  factory InfoSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$InfoSelectionSetFromJson(json);
+
+  Map<String, dynamic> toJson() =>
+      _$InfoSelectionSetToJson(this)..['__typename'] = typeName;
 }

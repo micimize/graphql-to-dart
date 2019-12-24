@@ -3,7 +3,7 @@ class {{ className }} {{
 
     classExtends
         baseType=typeName
-        mixins=(resolveMixins fields)
+        mixins=(resolveMixins allFields)
         fragments=fragmentsSpread
         interfaces=interfaces
 
@@ -15,7 +15,7 @@ class {{ className }} {{
   {{> selectionSet }}
 
   {{className}}({
-      {{#each fields}}{{#if name}}
+      {{#each allFields}}{{#if name}}
           {{#if isRequired }}@required {{/if~}}
           {{ resolveType type
               isRequired
@@ -27,7 +27,7 @@ class {{ className }} {{
           }} {{dartName name}},
       {{/if}}{{/each}}
   }): super(
-      {{#each fields}}
+      {{#each allFields}}
       {{dartName schemaFieldName}}: {{dartName name}},
       {{/each}}
   );
@@ -45,7 +45,7 @@ class {{ className }} {{
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
-    {{#each fields}}
+    {{#each allFields}}
     {{~#if isRequired}}
     if ({{ dartName name }} == null){
       missingFields.add("

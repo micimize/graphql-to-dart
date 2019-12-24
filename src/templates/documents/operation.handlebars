@@ -14,7 +14,8 @@
 
 {{> selectionSetClass
       typeName=schemaBaseType
-      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+      fields=fields
+      allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       className=(concat (toPascalCase ../name) modelType)
       contextName=(toPascalCase ../name)
       contextModels=../innerModels
@@ -29,7 +30,8 @@
 --}}
 {{> selectionSetClass
       typeName=operationType
-      fields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+      fields=fields
+      allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
 
       className=(concat (toPascalCase name) (toPascalCase operationType))
       contextModels=innerModels

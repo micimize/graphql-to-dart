@@ -9,10 +9,11 @@
    defaults to `{ "^_+": "" }`, resulting in `"__typename" -> "typename"`
 * Models graphql-style "inheritance" by defining a protected `_$[Type}Fields` type along with every object type,
   which is then exposed by fragment mixins and selection sets.
+* Fragments are modeled generated as mixins, as well as standalone `FragmentNameSelectionSet` classes
 
 ## usage
 ```bash
-yarn add -D graphql-code-generator graphql graphql-to-dart@1.1.0-beta
+yarn add -D graphql-code-generator graphql graphql-to-dart@1.1.2-beta
 ```
 write `codegen.yaml` to customize your build as needed.
 This is the full working config I'm using in the wild:

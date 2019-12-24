@@ -31,22 +31,6 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
   @JsonKey(required: true, disallowNullValue: true)
   List<Episode> get appearsIn => fields.appearsIn;
   set appearsIn(List<Episode> appearsIn) => fields.appearsIn = appearsIn;
-  @JsonKey(required: false, disallowNullValue: false)
-  double get height => fields.height;
-  set height(double height) => fields.height = height;
-  @JsonKey(required: false, disallowNullValue: false)
-  double get mass => fields.mass;
-  set mass(double mass) => fields.mass = mass;
-  @JsonKey(required: false, disallowNullValue: false)
-  String get home => fields.homePlanet;
-  set home(String home) => fields.homePlanet = home;
-  @JsonKey(required: false, disallowNullValue: false)
-  List<RelationshipsFriends> get friends => fields.friends;
-  set friends(List<RelationshipsFriends> friends) => fields.friends = friends;
-  @JsonKey(required: false, disallowNullValue: false)
-  List<RelationshipsStarships> get starships => fields.starships;
-  set starships(List<RelationshipsStarships> starships) =>
-      fields.starships = starships;
   HeroForEpisodeHumanInlineFragment({
     @required List<Episode> appearsIn,
     double height,
