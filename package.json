@@ -1,6 +1,6 @@
 {
   "name": "graphql-to-dart",
-  "version": "1.1.2-beta",
+  "version": "1.1.4-beta",
   "description": "generate dart json_serializable classes using graphql-code-generator",
   "repository": {
     "type": "git",
@@ -18,17 +18,15 @@
     "build-example": "yarn example:gql-gen && yarn example:source-gen && yarn example:format",
     "prepublishOnly": "if [[ ! $PWD =~ dist$ ]]; then npm run _dist:nopublish; fi",
     "_dist:nopublish": "echo 'Use `npm run dist` instead of `npm publish`!' && exit 1",
-    "_dist:build": "yarn build && cp package.json dist && cp README.md dist",
-    "_dist:pack": "cd dist && npm pack && cd ..",
-    "_dist:prep": "yarn _dist:build && yarn _dist:pack",
-    "_dist:post": "rm -f dist/package.json && rm -f dist/README.md && rm -f dist/*.tgz",
-    "dist": "npm run _dist:prep && npm publish dist/*.tgz && npm run _dist:post"
+    "_dist:prep": "yarn build && cp package.json dist && cp README.md dist",
+    "_dist:post": "rm -f dist/package.json && rm -f dist/README.md",
+    "dist": "npm run _dist:prep && npm publish dist && npm run _dist:post"
   },
   "dependencies": {
     "@graphql-codegen/add": "^1.9.1",
     "@graphql-codegen/cli": "^1.9.1",
     "@graphql-codegen/core": "^1.9.1",
-    "@graphql-codegen/near-operation-file-preset": "micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta3-gitpkg",
+    "@graphql-codegen/near-operation-file-preset": "github:micimize/graphql-code-generator#graphql-codegen-near-operation-file-preset-v1.9.3-beta4-gitpkg",
     "@graphql-codegen/plugin-helpers": "^1.9.1",
     "graphql-codegen-core": "^0.18.0",
     "graphql-codegen-plugin-handlebars-helpers": "0.18.0",
