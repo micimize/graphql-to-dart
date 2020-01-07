@@ -118,7 +118,6 @@ https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112
 * I probably won't touch this for a while once again.
 * Really what we want is for @klavs's `gql_code_gen` to become more mature,
   but I keep sinking energy into this because I can go fast here
-* This depends on a PR I made to [near-operation-files](https://github.com/dotansimha/graphql-code-generator/pull/3109), which I published with [gitpkg](https://github.com/ramasilveyra/gitpkg)
 * `#import "./fragment.graphql` bolton support has been merged into `gql_code_gen`
 * (possibly outdated): You can have multiple inline fragments on the same document,
   but they will be named with leading underscores, like `Query_TypeInlineFragment`, which is ugly

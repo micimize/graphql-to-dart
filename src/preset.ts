@@ -121,9 +121,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
           ${ importAlias } ${ importNames };`;*/
       },
 
-      schemaTypesSource: schemaTypesPath,
-
-      importNestedFragments: true
+      schemaTypesSource: schemaTypesPath
     });
 
     return sources.map<Types.GenerateOptions>(
