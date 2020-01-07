@@ -2,7 +2,7 @@
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
 ### Beta
-`npm install graphql-to-dart@1.1.4-beta` includes a number of updates, such as:
+`npm install graphql-to-dart@1.1.5-beta` includes a number of updates, such as:
 * per-operation file generation (probably non-optional)
 *  [`gql_code_gen`](https://github.com/gql-dart/gql/tree/master/gql_code_gen) support via `integrateGqlCodeGenAst`
 * `transformCharacters` support for handling `_underscore_prefixed` fields
