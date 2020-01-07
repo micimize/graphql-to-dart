@@ -7,12 +7,15 @@ import 'package:starwars/graphql/schema.dart';
 part '_human_fragment.gql.g.dart';
 
 ///
+/// See [HomeSelectionSet] for the full stand-alone class
 mixin Home on Human {
   static final String typeName = "Human";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   set home(String home) => fields.homePlanet = home;
+  @JsonKey(name: r'planet', required: false, disallowNullValue: false)
+  String planet;
 
   /// Copies fields from [other] into a new `Home`
   static HomeSelectionSet from(Human other) => HomeSelectionSet.from(other);
@@ -30,9 +33,12 @@ class HomeSelectionSet extends Human with Home {
 
   HomeSelectionSet({
     String home,
+    String planet,
   }) : super(
           homePlanet: home,
-        );
+        ) {
+    this.planet = planet;
+  }
 
   HomeSelectionSet.empty();
 
@@ -58,13 +64,14 @@ class HomeSelectionSet extends Human with Home {
 }
 
 ///
+/// See [DimensionsSelectionSet] for the full stand-alone class
 mixin Dimensions on Human {
   static final String typeName = "Human";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
   set height(double height) => fields.height = height;
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
   set mass(double mass) => fields.mass = mass;
 
@@ -118,10 +125,10 @@ class DimensionsSelectionSet extends Human with Dimensions {
 class RelationshipsStarships extends Starship with HelloMixin {
   static final String typeName = "Starship";
 
-  @JsonKey(required: true, disallowNullValue: true)
+  @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
   set name(String name) => fields.name = name;
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'length', required: false, disallowNullValue: false)
   double get length => fields.length;
   set length(double length) => fields.length = length;
   RelationshipsStarships({
@@ -162,7 +169,7 @@ class RelationshipsStarships extends Starship with HelloMixin {
 class RelationshipsFriends extends Character with HelloMixin {
   static final String typeName = "Character";
 
-  @JsonKey(required: true, disallowNullValue: true)
+  @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
   set name(String name) => fields.name = name;
   RelationshipsFriends({
@@ -198,13 +205,14 @@ class RelationshipsFriends extends Character with HelloMixin {
 }
 
 ///
+/// See [RelationshipsSelectionSet] for the full stand-alone class
 mixin Relationships on Human {
   static final String typeName = "Human";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'friends', required: false, disallowNullValue: false)
   List<RelationshipsFriends> get friends => fields.friends;
   set friends(List<RelationshipsFriends> friends) => fields.friends = friends;
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'starships', required: false, disallowNullValue: false)
   List<RelationshipsStarships> get starships => fields.starships;
   set starships(List<RelationshipsStarships> starships) =>
       fields.starships = starships;
@@ -257,18 +265,21 @@ class RelationshipsSelectionSet extends Human with Relationships {
 }
 
 ///
+/// See [InfoSelectionSet] for the full stand-alone class
 mixin Info on Human implements Dimensions, Home {
   static final String typeName = "Human";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
   set height(double height) => fields.height = height;
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
   set mass(double mass) => fields.mass = mass;
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   set home(String home) => fields.homePlanet = home;
+  @JsonKey(name: r'planet', required: false, disallowNullValue: false)
+  String planet;
 
   /// Copies fields from [other] into a new `Info`
   static InfoSelectionSet from(Human other) => InfoSelectionSet.from(other);
@@ -288,11 +299,14 @@ class InfoSelectionSet extends Human with Info {
     double height,
     double mass,
     String home,
+    String planet,
   }) : super(
           height: height,
           mass: mass,
           homePlanet: home,
-        );
+        ) {
+    this.planet = planet;
+  }
 
   InfoSelectionSet.empty();
 

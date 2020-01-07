@@ -57,18 +57,23 @@ class {{ name }} {{ classExtends interfaces=interfaces }} {
   @protected
   covariant _{{ name }}Fields fields;
 
-  {{name}}({
-  {{#each fields}}{{#if name}}
-    {{ resolveType type
-      "inline"
-      (takeFirst contextName ../contextName)
-      (takeFirst contextModels ../contextModels)
-      isArray
-      raw
-      ../name
-    }} {{ dartName name }},
-  {{/if}}{{/each}}
-  }): fields = _{{ name }}Fields(
+  {{name}}(
+    {{#emptySafeEach fields
+      required='name'
+      prefix='{'
+      delimiter=','
+      suffix=', }'
+    }}
+      {{ resolveType type
+        "inline"
+        (takeFirst contextName ../contextName)
+        (takeFirst contextModels ../contextModels)
+        isArray
+        raw
+        ../name
+      }} {{ dartName name }}
+    {{/emptySafeEach}}
+  ): fields = _{{ name }}Fields(
     {{#each fields}}
     {{ dartName name }}: {{ dartName name }},
     {{/each}}

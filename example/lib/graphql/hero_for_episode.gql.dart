@@ -28,7 +28,7 @@ class HeroForEpisodeVariables {
 class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
   static final String typeName = "Human";
 
-  @JsonKey(required: true, disallowNullValue: true)
+  @JsonKey(name: r'appearsIn', required: true, disallowNullValue: true)
   List<Episode> get appearsIn => fields.appearsIn;
   set appearsIn(List<Episode> appearsIn) => fields.appearsIn = appearsIn;
   HeroForEpisodeHumanInlineFragment({
@@ -36,6 +36,7 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
     double height,
     double mass,
     String home,
+    String planet,
     List<RelationshipsFriends> friends,
     List<RelationshipsStarships> starships,
   }) : super(
@@ -45,7 +46,9 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
           homePlanet: home,
           friends: friends,
           starships: starships,
-        );
+        ) {
+    this.planet = planet;
+  }
 
   HeroForEpisodeHumanInlineFragment.empty();
 
@@ -80,7 +83,7 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
 class HeroForEpisodeDroidInlineFragment extends Droid {
   static final String typeName = "Droid";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'primaryFunction', required: false, disallowNullValue: false)
   String get primaryFunction => fields.primaryFunction;
   set primaryFunction(String primaryFunction) =>
       fields.primaryFunction = primaryFunction;
@@ -120,7 +123,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
 class HeroForEpisodeHero extends Character with HelloMixin {
   static final String typeName = "Character";
 
-  @JsonKey(required: true, disallowNullValue: true)
+  @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
   set name(String name) => fields.name = name;
   HeroForEpisodeHero({
@@ -159,7 +162,7 @@ class HeroForEpisodeHero extends Character with HelloMixin {
 class HeroForEpisodeQuery extends Query {
   static final String typeName = "query";
 
-  @JsonKey(required: false, disallowNullValue: false)
+  @JsonKey(name: r'hero', required: false, disallowNullValue: false)
   HeroForEpisodeHero get hero => fields.hero;
   set hero(HeroForEpisodeHero hero) => fields.hero = hero;
   HeroForEpisodeQuery({

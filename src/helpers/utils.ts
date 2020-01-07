@@ -1,4 +1,5 @@
 import { SafeString } from "handlebars";
+import { resetLogs } from "graphql-codegen-core";
 
 type String = SafeString | string;
 
@@ -32,7 +33,7 @@ export function stripLeadingUnderscores(lower) {
   return lower.replace("_", "", "g");
 }
 
-export function transformCharacters(str, characterMap = { "^_": "" }) {
+export function transformCharacters(str, characterMap = { "^_+": "" }) {
   return Object.keys(characterMap)
     .reduce(
       (transformed, regex) =>
@@ -119,4 +120,75 @@ export function inputBaseType(name) {
 
 export function wrapFields(interfaces = []) {
   return interfaces.map(i => `_${i}Fields`);
+}
+
+function _eachInner<I = any>(
+  context: I[],
+  fn: (item: I) => string,
+  conditional: (item: I) => boolean,
+  { prefix = "", suffix = "", delimiter = "", alwaysWrap = false }
+) {
+  let blockResult = "";
+  context.forEach(item => {
+    if (conditional(item)) {
+      let itemResult = fn(item);
+      if (itemResult.trim()) {
+        if (blockResult) {
+          blockResult += delimiter;
+        }
+        blockResult += itemResult;
+      }
+    }
+  });
+  if (blockResult || alwaysWrap) {
+    blockResult = `${prefix}${blockResult}${suffix}`;
+  }
+
+  return blockResult;
+}
+
+export function emptySafeEach(
+  context: any[],
+  { fn, hash: { required = null, ...hash } }
+) {
+  return _eachInner(
+    context,
+    fn,
+    item => required == null || item[required],
+    hash
+  );
+}
+
+export function eachUniqueBy(
+  context: any[],
+  {
+    fn,
+    inverse,
+    hash: { uniqueField = null, alwaysWrap = true, noDupeSuffix = "", ...hash }
+  }
+) {
+  let seen = new Set<string>();
+  let dupes = [];
+  let blockResult = _eachInner(
+    context,
+    fn,
+    item => {
+      if (seen.has(item[uniqueField])) {
+        dupes.push(item);
+        return false;
+      } else {
+        seen.add(item[uniqueField]);
+        return true;
+      }
+    },
+    { ...hash, suffix: "", alwaysWrap }
+  );
+  // it isn't possible to have the else without the if because it's dupe-based
+  if (inverse && dupes.length) {
+    blockResult += inverse(dupes);
+  } else {
+    blockResult += alwaysWrap || blockResult ? noDupeSuffix : "";
+  }
+
+  return blockResult;
 }

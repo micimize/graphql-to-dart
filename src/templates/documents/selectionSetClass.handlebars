@@ -14,23 +14,29 @@ class {{ className }} {{
 
   {{> selectionSet }}
 
-  {{className}}({
-      {{#each allFields}}{{#if name}}
-          {{#if isRequired }}@required {{/if~}}
-          {{ resolveType type
-              isRequired
-              (takeFirst contextName ../contextName)
-              (takeFirst contextModels ../contextModels)
-              isArray
-              raw
-              ../name
-          }} {{dartName name}},
-      {{/if}}{{/each}}
-  }): super(
-      {{#each allFields}}
+  {{className}}( 
+    {{#emptySafeEach allFields
+      required='name'
+      prefix='{'
+      suffix='}'
+    }}
+      {{#if isRequired }}@required {{/if~}}
+      {{ resolveType type
+          isRequired
+          (takeFirst contextName ../contextName)
+          (takeFirst contextModels ../contextModels)
+          isArray
+          raw
+          ../name
+      }} {{dartName name}},
+    {{/emptySafeEach}}
+  ): {{#eachUniqueBy allFields uniqueField='schemaFieldName' prefix='super(' noDupeSuffix=');'}}
       {{dartName schemaFieldName}}: {{dartName name}},
+    {{else}}) {
+      {{#each this}}
+        this.{{dartName name}} = {{dartName name}};
       {{/each}}
-  );
+    }{{/eachUniqueBy}}{{!-- coupled to the same eachUniqueBy in selectionSet --}}
 
   {{className}}.empty();
 

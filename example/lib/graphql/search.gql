@@ -1,0 +1,12 @@
+query Search($text: String) {
+  search(text: $text) {
+    ... on Starship {
+      id
+    }
+  }
+  __searchCopyForTesting: search(text: $text) {
+    ... on Starship {
+      id
+    }
+  }
+}

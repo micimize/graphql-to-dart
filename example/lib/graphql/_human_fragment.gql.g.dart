@@ -9,12 +9,14 @@ part of '_human_fragment.gql.dart';
 HomeSelectionSet _$HomeSelectionSetFromJson(Map<String, dynamic> json) {
   return HomeSelectionSet(
     home: json['home'] as String,
+    planet: json['planet'] as String,
   );
 }
 
 Map<String, dynamic> _$HomeSelectionSetToJson(HomeSelectionSet instance) =>
     <String, dynamic>{
       'home': instance.home,
+      'planet': instance.planet,
     };
 
 DimensionsSelectionSet _$DimensionsSelectionSetFromJson(
@@ -107,6 +109,7 @@ InfoSelectionSet _$InfoSelectionSetFromJson(Map<String, dynamic> json) {
     height: (json['height'] as num)?.toDouble(),
     mass: (json['mass'] as num)?.toDouble(),
     home: json['home'] as String,
+    planet: json['planet'] as String,
   );
 }
 
@@ -115,4 +118,5 @@ Map<String, dynamic> _$InfoSelectionSetToJson(InfoSelectionSet instance) =>
       'height': instance.height,
       'mass': instance.mass,
       'home': instance.home,
+      'planet': instance.planet,
     };

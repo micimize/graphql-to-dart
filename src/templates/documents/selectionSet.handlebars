@@ -2,18 +2,19 @@
 {{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
-  @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
+  @JsonKey(name: r'{{rawName}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ type }} get {{ name }} => fields.{{ schemaFieldName }};
   set {{ name }} ({{ takeLastWord type }} {{ name }}) => fields.{{ schemaFieldName }} = {{ name }};
 {{~/if}}{{/if}}
 {{~/inline}}
 
 {{#if fields}}
-{{~#each fields}}
+{{#eachUniqueBy fields uniqueField='schemaFieldName'}}
 {{> exposeField
     this
     description=description
-    name=(dartName name)
+    rawName=name
+    name=(camelCase (dartName name))
     schemaFieldName=(dartName schemaFieldName)
     type=(
         resolveType type
@@ -25,5 +26,17 @@
             ../name
     )
 }}
+{{else}}
+{{#each this}}
+  @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
+  {{ resolveType type
+      'inline'
+      ../../contextName
+      ../../contextModels
+      isArray
+      raw
+      ../name
+  }} {{ camelCase (dartName name) }};
 {{/each}}
+{{/eachUniqueBy}}
 {{/if}}

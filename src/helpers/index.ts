@@ -31,7 +31,9 @@ import {
   inputBaseType,
   takeLastWord,
   dartDirective,
-  callMethod
+  callMethod,
+  emptySafeEach,
+  eachUniqueBy
 } from "./utils";
 import addInputHelpers from "./add-input-helpers";
 
@@ -79,6 +81,8 @@ const helpers = wrapHelpers({
   takeLastWord,
   expectedGeneratedFileFor,
   dartDirective,
+  emptySafeEach,
+  eachUniqueBy,
   callMethod
 });
 

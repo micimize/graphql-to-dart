@@ -79,6 +79,7 @@ HeroForEpisodeHumanInlineFragment _$HeroForEpisodeHumanInlineFragmentFromJson(
     height: (json['height'] as num)?.toDouble(),
     mass: (json['mass'] as num)?.toDouble(),
     home: json['home'] as String,
+    planet: json['planet'] as String,
     friends: (json['friends'] as List)
         ?.map((e) => e == null
             ? null
@@ -100,6 +101,7 @@ Map<String, dynamic> _$HeroForEpisodeHumanInlineFragmentToJson(
     'height': instance.height,
     'mass': instance.mass,
     'home': instance.home,
+    'planet': instance.planet,
   };
 
   void writeNotNull(String key, dynamic value) {
