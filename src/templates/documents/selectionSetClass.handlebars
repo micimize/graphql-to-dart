@@ -53,9 +53,9 @@ class {{ className }} {{
     Set<String> missingFields = Set();
     {{#each allFields}}
     {{~#if isRequired}}
-    if ({{ dartName name }} == null){
+    if ({{ camelCase (dartName name) }} == null){
       missingFields.add("
-      {{~ dartName name ~}}
+      {{~ camelCase (dartName name) ~}}
       {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}
       {{~/if~}}
       ");
