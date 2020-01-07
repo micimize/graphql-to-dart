@@ -26,11 +26,11 @@ enum LengthUnit {
 class SearchResult {
   static const possibleTypes = const {Human, Droid, Starship};
 
-  Human human;
-  Droid droid;
-  Starship starship;
+  covariant Human onHuman;
+  covariant Droid onDroid;
+  covariant Starship onStarship;
 
-  Object get value => (human ?? droid ?? starship);
+  Object get value => (onHuman ?? onDroid ?? onStarship);
 
   /// Adds all fields from [other] to this `SearchResult`,
   /// validating that they are the same type
@@ -43,28 +43,28 @@ class SearchResult {
     assert(other?.value != null,
         "Cannot add all from null union value into $this from $other");
     final _v = value;
-    if (other.human != null) {
+    if (other.onHuman != null) {
       assert(
-        _v == null || human != null,
-        "Cannot add all from $other.value of type human into $this.value of type ${_v.runtimeType}",
+        _v == null || onHuman != null,
+        "Cannot add all from $other.value of type onHuman into $this.value of type ${_v.runtimeType}",
       );
-      human.addAll(other.human, overwrite: overwrite);
+      onHuman.addAll(other.onHuman, overwrite: overwrite);
       return null;
     }
-    if (other.droid != null) {
+    if (other.onDroid != null) {
       assert(
-        _v == null || droid != null,
-        "Cannot add all from $other.value of type droid into $this.value of type ${_v.runtimeType}",
+        _v == null || onDroid != null,
+        "Cannot add all from $other.value of type onDroid into $this.value of type ${_v.runtimeType}",
       );
-      droid.addAll(other.droid, overwrite: overwrite);
+      onDroid.addAll(other.onDroid, overwrite: overwrite);
       return null;
     }
-    if (other.starship != null) {
+    if (other.onStarship != null) {
       assert(
-        _v == null || starship != null,
-        "Cannot add all from $other.value of type starship into $this.value of type ${_v.runtimeType}",
+        _v == null || onStarship != null,
+        "Cannot add all from $other.value of type onStarship into $this.value of type ${_v.runtimeType}",
       );
-      starship.addAll(other.starship, overwrite: overwrite);
+      onStarship.addAll(other.onStarship, overwrite: overwrite);
       return null;
     }
   }

@@ -9,7 +9,9 @@ import configureClassExtends, {
   configureResolveMixins,
   MixinConfig
 } from "./class-extends";
-import configureResolveType from "./resolve-type";
+import configureResolveType, {
+  inlineFragmentName as configureInlineFragmentName
+} from "./resolve-type";
 import hackFragmentFields from "./hack-fragment-fields";
 import ignoreType from "./ignore-type";
 import fragmentClassNames from "./fragment-class-names";
@@ -35,10 +37,8 @@ import {
   emptySafeEach,
   eachUniqueBy
 } from "./utils";
-import addInputHelpers from "./add-input-helpers";
 
 function wrapHelpers<T>(helpers: T) {
-  return helpers;
   return Object.keys(helpers).reduce(
     (wrapped, h) => ((wrapped[h] = _logErrors(helpers[h])), wrapped),
     {}
@@ -74,7 +74,6 @@ const helpers = wrapHelpers({
   ignoreType,
   fragmentClassNames,
   arrayify,
-
   transformCharacters,
   wrapFields,
   inputBaseType,
@@ -86,9 +85,12 @@ const helpers = wrapHelpers({
   callMethod
 });
 
-export interface Config extends AddInputHelpersConfig, MixinConfig {}
+export interface Config extends AddInputHelpersConfig, MixinConfig {
+  inlineFragmentNameTemplate: string;
+}
 
 export default function configureHelpers(schema: GraphQLSchema, config) {
+  const ifn = configureInlineFragmentName(config);
   return {
     ...helpers,
     dartName(name: string): string {
@@ -97,6 +99,7 @@ export default function configureHelpers(schema: GraphQLSchema, config) {
     resolveType: configureResolveType(config),
     classExtends: configureClassExtends(config),
     resolveMixins: configureResolveMixins(config),
-    addInputHelpers: configurAddInputHelpers(schema, config)
+    addInputHelpers: configurAddInputHelpers(schema, config),
+    inlineFragmentName: (type: string) => camelCase(ifn(toPascalCase(type)))
   };
 }

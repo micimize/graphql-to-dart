@@ -15,6 +15,7 @@ generates:
     plugins:
       - ../dist/documents.js
 config:
+  inlineFragmentFieldNames: { "prefix": "on", "suffix": "" }
   schema:
     parts: []
     imports:

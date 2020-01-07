@@ -50,6 +50,22 @@ export type DartConfig = HelperConfig & {
   irreducibleTypes?: Array<string>;
 
   /**
+   * Field to base union / inline fragment resolution on. Field will be `@protected`
+   * @default '__typename'
+   *
+   * Can be set to `false` to disable automatic addition of meta fields
+   */
+  typenameField?: false | string;
+
+  /**
+   * { prefix, suffix } to wrap inline fragment type names with
+   *
+   * @example '{ prefix: "on", suffix: "" } => SomeTypeInlineFragment onSomeType'
+   * @default '{ prefix: "", suffix: "InlineFragment" }'
+   */
+  inlineFragmentFieldNames?: { prefix?: string; suffix?: string };
+
+  /**
    * Mapping of regexs to replacement characters.
    * @example `{ "^_": "underscored" }` results in "__typename" -> "underscoredTypename"
    * @example `{ "^_": "u_" }` results in "__typename" -> "u_typename" for snakecase support
@@ -103,6 +119,9 @@ export default function buildPlugin(
     config: DartConfig,
     { outputFile }
   ): Promise<string> => {
+    if (config.typenameField == undefined) {
+      config.typenameField = "__typename";
+    }
     config[route] = mergeDirectives(dartDirectives, config[route]);
     if (route === "documents" && config.integrateGqlCodeGenAst) {
       config[route].exports.push(

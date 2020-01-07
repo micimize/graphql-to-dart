@@ -12,13 +12,13 @@ class {{ className }} {
   };
 
   {{#each possibleTypes}}
-  {{ this }} {{ camelCase this}};
+  covariant {{ this }} {{inlineFragmentName this}};
   {{/each}}
 
 
   Object get value => (
     {{#each possibleTypes~}}
-    {{ camelCase this}}{{#unless @last}} ??
+    {{inlineFragmentName this}}{{#unless @last}} ??
     {{/unless}}
     {{~/each}}
    );
@@ -31,16 +31,15 @@ class {{ className }} {
     assert(other?.value != null, "Cannot add all from null union value into $this from $other");
     final _v = value;
     {{#each possibleTypes~}}
-    if (other.{{ camelCase this}} != null){
+    if (other.{{ inlineFragmentName this}} != null){
       assert(
-        _v == null || {{ camelCase this}} != null,
-        "Cannot add all from $other.value of type {{camelCase this}} into $this.value of type ${_v.runtimeType}",
+        _v == null || {{ inlineFragmentName this}} != null,
+        "Cannot add all from $other.value of type {{inlineFragmentName this}} into $this.value of type ${_v.runtimeType}",
       );
-      {{ camelCase this}}.addAll(other.{{ camelCase this}}, overwrite: overwrite);
+      {{ inlineFragmentName this}}.addAll(other.{{ inlineFragmentName this}}, overwrite: overwrite);
       return null;
     }
     {{/each}}
   }
 
 }
-

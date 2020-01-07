@@ -19,6 +19,7 @@
       className=(concat (toPascalCase ../name) modelType)
       contextName=(toPascalCase ../name)
       contextModels=../innerModels
+      inlineFragments=inlineFragments
 }}
 
 {{/unless~}}
@@ -36,4 +37,5 @@
       className=(concat (toPascalCase name) (toPascalCase operationType))
       contextModels=innerModels
       contextName=(toPascalCase name)
+      inlineFragments=inlineFragments
 }}

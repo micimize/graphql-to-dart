@@ -29,7 +29,10 @@ mixin Home on Human {
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
 class HomeSelectionSet extends Human with Home {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
+
+  @protected
+  String typename;
 
   HomeSelectionSet({
     String home,
@@ -56,11 +59,37 @@ class HomeSelectionSet extends Human with Home {
     return missingFields;
   }
 
-  factory HomeSelectionSet.fromJson(Map<String, dynamic> json) =>
-      _$HomeSelectionSetFromJson(json);
+  /// Adds all fields from [other] to this `HomeSelectionSet`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant HomeSelectionSet other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
 
-  Map<String, dynamic> toJson() =>
-      _$HomeSelectionSetToJson(this)..['__typename'] = typeName;
+    if (overwrite != null && overwrite) {
+      planet = other.planet ?? planet;
+    } else {
+      planet ??= other.planet;
+    }
+  }
+
+  factory HomeSelectionSet.fromJson(Map<String, dynamic> json) {
+    HomeSelectionSet instance = _$HomeSelectionSetFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$HomeSelectionSetToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 ///
@@ -88,7 +117,10 @@ mixin Dimensions on Human {
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
 class DimensionsSelectionSet extends Human with Dimensions {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
+
+  @protected
+  String typename;
 
   DimensionsSelectionSet({
     double height,
@@ -114,16 +146,39 @@ class DimensionsSelectionSet extends Human with Dimensions {
     return missingFields;
   }
 
-  factory DimensionsSelectionSet.fromJson(Map<String, dynamic> json) =>
-      _$DimensionsSelectionSetFromJson(json);
+  /// Adds all fields from [other] to this `DimensionsSelectionSet`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant DimensionsSelectionSet other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$DimensionsSelectionSetToJson(this)..['__typename'] = typeName;
+  factory DimensionsSelectionSet.fromJson(Map<String, dynamic> json) {
+    DimensionsSelectionSet instance = _$DimensionsSelectionSetFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$DimensionsSelectionSetToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class RelationshipsStarships extends Starship with HelloMixin {
-  static final String typeName = "Starship";
+  static final String schemaTypeName = "Starship";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
@@ -158,16 +213,39 @@ class RelationshipsStarships extends Starship with HelloMixin {
     return missingFields;
   }
 
-  factory RelationshipsStarships.fromJson(Map<String, dynamic> json) =>
-      _$RelationshipsStarshipsFromJson(json);
+  /// Adds all fields from [other] to this `RelationshipsStarships`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant RelationshipsStarships other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$RelationshipsStarshipsToJson(this)..['__typename'] = typeName;
+  factory RelationshipsStarships.fromJson(Map<String, dynamic> json) {
+    RelationshipsStarships instance = _$RelationshipsStarshipsFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$RelationshipsStarshipsToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class RelationshipsFriends extends Character with HelloMixin {
-  static final String typeName = "Character";
+  static final String schemaTypeName = "Character";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
@@ -197,11 +275,31 @@ class RelationshipsFriends extends Character with HelloMixin {
     return missingFields;
   }
 
-  factory RelationshipsFriends.fromJson(Map<String, dynamic> json) =>
-      _$RelationshipsFriendsFromJson(json);
+  /// Adds all fields from [other] to this `RelationshipsFriends`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant RelationshipsFriends other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$RelationshipsFriendsToJson(this)..['__typename'] = typeName;
+  factory RelationshipsFriends.fromJson(Map<String, dynamic> json) {
+    RelationshipsFriends instance = _$RelationshipsFriendsFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$RelationshipsFriendsToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 ///
@@ -230,7 +328,10 @@ mixin Relationships on Human {
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
 class RelationshipsSelectionSet extends Human with Relationships {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
+
+  @protected
+  String typename;
 
   RelationshipsSelectionSet({
     List<RelationshipsFriends> friends,
@@ -257,11 +358,32 @@ class RelationshipsSelectionSet extends Human with Relationships {
     return missingFields;
   }
 
-  factory RelationshipsSelectionSet.fromJson(Map<String, dynamic> json) =>
-      _$RelationshipsSelectionSetFromJson(json);
+  /// Adds all fields from [other] to this `RelationshipsSelectionSet`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant RelationshipsSelectionSet other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$RelationshipsSelectionSetToJson(this)..['__typename'] = typeName;
+  factory RelationshipsSelectionSet.fromJson(Map<String, dynamic> json) {
+    RelationshipsSelectionSet instance =
+        _$RelationshipsSelectionSetFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$RelationshipsSelectionSetToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 ///
@@ -293,7 +415,10 @@ mixin Info on Human implements Dimensions, Home {
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
 class InfoSelectionSet extends Human with Info {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
+
+  @protected
+  String typename;
 
   InfoSelectionSet({
     double height,
@@ -324,9 +449,35 @@ class InfoSelectionSet extends Human with Info {
     return missingFields;
   }
 
-  factory InfoSelectionSet.fromJson(Map<String, dynamic> json) =>
-      _$InfoSelectionSetFromJson(json);
+  /// Adds all fields from [other] to this `InfoSelectionSet`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant InfoSelectionSet other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
 
-  Map<String, dynamic> toJson() =>
-      _$InfoSelectionSetToJson(this)..['__typename'] = typeName;
+    if (overwrite != null && overwrite) {
+      planet = other.planet ?? planet;
+    } else {
+      planet ??= other.planet;
+    }
+  }
+
+  factory InfoSelectionSet.fromJson(Map<String, dynamic> json) {
+    InfoSelectionSet instance = _$InfoSelectionSetFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$InfoSelectionSetToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }

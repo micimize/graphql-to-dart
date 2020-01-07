@@ -34,6 +34,7 @@ mixin {{ className }} {{
       className=(concat className 'SelectionSet')
       typeName=typeName
       fragmentsSpread=(arrayify className)
+      inlineFragments=inlineFragments
       fields=''
       allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
 }}
@@ -63,6 +64,7 @@ mixin {{ className }} {{
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
       fragmentsSpread=fragmentsSpread
+      inlineFragments=inlineFragments
       fields=fields
       allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       contextModels=../innerModels
@@ -78,6 +80,7 @@ mixin {{ className }} {{
       typeName=onType
       fields=(hackFragmentFields 'get' fragments=fragmentsSpread fields=fields)
       fragmentsSpread=fragmentsSpread
+      inlineFragments=inlineFragments
       contextModels=innerModels
       contextName=(toPascalCase name)
 }}

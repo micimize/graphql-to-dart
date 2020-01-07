@@ -26,7 +26,10 @@ class HeroForEpisodeVariables {
 
 @JsonSerializable()
 class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'appearsIn', required: true, disallowNullValue: true)
   List<Episode> get appearsIn => fields.appearsIn;
@@ -70,18 +73,47 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
     return missingFields;
   }
 
-  factory HeroForEpisodeHumanInlineFragment.fromJson(
-          Map<String, dynamic> json) =>
-      _$HeroForEpisodeHumanInlineFragmentFromJson(json);
+  /// Adds all fields from [other] to this `HeroForEpisodeHumanInlineFragment`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant HeroForEpisodeHumanInlineFragment other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
 
-  Map<String, dynamic> toJson() =>
-      _$HeroForEpisodeHumanInlineFragmentToJson(this)
-        ..['__typename'] = typeName;
+    if (overwrite != null && overwrite) {
+      planet = other.planet ?? planet;
+    } else {
+      planet ??= other.planet;
+    }
+  }
+
+  factory HeroForEpisodeHumanInlineFragment.fromJson(
+      Map<String, dynamic> json) {
+    HeroForEpisodeHumanInlineFragment instance =
+        _$HeroForEpisodeHumanInlineFragmentFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$HeroForEpisodeHumanInlineFragmentToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HeroForEpisodeDroidInlineFragment extends Droid {
-  static final String typeName = "Droid";
+  static final String schemaTypeName = "Droid";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'primaryFunction', required: false, disallowNullValue: false)
   String get primaryFunction => fields.primaryFunction;
@@ -110,18 +142,41 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
     return missingFields;
   }
 
-  factory HeroForEpisodeDroidInlineFragment.fromJson(
-          Map<String, dynamic> json) =>
-      _$HeroForEpisodeDroidInlineFragmentFromJson(json);
+  /// Adds all fields from [other] to this `HeroForEpisodeDroidInlineFragment`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant HeroForEpisodeDroidInlineFragment other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$HeroForEpisodeDroidInlineFragmentToJson(this)
-        ..['__typename'] = typeName;
+  factory HeroForEpisodeDroidInlineFragment.fromJson(
+      Map<String, dynamic> json) {
+    HeroForEpisodeDroidInlineFragment instance =
+        _$HeroForEpisodeDroidInlineFragmentFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$HeroForEpisodeDroidInlineFragmentToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HeroForEpisodeHero extends Character with HelloMixin {
-  static final String typeName = "Character";
+  static final String schemaTypeName = "Character";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
@@ -151,16 +206,65 @@ class HeroForEpisodeHero extends Character with HelloMixin {
     return missingFields;
   }
 
-  factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) =>
-      _$HeroForEpisodeHeroFromJson(json);
+  /// Adds all fields from [other] to this `HeroForEpisodeHero`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant HeroForEpisodeHero other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
 
-  Map<String, dynamic> toJson() =>
-      _$HeroForEpisodeHeroToJson(this)..['__typename'] = typeName;
+    if (other.onDroid != null) {
+      onDroid ??= HeroForEpisodeDroidInlineFragment.empty();
+      onDroid.addAll(other.onDroid, overwrite: overwrite);
+    }
+    if (other.onHuman != null) {
+      onHuman ??= HeroForEpisodeHumanInlineFragment.empty();
+      onHuman.addAll(other.onHuman, overwrite: overwrite);
+    }
+  }
+
+  @JsonKey(ignore: true)
+  HeroForEpisodeDroidInlineFragment onDroid;
+  @JsonKey(ignore: true)
+  HeroForEpisodeHumanInlineFragment onHuman;
+
+  factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) {
+    HeroForEpisodeHero instance = _$HeroForEpisodeHeroFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    if (HeroForEpisodeDroidInlineFragment.schemaTypeName == __typename) {
+      instance.onDroid = HeroForEpisodeDroidInlineFragment.fromJson(json);
+    }
+    if (HeroForEpisodeHumanInlineFragment.schemaTypeName == __typename) {
+      instance.onHuman = HeroForEpisodeHumanInlineFragment.fromJson(json);
+    }
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$HeroForEpisodeHeroToJson(this);
+    json['__typename'] = typename;
+    if (onDroid != null) {
+      json.addAll(onDroid.toJson());
+    }
+    if (onHuman != null) {
+      json.addAll(onHuman.toJson());
+    }
+
+    return json;
+  }
 }
 
 @JsonSerializable()
 class HeroForEpisodeQuery extends Query {
-  static final String typeName = "query";
+  static final String schemaTypeName = "query";
+
+  @protected
+  String typename;
 
   @JsonKey(name: r'hero', required: false, disallowNullValue: false)
   HeroForEpisodeHero get hero => fields.hero;
@@ -187,9 +291,29 @@ class HeroForEpisodeQuery extends Query {
     return missingFields;
   }
 
-  factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) =>
-      _$HeroForEpisodeQueryFromJson(json);
+  /// Adds all fields from [other] to this `HeroForEpisodeQuery`.
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(
+    covariant HeroForEpisodeQuery other, {
+    bool overwrite = true,
+  }) {
+    super.addAll(other, overwrite: overwrite);
+  }
 
-  Map<String, dynamic> toJson() =>
-      _$HeroForEpisodeQueryToJson(this)..['__typename'] = typeName;
+  factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) {
+    HeroForEpisodeQuery instance = _$HeroForEpisodeQueryFromJson(json);
+    final __typename = json['__typename'];
+    instance.typename = __typename;
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$HeroForEpisodeQueryToJson(this);
+    json['__typename'] = typename;
+
+    return json;
+  }
 }

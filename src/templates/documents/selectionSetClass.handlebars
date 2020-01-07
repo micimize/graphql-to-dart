@@ -9,7 +9,12 @@ class {{ className }} {{
 
 }} {
   {{#if typeName }}
-  static final String typeName = "{{ typeName }}";
+  static final String schemaTypeName = "{{ typeName }}";
+  {{/if}}
+
+  {{#if @root.config.typenameField }}
+  @protected
+  String {{ dartName @root.config.typenameField }};
   {{/if}}
 
   {{> selectionSet }}
@@ -36,7 +41,8 @@ class {{ className }} {{
       {{#each this}}
         this.{{dartName name}} = {{dartName name}};
       {{/each}}
-    }{{/eachUniqueBy}}{{!-- coupled to the same eachUniqueBy in selectionSet --}}
+    }
+  {{/eachUniqueBy}}{{!-- coupled to the same eachUniqueBy in selectionSet --}}
 
   {{className}}.empty();
 
@@ -65,10 +71,96 @@ class {{ className }} {{
     return missingFields;
   }
 
-  factory {{className}}.fromJson(Map<String, dynamic> json) => 
-    _${{className}}FromJson(json);
+  {{!--
+  {{#if hasInlineFragments~}}
+  /// Adds all fields from [other] to this `{{ className }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+    super.addAll(other, overwrite: overwrite);
+    {{#each inlineFragments}}
+    if(other.{{ inlineFragmentName name}} != null){
+      {{inlineFragmentName name}}..addAll(other.{{ inlineFragmentName name}});
+    }
+    {{/each}}
+  }
+  {{~/if}}
+  --}}
+  /// Adds all fields from [other] to this `{{ className }}`.
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  @override
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+    super.addAll(other, overwrite: overwrite);
+    {{#eachUniqueBy allFields uniqueField='schemaFieldName'}}{{else}}
+    if (overwrite != null && overwrite){
+      {{#each this}}{{#if name}}
+      {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
+      {{~/if}}{{/each}}
+    } else {
+      {{#each this}}{{#if name}}
+      {{ dartName name }} ??= other.{{ dartName name }};
+      {{~/if}}{{/each}}
+    }
+    {{/eachUniqueBy}}
 
-  Map<String, dynamic> toJson() => _${{className}}ToJson(this){{#if typeName }}
-    ..['__typename'] = typeName{{/if}};
+    {{#each inlineFragments}}
+    if(other.{{ inlineFragmentName name}} != null){
+      {{#if isArray}}
+      {{inlineFragmentName name}} = (overwrite ?? true)
+        ? [...other.{{ inlineFragmentName name}}]
+        : ({{inlineFragmentName name}} ?? [...other.{{ inlineFragmentName name}}]);
+      {{else}}
+      {{inlineFragmentName name}} ??= {{ concat ../contextName name }}.empty();
+      {{inlineFragmentName name}}.addAll(other.{{ inlineFragmentName name}}, overwrite: overwrite);
+      {{/if}}
+    }
+    {{/each}}
+
+  }
+
+
+  {{#if hasInlineFragments~}}
+  {{#each inlineFragments}}
+  @JsonKey(ignore: true)
+  {{ concat ../contextName name }} {{ inlineFragmentName name}};
+  {{/each}}
+  {{~/if}}
+
+  factory {{className}}.fromJson(Map<String, dynamic> json) {
+    {{className}} instance = _${{className}}FromJson(json);
+    {{#if @root.config.typenameField~}}
+      final __typename = json['{{ @root.config.typenameField }}'];
+      instance.{{ dartName @root.config.typenameField }} = __typename;
+
+      {{#if hasInlineFragments~}}
+      {{#each inlineFragments}}
+      if({{ concat ../contextName name }}.schemaTypeName == __typename){
+        instance.{{ inlineFragmentName name}} = {{ concat ../contextName name }}.fromJson(json);
+      }
+      {{/each}}
+      {{~/if}}
+    {{~/if}}
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _${{className}}ToJson(this);
+    {{#if @root.config.typenameField~}}
+    json['{{@root.config.typenameField }}'] = {{ dartName @root.config.typenameField }};
+    {{~/if}}
+
+    {{#if hasInlineFragments~}}
+    {{#each inlineFragments}}
+    if ({{ inlineFragmentName name}} != null){
+        json.addAll({{ inlineFragmentName name}}.toJson());
+    }
+    {{/each}}
+    {{~/if}}
+
+    return json;
+  }
+
 
 }

@@ -23,6 +23,12 @@ const primitives = {
   DateTime: "DateTime"
 };
 
+const INLINE_FRAGMENT_FIELD_TEMPLATE = { prefix: "", suffix: "InlineFragment" };
+
+export const inlineFragmentName = ({
+  inlineFragmentFieldNames: { prefix = "", suffix = "InlineFragment" } = {}
+}) => (type: string) => prefix + type.replace(/InlineFragment$/, "") + suffix;
+
 const JSON_CONVERTER_TEMPLATE = "@${type}Converter()";
 
 function jsonConverter(type: string) {
