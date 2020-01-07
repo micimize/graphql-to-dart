@@ -31,6 +31,43 @@ class SearchResult {
   Starship starship;
 
   Object get value => (human ?? droid ?? starship);
+
+  /// Adds all fields from [other] to this `SearchResult`,
+  /// validating that they are the same type
+  ///
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(
+    covariant SearchResult other, {
+    bool overwrite = true,
+  }) {
+    assert(other?.value != null,
+        "Cannot add all from null union value into $this from $other");
+    final _v = value;
+    if (other.human != null) {
+      assert(
+        _v == null || human != null,
+        "Cannot add all from $other.value of type human into $this.value of type ${_v.runtimeType}",
+      );
+      human.addAll(other.human, overwrite: overwrite);
+      return null;
+    }
+    if (other.droid != null) {
+      assert(
+        _v == null || droid != null,
+        "Cannot add all from $other.value of type droid into $this.value of type ${_v.runtimeType}",
+      );
+      droid.addAll(other.droid, overwrite: overwrite);
+      return null;
+    }
+    if (other.starship != null) {
+      assert(
+        _v == null || starship != null,
+        "Cannot add all from $other.value of type starship into $this.value of type ${_v.runtimeType}",
+      );
+      starship.addAll(other.starship, overwrite: overwrite);
+      return null;
+    }
+  }
 }
 
 /* Input Types */

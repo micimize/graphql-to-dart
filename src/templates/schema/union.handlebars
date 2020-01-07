@@ -22,6 +22,25 @@ class {{ className }} {
     {{/unless}}
     {{~/each}}
    );
+  
+  /// Adds all fields from [other] to this `{{ className }}`,
+  /// validating that they are the same type
+  /// 
+  /// pre-existing values are not overwritten unless `overwrite: true`
+  void addAll(covariant {{ className }} other, { bool overwrite = true, }) {
+    assert(other?.value != null, "Cannot add all from null union value into $this from $other");
+    final _v = value;
+    {{#each possibleTypes~}}
+    if (other.{{ camelCase this}} != null){
+      assert(
+        _v == null || {{ camelCase this}} != null,
+        "Cannot add all from $other.value of type {{camelCase this}} into $this.value of type ${_v.runtimeType}",
+      );
+      {{ camelCase this}}.addAll(other.{{ camelCase this}}, overwrite: overwrite);
+      return null;
+    }
+    {{/each}}
+  }
 
 }
 
