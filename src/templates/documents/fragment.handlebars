@@ -17,10 +17,6 @@ mixin {{ className }} {{
 
   {{> selectionSet }}
 
-  /// Copies fields from [other] into a new `{{ className }}`
-  static {{concat className 'SelectionSet'}} from({{ toPascalCase typeName }} other) =>
-    {{concat className 'SelectionSet'}}.from(other);
-
   static {{concat className 'SelectionSet'}} fromJson(Map<String, dynamic> json) =>
     {{concat className 'SelectionSet'}}.fromJson(json);
 

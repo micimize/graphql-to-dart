@@ -12,15 +12,28 @@ class {{ className }} {{
   static final String schemaTypeName = "{{ typeName }}";
   {{/if}}
 
-  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   /// The `__typename` meta-field 
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
   /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
-  String {{ camelCase (dartName @root.config.typenameField) }};
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  final String {{ camelCase (dartName @root.config.typenameField) }};
 
-  {{> selectionSet }}
+  {{> selectionSet this excludeDupes='true' }}
+
+  {{~#eachDuplicateBy allFields uniqueField='schemaFieldName'}}
+  @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
+  final {{ resolveType type
+      'inline'
+      ../contextName
+      ../contextModels
+      isArray
+      raw
+      name
+  }} {{ dartName name }};
+  {{/eachDuplicateBy}}
+  
 
   {{#if hasInlineFragments~}}
   {{#each inlineFragments}}
@@ -32,9 +45,9 @@ class {{ className }} {{
   @override
   List<Object> get props => [
     ...super.props,
-    {{~#eachUniqueBy allFields uniqueField='schemaFieldName' prefix='super(' noDupeSuffix=');'}}{{else}}
-    {{dartName name}},
-    {{/eachUniqueBy~}},
+    {{~#eachDuplicateBy allFields uniqueField='schemaFieldName'}}
+    {{ dartName name }},
+    {{/eachDuplicateBy~}}
     {{#if hasInlineFragments~}}
     {{#each inlineFragments}}
     {{ inlineFragmentName name}},
@@ -42,13 +55,12 @@ class {{ className }} {{
     {{~/if}}
   ];
 
-  const {{className}}({
+  {{className}}({
     this.{{ camelCase (dartName @root.config.typenameField) }},
     {{#each inlineFragments~}}
     this.{{ inlineFragmentName name}},
     {{~/each}}
-    {{#emptySafeEach allFields required='name' }}
-      {{~#if name != '__typename'}}
+    {{~#eachUniqueBy allFields uniqueField='schemaFieldName' required='name' excluding='__typename' }}
       {{#if isRequired }}@required {{/if~}}
       {{ resolveType type
           isRequired
@@ -58,11 +70,12 @@ class {{ className }} {{
           raw
           ../name
       }} {{dartName name}},
-      {{/if~}}
-    {{/emptySafeEach}} {{!-- VV coupled to the same eachUniqueBy in selectionSet --}}
-  }): {{#eachUniqueBy allFields uniqueField='schemaFieldName' prefix='super(' noDupeSuffix=');'}}{{else}}
-        this.{{dartName name}} = {{dartName name}},{{/eachUniqueBy}}
-    super(
+      {{~else~}}
+      {{~#each this}}
+      this.{{dartName name}},
+      {{~/each}}
+    {{/eachUniqueBy}} {{!-- VV coupled to the same eachUniqueBy in selectionSet --}}
+  }): super(
       {{~#eachUniqueBy allFields uniqueField='schemaFieldName'}}
       {{dartName schemaFieldName}}: {{dartName name}},
       {{/eachUniqueBy~}}
@@ -73,9 +86,9 @@ class {{ className }} {{
     Set<String> missingFields = Set();
     {{#each allFields}}
     {{~#if isRequired}}
-    if ({{ camelCase (dartName name) }} == null){
+    if ({{ dartName name }} == null){
       missingFields.add("
-      {{~ camelCase (dartName name) ~}}
+      {{~ dartName name ~}}
       {{~#if isAliased}} aliased from {{ dartName schemaFieldName }}
       {{~/if~}}
       ");
@@ -86,13 +99,12 @@ class {{ className }} {{
   }
 
   /// Creates a new `{{ className }}` with the given non-null values overridden
-  {{ className }} copyWith(
+  {{ className }} copyWith({
     String {{ camelCase (dartName @root.config.typenameField) }},
     {{#each inlineFragments~}}
     {{ concat ../contextName name }} {{ inlineFragmentName name}},
     {{~/each}}
-    {{#emptySafeEach allFields required='name' }}
-      {{~#if name != '__typename'}}
+    {{#emptySafeEach allFields required='name' excluding='__typename' }}
       {{ resolveType type
           isRequired
           (takeFirst contextName ../contextName)
@@ -101,9 +113,8 @@ class {{ className }} {{
           raw
           ../name
       }} {{dartName name}},
-      {{/if~}}
     {{/emptySafeEach}}
-  } => {{ className }}(
+  }) => {{ className }}(
     {{ camelCase (dartName @root.config.typenameField) }}: {{ camelCase (dartName @root.config.typenameField) }} ?? this.{{ camelCase (dartName @root.config.typenameField) }},
     {{#each inlineFragments~}}
     {{ inlineFragmentName name}}: {{ inlineFragmentName name}} != null ?
@@ -114,26 +125,21 @@ class {{ className }} {{
       {{~/if}}
       : this.{{ inlineFragmentName name}},
     {{~/each}}
-    {{#emptySafeEach allFields required='name' }}
-      {{~#if name != '__typename'}}
-      {{ camelCase (dartName name) }}: {{ camelCase (dartName name) }} ?? this.{{ camelCase (dartName name) }},
-      {{/if~}}
+    {{#emptySafeEach allFields required='name' excluding='__typename' }}
+      {{ dartName name }}: {{ dartName name }} ?? this.{{ dartName name }},
     {{/emptySafeEach}}
   );
 
   /// Creates a new `{{ className }}` with non-null values from [other] as attribute overrides
-  @override
   {{ className }} mergeLeftWith(covariant {{ className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       {{ camelCase (dartName @root.config.typenameField) }}: other.{{ camelCase (dartName @root.config.typenameField) }},
       {{#each inlineFragments~}}
-      {{ concat ../contextName name }}:  {{ inlineFragmentName name}},
+      {{ inlineFragmentName name}}:  {{ inlineFragmentName name}},
       {{~/each}}
-      {{#emptySafeEach allFields required='name' }}
-      {{~#if name != '__typename'}}
-      {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }},
-      {{/if~}}
+      {{#emptySafeEach allFields required='name' excluding='__typename' }}
+      {{ dartName name }}: other.{{ dartName name }},
       {{/emptySafeEach}}
     );
   }

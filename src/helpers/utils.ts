@@ -1,5 +1,5 @@
 import { SafeString } from "handlebars";
-import { resetLogs } from "graphql-codegen-core";
+import { resetLogs, printLogs } from "graphql-codegen-core";
 
 type String = SafeString | string;
 
@@ -149,12 +149,12 @@ function _eachInner<I = any>(
 
 export function emptySafeEach(
   context: any[],
-  { fn, hash: { required = null, ...hash } }
+  { fn, hash: { required = null, excluding = null, ...hash } }
 ) {
   return _eachInner(
     context,
     fn,
-    item => required == null || item[required],
+    item => required == null || (item[required] && item[required] != excluding),
     hash
   );
 }
@@ -164,7 +164,14 @@ export function eachUniqueBy(
   {
     fn,
     inverse,
-    hash: { uniqueField = null, alwaysWrap = true, noDupeSuffix = "", ...hash }
+    hash: {
+      uniqueField = null,
+      excluding = null,
+      required = null,
+      alwaysWrap = true,
+      noDupeSuffix = "",
+      ...hash
+    }
   }
 ) {
   let seen = new Set<string>();
@@ -173,6 +180,13 @@ export function eachUniqueBy(
     context,
     fn,
     item => {
+      if (
+        !item[uniqueField] == null ||
+        item[uniqueField] == excluding ||
+        (required != null && (!item[required] || item[required] == excluding))
+      ) {
+        return false;
+      }
       if (seen.has(item[uniqueField])) {
         dupes.push(item);
         return false;
@@ -189,6 +203,29 @@ export function eachUniqueBy(
   } else {
     blockResult += alwaysWrap || blockResult ? noDupeSuffix : "";
   }
+
+  return blockResult;
+}
+
+export function eachDuplicateBy(
+  context: any[],
+  { fn, hash: { uniqueField = null, alwaysWrap = true, ...hash } }
+) {
+  let seen = new Set<string>();
+  let dupes = [];
+  let blockResult = _eachInner(
+    context,
+    fn,
+    item => {
+      if (seen.has(item[uniqueField])) {
+        return true;
+      } else {
+        seen.add(item[uniqueField]);
+        return false;
+      }
+    },
+    { ...hash, suffix: "", alwaysWrap }
+  );
 
   return blockResult;
 }

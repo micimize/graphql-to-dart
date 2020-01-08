@@ -13,7 +13,7 @@
     this
     description=description
     rawName=name
-    name=(camelCase (dartName name))
+    name=(dartName name)
     schemaFieldName=(dartName schemaFieldName)
     type=(
         resolveType type
@@ -26,16 +26,18 @@
     )
 }}
 {{else}}
+{{#unless ../excludeDupes}}
 {{#each this}}
   @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  final {{ resolveType type
+  {{ resolveType type
       'inline'
       ../../contextName
       ../../contextModels
       isArray
       raw
       ../name
-  }} {{ camelCase (dartName name) }};
+  }} {{ dartName name }};
 {{/each}}
+{{/unless}}
 {{/eachUniqueBy}}
 {{/if}}

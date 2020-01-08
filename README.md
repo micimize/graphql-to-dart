@@ -10,6 +10,7 @@
 * Models graphql-style "inheritance" by defining a protected `_$[Type}Fields` type along with every object type,
   which is then exposed by fragment mixins and selection sets.
 * Fragments are modeled generated as mixins, as well as standalone `FragmentNameSelectionSet` classes
+* all classes are immutable and use the `equatable` package
 
 ## usage
 ```bash
@@ -81,7 +82,7 @@ config:
 
 ```
 Then generate with `yarn gql-gen` (or `gql-gen` if you have it globally installed),
-And theeeen generate the actual json serializers (`json_serializable` is a peer dependency, but on the flutter side, also `gql_code_gen` if you're using the ast integration).
+And theeeen generate the actual json serializers (`equatable` and `json_serializable` are peer dependencies, but on the flutter side, also `gql_code_gen` if you're using the ast integration).
 So:
 ```bash
 yarn gql-gen
@@ -100,6 +101,7 @@ dev_dependencies:
 
 dependencies:
   json_annotation: ^0.2.3
+  equatable: 1.0.2
   # ...
 # ...
 ```
@@ -108,7 +110,7 @@ dependencies:
 
 
 Take a look at the example output to see how it generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
-* all types have [`isValid`, `validate`, `addAll(ThisType other)`, and `copy` helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
+* all types have [`isValid`, `validate`, `mergeLeftWith(ThisType other)`, and `copyWith` helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
 * selection set and fragments have [`from(BaseObjectType other)` and `empty` constructors](
 https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/hero_for_episode.gql.dart#L66-L75)
 

@@ -35,7 +35,8 @@ import {
   dartDirective,
   callMethod,
   emptySafeEach,
-  eachUniqueBy
+  eachUniqueBy,
+  eachDuplicateBy
 } from "./utils";
 
 function wrapHelpers<T>(helpers: T) {
@@ -82,6 +83,7 @@ const helpers = wrapHelpers({
   dartDirective,
   emptySafeEach,
   eachUniqueBy,
+  eachDuplicateBy,
   callMethod
 });
 

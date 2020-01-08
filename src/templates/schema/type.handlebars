@@ -11,21 +11,21 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       isArray
-      rag
+      raw
       ../name
-  }} {{ camelCase (dartName name) }};
+  }} {{ dartName name }};
   {{~/if}}{{/if}}{{/each}}
 
   const {{ className }}({
     {{#each fields}}{{#if name}}
-      this.{{ camelCase (dartName name) }},
+      this.{{ dartName name }},
     {{/if}}{{/each}}
   });
 
   @override
   List<Object> get props => [
     {{~#each fields}}{{#if name}}
-    {{ camelCase (dartName name) }},
+    {{ dartName name }},
     {{/if}}{{/each~}}
   ];
 
@@ -34,7 +34,7 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
     assert(other != null, "$this Cannot be merged with null");
     return {{ className }}(
       {{~#each fields}}{{#if name}}
-      {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }} ?? {{ camelCase (dartName name) }},
+      {{ dartName name }}: other.{{ dartName name }} ?? {{ dartName name }},
       {{/if}}{{/each~}}
     );
   }
@@ -64,11 +64,11 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
   @protected
-  final covariant _{{ name }}Fields fields;
+  final _{{ name }}Fields fields;
 
-  {{name}}._fromFields(this.fields);
+  const {{name}}._fromFields(this.fields);
 
-  const {{name}}(
+  {{name}}(
     {{#emptySafeEach fields
       required='name'
       prefix='{'
@@ -95,11 +95,11 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
 
   /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) =>
-    {{ name }}._fromFields(fields.mergedLeftWith(other));
+    {{ name }}._fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) =>
-    {{ name }}._fromFields(fields.mergedRightWith(other));
+    {{ name }}._fromFields(fields.mergedRightWith(other.fields));
 
   @protected
   Set<String> get missingRequiredFields {

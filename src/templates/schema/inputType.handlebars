@@ -121,12 +121,12 @@ class {{ name }} {{
   @override
   List<Object> get props => [
     {{~#each fields}}{{#if name}}
-    {{ camelCase (dartName name) }},
+    {{ dartName name }},
     {{/if}}{{/each~}}
   ];
 
   /// Creates a new `{{ className }}` with the given non-null values overridden
-  const {{name}} copyWith({
+  {{name}} copyWith({
     {{#each fields}}{{#if name~}}
       {{ resolveType type
             'inline'
@@ -135,20 +135,20 @@ class {{ name }} {{
             isArray
             raw
             ../name
-      }} {{ camelCase (dartName name) }}
+      }} {{ dartName name }},
     {{/if}}{{/each~}}
-  }): {{name}}({
+  }) => {{name}}(
     {{#each fields}}{{#if name~}}
-    {{ camelCase (dartName name) }}: {{ camelCase (dartName name) }} ?? this.{{ camelCase (dartName name) }},
+    {{ dartName name }}: {{ dartName name }} ?? this.{{ dartName name }},
     {{/if}}{{/each~}}
-  });
+  );
 
   /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return {{ name }}(
       {{~#each fields}}{{#if name}}
-      {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }} ?? {{ camelCase (dartName name) }},
+      {{ dartName name }}: other.{{ dartName name }} ?? {{ dartName name }},
       {{/if}}{{/each~}}
     );
   }

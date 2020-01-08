@@ -1,5 +1,5 @@
-{{#if description }}{{ multilineComment description }}{{/if}}
 @immutable
+{{#if description }}{{ multilineComment description }}{{/if}}
 class {{ className }} extends Equatable {
   {{#if typeName }}
   static final String typeName = "{{ typeName }}";
@@ -12,21 +12,21 @@ class {{ className }} extends Equatable {
     {{~/each}}
   };
 
+  {{#each possibleTypes~}}
+  final {{ this }} {{inlineFragmentName this}};
+  {{/each}}
+
+
   const {{ className }}({
     {{#each possibleTypes~}}
-    {{ this }} {{inlineFragmentName this}},
+    this.{{inlineFragmentName this}},
     {{/each}}
-  }): value = {{#each possibleTypes~}}
-    {{inlineFragmentName this}}{{#unless @last}} ??
-  {{/unless}}
-  {{~/each}};
+  });
 
-  /// The wrapped value;
-  final Object value;
-
-  {{#each possibleTypes~}}
-  covariant {{ this }} get {{inlineFragmentName this}} => value is {{ this }} && value : null;
-  {{~/each}}
+  /// The wrapped value. Will be one of the `possibleTypes`
+  Object get value => {{#each possibleTypes~}}
+    {{inlineFragmentName this}} {{#unless @last}}??{{/unless}}
+    {{~/each}};
 
   @override
   List<Object> get props => [value];
@@ -37,9 +37,10 @@ class {{ className }} extends Equatable {
   {{ className }} mergedLeftWith(covariant {{ name }} other) {
     assert(other?.value != null, "$this Cannot be merged with null value from $other");
     {{#each possibleTypes~}}
-    if (value is {{this}} and other.value is {{this}}){
-      return {{className}}({{inlineFragmentName this}}: value.mergeLeftWith(other.value));
+    if ({{inlineFragmentName this}} != null && other.{{inlineFragmentName this}} != null){
+      return {{../className}}({{inlineFragmentName this}}: {{inlineFragmentName this}}.mergedLeftWith(other.{{inlineFragmentName this}}));
     }
+    {{/each}}
     // merging cannot be done
     return other;
   }
