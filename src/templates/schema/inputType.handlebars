@@ -71,8 +71,9 @@
     https://github.com/graphql/graphql-spec/issues/114#issuecomment-550056235
 --}}
 @JsonSerializable()
+@immutable
 class {{ name }} {{
-    classExtends mixins=(resolveMixins fields)
+    classExtends baseType='Equatable' mixins=(resolveMixins fields)
 }} {
   static final String typeName = "{{ takeFirst typeName name }}";
 
@@ -97,50 +98,66 @@ class {{ name }} {{
     {{/if}}{{/each~}}
   });
 
-  {{name}}.empty();
-
-    @protected
-    Set<String> get missingRequiredFields {
-        Set<String> missingFields = Set();
-        {{#each fields}}
-        {{~#if isRequired}}
-        if ({{ dartName name }}  == null){
-            missingFields.add("{{ dartName name }}");
-        }
-        {{/if}}
-        {{/each}}
-        return missingFields;
+  @protected
+  Set<String> get missingRequiredFields {
+    Set<String> missingFields = Set();
+    {{#each fields}}
+    {{~#if isRequired}}
+    if ({{ dartName name }}  == null){
+        missingFields.add("{{ dartName name }}");
     }
+    {{/if}}
+    {{/each}}
+    return missingFields;
+  }
 
-    void validate(){
-        final missing = missingRequiredFields;
-        assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
-    }
+  void validate(){
+    final missing = missingRequiredFields;
+    assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+  }
 
-    bool get isValid => missingRequiredFields.isEmpty;
+  bool get isValid => missingRequiredFields.isEmpty;
 
-    @override
-    List<Object> get props => [
+  @override
+  List<Object> get props => [
+    {{~#each fields}}{{#if name}}
+    {{ camelCase (dartName name) }},
+    {{/if}}{{/each~}}
+  ];
+
+  /// Creates a new `{{ className }}` with the given non-null values overridden
+  const {{name}} copyWith({
+    {{#each fields}}{{#if name~}}
+      {{ resolveType type
+            'inline'
+            (takeFirst contextName ../contextName)
+            (takeFirst contextModels ../contextModels)
+            isArray
+            raw
+            ../name
+      }} {{ camelCase (dartName name) }}
+    {{/if}}{{/each~}}
+  }): {{name}}({
+    {{#each fields}}{{#if name~}}
+    {{ camelCase (dartName name) }}: {{ camelCase (dartName name) }} ?? this.{{ camelCase (dartName name) }},
+    {{/if}}{{/each~}}
+  });
+
+  /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
+  {{ name }} mergedLeftWith(covariant {{ name }} other) {
+    assert(other != null, "$this Cannot be merged with null");
+    return {{ name }}(
       {{~#each fields}}{{#if name}}
-      {{ camelCase (dartName name) }},
+      {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }} ?? {{ camelCase (dartName name) }},
       {{/if}}{{/each~}}
-    ];
+    );
+  }
 
-    /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
-    {{ name }} mergedLeftWith(covariant {{ name }} other) {
-      assert(other != null, "$this Cannot be merged with null");
-      return {{ name }}(
-        {{~#each fields}}{{#if name}}
-        {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }} ?? {{ camelCase (dartName name) }},
-        {{/if}}{{/each~}}
-      );
-    }
-
-    /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
-    {{ name }} mergedRightWith(covariant {{ name }} other) {
-      assert(other != null, "$this Cannot be merged with null");
-      return other.mergedLeftWith(this);
-    }
+  /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
+  {{ name }} mergedRightWith(covariant {{ name }} other) {
+    assert(other != null, "$this Cannot be merged with null");
+    return other.mergedLeftWith(this);
+  }
 
   {{#each (addInputHelpers name) ~}}
   {{> inputTypeHelpers .. objectType=this }}
