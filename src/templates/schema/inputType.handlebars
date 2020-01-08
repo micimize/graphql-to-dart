@@ -80,7 +80,7 @@ class {{ name }} {{
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  {{ resolveType type
+  final {{ resolveType type
       'withSerializers'
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
@@ -119,25 +119,28 @@ class {{ name }} {{
 
     bool get isValid => missingRequiredFields.isEmpty;
 
-    /// Adds all fields from [other] to this `{{ name }}`.
-    /// 
-    /// If a field from [other] is already in this `{{ name }}`,
-    /// its value is not overwritten, unless  `overwrite: true` is specified
-    void addAll(covariant {{ name }} other, { bool overwrite = true, }) {
-        assert(other != null, "Cannot add all from null into $this");
-        if (overwrite != null && overwrite){
-            {{#each fields}}{{#if name}}
-            {{ dartName name }} = other.{{ dartName name }} ?? {{ dartName name }};
-            {{~/if}}{{/each}}
-        } else {
-            {{#each fields}}{{#if name}}
-            {{ dartName name }} ??= other.{{ dartName name }};
-            {{~/if}}{{/each}}
-        }
+    @override
+    List<Object> get props => [
+      {{~#each fields}}{{#if name}}
+      {{ camelCase (dartName name) }},
+      {{/if}}{{/each~}}
+    ];
+
+    /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
+    {{ name }} mergedLeftWith(covariant {{ name }} other) {
+      assert(other != null, "$this Cannot be merged with null");
+      return {{ name }}(
+        {{~#each fields}}{{#if name}}
+        {{ camelCase (dartName name) }}: other.{{ camelCase (dartName name) }} ?? {{ camelCase (dartName name) }},
+        {{/if}}{{/each~}}
+      );
     }
 
-  /// Creates a copy of this `{{ name }}`
-  {{ name }} copy() => {{name}}.empty()..addAll(this);
+    /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
+    {{ name }} mergedRightWith(covariant {{ name }} other) {
+      assert(other != null, "$this Cannot be merged with null");
+      return other.mergedLeftWith(this);
+    }
 
   {{#each (addInputHelpers name) ~}}
   {{> inputTypeHelpers .. objectType=this }}

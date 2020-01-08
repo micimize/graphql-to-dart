@@ -52,10 +52,8 @@ export type DartConfig = HelperConfig & {
   /**
    * Field to base union / inline fragment resolution on. Field will be `@protected`
    * @default '__typename'
-   *
-   * Can be set to `false` to disable automatic addition of meta fields
    */
-  typenameField?: false | string;
+  typenameField?: string;
 
   /**
    * { prefix, suffix } to wrap inline fragment type names with
@@ -119,7 +117,7 @@ export default function buildPlugin(
     config: DartConfig,
     { outputFile }
   ): Promise<string> => {
-    if (config.typenameField == undefined) {
+    if (!config.typenameField) {
       config.typenameField = "__typename";
     }
     config[route] = mergeDirectives(dartDirectives, config[route]);
