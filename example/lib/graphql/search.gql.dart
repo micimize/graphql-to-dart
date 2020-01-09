@@ -28,7 +28,7 @@ class Search_StarshipInlineFragment extends Starship {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -101,7 +101,7 @@ class SearchSearchCopyForTesting extends SearchResult {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -181,7 +181,7 @@ class SearchStarshipInlineFragment extends Starship {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -254,7 +254,7 @@ class SearchSearch extends SearchResult {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -332,7 +332,7 @@ class SearchQuery extends Query {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 

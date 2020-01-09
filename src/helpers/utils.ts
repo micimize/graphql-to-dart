@@ -1,5 +1,6 @@
 import { SafeString } from "handlebars";
 import { resetLogs, printLogs } from "graphql-codegen-core";
+import * as deepmerge from "deepmerge";
 
 type String = SafeString | string;
 
@@ -25,7 +26,7 @@ export function dedupe<T = string>(arr: T[], hash = JSON.stringify) {
   });
 }
 
-export function arrayify<T>(arr: T | T[]) {
+export function arrayify<T>(arr: T | T[]): T[] {
   return Array.isArray(arr) ? arr : [arr];
 }
 
@@ -58,6 +59,10 @@ export function concat(...args) {
     return [].concat(...args.slice(0, -1));
   }
   return args.slice(0, -1).join("");
+}
+
+function restWithoutContext<T = any>(...args: T[]) {
+  return args.slice(0, -1);
 }
 
 export function eachBackwards(context, options) {
@@ -157,6 +162,24 @@ export function emptySafeEach(
     item => required == null || (item[required] && item[required] != excluding),
     hash
   );
+}
+
+export function _deepMergeOnKeys<T = any>(context: T[], keys: string[]) {
+  let identify = (item: T) => JSON.stringify(keys.map(k => item[k]));
+  let uniqueMap = new Map<string, T>();
+  context.forEach(item => {
+    uniqueMap.set(
+      identify(item),
+      deepmerge(uniqueMap.get(identify(item)) || ({} as T), item)
+    );
+  });
+
+  return Array.from(uniqueMap.values());
+}
+
+export function deepMergeOnKeys<T = any>(context: T[], ...args: string[]) {
+  let keys = restWithoutContext(...args);
+  return _deepMergeOnKeys(context, keys);
 }
 
 export function eachUniqueBy(

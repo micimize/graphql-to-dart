@@ -10,6 +10,7 @@ import { flattenTypes } from "graphql-codegen-plugin-helpers";
 import configureHelpers, { Config as HelperConfig } from "./helpers";
 import { dedupe } from "./helpers/utils";
 import { basename, extname } from "path";
+import canonicalize from "./canonicalize";
 
 type Scalars = Record<"String" | "Int" | "Float" | "Boolean" | "ID", string>;
 
@@ -130,7 +131,13 @@ export default function buildPlugin(
 
     const templateContext = schemaToTemplateContext(schema);
 
-    const transformedDocuments = transformDocumentsFiles(schema, documents);
+    const transformedDocuments = transformDocumentsFiles(
+      schema,
+      documents.map(d => ({
+        ...d,
+        content: canonicalize(d.content)
+      }))
+    );
 
     const flattenDocuments = flattenTypes(transformedDocuments);
 

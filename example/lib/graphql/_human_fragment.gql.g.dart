@@ -6,16 +6,16 @@ part of '_human_fragment.gql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-HomeSelectionSet _$HomeSelectionSetFromJson(Map<String, dynamic> json) {
+Home _$HomeFromJson(Map<String, dynamic> json) {
   $checkKeys(json, disallowNullValues: const ['__typename']);
-  return HomeSelectionSet(
+  return Home(
     typename: json['__typename'] as String,
     home: json['home'] as String,
     planet: json['planet'] as String,
   );
 }
 
-Map<String, dynamic> _$HomeSelectionSetToJson(HomeSelectionSet instance) {
+Map<String, dynamic> _$HomeToJson(Home instance) {
   final val = <String, dynamic>{
     'home': instance.home,
   };
@@ -31,18 +31,16 @@ Map<String, dynamic> _$HomeSelectionSetToJson(HomeSelectionSet instance) {
   return val;
 }
 
-DimensionsSelectionSet _$DimensionsSelectionSetFromJson(
-    Map<String, dynamic> json) {
+Dimensions _$DimensionsFromJson(Map<String, dynamic> json) {
   $checkKeys(json, disallowNullValues: const ['__typename']);
-  return DimensionsSelectionSet(
+  return Dimensions(
     typename: json['__typename'] as String,
     height: (json['height'] as num)?.toDouble(),
     mass: (json['mass'] as num)?.toDouble(),
   );
 }
 
-Map<String, dynamic> _$DimensionsSelectionSetToJson(
-    DimensionsSelectionSet instance) {
+Map<String, dynamic> _$DimensionsToJson(Dimensions instance) {
   final val = <String, dynamic>{
     'height': instance.height,
     'mass': instance.mass,
@@ -62,7 +60,7 @@ RelationshipsStarships _$RelationshipsStarshipsFromJson(
     Map<String, dynamic> json) {
   $checkKeys(json,
       requiredKeys: const ['name'],
-      disallowNullValues: const ['__typename', 'name']);
+      disallowNullValues: const ['name', '__typename']);
   return RelationshipsStarships(
     typename: json['__typename'] as String,
     name: json['name'] as String,
@@ -80,16 +78,16 @@ Map<String, dynamic> _$RelationshipsStarshipsToJson(
     }
   }
 
-  writeNotNull('__typename', instance.typename);
   writeNotNull('name', instance.name);
   val['length'] = instance.length;
+  writeNotNull('__typename', instance.typename);
   return val;
 }
 
 RelationshipsFriends _$RelationshipsFriendsFromJson(Map<String, dynamic> json) {
   $checkKeys(json,
       requiredKeys: const ['name'],
-      disallowNullValues: const ['__typename', 'name']);
+      disallowNullValues: const ['name', '__typename']);
   return RelationshipsFriends(
     typename: json['__typename'] as String,
     name: json['name'] as String,
@@ -106,15 +104,14 @@ Map<String, dynamic> _$RelationshipsFriendsToJson(
     }
   }
 
-  writeNotNull('__typename', instance.typename);
   writeNotNull('name', instance.name);
+  writeNotNull('__typename', instance.typename);
   return val;
 }
 
-RelationshipsSelectionSet _$RelationshipsSelectionSetFromJson(
-    Map<String, dynamic> json) {
+Relationships _$RelationshipsFromJson(Map<String, dynamic> json) {
   $checkKeys(json, disallowNullValues: const ['__typename']);
-  return RelationshipsSelectionSet(
+  return Relationships(
     typename: json['__typename'] as String,
     friends: (json['friends'] as List)
         ?.map((e) => e == null
@@ -129,8 +126,7 @@ RelationshipsSelectionSet _$RelationshipsSelectionSetFromJson(
   );
 }
 
-Map<String, dynamic> _$RelationshipsSelectionSetToJson(
-    RelationshipsSelectionSet instance) {
+Map<String, dynamic> _$RelationshipsToJson(Relationships instance) {
   final val = <String, dynamic>{
     'friends': instance.friends?.map((e) => e?.toJson())?.toList(),
     'starships': instance.starships?.map((e) => e?.toJson())?.toList(),
@@ -146,9 +142,9 @@ Map<String, dynamic> _$RelationshipsSelectionSetToJson(
   return val;
 }
 
-InfoSelectionSet _$InfoSelectionSetFromJson(Map<String, dynamic> json) {
+Info _$InfoFromJson(Map<String, dynamic> json) {
   $checkKeys(json, disallowNullValues: const ['__typename']);
-  return InfoSelectionSet(
+  return Info(
     typename: json['__typename'] as String,
     height: (json['height'] as num)?.toDouble(),
     mass: (json['mass'] as num)?.toDouble(),
@@ -157,7 +153,7 @@ InfoSelectionSet _$InfoSelectionSetFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$InfoSelectionSetToJson(InfoSelectionSet instance) {
+Map<String, dynamic> _$InfoToJson(Info instance) {
   final val = <String, dynamic>{
     'height': instance.height,
     'mass': instance.mass,

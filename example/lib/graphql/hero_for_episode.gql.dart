@@ -24,14 +24,15 @@ class HeroForEpisodeVariables {
 }
 
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
+class HeroForEpisodeHumanInlineFragment extends Human
+    with InfoMixin, RelationshipsMixin {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -137,7 +138,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -208,7 +209,7 @@ class HeroForEpisodeHero extends Character with HelloMixin {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
@@ -314,7 +315,7 @@ class HeroForEpisodeQuery extends Query {
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 

@@ -6,7 +6,7 @@
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
 /// See [{{ className }}SelectionSet] for the full stand-alone class
-mixin {{ className }} {{
+mixin {{concat className 'Mixin'}} {{
   classExtends
     onMixin="true"
     baseType=typeName
@@ -17,8 +17,8 @@ mixin {{ className }} {{
 
   {{> selectionSet }}
 
-  static {{concat className 'SelectionSet'}} fromJson(Map<String, dynamic> json) =>
-    {{concat className 'SelectionSet'}}.fromJson(json);
+  static {{className}} fromJson(Map<String, dynamic> json) =>
+    {{className}}.fromJson(json);
 
 }
 
@@ -26,8 +26,8 @@ mixin {{ className }} {{
 /// Materialized class that implements the fragment [{{ className }}]
 ///
 /// Gives access to all the usual selection set helpers
-{{> selectionSetClass
-      className=(concat className 'SelectionSet')
+{{> selectionSetClass this
+      className=className
       typeName=typeName
       fragmentsSpread=(arrayify className)
       inlineFragments=inlineFragments
@@ -56,12 +56,13 @@ mixin {{ className }} {{
       @root.config.irreducibleTypes
 )}}
 
-{{> selectionSetClass
+{{!-- need to define a mixin for every nested fragment for deep merging --}}
+{{> fragmentMixin this
       className=(concat (toPascalCase ../name) modelType)
       typeName=schemaBaseType
+      fields=fields
       fragmentsSpread=fragmentsSpread
       inlineFragments=inlineFragments
-      fields=fields
       allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
       contextModels=../innerModels
       contextName=(toPascalCase ../name)
@@ -71,7 +72,7 @@ mixin {{ className }} {{
 
 {{/eachBackwards~}}
 
-{{> fragmentMixin
+{{> fragmentMixin this
       className=(toPascalCase name)
       typeName=onType
       fields=(hackFragmentFields 'get' fragments=fragmentsSpread fields=fields)

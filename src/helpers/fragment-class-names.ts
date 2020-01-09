@@ -5,7 +5,7 @@ function fragmentClass(f) {
     throw Error(`${f} is not a fragment definition`);
   }
   // allow for simple string hackery
-  return capitalize(f.fragmentName || f);
+  return capitalize(f.fragmentName || f) + "Mixin";
 }
 export default function fragmentClassNames(fragments = []) {
   return fragments.map(fragmentClass);

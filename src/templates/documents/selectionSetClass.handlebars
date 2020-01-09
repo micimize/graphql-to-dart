@@ -16,7 +16,7 @@ class {{ className }} {{
   ///
   /// GraphQL supports type name introspection at any point within a query by the meta-field `__typename: String!` ([spec])
   ///
-  /// [reference]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
+  /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String {{ camelCase (dartName @root.config.typenameField) }};
 
