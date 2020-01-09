@@ -81,6 +81,32 @@ class {{ className }} {{
       {{/eachUniqueBy~}}
     );
 
+
+  {{className}}.partial({
+    this.{{ camelCase (dartName @root.config.typenameField) }},
+    {{#each inlineFragments~}}
+    this.{{ inlineFragmentName name}},
+    {{/each}}
+    {{#eachUniqueBy allFields uniqueField='schemaFieldName' required='name' excluding='__typename' }}
+      {{ resolveType type
+          'inline'
+          (takeFirst contextName ../contextName)
+          (takeFirst contextModels ../contextModels)
+          isArray
+          raw
+          ../name
+      }} {{dartName name}},
+      {{~else~}}
+      {{~#each this}}
+      this.{{dartName name}},
+      {{/each}}
+    {{/eachUniqueBy}} {{!-- VV coupled to the same eachUniqueBy in selectionSet --}}
+  }): super(
+      {{~#eachUniqueBy allFields uniqueField='schemaFieldName'}}
+      {{dartName schemaFieldName}}: {{dartName name}},
+      {{/eachUniqueBy~}}
+    );
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
