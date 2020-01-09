@@ -13,7 +13,7 @@ mixin HomeMixin on Human {
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
-  String planet;
+  final String planet;
 
   static Home fromJson(Map<String, dynamic> json) => Home.fromJson(json);
 }
@@ -451,7 +451,7 @@ mixin InfoMixin on Human implements DimensionsMixin, HomeMixin {
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
-  String planet;
+  final String planet;
 
   static Info fromJson(Map<String, dynamic> json) => Info.fromJson(json);
 }

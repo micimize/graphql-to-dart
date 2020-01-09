@@ -11,7 +11,7 @@ part 'hero_for_episode.gql.g.dart';
 @JsonSerializable()
 class HeroForEpisodeVariables {
   @JsonKey(required: true, disallowNullValue: true)
-  Episode ep;
+  final Episode ep;
 
   HeroForEpisodeVariables({
     @required this.ep,

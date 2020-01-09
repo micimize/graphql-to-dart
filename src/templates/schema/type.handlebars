@@ -6,8 +6,8 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
-  final {{ resolveType type
-      "inline"
+  {{ resolveType type
+      "final"
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       isArray

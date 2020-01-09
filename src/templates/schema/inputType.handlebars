@@ -81,8 +81,8 @@ class {{ name }} {{
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  final {{ resolveType type
-      'withSerializers'
+  {{ resolveType type
+      'final'
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       isArray

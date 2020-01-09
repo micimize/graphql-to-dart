@@ -3,7 +3,7 @@
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   @JsonKey(name: r'{{rawName}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  {{ type }} get {{ name }} => fields.{{ schemaFieldName }};
+  {{ type }} {{ name }} => fields.{{ schemaFieldName }};
 {{~/if}}{{/if}}
 {{~/inline}}
 
@@ -17,7 +17,7 @@
     schemaFieldName=(dartName schemaFieldName)
     type=(
         resolveType type
-            isRequired
+            'get'
             (takeFirst contextName ../contextName)
             (takeFirst contextModels ../contextModels)
             isArray
@@ -30,7 +30,7 @@
 {{#each this}}
   @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
-      'inline'
+      'final'
       ../../contextName
       ../../contextModels
       isArray

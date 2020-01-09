@@ -9,7 +9,7 @@ class {{ className }} {
   {{/if}}
   @JsonKey(required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
-      isRequired
+      'final'
       (takeFirst contextName ../contextName)
       (takeFirst contextModels ../contextModels)
       isArray

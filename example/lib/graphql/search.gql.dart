@@ -8,7 +8,7 @@ part 'search.gql.g.dart';
 @JsonSerializable()
 class SearchVariables {
   @JsonKey(required: false, disallowNullValue: false)
-  String text;
+  final String text;
 
   SearchVariables({
     this.text,

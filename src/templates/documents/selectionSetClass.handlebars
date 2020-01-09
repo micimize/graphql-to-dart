@@ -24,8 +24,8 @@ class {{ className }} {{
 
   {{~#eachDuplicateBy allFields uniqueField='schemaFieldName'}}
   @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
-  final {{ resolveType type
-      'inline'
+  {{ resolveType type
+      'final'
       ../contextName
       ../contextModels
       isArray
@@ -59,11 +59,11 @@ class {{ className }} {{
     this.{{ camelCase (dartName @root.config.typenameField) }},
     {{#each inlineFragments~}}
     this.{{ inlineFragmentName name}},
-    {{~/each}}
-    {{~#eachUniqueBy allFields uniqueField='schemaFieldName' required='name' excluding='__typename' }}
-      {{#if isRequired }}@required {{/if~}}
+    {{/each}}
+    {{#eachUniqueBy allFields uniqueField='schemaFieldName' required='name' excluding='__typename' }}
+      {{#if isRequired }}@required {{/if}}
       {{ resolveType type
-          isRequired
+          'inline'
           (takeFirst contextName ../contextName)
           (takeFirst contextModels ../contextModels)
           isArray
@@ -73,7 +73,7 @@ class {{ className }} {{
       {{~else~}}
       {{~#each this}}
       this.{{dartName name}},
-      {{~/each}}
+      {{/each}}
     {{/eachUniqueBy}} {{!-- VV coupled to the same eachUniqueBy in selectionSet --}}
   }): super(
       {{~#eachUniqueBy allFields uniqueField='schemaFieldName'}}
@@ -106,7 +106,7 @@ class {{ className }} {{
     {{~/each}}
     {{#emptySafeEach allFields required='name' excluding='__typename' }}
       {{ resolveType type
-          isRequired
+          'inline'
           (takeFirst contextName ../contextName)
           (takeFirst contextModels ../contextModels)
           isArray

@@ -35,13 +35,6 @@ function jsonConverter(type: string) {
   return interpolateTemplate(JSON_CONVERTER_TEMPLATE, { type }) + "\n";
 }
 
-function jsonKey({ type, addSerializers = false }) {
-  if (!addSerializers) {
-    return "";
-  }
-  return jsonConverter(type);
-}
-
 function wrap(isArray, fieldType) {
   return isArray ? `List<${fieldType}>` : fieldType;
 }
@@ -70,6 +63,18 @@ export type ResolveTypeConfig = {
   irreducibleTypes?: Array<string>;
 };
 
+type Qualifier = "final" | "inline" | "get";
+function qualify(q: Qualifier, type: string, decorator = "") {
+  switch (q) {
+    case "final":
+      return `${decorator} final ${type}`;
+    case "get":
+      return `${decorator}${type} get`;
+    default:
+      return type;
+  }
+}
+
 export default function configureResolveType({
   scalars = {},
   replaceTypes = {},
@@ -77,13 +82,12 @@ export default function configureResolveType({
 }: ResolveTypeConfig) {
   function resolveType(
     type,
-    jsonKeyInfo,
+    qualifier: "final" | "inline" | "get",
     contextName,
     contextModels = [],
     isArray,
     rawTypeText
   ) {
-    let addSerializers = !(jsonKeyInfo == "inline");
     let fieldType =
       asIrreducible(rawTypeText, irreducibleTypes) ||
       (contextModels.filter(({ modelType }) => modelType === type).length
@@ -97,22 +101,13 @@ export default function configureResolveType({
       fieldType = scalars[fieldType];
       if (!(fieldType in primitives)) {
         return new SafeString(
-          jsonKey({
-            type: fieldType,
-            addSerializers
-            //className: className,
-            //required: isRequired,
-          }) + wrap(isArray, fieldType)
+          qualify(qualifier, wrap(isArray, fieldType), jsonConverter(fieldType))
         );
       } else {
         fieldType = primitives[fieldType];
       }
     }
-    return new SafeString(
-      jsonKey({
-        type: fieldType /*required: isRequired, className: className*/
-      }) + wrap(isArray, fieldType)
-    );
+    return new SafeString(qualify(qualifier, wrap(isArray, fieldType)));
   }
   return resolveType;
 }
