@@ -114,7 +114,7 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
       );
 
   /// Creates a new `HeroForEpisodeHumanInlineFragment` with non-null values from [other] as attribute overrides
-  HeroForEpisodeHumanInlineFragment mergeLeftWith(
+  HeroForEpisodeHumanInlineFragment mergedLeftWith(
       covariant HeroForEpisodeHumanInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -198,7 +198,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
       );
 
   /// Creates a new `HeroForEpisodeDroidInlineFragment` with non-null values from [other] as attribute overrides
-  HeroForEpisodeDroidInlineFragment mergeLeftWith(
+  HeroForEpisodeDroidInlineFragment mergedLeftWith(
       covariant HeroForEpisodeDroidInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -298,7 +298,7 @@ class HeroForEpisodeHero extends Character with HelloMixin {
       );
 
   /// Creates a new `HeroForEpisodeHero` with non-null values from [other] as attribute overrides
-  HeroForEpisodeHero mergeLeftWith(covariant HeroForEpisodeHero other) {
+  HeroForEpisodeHero mergedLeftWith(covariant HeroForEpisodeHero other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -391,7 +391,7 @@ class HeroForEpisodeQuery extends Query {
       );
 
   /// Creates a new `HeroForEpisodeQuery` with non-null values from [other] as attribute overrides
-  HeroForEpisodeQuery mergeLeftWith(covariant HeroForEpisodeQuery other) {
+  HeroForEpisodeQuery mergedLeftWith(covariant HeroForEpisodeQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,

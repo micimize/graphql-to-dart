@@ -74,7 +74,7 @@ class Search_StarshipInlineFragment extends Starship {
       );
 
   /// Creates a new `Search_StarshipInlineFragment` with non-null values from [other] as attribute overrides
-  Search_StarshipInlineFragment mergeLeftWith(
+  Search_StarshipInlineFragment mergedLeftWith(
       covariant Search_StarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -150,7 +150,7 @@ class SearchSearchCopyForTesting extends SearchResult {
       );
 
   /// Creates a new `SearchSearchCopyForTesting` with non-null values from [other] as attribute overrides
-  SearchSearchCopyForTesting mergeLeftWith(
+  SearchSearchCopyForTesting mergedLeftWith(
       covariant SearchSearchCopyForTesting other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -239,7 +239,7 @@ class SearchStarshipInlineFragment extends Starship {
       );
 
   /// Creates a new `SearchStarshipInlineFragment` with non-null values from [other] as attribute overrides
-  SearchStarshipInlineFragment mergeLeftWith(
+  SearchStarshipInlineFragment mergedLeftWith(
       covariant SearchStarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -315,7 +315,7 @@ class SearchSearch extends SearchResult {
       );
 
   /// Creates a new `SearchSearch` with non-null values from [other] as attribute overrides
-  SearchSearch mergeLeftWith(covariant SearchSearch other) {
+  SearchSearch mergedLeftWith(covariant SearchSearch other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -409,7 +409,7 @@ class SearchQuery extends Query {
       );
 
   /// Creates a new `SearchQuery` with non-null values from [other] as attribute overrides
-  SearchQuery mergeLeftWith(covariant SearchQuery other) {
+  SearchQuery mergedLeftWith(covariant SearchQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,

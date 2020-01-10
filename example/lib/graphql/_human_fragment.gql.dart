@@ -82,7 +82,7 @@ class HomeSelectionSet extends Human with Home {
       );
 
   /// Creates a new `HomeSelectionSet` with non-null values from [other] as attribute overrides
-  HomeSelectionSet mergeLeftWith(covariant HomeSelectionSet other) {
+  HomeSelectionSet mergedLeftWith(covariant HomeSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -183,7 +183,8 @@ class DimensionsSelectionSet extends Human with Dimensions {
       );
 
   /// Creates a new `DimensionsSelectionSet` with non-null values from [other] as attribute overrides
-  DimensionsSelectionSet mergeLeftWith(covariant DimensionsSelectionSet other) {
+  DimensionsSelectionSet mergedLeftWith(
+      covariant DimensionsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -272,7 +273,8 @@ class RelationshipsStarships extends Starship with HelloMixin {
       );
 
   /// Creates a new `RelationshipsStarships` with non-null values from [other] as attribute overrides
-  RelationshipsStarships mergeLeftWith(covariant RelationshipsStarships other) {
+  RelationshipsStarships mergedLeftWith(
+      covariant RelationshipsStarships other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -352,7 +354,7 @@ class RelationshipsFriends extends Character with HelloMixin {
       );
 
   /// Creates a new `RelationshipsFriends` with non-null values from [other] as attribute overrides
-  RelationshipsFriends mergeLeftWith(covariant RelationshipsFriends other) {
+  RelationshipsFriends mergedLeftWith(covariant RelationshipsFriends other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -452,7 +454,7 @@ class RelationshipsSelectionSet extends Human with Relationships {
       );
 
   /// Creates a new `RelationshipsSelectionSet` with non-null values from [other] as attribute overrides
-  RelationshipsSelectionSet mergeLeftWith(
+  RelationshipsSelectionSet mergedLeftWith(
       covariant RelationshipsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -574,7 +576,7 @@ class InfoSelectionSet extends Human with Info {
       );
 
   /// Creates a new `InfoSelectionSet` with non-null values from [other] as attribute overrides
-  InfoSelectionSet mergeLeftWith(covariant InfoSelectionSet other) {
+  InfoSelectionSet mergedLeftWith(covariant InfoSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,

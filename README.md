@@ -110,9 +110,11 @@ dependencies:
 
 
 Take a look at the example output to see how it generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
-* all types have [`isValid`, `validate`, `mergeLeftWith(ThisType other)`, and `copyWith`  helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
-* selection set and fragments have [`from(BaseObjectType other)` and `empty` constructors](
-https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/hero_for_episode.gql.dart#L66-L75)
+* (almost) all types have
+  * [`isValid`, `validate` helpers](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/schema.dart#L335-L359) 
+  * [`mergedLeftWith(ThisType other)` and `mergedRightWith(ThisType other)` helpers, aliased to the `<<` and `>>` operators respectively](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/schema.dart#L321-L333)
+* selection sets have [`copyWith`](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/hero_for_episode.gql.dart#L95-L114) helpers and a `.partial` constructor.
+* For some reason I can't override `copyWith` properly
 
 # NOTES
 * Base types do not currently have json helpers, but it should probably be configurable

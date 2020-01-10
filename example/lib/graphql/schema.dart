@@ -42,7 +42,7 @@ class SearchResult extends Equatable {
   @override
   List<Object> get props => [value];
 
-  /// Creates a new `SearchResult` with `value.mergeLeftWith(other.value)`
+  /// Creates a new `SearchResult` with `value.mergedLeftWith(other.value)`
   ///
   /// If [other].value is not the same type, [other] is returned.
   SearchResult mergedLeftWith(covariant SearchResult other) {
