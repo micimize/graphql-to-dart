@@ -32,7 +32,7 @@ export const inlineFragmentName = ({
 const JSON_CONVERTER_TEMPLATE = "@${type}Converter()";
 
 function jsonConverter(type: string) {
-  return interpolateTemplate(JSON_CONVERTER_TEMPLATE, { type }) + "\n";
+  return interpolateTemplate(JSON_CONVERTER_TEMPLATE, { type });
 }
 
 function wrap(isArray, fieldType) {
@@ -64,12 +64,20 @@ export type ResolveTypeConfig = {
 };
 
 type Qualifier = "final" | "inline" | "get";
-function qualify(q: Qualifier, type: string, decorator = "") {
-  switch (q) {
+function qualify({
+  qualifier,
+  type,
+  decorator = ""
+}: {
+  qualifier: Qualifier;
+  type: string;
+  decorator?: string;
+}) {
+  switch (qualifier) {
     case "final":
-      return `${decorator} final ${type}`;
+      return `${decorator ? decorator + "\n" : ""}final ${type}`;
     case "get":
-      return `${decorator}${type} get`;
+      return `${decorator}\n${type} get`;
     default:
       return type;
   }
@@ -81,12 +89,12 @@ export default function configureResolveType({
   irreducibleTypes = []
 }: ResolveTypeConfig) {
   function resolveType(
-    type,
+    type: string,
     qualifier: "final" | "inline" | "get",
-    contextName,
+    contextName: string,
     contextModels = [],
-    isArray,
-    rawTypeText
+    isArray: boolean,
+    rawTypeText: string
   ) {
     let fieldType =
       asIrreducible(rawTypeText, irreducibleTypes) ||
@@ -101,13 +109,19 @@ export default function configureResolveType({
       fieldType = scalars[fieldType];
       if (!(fieldType in primitives)) {
         return new SafeString(
-          qualify(qualifier, wrap(isArray, fieldType), jsonConverter(fieldType))
+          qualify({
+            qualifier,
+            decorator: jsonConverter(fieldType),
+            type: wrap(isArray, fieldType)
+          })
         );
       } else {
         fieldType = primitives[fieldType];
       }
     }
-    return new SafeString(qualify(qualifier, wrap(isArray, fieldType)));
+    return new SafeString(
+      qualify({ qualifier, type: wrap(isArray, fieldType) })
+    );
   }
   return resolveType;
 }

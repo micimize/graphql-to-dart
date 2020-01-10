@@ -1,3 +1,7 @@
+
+{{#*inline "nullify" ~}}
+{{dartName this}}: {{dartName this}} == false ? this.{{dartName this}} : null
+{{~/inline}}
 {{~#*inline "setField" ~}}
     {{ dartName name }} = {{#if (
         callMethod type
@@ -70,6 +74,7 @@
     input types are currently very simple in graphql, see
     https://github.com/graphql/graphql-spec/issues/114#issuecomment-550056235
 --}}
+{{ multilineComment description }}
 @JsonSerializable()
 @immutable
 class {{ name }} {{
@@ -125,7 +130,7 @@ class {{ name }} {{
     {{/if}}{{/each~}}
   ];
 
-  /// Creates a new `{{ className }}` with the given non-null values overridden
+  /// Creates a new [{{ name }}] with the given non-null values overridden
   {{name}} copyWith({
     {{#each fields}}{{#if name~}}
       {{ resolveType type
@@ -143,7 +148,20 @@ class {{ name }} {{
     {{/if}}{{/each~}}
   );
 
-  /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
+  /// Creates a new [{{ className }}] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  {{ name }} copyWithout({
+    {{#emptySafeEach fields required='name' }}
+    bool {{dartName name}} = false,
+    {{/emptySafeEach}}
+  }) => {{ name }}(
+    {{#emptySafeEach fields required='name'}}
+    {{> nullify name }},
+    {{/emptySafeEach}}
+  );
+
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return {{ name }}(
@@ -153,11 +171,17 @@ class {{ name }} {{
     );
   }
 
-  /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  {{ name }} operator >>(covariant {{ name }} other) => mergedRightWith(other);
 
   {{#each (addInputHelpers name) ~}}
   {{> inputTypeHelpers .. objectType=this }}

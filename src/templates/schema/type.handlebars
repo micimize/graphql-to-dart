@@ -29,7 +29,7 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
     {{/if}}{{/each~}}
   ];
 
-  /// Creates a new `{{ className }}` with non-null values from [other] as attribute overrides
+  /// Creates a new [{{ className }}] with non-null values from [other] as attribute overrides
   {{ className }} mergedLeftWith(covariant {{ className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return {{ className }}(
@@ -39,7 +39,7 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
     );
   }
 
-  /// Creates a new `{{ className }}` with non-null values from [other] as attribute defaults
+  /// Creates a new [{{ className }}] with non-null values from [other] as attribute defaults
   {{ className }} mergedRightWith(covariant {{ className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -61,7 +61,7 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
 {{ multilineComment description }}
 @immutable
 class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
-  static final String typeName = "{{ takeFirst typeName name }}";
+  static final String schemaTypeName = "{{ takeFirst typeName name }}";
 
   @protected
   final _{{ name }}Fields fields;
@@ -94,7 +94,7 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   List<Object> get props => [fields];
 
   {{!-- not sure why but this breaks things 
-  /// Creates a new `{{ name }}` with the given non-null values overridden
+  /// Creates a new [{{ name }}] with the given non-null values overridden
   {{ name }} copyWith({{#emptySafeEach fields required='name' excluding='__typename' prefix='{' suffix='}'}}
       {{ resolveType type
           "inline"
@@ -112,11 +112,11 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   --}}
 
 
-  /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) =>
     {{ name }}._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) =>
     {{ name }}._fromFields(fields.mergedRightWith(other.fields));
 

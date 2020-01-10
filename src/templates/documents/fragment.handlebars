@@ -2,6 +2,9 @@
     Leaving external mixins out of fragments because it overcomplicates things.  
     Because "mixin on BaseType, Foo, Bar" basically defines a multi-parent interface
     mixins=(resolveMixins fields)
+
+    We can't use FragmentSelectionSet as atters, so we have to settle for Mixins,
+    which means no `copyWith`
 --}}
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
@@ -37,6 +40,7 @@ mixin {{className}} {{
       inlineFragments=inlineFragments
       fields=''
       allFields=(hackFragmentFields "get" fragments=fragmentsSpread fields=fields)
+      selectionSetOf=className
 }}
 {{~/inline~}}
 

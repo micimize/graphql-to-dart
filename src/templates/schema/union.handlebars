@@ -31,7 +31,7 @@ class {{ className }} extends Equatable {
   @override
   List<Object> get props => [value];
   
-  /// Creates a new `{{ className }}` with `value.mergedLeftWith(other.value)`
+  /// Creates a new [{{ className }}] with `value.mergedLeftWith(other.value)`
   ///
   /// If [other].value is not the same type, [other] is returned.
   {{ className }} mergedLeftWith(covariant {{ name }} other) {
@@ -45,7 +45,7 @@ class {{ className }} extends Equatable {
     return other;
   }
 
-  /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) {
     assert(other?.value != null, "$this Cannot be merged with null value from $other");
     return other.mergedLeftWith(this);

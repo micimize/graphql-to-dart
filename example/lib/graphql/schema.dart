@@ -42,7 +42,7 @@ class SearchResult extends Equatable {
   @override
   List<Object> get props => [value];
 
-  /// Creates a new `SearchResult` with `value.mergedLeftWith(other.value)`
+  /// Creates a new [SearchResult] with `value.mergedLeftWith(other.value)`
   ///
   /// If [other].value is not the same type, [other] is returned.
   SearchResult mergedLeftWith(covariant SearchResult other) {
@@ -62,7 +62,7 @@ class SearchResult extends Equatable {
     return other;
   }
 
-  /// Creates a new `SearchResult` with non-null values from [other] as attribute defaults
+  /// Creates a new [SearchResult] with non-null values from [other] as attribute defaults
   SearchResult mergedRightWith(covariant SearchResult other) {
     assert(other?.value != null,
         "$this Cannot be merged with null value from $other");
@@ -72,6 +72,7 @@ class SearchResult extends Equatable {
 
 /* Input Types */
 
+/// The input object sent when someone is creating a new review
 @JsonSerializable()
 @immutable
 class ReviewInput extends Equatable {
@@ -119,7 +120,7 @@ class ReviewInput extends Equatable {
         favoriteColor,
       ];
 
-  /// Creates a new `` with the given non-null values overridden
+  /// Creates a new [ReviewInput] with the given non-null values overridden
   ReviewInput copyWith({
     int stars,
     String commentary,
@@ -131,7 +132,21 @@ class ReviewInput extends Equatable {
         favoriteColor: favoriteColor ?? this.favoriteColor,
       );
 
-  /// Creates a new `ReviewInput` with non-null values from [other] as attribute overrides
+  /// Creates a new [] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  ReviewInput copyWithout({
+    bool stars = false,
+    bool commentary = false,
+    bool favoriteColor = false,
+  }) =>
+      ReviewInput(
+        stars: stars == false ? this.stars : null,
+        commentary: commentary == false ? this.commentary : null,
+        favoriteColor: favoriteColor == false ? this.favoriteColor : null,
+      );
+
+  /// Creates a new [ReviewInput] with non-null values from [other] as attribute overrides
   ReviewInput mergedLeftWith(covariant ReviewInput other) {
     assert(other != null, "$this Cannot be merged with null");
     return ReviewInput(
@@ -141,11 +156,18 @@ class ReviewInput extends Equatable {
     );
   }
 
-  /// Creates a new `ReviewInput` with non-null values from [other] as attribute defaults
+  /// Creates a new [ReviewInput] with non-null values from [other] as attribute defaults
   ReviewInput mergedRightWith(covariant ReviewInput other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  ReviewInput operator <<(covariant ReviewInput other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  ReviewInput operator >>(covariant ReviewInput other) =>
+      mergedRightWith(other);
 
   factory ReviewInput.fromJson(Map<String, dynamic> json) =>
       _$ReviewInputFromJson(json);
@@ -153,6 +175,7 @@ class ReviewInput extends Equatable {
   Map<String, dynamic> toJson() => _$ReviewInputToJson(this);
 }
 
+/// The input object sent when passing in a color
 @JsonSerializable()
 @immutable
 class ColorInput extends Equatable {
@@ -201,7 +224,7 @@ class ColorInput extends Equatable {
         blue,
       ];
 
-  /// Creates a new `` with the given non-null values overridden
+  /// Creates a new [ColorInput] with the given non-null values overridden
   ColorInput copyWith({
     int red,
     int green,
@@ -213,7 +236,21 @@ class ColorInput extends Equatable {
         blue: blue ?? this.blue,
       );
 
-  /// Creates a new `ColorInput` with non-null values from [other] as attribute overrides
+  /// Creates a new [] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  ColorInput copyWithout({
+    bool red = false,
+    bool green = false,
+    bool blue = false,
+  }) =>
+      ColorInput(
+        red: red == false ? this.red : null,
+        green: green == false ? this.green : null,
+        blue: blue == false ? this.blue : null,
+      );
+
+  /// Creates a new [ColorInput] with non-null values from [other] as attribute overrides
   ColorInput mergedLeftWith(covariant ColorInput other) {
     assert(other != null, "$this Cannot be merged with null");
     return ColorInput(
@@ -223,11 +260,17 @@ class ColorInput extends Equatable {
     );
   }
 
-  /// Creates a new `ColorInput` with non-null values from [other] as attribute defaults
+  /// Creates a new [ColorInput] with non-null values from [other] as attribute defaults
   ColorInput mergedRightWith(covariant ColorInput other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  ColorInput operator <<(covariant ColorInput other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  ColorInput operator >>(covariant ColorInput other) => mergedRightWith(other);
 
   factory ColorInput.fromJson(Map<String, dynamic> json) =>
       _$ColorInputFromJson(json);
@@ -272,7 +315,7 @@ class _CharacterFields extends Equatable {
         appearsIn,
       ];
 
-  /// Creates a new `_CharacterFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_CharacterFields] with non-null values from [other] as attribute overrides
   _CharacterFields mergedLeftWith(covariant _CharacterFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _CharacterFields(
@@ -284,7 +327,7 @@ class _CharacterFields extends Equatable {
     );
   }
 
-  /// Creates a new `_CharacterFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_CharacterFields] with non-null values from [other] as attribute defaults
   _CharacterFields mergedRightWith(covariant _CharacterFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -294,7 +337,7 @@ class _CharacterFields extends Equatable {
 /// A character from the Star Wars universe
 @immutable
 class Character extends Equatable {
-  static final String typeName = "Character";
+  static final String schemaTypeName = "Character";
 
   @protected
   final _CharacterFields fields;
@@ -318,11 +361,11 @@ class Character extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Character` with non-null values from [other] as attribute overrides
+  /// Creates a new [Character] with non-null values from [other] as attribute overrides
   Character mergedLeftWith(covariant Character other) =>
       Character._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Character` with non-null values from [other] as attribute defaults
+  /// Creates a new [Character] with non-null values from [other] as attribute defaults
   Character mergedRightWith(covariant Character other) =>
       Character._fromFields(fields.mergedRightWith(other.fields));
 
@@ -393,7 +436,7 @@ class _QueryFields extends Equatable {
         starship,
       ];
 
-  /// Creates a new `_QueryFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_QueryFields] with non-null values from [other] as attribute overrides
   _QueryFields mergedLeftWith(covariant _QueryFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _QueryFields(
@@ -407,7 +450,7 @@ class _QueryFields extends Equatable {
     );
   }
 
-  /// Creates a new `_QueryFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_QueryFields] with non-null values from [other] as attribute defaults
   _QueryFields mergedRightWith(covariant _QueryFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -417,7 +460,7 @@ class _QueryFields extends Equatable {
 /// The query type, represents all of the entry points into our object graph
 @immutable
 class Query extends Equatable {
-  static final String typeName = "Query";
+  static final String schemaTypeName = "Query";
 
   @protected
   final _QueryFields fields;
@@ -445,11 +488,11 @@ class Query extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Query` with non-null values from [other] as attribute overrides
+  /// Creates a new [Query] with non-null values from [other] as attribute overrides
   Query mergedLeftWith(covariant Query other) =>
       Query._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Query` with non-null values from [other] as attribute defaults
+  /// Creates a new [Query] with non-null values from [other] as attribute defaults
   Query mergedRightWith(covariant Query other) =>
       Query._fromFields(fields.mergedRightWith(other.fields));
 
@@ -504,7 +547,7 @@ class _FriendsConnectionFields extends Equatable {
         pageInfo,
       ];
 
-  /// Creates a new `_FriendsConnectionFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_FriendsConnectionFields] with non-null values from [other] as attribute overrides
   _FriendsConnectionFields mergedLeftWith(
       covariant _FriendsConnectionFields other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -516,7 +559,7 @@ class _FriendsConnectionFields extends Equatable {
     );
   }
 
-  /// Creates a new `_FriendsConnectionFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_FriendsConnectionFields] with non-null values from [other] as attribute defaults
   _FriendsConnectionFields mergedRightWith(
       covariant _FriendsConnectionFields other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -527,7 +570,7 @@ class _FriendsConnectionFields extends Equatable {
 /// A connection object for a character's friends
 @immutable
 class FriendsConnection extends Equatable {
-  static final String typeName = "FriendsConnection";
+  static final String schemaTypeName = "FriendsConnection";
 
   @protected
   final _FriendsConnectionFields fields;
@@ -549,11 +592,11 @@ class FriendsConnection extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `FriendsConnection` with non-null values from [other] as attribute overrides
+  /// Creates a new [FriendsConnection] with non-null values from [other] as attribute overrides
   FriendsConnection mergedLeftWith(covariant FriendsConnection other) =>
       FriendsConnection._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `FriendsConnection` with non-null values from [other] as attribute defaults
+  /// Creates a new [FriendsConnection] with non-null values from [other] as attribute defaults
   FriendsConnection mergedRightWith(covariant FriendsConnection other) =>
       FriendsConnection._fromFields(fields.mergedRightWith(other.fields));
 
@@ -603,7 +646,7 @@ class _FriendsEdgeFields extends Equatable {
         node,
       ];
 
-  /// Creates a new `_FriendsEdgeFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_FriendsEdgeFields] with non-null values from [other] as attribute overrides
   _FriendsEdgeFields mergedLeftWith(covariant _FriendsEdgeFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _FriendsEdgeFields(
@@ -612,7 +655,7 @@ class _FriendsEdgeFields extends Equatable {
     );
   }
 
-  /// Creates a new `_FriendsEdgeFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_FriendsEdgeFields] with non-null values from [other] as attribute defaults
   _FriendsEdgeFields mergedRightWith(covariant _FriendsEdgeFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -622,7 +665,7 @@ class _FriendsEdgeFields extends Equatable {
 /// An edge object for a character's friends
 @immutable
 class FriendsEdge extends Equatable {
-  static final String typeName = "FriendsEdge";
+  static final String schemaTypeName = "FriendsEdge";
 
   @protected
   final _FriendsEdgeFields fields;
@@ -640,11 +683,11 @@ class FriendsEdge extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `FriendsEdge` with non-null values from [other] as attribute overrides
+  /// Creates a new [FriendsEdge] with non-null values from [other] as attribute overrides
   FriendsEdge mergedLeftWith(covariant FriendsEdge other) =>
       FriendsEdge._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `FriendsEdge` with non-null values from [other] as attribute defaults
+  /// Creates a new [FriendsEdge] with non-null values from [other] as attribute defaults
   FriendsEdge mergedRightWith(covariant FriendsEdge other) =>
       FriendsEdge._fromFields(fields.mergedRightWith(other.fields));
 
@@ -693,7 +736,7 @@ class _PageInfoFields extends Equatable {
         hasNextPage,
       ];
 
-  /// Creates a new `_PageInfoFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_PageInfoFields] with non-null values from [other] as attribute overrides
   _PageInfoFields mergedLeftWith(covariant _PageInfoFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _PageInfoFields(
@@ -703,7 +746,7 @@ class _PageInfoFields extends Equatable {
     );
   }
 
-  /// Creates a new `_PageInfoFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_PageInfoFields] with non-null values from [other] as attribute defaults
   _PageInfoFields mergedRightWith(covariant _PageInfoFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -713,7 +756,7 @@ class _PageInfoFields extends Equatable {
 /// Information for paginating this connection
 @immutable
 class PageInfo extends Equatable {
-  static final String typeName = "PageInfo";
+  static final String schemaTypeName = "PageInfo";
 
   @protected
   final _PageInfoFields fields;
@@ -733,11 +776,11 @@ class PageInfo extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `PageInfo` with non-null values from [other] as attribute overrides
+  /// Creates a new [PageInfo] with non-null values from [other] as attribute overrides
   PageInfo mergedLeftWith(covariant PageInfo other) =>
       PageInfo._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `PageInfo` with non-null values from [other] as attribute defaults
+  /// Creates a new [PageInfo] with non-null values from [other] as attribute defaults
   PageInfo mergedRightWith(covariant PageInfo other) =>
       PageInfo._fromFields(fields.mergedRightWith(other.fields));
 
@@ -790,7 +833,7 @@ class _ReviewFields extends Equatable {
         commentary,
       ];
 
-  /// Creates a new `_ReviewFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_ReviewFields] with non-null values from [other] as attribute overrides
   _ReviewFields mergedLeftWith(covariant _ReviewFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _ReviewFields(
@@ -800,7 +843,7 @@ class _ReviewFields extends Equatable {
     );
   }
 
-  /// Creates a new `_ReviewFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_ReviewFields] with non-null values from [other] as attribute defaults
   _ReviewFields mergedRightWith(covariant _ReviewFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -810,7 +853,7 @@ class _ReviewFields extends Equatable {
 /// Represents a review for a movie
 @immutable
 class Review extends Equatable {
-  static final String typeName = "Review";
+  static final String schemaTypeName = "Review";
 
   @protected
   final _ReviewFields fields;
@@ -830,11 +873,11 @@ class Review extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Review` with non-null values from [other] as attribute overrides
+  /// Creates a new [Review] with non-null values from [other] as attribute overrides
   Review mergedLeftWith(covariant Review other) =>
       Review._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Review` with non-null values from [other] as attribute defaults
+  /// Creates a new [Review] with non-null values from [other] as attribute defaults
   Review mergedRightWith(covariant Review other) =>
       Review._fromFields(fields.mergedRightWith(other.fields));
 
@@ -917,7 +960,7 @@ class _HumanFields extends Equatable implements _CharacterFields {
         starships,
       ];
 
-  /// Creates a new `_HumanFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_HumanFields] with non-null values from [other] as attribute overrides
   _HumanFields mergedLeftWith(covariant _HumanFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _HumanFields(
@@ -933,7 +976,7 @@ class _HumanFields extends Equatable implements _CharacterFields {
     );
   }
 
-  /// Creates a new `_HumanFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_HumanFields] with non-null values from [other] as attribute defaults
   _HumanFields mergedRightWith(covariant _HumanFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -943,7 +986,7 @@ class _HumanFields extends Equatable implements _CharacterFields {
 /// A humanoid creature from the Star Wars universe
 @immutable
 class Human extends Equatable implements Character {
-  static final String typeName = "Human";
+  static final String schemaTypeName = "Human";
 
   @protected
   final _HumanFields fields;
@@ -975,11 +1018,11 @@ class Human extends Equatable implements Character {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Human` with non-null values from [other] as attribute overrides
+  /// Creates a new [Human] with non-null values from [other] as attribute overrides
   Human mergedLeftWith(covariant Human other) =>
       Human._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Human` with non-null values from [other] as attribute defaults
+  /// Creates a new [Human] with non-null values from [other] as attribute defaults
   Human mergedRightWith(covariant Human other) =>
       Human._fromFields(fields.mergedRightWith(other.fields));
 
@@ -1044,7 +1087,7 @@ class _StarshipFields extends Equatable {
         coordinates,
       ];
 
-  /// Creates a new `_StarshipFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_StarshipFields] with non-null values from [other] as attribute overrides
   _StarshipFields mergedLeftWith(covariant _StarshipFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _StarshipFields(
@@ -1055,7 +1098,7 @@ class _StarshipFields extends Equatable {
     );
   }
 
-  /// Creates a new `_StarshipFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_StarshipFields] with non-null values from [other] as attribute defaults
   _StarshipFields mergedRightWith(covariant _StarshipFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -1065,7 +1108,7 @@ class _StarshipFields extends Equatable {
 ///
 @immutable
 class Starship extends Equatable {
-  static final String typeName = "Starship";
+  static final String schemaTypeName = "Starship";
 
   @protected
   final _StarshipFields fields;
@@ -1087,11 +1130,11 @@ class Starship extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Starship` with non-null values from [other] as attribute overrides
+  /// Creates a new [Starship] with non-null values from [other] as attribute overrides
   Starship mergedLeftWith(covariant Starship other) =>
       Starship._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Starship` with non-null values from [other] as attribute defaults
+  /// Creates a new [Starship] with non-null values from [other] as attribute defaults
   Starship mergedRightWith(covariant Starship other) =>
       Starship._fromFields(fields.mergedRightWith(other.fields));
 
@@ -1162,7 +1205,7 @@ class _DroidFields extends Equatable implements _CharacterFields {
         primaryFunction,
       ];
 
-  /// Creates a new `_DroidFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_DroidFields] with non-null values from [other] as attribute overrides
   _DroidFields mergedLeftWith(covariant _DroidFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _DroidFields(
@@ -1175,7 +1218,7 @@ class _DroidFields extends Equatable implements _CharacterFields {
     );
   }
 
-  /// Creates a new `_DroidFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_DroidFields] with non-null values from [other] as attribute defaults
   _DroidFields mergedRightWith(covariant _DroidFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -1185,7 +1228,7 @@ class _DroidFields extends Equatable implements _CharacterFields {
 /// An autonomous mechanical character in the Star Wars universe
 @immutable
 class Droid extends Equatable implements Character {
-  static final String typeName = "Droid";
+  static final String schemaTypeName = "Droid";
 
   @protected
   final _DroidFields fields;
@@ -1211,11 +1254,11 @@ class Droid extends Equatable implements Character {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Droid` with non-null values from [other] as attribute overrides
+  /// Creates a new [Droid] with non-null values from [other] as attribute overrides
   Droid mergedLeftWith(covariant Droid other) =>
       Droid._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Droid` with non-null values from [other] as attribute defaults
+  /// Creates a new [Droid] with non-null values from [other] as attribute defaults
   Droid mergedRightWith(covariant Droid other) =>
       Droid._fromFields(fields.mergedRightWith(other.fields));
 
@@ -1266,7 +1309,7 @@ class _MutationFields extends Equatable {
         createReview,
       ];
 
-  /// Creates a new `_MutationFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_MutationFields] with non-null values from [other] as attribute overrides
   _MutationFields mergedLeftWith(covariant _MutationFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _MutationFields(
@@ -1274,7 +1317,7 @@ class _MutationFields extends Equatable {
     );
   }
 
-  /// Creates a new `_MutationFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_MutationFields] with non-null values from [other] as attribute defaults
   _MutationFields mergedRightWith(covariant _MutationFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -1284,7 +1327,7 @@ class _MutationFields extends Equatable {
 /// The mutation type, represents all updates we can make to our data
 @immutable
 class Mutation extends Equatable {
-  static final String typeName = "Mutation";
+  static final String schemaTypeName = "Mutation";
 
   @protected
   final _MutationFields fields;
@@ -1300,11 +1343,11 @@ class Mutation extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Mutation` with non-null values from [other] as attribute overrides
+  /// Creates a new [Mutation] with non-null values from [other] as attribute overrides
   Mutation mergedLeftWith(covariant Mutation other) =>
       Mutation._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Mutation` with non-null values from [other] as attribute defaults
+  /// Creates a new [Mutation] with non-null values from [other] as attribute defaults
   Mutation mergedRightWith(covariant Mutation other) =>
       Mutation._fromFields(fields.mergedRightWith(other.fields));
 
@@ -1343,7 +1386,7 @@ class _SubscriptionFields extends Equatable {
         reviewAdded,
       ];
 
-  /// Creates a new `_SubscriptionFields` with non-null values from [other] as attribute overrides
+  /// Creates a new [_SubscriptionFields] with non-null values from [other] as attribute overrides
   _SubscriptionFields mergedLeftWith(covariant _SubscriptionFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return _SubscriptionFields(
@@ -1351,7 +1394,7 @@ class _SubscriptionFields extends Equatable {
     );
   }
 
-  /// Creates a new `_SubscriptionFields` with non-null values from [other] as attribute defaults
+  /// Creates a new [_SubscriptionFields] with non-null values from [other] as attribute defaults
   _SubscriptionFields mergedRightWith(covariant _SubscriptionFields other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -1361,7 +1404,7 @@ class _SubscriptionFields extends Equatable {
 /// The subscription type, represents all subscriptions we can make to our data
 @immutable
 class Subscription extends Equatable {
-  static final String typeName = "Subscription";
+  static final String schemaTypeName = "Subscription";
 
   @protected
   final _SubscriptionFields fields;
@@ -1377,11 +1420,11 @@ class Subscription extends Equatable {
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new `Subscription` with non-null values from [other] as attribute overrides
+  /// Creates a new [Subscription] with non-null values from [other] as attribute overrides
   Subscription mergedLeftWith(covariant Subscription other) =>
       Subscription._fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new `Subscription` with non-null values from [other] as attribute defaults
+  /// Creates a new [Subscription] with non-null values from [other] as attribute defaults
   Subscription mergedRightWith(covariant Subscription other) =>
       Subscription._fromFields(fields.mergedRightWith(other.fields));
 

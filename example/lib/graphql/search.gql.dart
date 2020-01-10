@@ -63,7 +63,7 @@ class Search_StarshipInlineFragment extends Starship {
     return missingFields;
   }
 
-  /// Creates a new `Search_StarshipInlineFragment` with the given non-null values overridden
+  /// Creates a new [Search_StarshipInlineFragment] with the given non-null values overridden
   Search_StarshipInlineFragment copyWith({
     String typename,
     String id,
@@ -73,7 +73,19 @@ class Search_StarshipInlineFragment extends Starship {
         id: id ?? this.id,
       );
 
-  /// Creates a new `Search_StarshipInlineFragment` with non-null values from [other] as attribute overrides
+  /// Creates a new [Search_StarshipInlineFragment] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  Search_StarshipInlineFragment copyWithout({
+    bool typename = false,
+    bool id = false,
+  }) =>
+      Search_StarshipInlineFragment(
+        typename: typename == false ? this.typename : null,
+        id: id == false ? this.id : null,
+      );
+
+  /// Creates a new [Search_StarshipInlineFragment] with non-null values from [other] as attribute overrides
   Search_StarshipInlineFragment mergedLeftWith(
       covariant Search_StarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -83,7 +95,7 @@ class Search_StarshipInlineFragment extends Starship {
     );
   }
 
-  /// Creates a new `Search_StarshipInlineFragment` with non-null values from [other] as attribute defaults
+  /// Creates a new [Search_StarshipInlineFragment] with non-null values from [other] as attribute defaults
   Search_StarshipInlineFragment mergedRightWith(
       covariant Search_StarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -137,7 +149,7 @@ class SearchSearchCopyForTesting extends SearchResult {
     return missingFields;
   }
 
-  /// Creates a new `SearchSearchCopyForTesting` with the given non-null values overridden
+  /// Creates a new [SearchSearchCopyForTesting] with the given non-null values overridden
   SearchSearchCopyForTesting copyWith({
     String typename,
     Search_StarshipInlineFragment onStarship,
@@ -149,17 +161,29 @@ class SearchSearchCopyForTesting extends SearchResult {
             : this.onStarship,
       );
 
-  /// Creates a new `SearchSearchCopyForTesting` with non-null values from [other] as attribute overrides
+  /// Creates a new [SearchSearchCopyForTesting] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  SearchSearchCopyForTesting copyWithout({
+    bool typename = false,
+    bool onStarship = false,
+  }) =>
+      SearchSearchCopyForTesting(
+        typename: typename == false ? this.typename : null,
+        onStarship: onStarship == false ? this.onStarship : null,
+      );
+
+  /// Creates a new [SearchSearchCopyForTesting] with non-null values from [other] as attribute overrides
   SearchSearchCopyForTesting mergedLeftWith(
       covariant SearchSearchCopyForTesting other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
-      onStarship: onStarship,
+      onStarship: other.onStarship,
     );
   }
 
-  /// Creates a new `SearchSearchCopyForTesting` with non-null values from [other] as attribute defaults
+  /// Creates a new [SearchSearchCopyForTesting] with non-null values from [other] as attribute defaults
   SearchSearchCopyForTesting mergedRightWith(
       covariant SearchSearchCopyForTesting other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -228,7 +252,7 @@ class SearchStarshipInlineFragment extends Starship {
     return missingFields;
   }
 
-  /// Creates a new `SearchStarshipInlineFragment` with the given non-null values overridden
+  /// Creates a new [SearchStarshipInlineFragment] with the given non-null values overridden
   SearchStarshipInlineFragment copyWith({
     String typename,
     String id,
@@ -238,7 +262,19 @@ class SearchStarshipInlineFragment extends Starship {
         id: id ?? this.id,
       );
 
-  /// Creates a new `SearchStarshipInlineFragment` with non-null values from [other] as attribute overrides
+  /// Creates a new [SearchStarshipInlineFragment] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  SearchStarshipInlineFragment copyWithout({
+    bool typename = false,
+    bool id = false,
+  }) =>
+      SearchStarshipInlineFragment(
+        typename: typename == false ? this.typename : null,
+        id: id == false ? this.id : null,
+      );
+
+  /// Creates a new [SearchStarshipInlineFragment] with non-null values from [other] as attribute overrides
   SearchStarshipInlineFragment mergedLeftWith(
       covariant SearchStarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -248,7 +284,7 @@ class SearchStarshipInlineFragment extends Starship {
     );
   }
 
-  /// Creates a new `SearchStarshipInlineFragment` with non-null values from [other] as attribute defaults
+  /// Creates a new [SearchStarshipInlineFragment] with non-null values from [other] as attribute defaults
   SearchStarshipInlineFragment mergedRightWith(
       covariant SearchStarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -302,7 +338,7 @@ class SearchSearch extends SearchResult {
     return missingFields;
   }
 
-  /// Creates a new `SearchSearch` with the given non-null values overridden
+  /// Creates a new [SearchSearch] with the given non-null values overridden
   SearchSearch copyWith({
     String typename,
     SearchStarshipInlineFragment onStarship,
@@ -314,16 +350,28 @@ class SearchSearch extends SearchResult {
             : this.onStarship,
       );
 
-  /// Creates a new `SearchSearch` with non-null values from [other] as attribute overrides
+  /// Creates a new [SearchSearch] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  SearchSearch copyWithout({
+    bool typename = false,
+    bool onStarship = false,
+  }) =>
+      SearchSearch(
+        typename: typename == false ? this.typename : null,
+        onStarship: onStarship == false ? this.onStarship : null,
+      );
+
+  /// Creates a new [SearchSearch] with non-null values from [other] as attribute overrides
   SearchSearch mergedLeftWith(covariant SearchSearch other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
-      onStarship: onStarship,
+      onStarship: other.onStarship,
     );
   }
 
-  /// Creates a new `SearchSearch` with non-null values from [other] as attribute defaults
+  /// Creates a new [SearchSearch] with non-null values from [other] as attribute defaults
   SearchSearch mergedRightWith(covariant SearchSearch other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -396,7 +444,7 @@ class SearchQuery extends Query {
     return missingFields;
   }
 
-  /// Creates a new `SearchQuery` with the given non-null values overridden
+  /// Creates a new [SearchQuery] with the given non-null values overridden
   SearchQuery copyWith({
     String typename,
     List<SearchSearch> search,
@@ -408,7 +456,22 @@ class SearchQuery extends Query {
         searchCopyForTesting: searchCopyForTesting ?? this.searchCopyForTesting,
       );
 
-  /// Creates a new `SearchQuery` with non-null values from [other] as attribute overrides
+  /// Creates a new [SearchQuery] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  SearchQuery copyWithout({
+    bool typename = false,
+    bool search = false,
+    bool searchCopyForTesting = false,
+  }) =>
+      SearchQuery(
+        typename: typename == false ? this.typename : null,
+        search: search == false ? this.search : null,
+        searchCopyForTesting:
+            searchCopyForTesting == false ? this.searchCopyForTesting : null,
+      );
+
+  /// Creates a new [SearchQuery] with non-null values from [other] as attribute overrides
   SearchQuery mergedLeftWith(covariant SearchQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -418,7 +481,7 @@ class SearchQuery extends Query {
     );
   }
 
-  /// Creates a new `SearchQuery` with non-null values from [other] as attribute defaults
+  /// Creates a new [SearchQuery] with non-null values from [other] as attribute defaults
   SearchQuery mergedRightWith(covariant SearchQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);

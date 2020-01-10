@@ -91,7 +91,7 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
     return missingFields;
   }
 
-  /// Creates a new `HeroForEpisodeHumanInlineFragment` with the given non-null values overridden
+  /// Creates a new [HeroForEpisodeHumanInlineFragment] with the given non-null values overridden
   HeroForEpisodeHumanInlineFragment copyWith({
     String typename,
     List<Episode> appearsIn,
@@ -113,7 +113,31 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
         starships: starships ?? this.starships,
       );
 
-  /// Creates a new `HeroForEpisodeHumanInlineFragment` with non-null values from [other] as attribute overrides
+  /// Creates a new [HeroForEpisodeHumanInlineFragment] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  HeroForEpisodeHumanInlineFragment copyWithout({
+    bool typename = false,
+    bool appearsIn = false,
+    bool height = false,
+    bool mass = false,
+    bool home = false,
+    bool planet = false,
+    bool friends = false,
+    bool starships = false,
+  }) =>
+      HeroForEpisodeHumanInlineFragment(
+        typename: typename == false ? this.typename : null,
+        appearsIn: appearsIn == false ? this.appearsIn : null,
+        height: height == false ? this.height : null,
+        mass: mass == false ? this.mass : null,
+        home: home == false ? this.home : null,
+        planet: planet == false ? this.planet : null,
+        friends: friends == false ? this.friends : null,
+        starships: starships == false ? this.starships : null,
+      );
+
+  /// Creates a new [HeroForEpisodeHumanInlineFragment] with non-null values from [other] as attribute overrides
   HeroForEpisodeHumanInlineFragment mergedLeftWith(
       covariant HeroForEpisodeHumanInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -129,7 +153,7 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
     );
   }
 
-  /// Creates a new `HeroForEpisodeHumanInlineFragment` with non-null values from [other] as attribute defaults
+  /// Creates a new [HeroForEpisodeHumanInlineFragment] with non-null values from [other] as attribute defaults
   HeroForEpisodeHumanInlineFragment mergedRightWith(
       covariant HeroForEpisodeHumanInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -187,7 +211,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
     return missingFields;
   }
 
-  /// Creates a new `HeroForEpisodeDroidInlineFragment` with the given non-null values overridden
+  /// Creates a new [HeroForEpisodeDroidInlineFragment] with the given non-null values overridden
   HeroForEpisodeDroidInlineFragment copyWith({
     String typename,
     String primaryFunction,
@@ -197,7 +221,19 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
         primaryFunction: primaryFunction ?? this.primaryFunction,
       );
 
-  /// Creates a new `HeroForEpisodeDroidInlineFragment` with non-null values from [other] as attribute overrides
+  /// Creates a new [HeroForEpisodeDroidInlineFragment] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  HeroForEpisodeDroidInlineFragment copyWithout({
+    bool typename = false,
+    bool primaryFunction = false,
+  }) =>
+      HeroForEpisodeDroidInlineFragment(
+        typename: typename == false ? this.typename : null,
+        primaryFunction: primaryFunction == false ? this.primaryFunction : null,
+      );
+
+  /// Creates a new [HeroForEpisodeDroidInlineFragment] with non-null values from [other] as attribute overrides
   HeroForEpisodeDroidInlineFragment mergedLeftWith(
       covariant HeroForEpisodeDroidInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -207,7 +243,7 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
     );
   }
 
-  /// Creates a new `HeroForEpisodeDroidInlineFragment` with non-null values from [other] as attribute defaults
+  /// Creates a new [HeroForEpisodeDroidInlineFragment] with non-null values from [other] as attribute defaults
   HeroForEpisodeDroidInlineFragment mergedRightWith(
       covariant HeroForEpisodeDroidInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -279,7 +315,7 @@ class HeroForEpisodeHero extends Character with HelloMixin {
     return missingFields;
   }
 
-  /// Creates a new `HeroForEpisodeHero` with the given non-null values overridden
+  /// Creates a new [HeroForEpisodeHero] with the given non-null values overridden
   HeroForEpisodeHero copyWith({
     String typename,
     HeroForEpisodeDroidInlineFragment onDroid,
@@ -297,18 +333,34 @@ class HeroForEpisodeHero extends Character with HelloMixin {
         name: name ?? this.name,
       );
 
-  /// Creates a new `HeroForEpisodeHero` with non-null values from [other] as attribute overrides
+  /// Creates a new [HeroForEpisodeHero] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  HeroForEpisodeHero copyWithout({
+    bool typename = false,
+    bool onDroid = false,
+    bool onHuman = false,
+    bool name = false,
+  }) =>
+      HeroForEpisodeHero(
+        typename: typename == false ? this.typename : null,
+        onDroid: onDroid == false ? this.onDroid : null,
+        onHuman: onHuman == false ? this.onHuman : null,
+        name: name == false ? this.name : null,
+      );
+
+  /// Creates a new [HeroForEpisodeHero] with non-null values from [other] as attribute overrides
   HeroForEpisodeHero mergedLeftWith(covariant HeroForEpisodeHero other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
-      onDroid: onDroid,
-      onHuman: onHuman,
+      onDroid: other.onDroid,
+      onHuman: other.onHuman,
       name: other.name,
     );
   }
 
-  /// Creates a new `HeroForEpisodeHero` with non-null values from [other] as attribute defaults
+  /// Creates a new [HeroForEpisodeHero] with non-null values from [other] as attribute defaults
   HeroForEpisodeHero mergedRightWith(covariant HeroForEpisodeHero other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -380,7 +432,7 @@ class HeroForEpisodeQuery extends Query {
     return missingFields;
   }
 
-  /// Creates a new `HeroForEpisodeQuery` with the given non-null values overridden
+  /// Creates a new [HeroForEpisodeQuery] with the given non-null values overridden
   HeroForEpisodeQuery copyWith({
     String typename,
     HeroForEpisodeHero hero,
@@ -390,7 +442,19 @@ class HeroForEpisodeQuery extends Query {
         hero: hero ?? this.hero,
       );
 
-  /// Creates a new `HeroForEpisodeQuery` with non-null values from [other] as attribute overrides
+  /// Creates a new [HeroForEpisodeQuery] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  HeroForEpisodeQuery copyWithout({
+    bool typename = false,
+    bool hero = false,
+  }) =>
+      HeroForEpisodeQuery(
+        typename: typename == false ? this.typename : null,
+        hero: hero == false ? this.hero : null,
+      );
+
+  /// Creates a new [HeroForEpisodeQuery] with non-null values from [other] as attribute overrides
   HeroForEpisodeQuery mergedLeftWith(covariant HeroForEpisodeQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -399,7 +463,7 @@ class HeroForEpisodeQuery extends Query {
     );
   }
 
-  /// Creates a new `HeroForEpisodeQuery` with non-null values from [other] as attribute defaults
+  /// Creates a new [HeroForEpisodeQuery] with non-null values from [other] as attribute defaults
   HeroForEpisodeQuery mergedRightWith(covariant HeroForEpisodeQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);

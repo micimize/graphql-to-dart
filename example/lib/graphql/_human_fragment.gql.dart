@@ -26,6 +26,7 @@ mixin Home on Human {
 /// Materialized class that implements the fragment [Home]
 ///
 /// Gives access to all the usual selection set helpers
+
 @JsonSerializable()
 class HomeSelectionSet extends Human with Home {
   static final String schemaTypeName = "Human";
@@ -69,7 +70,7 @@ class HomeSelectionSet extends Human with Home {
     return missingFields;
   }
 
-  /// Creates a new `HomeSelectionSet` with the given non-null values overridden
+  /// Creates a new [HomeSelectionSet] with the given non-null values overridden
   HomeSelectionSet copyWith({
     String typename,
     String home,
@@ -81,8 +82,22 @@ class HomeSelectionSet extends Human with Home {
         planet: planet ?? this.planet,
       );
 
-  /// Creates a new `HomeSelectionSet` with non-null values from [other] as attribute overrides
-  HomeSelectionSet mergedLeftWith(covariant HomeSelectionSet other) {
+  /// Creates a new [HomeSelectionSet] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  HomeSelectionSet copyWithout({
+    bool typename = false,
+    bool home = false,
+    bool planet = false,
+  }) =>
+      HomeSelectionSet(
+        typename: typename == false ? this.typename : null,
+        home: home == false ? this.home : null,
+        planet: planet == false ? this.planet : null,
+      );
+
+  /// Creates a new [HomeSelectionSet] with non-null values from [other] as attribute overrides
+  HomeSelectionSet mergedLeftWith(covariant Home other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -91,8 +106,8 @@ class HomeSelectionSet extends Human with Home {
     );
   }
 
-  /// Creates a new `HomeSelectionSet` with non-null values from [other] as attribute defaults
-  HomeSelectionSet mergedRightWith(covariant HomeSelectionSet other) {
+  /// Creates a new [HomeSelectionSet] with non-null values from [other] as attribute defaults
+  HomeSelectionSet mergedRightWith(covariant Home other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
@@ -104,6 +119,16 @@ class HomeSelectionSet extends Human with Home {
     Map<String, dynamic> json = _$HomeSelectionSetToJson(this);
 
     return json;
+  }
+
+  /// Construct a [HomeSelectionSet] from a [Home]
+  factory HomeSelectionSet.from(Home source) {
+    assert(source != null, "Cannot construct HomeSelectionSet from null");
+    return HomeSelectionSet(
+      typename: source.typename,
+      home: source.home,
+      planet: source.planet,
+    );
   }
 }
 
@@ -129,6 +154,7 @@ mixin Dimensions on Human {
 /// Materialized class that implements the fragment [Dimensions]
 ///
 /// Gives access to all the usual selection set helpers
+
 @JsonSerializable()
 class DimensionsSelectionSet extends Human with Dimensions {
   static final String schemaTypeName = "Human";
@@ -170,7 +196,7 @@ class DimensionsSelectionSet extends Human with Dimensions {
     return missingFields;
   }
 
-  /// Creates a new `DimensionsSelectionSet` with the given non-null values overridden
+  /// Creates a new [DimensionsSelectionSet] with the given non-null values overridden
   DimensionsSelectionSet copyWith({
     String typename,
     double height,
@@ -182,9 +208,22 @@ class DimensionsSelectionSet extends Human with Dimensions {
         mass: mass ?? this.mass,
       );
 
-  /// Creates a new `DimensionsSelectionSet` with non-null values from [other] as attribute overrides
-  DimensionsSelectionSet mergedLeftWith(
-      covariant DimensionsSelectionSet other) {
+  /// Creates a new [DimensionsSelectionSet] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  DimensionsSelectionSet copyWithout({
+    bool typename = false,
+    bool height = false,
+    bool mass = false,
+  }) =>
+      DimensionsSelectionSet(
+        typename: typename == false ? this.typename : null,
+        height: height == false ? this.height : null,
+        mass: mass == false ? this.mass : null,
+      );
+
+  /// Creates a new [DimensionsSelectionSet] with non-null values from [other] as attribute overrides
+  DimensionsSelectionSet mergedLeftWith(covariant Dimensions other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -193,9 +232,8 @@ class DimensionsSelectionSet extends Human with Dimensions {
     );
   }
 
-  /// Creates a new `DimensionsSelectionSet` with non-null values from [other] as attribute defaults
-  DimensionsSelectionSet mergedRightWith(
-      covariant DimensionsSelectionSet other) {
+  /// Creates a new [DimensionsSelectionSet] with non-null values from [other] as attribute defaults
+  DimensionsSelectionSet mergedRightWith(covariant Dimensions other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
@@ -207,6 +245,16 @@ class DimensionsSelectionSet extends Human with Dimensions {
     Map<String, dynamic> json = _$DimensionsSelectionSetToJson(this);
 
     return json;
+  }
+
+  /// Construct a [DimensionsSelectionSet] from a [Dimensions]
+  factory DimensionsSelectionSet.from(Dimensions source) {
+    assert(source != null, "Cannot construct DimensionsSelectionSet from null");
+    return DimensionsSelectionSet(
+      typename: source.typename,
+      height: source.height,
+      mass: source.mass,
+    );
   }
 }
 
@@ -260,7 +308,7 @@ class RelationshipsStarships extends Starship with HelloMixin {
     return missingFields;
   }
 
-  /// Creates a new `RelationshipsStarships` with the given non-null values overridden
+  /// Creates a new [RelationshipsStarships] with the given non-null values overridden
   RelationshipsStarships copyWith({
     String typename,
     String name,
@@ -272,7 +320,21 @@ class RelationshipsStarships extends Starship with HelloMixin {
         length: length ?? this.length,
       );
 
-  /// Creates a new `RelationshipsStarships` with non-null values from [other] as attribute overrides
+  /// Creates a new [RelationshipsStarships] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  RelationshipsStarships copyWithout({
+    bool typename = false,
+    bool name = false,
+    bool length = false,
+  }) =>
+      RelationshipsStarships(
+        typename: typename == false ? this.typename : null,
+        name: name == false ? this.name : null,
+        length: length == false ? this.length : null,
+      );
+
+  /// Creates a new [RelationshipsStarships] with non-null values from [other] as attribute overrides
   RelationshipsStarships mergedLeftWith(
       covariant RelationshipsStarships other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -283,7 +345,7 @@ class RelationshipsStarships extends Starship with HelloMixin {
     );
   }
 
-  /// Creates a new `RelationshipsStarships` with non-null values from [other] as attribute defaults
+  /// Creates a new [RelationshipsStarships] with non-null values from [other] as attribute defaults
   RelationshipsStarships mergedRightWith(
       covariant RelationshipsStarships other) {
     assert(other != null, "$this Cannot be merged with null");
@@ -343,7 +405,7 @@ class RelationshipsFriends extends Character with HelloMixin {
     return missingFields;
   }
 
-  /// Creates a new `RelationshipsFriends` with the given non-null values overridden
+  /// Creates a new [RelationshipsFriends] with the given non-null values overridden
   RelationshipsFriends copyWith({
     String typename,
     String name,
@@ -353,7 +415,19 @@ class RelationshipsFriends extends Character with HelloMixin {
         name: name ?? this.name,
       );
 
-  /// Creates a new `RelationshipsFriends` with non-null values from [other] as attribute overrides
+  /// Creates a new [RelationshipsFriends] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  RelationshipsFriends copyWithout({
+    bool typename = false,
+    bool name = false,
+  }) =>
+      RelationshipsFriends(
+        typename: typename == false ? this.typename : null,
+        name: name == false ? this.name : null,
+      );
+
+  /// Creates a new [RelationshipsFriends] with non-null values from [other] as attribute overrides
   RelationshipsFriends mergedLeftWith(covariant RelationshipsFriends other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
@@ -362,7 +436,7 @@ class RelationshipsFriends extends Character with HelloMixin {
     );
   }
 
-  /// Creates a new `RelationshipsFriends` with non-null values from [other] as attribute defaults
+  /// Creates a new [RelationshipsFriends] with non-null values from [other] as attribute defaults
   RelationshipsFriends mergedRightWith(covariant RelationshipsFriends other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
@@ -400,6 +474,7 @@ mixin Relationships on Human {
 /// Materialized class that implements the fragment [Relationships]
 ///
 /// Gives access to all the usual selection set helpers
+
 @JsonSerializable()
 class RelationshipsSelectionSet extends Human with Relationships {
   static final String schemaTypeName = "Human";
@@ -441,7 +516,7 @@ class RelationshipsSelectionSet extends Human with Relationships {
     return missingFields;
   }
 
-  /// Creates a new `RelationshipsSelectionSet` with the given non-null values overridden
+  /// Creates a new [RelationshipsSelectionSet] with the given non-null values overridden
   RelationshipsSelectionSet copyWith({
     String typename,
     List<RelationshipsFriends> friends,
@@ -453,9 +528,22 @@ class RelationshipsSelectionSet extends Human with Relationships {
         starships: starships ?? this.starships,
       );
 
-  /// Creates a new `RelationshipsSelectionSet` with non-null values from [other] as attribute overrides
-  RelationshipsSelectionSet mergedLeftWith(
-      covariant RelationshipsSelectionSet other) {
+  /// Creates a new [RelationshipsSelectionSet] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  RelationshipsSelectionSet copyWithout({
+    bool typename = false,
+    bool friends = false,
+    bool starships = false,
+  }) =>
+      RelationshipsSelectionSet(
+        typename: typename == false ? this.typename : null,
+        friends: friends == false ? this.friends : null,
+        starships: starships == false ? this.starships : null,
+      );
+
+  /// Creates a new [RelationshipsSelectionSet] with non-null values from [other] as attribute overrides
+  RelationshipsSelectionSet mergedLeftWith(covariant Relationships other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -464,9 +552,8 @@ class RelationshipsSelectionSet extends Human with Relationships {
     );
   }
 
-  /// Creates a new `RelationshipsSelectionSet` with non-null values from [other] as attribute defaults
-  RelationshipsSelectionSet mergedRightWith(
-      covariant RelationshipsSelectionSet other) {
+  /// Creates a new [RelationshipsSelectionSet] with non-null values from [other] as attribute defaults
+  RelationshipsSelectionSet mergedRightWith(covariant Relationships other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
@@ -478,6 +565,17 @@ class RelationshipsSelectionSet extends Human with Relationships {
     Map<String, dynamic> json = _$RelationshipsSelectionSetToJson(this);
 
     return json;
+  }
+
+  /// Construct a [RelationshipsSelectionSet] from a [Relationships]
+  factory RelationshipsSelectionSet.from(Relationships source) {
+    assert(
+        source != null, "Cannot construct RelationshipsSelectionSet from null");
+    return RelationshipsSelectionSet(
+      typename: source.typename,
+      friends: source.friends,
+      starships: source.starships,
+    );
   }
 }
 
@@ -508,6 +606,7 @@ mixin Info on Human implements Dimensions, Home {
 /// Materialized class that implements the fragment [Info]
 ///
 /// Gives access to all the usual selection set helpers
+
 @JsonSerializable()
 class InfoSelectionSet extends Human with Info {
   static final String schemaTypeName = "Human";
@@ -559,7 +658,7 @@ class InfoSelectionSet extends Human with Info {
     return missingFields;
   }
 
-  /// Creates a new `InfoSelectionSet` with the given non-null values overridden
+  /// Creates a new [InfoSelectionSet] with the given non-null values overridden
   InfoSelectionSet copyWith({
     String typename,
     double height,
@@ -575,8 +674,26 @@ class InfoSelectionSet extends Human with Info {
         planet: planet ?? this.planet,
       );
 
-  /// Creates a new `InfoSelectionSet` with non-null values from [other] as attribute overrides
-  InfoSelectionSet mergedLeftWith(covariant InfoSelectionSet other) {
+  /// Creates a new [InfoSelectionSet] with the specified fields nullified
+  ///
+  /// All fields default to `false`, so `field: null` or `field: true` nullifies a field.
+  InfoSelectionSet copyWithout({
+    bool typename = false,
+    bool height = false,
+    bool mass = false,
+    bool home = false,
+    bool planet = false,
+  }) =>
+      InfoSelectionSet(
+        typename: typename == false ? this.typename : null,
+        height: height == false ? this.height : null,
+        mass: mass == false ? this.mass : null,
+        home: home == false ? this.home : null,
+        planet: planet == false ? this.planet : null,
+      );
+
+  /// Creates a new [InfoSelectionSet] with non-null values from [other] as attribute overrides
+  InfoSelectionSet mergedLeftWith(covariant Info other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -587,8 +704,8 @@ class InfoSelectionSet extends Human with Info {
     );
   }
 
-  /// Creates a new `InfoSelectionSet` with non-null values from [other] as attribute defaults
-  InfoSelectionSet mergedRightWith(covariant InfoSelectionSet other) {
+  /// Creates a new [InfoSelectionSet] with non-null values from [other] as attribute defaults
+  InfoSelectionSet mergedRightWith(covariant Info other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
@@ -600,5 +717,17 @@ class InfoSelectionSet extends Human with Info {
     Map<String, dynamic> json = _$InfoSelectionSetToJson(this);
 
     return json;
+  }
+
+  /// Construct a [InfoSelectionSet] from a [Info]
+  factory InfoSelectionSet.from(Info source) {
+    assert(source != null, "Cannot construct InfoSelectionSet from null");
+    return InfoSelectionSet(
+      typename: source.typename,
+      height: source.height,
+      mass: source.mass,
+      home: source.home,
+      planet: source.planet,
+    );
   }
 }
