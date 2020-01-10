@@ -110,7 +110,7 @@ dependencies:
 
 
 Take a look at the example output to see how it generates code, as well as `src/build-plugin.ts` for the configuration object, which has some docs just aching to be properly generated.
-* all types have [`isValid`, `validate`, `mergeLeftWith(ThisType other)`, and `copyWith` helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
+* all types have [`isValid`, `validate`, `mergeLeftWith(ThisType other)`, and `copyWith`  helpers](https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/schema.dart#L62-L100) 
 * selection set and fragments have [`from(BaseObjectType other)` and `empty` constructors](
 https://github.com/micimize/graphql-to-dart/blob/6aaba6db32c4094df535663f58c7112d17f40c32/example/lib/graphql/hero_for_episode.gql.dart#L66-L75)
 

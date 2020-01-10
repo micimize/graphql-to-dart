@@ -24,8 +24,7 @@ class HeroForEpisodeVariables {
 }
 
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment extends Human
-    with InfoMixin, RelationshipsMixin {
+class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
@@ -50,6 +49,24 @@ class HeroForEpisodeHumanInlineFragment extends Human
   HeroForEpisodeHumanInlineFragment({
     this.typename,
     @required List<Episode> appearsIn,
+    double height,
+    double mass,
+    String home,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+    this.planet,
+  }) : super(
+          appearsIn: appearsIn,
+          height: height,
+          mass: mass,
+          homePlanet: home,
+          friends: friends,
+          starships: starships,
+        );
+
+  HeroForEpisodeHumanInlineFragment.partial({
+    this.typename,
+    List<Episode> appearsIn,
     double height,
     double mass,
     String home,
@@ -157,6 +174,13 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
           primaryFunction: primaryFunction,
         );
 
+  HeroForEpisodeDroidInlineFragment.partial({
+    this.typename,
+    String primaryFunction,
+  }) : super(
+          primaryFunction: primaryFunction,
+        );
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -233,6 +257,15 @@ class HeroForEpisodeHero extends Character with HelloMixin {
     this.onDroid,
     this.onHuman,
     @required String name,
+  }) : super(
+          name: name,
+        );
+
+  HeroForEpisodeHero.partial({
+    this.typename,
+    this.onDroid,
+    this.onHuman,
+    String name,
   }) : super(
           name: name,
         );
@@ -328,6 +361,13 @@ class HeroForEpisodeQuery extends Query {
       ];
 
   HeroForEpisodeQuery({
+    this.typename,
+    HeroForEpisodeHero hero,
+  }) : super(
+          hero: hero,
+        );
+
+  HeroForEpisodeQuery.partial({
     this.typename,
     HeroForEpisodeHero hero,
   }) : super(

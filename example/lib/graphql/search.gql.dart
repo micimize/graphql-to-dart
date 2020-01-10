@@ -47,6 +47,13 @@ class Search_StarshipInlineFragment extends Starship {
           id: id,
         );
 
+  Search_StarshipInlineFragment.partial({
+    this.typename,
+    String id,
+  }) : super(
+          id: id,
+        );
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -115,6 +122,11 @@ class SearchSearchCopyForTesting extends SearchResult {
       ];
 
   SearchSearchCopyForTesting({
+    this.typename,
+    this.onStarship,
+  }) : super();
+
+  SearchSearchCopyForTesting.partial({
     this.typename,
     this.onStarship,
   }) : super();
@@ -200,6 +212,13 @@ class SearchStarshipInlineFragment extends Starship {
           id: id,
         );
 
+  SearchStarshipInlineFragment.partial({
+    this.typename,
+    String id,
+  }) : super(
+          id: id,
+        );
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -268,6 +287,11 @@ class SearchSearch extends SearchResult {
       ];
 
   SearchSearch({
+    this.typename,
+    this.onStarship,
+  }) : super();
+
+  SearchSearch.partial({
     this.typename,
     this.onStarship,
   }) : super();
@@ -351,6 +375,14 @@ class SearchQuery extends Query {
       ];
 
   SearchQuery({
+    this.typename,
+    List<SearchSearch> search,
+    this.searchCopyForTesting,
+  }) : super(
+          search: search,
+        );
+
+  SearchQuery.partial({
     this.typename,
     List<SearchSearch> search,
     this.searchCopyForTesting,

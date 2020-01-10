@@ -75,7 +75,7 @@
 class {{ name }} {{
     classExtends baseType='Equatable' mixins=(resolveMixins fields)
 }} {
-  static final String typeName = "{{ takeFirst typeName name }}";
+  static final String schemaTypeName = "{{ takeFirst typeName name }}";
 
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}

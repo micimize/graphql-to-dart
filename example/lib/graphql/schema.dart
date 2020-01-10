@@ -75,7 +75,7 @@ class SearchResult extends Equatable {
 @JsonSerializable()
 @immutable
 class ReviewInput extends Equatable {
-  static final String typeName = "ReviewInput";
+  static final String schemaTypeName = "ReviewInput";
 
   /// 0-5 stars
   @JsonKey(required: true, disallowNullValue: true)
@@ -156,7 +156,7 @@ class ReviewInput extends Equatable {
 @JsonSerializable()
 @immutable
 class ColorInput extends Equatable {
-  static final String typeName = "ColorInput";
+  static final String schemaTypeName = "ColorInput";
 
   @JsonKey(required: true, disallowNullValue: true)
   final int red;
@@ -326,6 +326,12 @@ class Character extends Equatable {
   Character mergedRightWith(covariant Character other) =>
       Character._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  Character operator <<(covariant Character other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Character operator >>(covariant Character other) => mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -447,6 +453,12 @@ class Query extends Equatable {
   Query mergedRightWith(covariant Query other) =>
       Query._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  Query operator <<(covariant Query other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Query operator >>(covariant Query other) => mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -545,6 +557,14 @@ class FriendsConnection extends Equatable {
   FriendsConnection mergedRightWith(covariant FriendsConnection other) =>
       FriendsConnection._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  FriendsConnection operator <<(covariant FriendsConnection other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  FriendsConnection operator >>(covariant FriendsConnection other) =>
+      mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -627,6 +647,13 @@ class FriendsEdge extends Equatable {
   /// Creates a new `FriendsEdge` with non-null values from [other] as attribute defaults
   FriendsEdge mergedRightWith(covariant FriendsEdge other) =>
       FriendsEdge._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  FriendsEdge operator <<(covariant FriendsEdge other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  FriendsEdge operator >>(covariant FriendsEdge other) =>
+      mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -713,6 +740,12 @@ class PageInfo extends Equatable {
   /// Creates a new `PageInfo` with non-null values from [other] as attribute defaults
   PageInfo mergedRightWith(covariant PageInfo other) =>
       PageInfo._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  PageInfo operator <<(covariant PageInfo other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  PageInfo operator >>(covariant PageInfo other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -804,6 +837,12 @@ class Review extends Equatable {
   /// Creates a new `Review` with non-null values from [other] as attribute defaults
   Review mergedRightWith(covariant Review other) =>
       Review._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  Review operator <<(covariant Review other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Review operator >>(covariant Review other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -944,6 +983,12 @@ class Human extends Equatable implements Character {
   Human mergedRightWith(covariant Human other) =>
       Human._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  Human operator <<(covariant Human other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Human operator >>(covariant Human other) => mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -1049,6 +1094,12 @@ class Starship extends Equatable {
   /// Creates a new `Starship` with non-null values from [other] as attribute defaults
   Starship mergedRightWith(covariant Starship other) =>
       Starship._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  Starship operator <<(covariant Starship other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Starship operator >>(covariant Starship other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1168,6 +1219,12 @@ class Droid extends Equatable implements Character {
   Droid mergedRightWith(covariant Droid other) =>
       Droid._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  Droid operator <<(covariant Droid other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Droid operator >>(covariant Droid other) => mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -1251,6 +1308,12 @@ class Mutation extends Equatable {
   Mutation mergedRightWith(covariant Mutation other) =>
       Mutation._fromFields(fields.mergedRightWith(other.fields));
 
+  /// Alias for [mergedLeftWith]
+  Mutation operator <<(covariant Mutation other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Mutation operator >>(covariant Mutation other) => mergedRightWith(other);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -1321,6 +1384,14 @@ class Subscription extends Equatable {
   /// Creates a new `Subscription` with non-null values from [other] as attribute defaults
   Subscription mergedRightWith(covariant Subscription other) =>
       Subscription._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  Subscription operator <<(covariant Subscription other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  Subscription operator >>(covariant Subscription other) =>
+      mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {

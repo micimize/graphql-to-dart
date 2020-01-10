@@ -4,7 +4,7 @@
   {{/if}}
   @JsonKey(name: r'{{rawName}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ type }} {{ name }} => fields.{{ schemaFieldName }};
-{{~/if}}{{/if}}
+{{/if}}{{/if}}
 {{~/inline}}
 
 {{#if fields}}
@@ -30,7 +30,7 @@
 {{#each this}}
   @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
-      'final'
+      (takeFirst ../../dupeQualifier 'final')
       ../../contextName
       ../../contextModels
       isArray

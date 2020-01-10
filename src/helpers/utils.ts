@@ -133,6 +133,9 @@ function _eachInner<I = any>(
   conditional: (item: I) => boolean,
   { prefix = "", suffix = "", delimiter = "", alwaysWrap = false }
 ) {
+  if (!context) {
+    return "";
+  }
   let blockResult = "";
   context.forEach(item => {
     if (conditional(item)) {

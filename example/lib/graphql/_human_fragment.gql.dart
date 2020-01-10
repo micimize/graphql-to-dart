@@ -7,22 +7,27 @@ part '_human_fragment.gql.g.dart';
 
 ///
 /// See [HomeSelectionSet] for the full stand-alone class
-mixin HomeMixin on Human {
-  static final String typeName = "Human";
+@JsonSerializable(createFactory: false)
+mixin Home on Human {
+  static final String schemaTypeName = "Human";
+
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  String get typename;
 
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
-  final String planet;
+  String get planet;
 
-  static Home fromJson(Map<String, dynamic> json) => Home.fromJson(json);
+  static HomeSelectionSet fromJson(Map<String, dynamic> json) =>
+      HomeSelectionSet.fromJson(json);
 }
 
 /// Materialized class that implements the fragment [Home]
 ///
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class Home extends Human with HomeMixin {
+class HomeSelectionSet extends Human with Home {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
@@ -42,7 +47,15 @@ class Home extends Human with HomeMixin {
         planet,
       ];
 
-  Home({
+  HomeSelectionSet({
+    this.typename,
+    String home,
+    this.planet,
+  }) : super(
+          homePlanet: home,
+        );
+
+  HomeSelectionSet.partial({
     this.typename,
     String home,
     this.planet,
@@ -56,20 +69,20 @@ class Home extends Human with HomeMixin {
     return missingFields;
   }
 
-  /// Creates a new `Home` with the given non-null values overridden
-  Home copyWith({
+  /// Creates a new `HomeSelectionSet` with the given non-null values overridden
+  HomeSelectionSet copyWith({
     String typename,
     String home,
     String planet,
   }) =>
-      Home(
+      HomeSelectionSet(
         typename: typename ?? this.typename,
         home: home ?? this.home,
         planet: planet ?? this.planet,
       );
 
-  /// Creates a new `Home` with non-null values from [other] as attribute overrides
-  Home mergeLeftWith(covariant Home other) {
+  /// Creates a new `HomeSelectionSet` with non-null values from [other] as attribute overrides
+  HomeSelectionSet mergeLeftWith(covariant HomeSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -78,16 +91,17 @@ class Home extends Human with HomeMixin {
     );
   }
 
-  /// Creates a new `Home` with non-null values from [other] as attribute defaults
-  Home mergedRightWith(covariant Home other) {
+  /// Creates a new `HomeSelectionSet` with non-null values from [other] as attribute defaults
+  HomeSelectionSet mergedRightWith(covariant HomeSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
 
-  factory Home.fromJson(Map<String, dynamic> json) => _$HomeFromJson(json);
+  factory HomeSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$HomeSelectionSetFromJson(json);
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$HomeToJson(this);
+    Map<String, dynamic> json = _$HomeSelectionSetToJson(this);
 
     return json;
   }
@@ -95,22 +109,28 @@ class Home extends Human with HomeMixin {
 
 ///
 /// See [DimensionsSelectionSet] for the full stand-alone class
-mixin DimensionsMixin on Human {
-  static final String typeName = "Human";
+@JsonSerializable(createFactory: false)
+mixin Dimensions on Human {
+  static final String schemaTypeName = "Human";
+
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  String get typename;
 
   @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
+
   @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
-  static Dimensions fromJson(Map<String, dynamic> json) =>
-      Dimensions.fromJson(json);
+
+  static DimensionsSelectionSet fromJson(Map<String, dynamic> json) =>
+      DimensionsSelectionSet.fromJson(json);
 }
 
 /// Materialized class that implements the fragment [Dimensions]
 ///
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class Dimensions extends Human with DimensionsMixin {
+class DimensionsSelectionSet extends Human with Dimensions {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
@@ -126,7 +146,16 @@ class Dimensions extends Human with DimensionsMixin {
         ...super.props,
       ];
 
-  Dimensions({
+  DimensionsSelectionSet({
+    this.typename,
+    double height,
+    double mass,
+  }) : super(
+          height: height,
+          mass: mass,
+        );
+
+  DimensionsSelectionSet.partial({
     this.typename,
     double height,
     double mass,
@@ -141,20 +170,20 @@ class Dimensions extends Human with DimensionsMixin {
     return missingFields;
   }
 
-  /// Creates a new `Dimensions` with the given non-null values overridden
-  Dimensions copyWith({
+  /// Creates a new `DimensionsSelectionSet` with the given non-null values overridden
+  DimensionsSelectionSet copyWith({
     String typename,
     double height,
     double mass,
   }) =>
-      Dimensions(
+      DimensionsSelectionSet(
         typename: typename ?? this.typename,
         height: height ?? this.height,
         mass: mass ?? this.mass,
       );
 
-  /// Creates a new `Dimensions` with non-null values from [other] as attribute overrides
-  Dimensions mergeLeftWith(covariant Dimensions other) {
+  /// Creates a new `DimensionsSelectionSet` with non-null values from [other] as attribute overrides
+  DimensionsSelectionSet mergeLeftWith(covariant DimensionsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -163,41 +192,25 @@ class Dimensions extends Human with DimensionsMixin {
     );
   }
 
-  /// Creates a new `Dimensions` with non-null values from [other] as attribute defaults
-  Dimensions mergedRightWith(covariant Dimensions other) {
+  /// Creates a new `DimensionsSelectionSet` with non-null values from [other] as attribute defaults
+  DimensionsSelectionSet mergedRightWith(
+      covariant DimensionsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
 
-  factory Dimensions.fromJson(Map<String, dynamic> json) =>
-      _$DimensionsFromJson(json);
+  factory DimensionsSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$DimensionsSelectionSetFromJson(json);
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$DimensionsToJson(this);
+    Map<String, dynamic> json = _$DimensionsSelectionSetToJson(this);
 
     return json;
   }
 }
 
-///
-/// See [RelationshipsStarshipsSelectionSet] for the full stand-alone class
-mixin RelationshipsStarshipsMixin on Starship, HelloMixin {
-  static final String typeName = "Starship";
-
-  @JsonKey(name: r'name', required: true, disallowNullValue: true)
-  String get name => fields.name;
-  @JsonKey(name: r'length', required: false, disallowNullValue: false)
-  double get length => fields.length;
-  static RelationshipsStarships fromJson(Map<String, dynamic> json) =>
-      RelationshipsStarships.fromJson(json);
-}
-
-/// Materialized class that implements the fragment [RelationshipsStarships]
-///
-/// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class RelationshipsStarships extends Starship
-    with HelloMixin, RelationshipsStarshipsMixin {
+class RelationshipsStarships extends Starship with HelloMixin {
   static final String schemaTypeName = "Starship";
 
   /// The `__typename` meta-field
@@ -208,6 +221,12 @@ class RelationshipsStarships extends Starship
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  @JsonKey(name: r'name', required: true, disallowNullValue: true)
+  String get name => fields.name;
+
+  @JsonKey(name: r'length', required: false, disallowNullValue: false)
+  double get length => fields.length;
+
   @override
   List<Object> get props => [
         ...super.props,
@@ -216,6 +235,15 @@ class RelationshipsStarships extends Starship
   RelationshipsStarships({
     this.typename,
     @required String name,
+    double length,
+  }) : super(
+          name: name,
+          length: length,
+        );
+
+  RelationshipsStarships.partial({
+    this.typename,
+    String name,
     double length,
   }) : super(
           name: name,
@@ -270,23 +298,8 @@ class RelationshipsStarships extends Starship
   }
 }
 
-///
-/// See [RelationshipsFriendsSelectionSet] for the full stand-alone class
-mixin RelationshipsFriendsMixin on Character, HelloMixin {
-  static final String typeName = "Character";
-
-  @JsonKey(name: r'name', required: true, disallowNullValue: true)
-  String get name => fields.name;
-  static RelationshipsFriends fromJson(Map<String, dynamic> json) =>
-      RelationshipsFriends.fromJson(json);
-}
-
-/// Materialized class that implements the fragment [RelationshipsFriends]
-///
-/// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class RelationshipsFriends extends Character
-    with HelloMixin, RelationshipsFriendsMixin {
+class RelationshipsFriends extends Character with HelloMixin {
   static final String schemaTypeName = "Character";
 
   /// The `__typename` meta-field
@@ -297,6 +310,9 @@ class RelationshipsFriends extends Character
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  @JsonKey(name: r'name', required: true, disallowNullValue: true)
+  String get name => fields.name;
+
   @override
   List<Object> get props => [
         ...super.props,
@@ -305,6 +321,13 @@ class RelationshipsFriends extends Character
   RelationshipsFriends({
     this.typename,
     @required String name,
+  }) : super(
+          name: name,
+        );
+
+  RelationshipsFriends.partial({
+    this.typename,
+    String name,
   }) : super(
           name: name,
         );
@@ -355,22 +378,28 @@ class RelationshipsFriends extends Character
 
 ///
 /// See [RelationshipsSelectionSet] for the full stand-alone class
-mixin RelationshipsMixin on Human {
-  static final String typeName = "Human";
+@JsonSerializable(createFactory: false)
+mixin Relationships on Human {
+  static final String schemaTypeName = "Human";
+
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  String get typename;
 
   @JsonKey(name: r'friends', required: false, disallowNullValue: false)
   List<RelationshipsFriends> get friends => fields.friends;
+
   @JsonKey(name: r'starships', required: false, disallowNullValue: false)
   List<RelationshipsStarships> get starships => fields.starships;
-  static Relationships fromJson(Map<String, dynamic> json) =>
-      Relationships.fromJson(json);
+
+  static RelationshipsSelectionSet fromJson(Map<String, dynamic> json) =>
+      RelationshipsSelectionSet.fromJson(json);
 }
 
 /// Materialized class that implements the fragment [Relationships]
 ///
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class Relationships extends Human with RelationshipsMixin {
+class RelationshipsSelectionSet extends Human with Relationships {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
@@ -386,7 +415,16 @@ class Relationships extends Human with RelationshipsMixin {
         ...super.props,
       ];
 
-  Relationships({
+  RelationshipsSelectionSet({
+    this.typename,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+  }) : super(
+          friends: friends,
+          starships: starships,
+        );
+
+  RelationshipsSelectionSet.partial({
     this.typename,
     List<RelationshipsFriends> friends,
     List<RelationshipsStarships> starships,
@@ -401,20 +439,21 @@ class Relationships extends Human with RelationshipsMixin {
     return missingFields;
   }
 
-  /// Creates a new `Relationships` with the given non-null values overridden
-  Relationships copyWith({
+  /// Creates a new `RelationshipsSelectionSet` with the given non-null values overridden
+  RelationshipsSelectionSet copyWith({
     String typename,
     List<RelationshipsFriends> friends,
     List<RelationshipsStarships> starships,
   }) =>
-      Relationships(
+      RelationshipsSelectionSet(
         typename: typename ?? this.typename,
         friends: friends ?? this.friends,
         starships: starships ?? this.starships,
       );
 
-  /// Creates a new `Relationships` with non-null values from [other] as attribute overrides
-  Relationships mergeLeftWith(covariant Relationships other) {
+  /// Creates a new `RelationshipsSelectionSet` with non-null values from [other] as attribute overrides
+  RelationshipsSelectionSet mergeLeftWith(
+      covariant RelationshipsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -423,17 +462,18 @@ class Relationships extends Human with RelationshipsMixin {
     );
   }
 
-  /// Creates a new `Relationships` with non-null values from [other] as attribute defaults
-  Relationships mergedRightWith(covariant Relationships other) {
+  /// Creates a new `RelationshipsSelectionSet` with non-null values from [other] as attribute defaults
+  RelationshipsSelectionSet mergedRightWith(
+      covariant RelationshipsSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
 
-  factory Relationships.fromJson(Map<String, dynamic> json) =>
-      _$RelationshipsFromJson(json);
+  factory RelationshipsSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$RelationshipsSelectionSetFromJson(json);
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$RelationshipsToJson(this);
+    Map<String, dynamic> json = _$RelationshipsSelectionSetToJson(this);
 
     return json;
   }
@@ -441,26 +481,33 @@ class Relationships extends Human with RelationshipsMixin {
 
 ///
 /// See [InfoSelectionSet] for the full stand-alone class
-mixin InfoMixin on Human implements DimensionsMixin, HomeMixin {
-  static final String typeName = "Human";
+@JsonSerializable(createFactory: false)
+mixin Info on Human implements Dimensions, Home {
+  static final String schemaTypeName = "Human";
+
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  String get typename;
 
   @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
+
   @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
+
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
-  final String planet;
+  String get planet;
 
-  static Info fromJson(Map<String, dynamic> json) => Info.fromJson(json);
+  static InfoSelectionSet fromJson(Map<String, dynamic> json) =>
+      InfoSelectionSet.fromJson(json);
 }
 
 /// Materialized class that implements the fragment [Info]
 ///
 /// Gives access to all the usual selection set helpers
 @JsonSerializable()
-class Info extends Human with InfoMixin {
+class InfoSelectionSet extends Human with Info {
   static final String schemaTypeName = "Human";
 
   /// The `__typename` meta-field
@@ -480,7 +527,19 @@ class Info extends Human with InfoMixin {
         planet,
       ];
 
-  Info({
+  InfoSelectionSet({
+    this.typename,
+    double height,
+    double mass,
+    String home,
+    this.planet,
+  }) : super(
+          height: height,
+          mass: mass,
+          homePlanet: home,
+        );
+
+  InfoSelectionSet.partial({
     this.typename,
     double height,
     double mass,
@@ -498,15 +557,15 @@ class Info extends Human with InfoMixin {
     return missingFields;
   }
 
-  /// Creates a new `Info` with the given non-null values overridden
-  Info copyWith({
+  /// Creates a new `InfoSelectionSet` with the given non-null values overridden
+  InfoSelectionSet copyWith({
     String typename,
     double height,
     double mass,
     String home,
     String planet,
   }) =>
-      Info(
+      InfoSelectionSet(
         typename: typename ?? this.typename,
         height: height ?? this.height,
         mass: mass ?? this.mass,
@@ -514,8 +573,8 @@ class Info extends Human with InfoMixin {
         planet: planet ?? this.planet,
       );
 
-  /// Creates a new `Info` with non-null values from [other] as attribute overrides
-  Info mergeLeftWith(covariant Info other) {
+  /// Creates a new `InfoSelectionSet` with non-null values from [other] as attribute overrides
+  InfoSelectionSet mergeLeftWith(covariant InfoSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       typename: other.typename,
@@ -526,16 +585,17 @@ class Info extends Human with InfoMixin {
     );
   }
 
-  /// Creates a new `Info` with non-null values from [other] as attribute defaults
-  Info mergedRightWith(covariant Info other) {
+  /// Creates a new `InfoSelectionSet` with non-null values from [other] as attribute defaults
+  InfoSelectionSet mergedRightWith(covariant InfoSelectionSet other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
 
-  factory Info.fromJson(Map<String, dynamic> json) => _$InfoFromJson(json);
+  factory InfoSelectionSet.fromJson(Map<String, dynamic> json) =>
+      _$InfoSelectionSetFromJson(json);
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$InfoToJson(this);
+    Map<String, dynamic> json = _$InfoSelectionSetToJson(this);
 
     return json;
   }

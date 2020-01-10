@@ -93,6 +93,25 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   @override
   List<Object> get props => [fields];
 
+  {{!-- not sure why but this breaks things 
+  /// Creates a new `{{ name }}` with the given non-null values overridden
+  {{ name }} copyWith({{#emptySafeEach fields required='name' excluding='__typename' prefix='{' suffix='}'}}
+      {{ resolveType type
+          "inline"
+          (takeFirst contextName ../contextName)
+          (takeFirst contextModels ../contextModels)
+          isArray
+          raw
+          ../name
+      }} {{ dartName name }},
+  {{/emptySafeEach}}) => {{ name }}(
+    {{~#each fields}}
+    {{ dartName name }}: {{ dartName name }} ?? this.{{ dartName name }},
+    {{/each~}}
+  );
+  --}}
+
+
   /// Creates a new `{{ name }}` with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) =>
     {{ name }}._fromFields(fields.mergedLeftWith(other.fields));
@@ -100,6 +119,12 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   /// Creates a new `{{ name }}` with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) =>
     {{ name }}._fromFields(fields.mergedRightWith(other.fields));
+
+  /// Alias for [mergedLeftWith]
+  {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  {{ name }} operator >>(covariant {{ name }} other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {

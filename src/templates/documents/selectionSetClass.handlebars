@@ -18,7 +18,7 @@ class {{ className }} {{
   ///
   /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
-  final String {{ camelCase (dartName @root.config.typenameField) }};
+  final String {{dartName @root.config.typenameField}};
 
   {{> selectionSet this excludeDupes='true' }}
 
@@ -56,7 +56,7 @@ class {{ className }} {{
   ];
 
   {{className}}({
-    this.{{ camelCase (dartName @root.config.typenameField) }},
+    this.{{dartName @root.config.typenameField}},
     {{#each inlineFragments~}}
     this.{{ inlineFragmentName name}},
     {{/each}}
@@ -83,7 +83,7 @@ class {{ className }} {{
 
 
   {{className}}.partial({
-    this.{{ camelCase (dartName @root.config.typenameField) }},
+    this.{{dartName @root.config.typenameField}},
     {{#each inlineFragments~}}
     this.{{ inlineFragmentName name}},
     {{/each}}
@@ -126,7 +126,7 @@ class {{ className }} {{
 
   /// Creates a new `{{ className }}` with the given non-null values overridden
   {{ className }} copyWith({
-    String {{ camelCase (dartName @root.config.typenameField) }},
+    String {{dartName @root.config.typenameField}},
     {{#each inlineFragments~}}
     {{ concat ../contextName name }} {{ inlineFragmentName name}},
     {{~/each}}
@@ -141,7 +141,7 @@ class {{ className }} {{
       }} {{dartName name}},
     {{/emptySafeEach}}
   }) => {{ className }}(
-    {{ camelCase (dartName @root.config.typenameField) }}: {{ camelCase (dartName @root.config.typenameField) }} ?? this.{{ camelCase (dartName @root.config.typenameField) }},
+    {{dartName @root.config.typenameField}}: {{dartName @root.config.typenameField}} ?? this.{{dartName @root.config.typenameField}},
     {{#each inlineFragments~}}
     {{ inlineFragmentName name}}: {{ inlineFragmentName name}} != null ?
       {{#if isArray~}}
@@ -160,7 +160,7 @@ class {{ className }} {{
   {{ className }} mergeLeftWith(covariant {{ className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
-      {{ camelCase (dartName @root.config.typenameField) }}: other.{{ camelCase (dartName @root.config.typenameField) }},
+      {{dartName @root.config.typenameField}}: other.{{dartName @root.config.typenameField}},
       {{#each inlineFragments~}}
       {{ inlineFragmentName name}}:  {{ inlineFragmentName name}},
       {{~/each}}

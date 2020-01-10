@@ -2,7 +2,7 @@
 {{#if description }}{{ multilineComment description }}{{/if}}
 class {{ className }} extends Equatable {
   {{#if typeName }}
-  static final String typeName = "{{ typeName }}";
+  static final String schemaTypeName = "{{ typeName }}";
   {{/if}}
 
   static const possibleTypes = const {

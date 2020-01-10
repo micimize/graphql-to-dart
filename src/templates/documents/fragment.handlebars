@@ -6,7 +6,7 @@
 {{#*inline "fragmentMixin" ~}}
 {{ multilineComment description }}
 /// See [{{ className }}SelectionSet] for the full stand-alone class
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 mixin {{className}} {{
   classExtends
     onMixin="true"
@@ -14,9 +14,12 @@ mixin {{className}} {{
     mixins=(resolveMixins fields)
     fragments=fragmentsSpread
 }} {
-  static final String typeName = "{{ typeName }}";
+  static final String schemaTypeName = "{{ typeName }}";
 
-  {{> selectionSet }}
+  @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
+  String get {{dartName @root.config.typenameField}};
+
+  {{> selectionSet this dupeQualifier='get' }}
 
   static {{concat className 'SelectionSet'}} fromJson(Map<String, dynamic> json) =>
     {{concat className 'SelectionSet'}}.fromJson(json);
