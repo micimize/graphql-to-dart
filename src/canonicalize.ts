@@ -1,5 +1,5 @@
 /**
- *  Yanked from graphiql. Original license:
+ *  Heavily modified, but started with mergeAst from graphiql. Original license:
  *
  *  Copyright (c) 2019 GraphQL Contributors.
  *
