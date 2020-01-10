@@ -31,7 +31,7 @@ class {{ className }} extends Equatable {
   @override
   List<Object> get props => [value];
   
-  /// Creates a new `{{ className }}` with `value.mergeLeftWith(other.value)`
+  /// Creates a new `{{ className }}` with `value.mergedLeftWith(other.value)`
   ///
   /// If [other].value is not the same type, [other] is returned.
   {{ className }} mergedLeftWith(covariant {{ name }} other) {

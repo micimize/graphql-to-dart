@@ -157,7 +157,7 @@ class {{ className }} {{
   );
 
   /// Creates a new `{{ className }}` with non-null values from [other] as attribute overrides
-  {{ className }} mergeLeftWith(covariant {{ className }} other) {
+  {{ className }} mergedLeftWith(covariant {{ className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return copyWith(
       {{dartName @root.config.typenameField}}: other.{{dartName @root.config.typenameField}},
