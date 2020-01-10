@@ -1,8 +1,9 @@
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
-### Beta
-`npm install graphql-to-dart@1.1.5-beta` includes a number of updates, such as:
+### 2.0.0 Beta
+#### This beta makes the api entirely immutable
+`npm install graphql-to-dart@2.0.0-beta5` includes a number of updates, such as:
 * per-operation file generation (probably non-optional)
 *  [`gql_code_gen`](https://github.com/gql-dart/gql/tree/master/gql_code_gen) support via `integrateGqlCodeGenAst`
 * `transformCharacters` support for handling `_underscore_prefixed` fields
@@ -113,8 +114,8 @@ Take a look at the example output to see how it generates code, as well as `src/
 * (almost) all types have
   * [`isValid`, `validate` helpers](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/schema.dart#L335-L359) 
   * [`mergedLeftWith(ThisType other)` and `mergedRightWith(ThisType other)` helpers, aliased to the `<<` and `>>` operators respectively](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/schema.dart#L321-L333)
-* selection sets have [`copyWith`](https://github.com/micimize/graphql-to-dart/blob/547142683d6b7da2c1c86e9486f74edd9937e559/example/lib/graphql/hero_for_episode.gql.dart#L95-L114) helpers and a `.partial` constructor.
-* For some reason I can't override `copyWith` properly
+* selection sets have [`copyWith`](https://github.com/micimize/graphql-to-dart/blob/66795230384bcd8cae9e725ecd694df5b0f95712/example/lib/graphql/hero_for_episode.gql.dart#L95-L114) helpers and a `.partial` constructor
+* For some reason I can't override `copyWith` properly - maybe because of covariant semantics idk.
 
 # NOTES
 * Base types do not currently have json helpers, but it should probably be configurable
