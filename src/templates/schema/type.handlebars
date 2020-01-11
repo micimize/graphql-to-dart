@@ -66,7 +66,8 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   @protected
   final _{{ name }}Fields fields;
 
-  const {{name}}._fromFields(this.fields);
+  @protected
+  const {{name}}.fromFields(this.fields);
 
   {{name}}(
     {{#emptySafeEach fields
@@ -114,11 +115,11 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
 
   /// Creates a new [{{ name }}] with non-null values from [other] as attribute overrides
   {{ name }} mergedLeftWith(covariant {{ name }} other) =>
-    {{ name }}._fromFields(fields.mergedLeftWith(other.fields));
+    {{ name }}.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
   {{ name }} mergedRightWith(covariant {{ name }} other) =>
-    {{ name }}._fromFields(fields.mergedRightWith(other.fields));
+    {{ name }}.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);

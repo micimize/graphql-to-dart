@@ -82,6 +82,12 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
           starships: starships,
         );
 
+  HeroForEpisodeHumanInlineFragment.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -138,27 +144,43 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
       );
 
   /// Creates a new [HeroForEpisodeHumanInlineFragment] with non-null values from [other] as attribute overrides
-  HeroForEpisodeHumanInlineFragment mergedLeftWith(
-      covariant HeroForEpisodeHumanInlineFragment other) {
+  @override
+  HeroForEpisodeHumanInlineFragment mergedLeftWith(Human other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      appearsIn: other.appearsIn,
-      height: other.height,
-      mass: other.mass,
-      home: other.home,
-      planet: other.planet,
-      friends: other.friends,
-      starships: other.starships,
-    );
+    if (other is HeroForEpisodeHumanInlineFragment) {
+      return copyWith(
+        typename: other.typename,
+        appearsIn: other.appearsIn,
+        height: other.height,
+        mass: other.mass,
+        home: other.home,
+        planet: other.planet,
+        friends: other.friends,
+        starships: other.starships,
+      );
+    } else {
+      return this << HeroForEpisodeHumanInlineFragment.fromObjectType(other);
+    }
   }
 
   /// Creates a new [HeroForEpisodeHumanInlineFragment] with non-null values from [other] as attribute defaults
+  @override
   HeroForEpisodeHumanInlineFragment mergedRightWith(
-      covariant HeroForEpisodeHumanInlineFragment other) {
+      HeroForEpisodeHumanInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  HeroForEpisodeHumanInlineFragment operator <<(Human other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  HeroForEpisodeHumanInlineFragment operator >>(
+          covariant HeroForEpisodeHumanInlineFragment other) =>
+      mergedRightWith(other);
 
   factory HeroForEpisodeHumanInlineFragment.fromJson(
           Map<String, dynamic> json) =>
@@ -205,6 +227,11 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
           primaryFunction: primaryFunction,
         );
 
+  HeroForEpisodeDroidInlineFragment.fromObjectType(
+    Droid objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -234,21 +261,37 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
       );
 
   /// Creates a new [HeroForEpisodeDroidInlineFragment] with non-null values from [other] as attribute overrides
-  HeroForEpisodeDroidInlineFragment mergedLeftWith(
-      covariant HeroForEpisodeDroidInlineFragment other) {
+  @override
+  HeroForEpisodeDroidInlineFragment mergedLeftWith(Droid other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      primaryFunction: other.primaryFunction,
-    );
+    if (other is HeroForEpisodeDroidInlineFragment) {
+      return copyWith(
+        typename: other.typename,
+        primaryFunction: other.primaryFunction,
+      );
+    } else {
+      return this << HeroForEpisodeDroidInlineFragment.fromObjectType(other);
+    }
   }
 
   /// Creates a new [HeroForEpisodeDroidInlineFragment] with non-null values from [other] as attribute defaults
+  @override
   HeroForEpisodeDroidInlineFragment mergedRightWith(
-      covariant HeroForEpisodeDroidInlineFragment other) {
+      HeroForEpisodeDroidInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  HeroForEpisodeDroidInlineFragment operator <<(Droid other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  HeroForEpisodeDroidInlineFragment operator >>(
+          covariant HeroForEpisodeDroidInlineFragment other) =>
+      mergedRightWith(other);
 
   factory HeroForEpisodeDroidInlineFragment.fromJson(
           Map<String, dynamic> json) =>
@@ -306,6 +349,13 @@ class HeroForEpisodeHero extends Character with HelloMixin {
           name: name,
         );
 
+  HeroForEpisodeHero.fromObjectType(
+    Character objectType, {
+    this.typename,
+    this.onDroid,
+    this.onHuman,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -350,21 +400,36 @@ class HeroForEpisodeHero extends Character with HelloMixin {
       );
 
   /// Creates a new [HeroForEpisodeHero] with non-null values from [other] as attribute overrides
-  HeroForEpisodeHero mergedLeftWith(covariant HeroForEpisodeHero other) {
+  @override
+  HeroForEpisodeHero mergedLeftWith(Character other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      onDroid: other.onDroid,
-      onHuman: other.onHuman,
-      name: other.name,
-    );
+    if (other is HeroForEpisodeHero) {
+      return copyWith(
+        typename: other.typename,
+        onDroid: other.onDroid,
+        onHuman: other.onHuman,
+        name: other.name,
+      );
+    } else {
+      return this << HeroForEpisodeHero.fromObjectType(other);
+    }
   }
 
   /// Creates a new [HeroForEpisodeHero] with non-null values from [other] as attribute defaults
-  HeroForEpisodeHero mergedRightWith(covariant HeroForEpisodeHero other) {
+  @override
+  HeroForEpisodeHero mergedRightWith(HeroForEpisodeHero other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  HeroForEpisodeHero operator <<(Character other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  HeroForEpisodeHero operator >>(covariant HeroForEpisodeHero other) =>
+      mergedRightWith(other);
 
   factory HeroForEpisodeHero.fromJson(Map<String, dynamic> json) =>
       _$HeroForEpisodeHeroFromJson(json).copyWith(
@@ -426,6 +491,11 @@ class HeroForEpisodeQuery extends Query {
           hero: hero,
         );
 
+  HeroForEpisodeQuery.fromObjectType(
+    query objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -455,19 +525,34 @@ class HeroForEpisodeQuery extends Query {
       );
 
   /// Creates a new [HeroForEpisodeQuery] with non-null values from [other] as attribute overrides
-  HeroForEpisodeQuery mergedLeftWith(covariant HeroForEpisodeQuery other) {
+  @override
+  HeroForEpisodeQuery mergedLeftWith(query other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      hero: other.hero,
-    );
+    if (other is HeroForEpisodeQuery) {
+      return copyWith(
+        typename: other.typename,
+        hero: other.hero,
+      );
+    } else {
+      return this << HeroForEpisodeQuery.fromObjectType(other);
+    }
   }
 
   /// Creates a new [HeroForEpisodeQuery] with non-null values from [other] as attribute defaults
-  HeroForEpisodeQuery mergedRightWith(covariant HeroForEpisodeQuery other) {
+  @override
+  HeroForEpisodeQuery mergedRightWith(HeroForEpisodeQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  HeroForEpisodeQuery operator <<(query other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  HeroForEpisodeQuery operator >>(covariant HeroForEpisodeQuery other) =>
+      mergedRightWith(other);
 
   factory HeroForEpisodeQuery.fromJson(Map<String, dynamic> json) =>
       _$HeroForEpisodeQueryFromJson(json);

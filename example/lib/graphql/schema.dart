@@ -342,7 +342,8 @@ class Character extends Equatable {
   @protected
   final _CharacterFields fields;
 
-  const Character._fromFields(this.fields);
+  @protected
+  const Character.fromFields(this.fields);
 
   Character({
     String id,
@@ -363,11 +364,11 @@ class Character extends Equatable {
 
   /// Creates a new [Character] with non-null values from [other] as attribute overrides
   Character mergedLeftWith(covariant Character other) =>
-      Character._fromFields(fields.mergedLeftWith(other.fields));
+      Character.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Character] with non-null values from [other] as attribute defaults
   Character mergedRightWith(covariant Character other) =>
-      Character._fromFields(fields.mergedRightWith(other.fields));
+      Character.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Character operator <<(covariant Character other) => mergedLeftWith(other);
@@ -465,7 +466,8 @@ class Query extends Equatable {
   @protected
   final _QueryFields fields;
 
-  const Query._fromFields(this.fields);
+  @protected
+  const Query.fromFields(this.fields);
 
   Query({
     Character hero,
@@ -490,11 +492,11 @@ class Query extends Equatable {
 
   /// Creates a new [Query] with non-null values from [other] as attribute overrides
   Query mergedLeftWith(covariant Query other) =>
-      Query._fromFields(fields.mergedLeftWith(other.fields));
+      Query.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Query] with non-null values from [other] as attribute defaults
   Query mergedRightWith(covariant Query other) =>
-      Query._fromFields(fields.mergedRightWith(other.fields));
+      Query.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Query operator <<(covariant Query other) => mergedLeftWith(other);
@@ -575,7 +577,8 @@ class FriendsConnection extends Equatable {
   @protected
   final _FriendsConnectionFields fields;
 
-  const FriendsConnection._fromFields(this.fields);
+  @protected
+  const FriendsConnection.fromFields(this.fields);
 
   FriendsConnection({
     int totalCount,
@@ -594,11 +597,11 @@ class FriendsConnection extends Equatable {
 
   /// Creates a new [FriendsConnection] with non-null values from [other] as attribute overrides
   FriendsConnection mergedLeftWith(covariant FriendsConnection other) =>
-      FriendsConnection._fromFields(fields.mergedLeftWith(other.fields));
+      FriendsConnection.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [FriendsConnection] with non-null values from [other] as attribute defaults
   FriendsConnection mergedRightWith(covariant FriendsConnection other) =>
-      FriendsConnection._fromFields(fields.mergedRightWith(other.fields));
+      FriendsConnection.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   FriendsConnection operator <<(covariant FriendsConnection other) =>
@@ -670,7 +673,8 @@ class FriendsEdge extends Equatable {
   @protected
   final _FriendsEdgeFields fields;
 
-  const FriendsEdge._fromFields(this.fields);
+  @protected
+  const FriendsEdge.fromFields(this.fields);
 
   FriendsEdge({
     String cursor,
@@ -685,11 +689,11 @@ class FriendsEdge extends Equatable {
 
   /// Creates a new [FriendsEdge] with non-null values from [other] as attribute overrides
   FriendsEdge mergedLeftWith(covariant FriendsEdge other) =>
-      FriendsEdge._fromFields(fields.mergedLeftWith(other.fields));
+      FriendsEdge.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [FriendsEdge] with non-null values from [other] as attribute defaults
   FriendsEdge mergedRightWith(covariant FriendsEdge other) =>
-      FriendsEdge._fromFields(fields.mergedRightWith(other.fields));
+      FriendsEdge.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   FriendsEdge operator <<(covariant FriendsEdge other) => mergedLeftWith(other);
@@ -761,7 +765,8 @@ class PageInfo extends Equatable {
   @protected
   final _PageInfoFields fields;
 
-  const PageInfo._fromFields(this.fields);
+  @protected
+  const PageInfo.fromFields(this.fields);
 
   PageInfo({
     String startCursor,
@@ -778,11 +783,11 @@ class PageInfo extends Equatable {
 
   /// Creates a new [PageInfo] with non-null values from [other] as attribute overrides
   PageInfo mergedLeftWith(covariant PageInfo other) =>
-      PageInfo._fromFields(fields.mergedLeftWith(other.fields));
+      PageInfo.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [PageInfo] with non-null values from [other] as attribute defaults
   PageInfo mergedRightWith(covariant PageInfo other) =>
-      PageInfo._fromFields(fields.mergedRightWith(other.fields));
+      PageInfo.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   PageInfo operator <<(covariant PageInfo other) => mergedLeftWith(other);
@@ -858,7 +863,8 @@ class Review extends Equatable {
   @protected
   final _ReviewFields fields;
 
-  const Review._fromFields(this.fields);
+  @protected
+  const Review.fromFields(this.fields);
 
   Review({
     Episode episode,
@@ -875,11 +881,11 @@ class Review extends Equatable {
 
   /// Creates a new [Review] with non-null values from [other] as attribute overrides
   Review mergedLeftWith(covariant Review other) =>
-      Review._fromFields(fields.mergedLeftWith(other.fields));
+      Review.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Review] with non-null values from [other] as attribute defaults
   Review mergedRightWith(covariant Review other) =>
-      Review._fromFields(fields.mergedRightWith(other.fields));
+      Review.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Review operator <<(covariant Review other) => mergedLeftWith(other);
@@ -991,7 +997,8 @@ class Human extends Equatable implements Character {
   @protected
   final _HumanFields fields;
 
-  const Human._fromFields(this.fields);
+  @protected
+  const Human.fromFields(this.fields);
 
   Human({
     String id,
@@ -1020,11 +1027,11 @@ class Human extends Equatable implements Character {
 
   /// Creates a new [Human] with non-null values from [other] as attribute overrides
   Human mergedLeftWith(covariant Human other) =>
-      Human._fromFields(fields.mergedLeftWith(other.fields));
+      Human.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Human] with non-null values from [other] as attribute defaults
   Human mergedRightWith(covariant Human other) =>
-      Human._fromFields(fields.mergedRightWith(other.fields));
+      Human.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Human operator <<(covariant Human other) => mergedLeftWith(other);
@@ -1113,7 +1120,8 @@ class Starship extends Equatable {
   @protected
   final _StarshipFields fields;
 
-  const Starship._fromFields(this.fields);
+  @protected
+  const Starship.fromFields(this.fields);
 
   Starship({
     String id,
@@ -1132,11 +1140,11 @@ class Starship extends Equatable {
 
   /// Creates a new [Starship] with non-null values from [other] as attribute overrides
   Starship mergedLeftWith(covariant Starship other) =>
-      Starship._fromFields(fields.mergedLeftWith(other.fields));
+      Starship.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Starship] with non-null values from [other] as attribute defaults
   Starship mergedRightWith(covariant Starship other) =>
-      Starship._fromFields(fields.mergedRightWith(other.fields));
+      Starship.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Starship operator <<(covariant Starship other) => mergedLeftWith(other);
@@ -1233,7 +1241,8 @@ class Droid extends Equatable implements Character {
   @protected
   final _DroidFields fields;
 
-  const Droid._fromFields(this.fields);
+  @protected
+  const Droid.fromFields(this.fields);
 
   Droid({
     String id,
@@ -1256,11 +1265,11 @@ class Droid extends Equatable implements Character {
 
   /// Creates a new [Droid] with non-null values from [other] as attribute overrides
   Droid mergedLeftWith(covariant Droid other) =>
-      Droid._fromFields(fields.mergedLeftWith(other.fields));
+      Droid.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Droid] with non-null values from [other] as attribute defaults
   Droid mergedRightWith(covariant Droid other) =>
-      Droid._fromFields(fields.mergedRightWith(other.fields));
+      Droid.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Droid operator <<(covariant Droid other) => mergedLeftWith(other);
@@ -1332,7 +1341,8 @@ class Mutation extends Equatable {
   @protected
   final _MutationFields fields;
 
-  const Mutation._fromFields(this.fields);
+  @protected
+  const Mutation.fromFields(this.fields);
 
   Mutation({
     Review createReview,
@@ -1345,11 +1355,11 @@ class Mutation extends Equatable {
 
   /// Creates a new [Mutation] with non-null values from [other] as attribute overrides
   Mutation mergedLeftWith(covariant Mutation other) =>
-      Mutation._fromFields(fields.mergedLeftWith(other.fields));
+      Mutation.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Mutation] with non-null values from [other] as attribute defaults
   Mutation mergedRightWith(covariant Mutation other) =>
-      Mutation._fromFields(fields.mergedRightWith(other.fields));
+      Mutation.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Mutation operator <<(covariant Mutation other) => mergedLeftWith(other);
@@ -1409,7 +1419,8 @@ class Subscription extends Equatable {
   @protected
   final _SubscriptionFields fields;
 
-  const Subscription._fromFields(this.fields);
+  @protected
+  const Subscription.fromFields(this.fields);
 
   Subscription({
     Review reviewAdded,
@@ -1422,11 +1433,11 @@ class Subscription extends Equatable {
 
   /// Creates a new [Subscription] with non-null values from [other] as attribute overrides
   Subscription mergedLeftWith(covariant Subscription other) =>
-      Subscription._fromFields(fields.mergedLeftWith(other.fields));
+      Subscription.fromFields(fields.mergedLeftWith(other.fields));
 
   /// Creates a new [Subscription] with non-null values from [other] as attribute defaults
   Subscription mergedRightWith(covariant Subscription other) =>
-      Subscription._fromFields(fields.mergedRightWith(other.fields));
+      Subscription.fromFields(fields.mergedRightWith(other.fields));
 
   /// Alias for [mergedLeftWith]
   Subscription operator <<(covariant Subscription other) =>

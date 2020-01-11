@@ -64,6 +64,12 @@ class HomeSelectionSet extends Human with Home {
           homePlanet: home,
         );
 
+  HomeSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -97,20 +103,34 @@ class HomeSelectionSet extends Human with Home {
       );
 
   /// Creates a new [HomeSelectionSet] with non-null values from [other] as attribute overrides
-  HomeSelectionSet mergedLeftWith(covariant Home other) {
+  @override
+  HomeSelectionSet mergedLeftWith(Human other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      home: other.home,
-      planet: other.planet,
-    );
+    if (other is Home) {
+      return copyWith(
+        typename: other.typename,
+        home: other.home,
+        planet: other.planet,
+      );
+    } else {
+      return this << HomeSelectionSet.fromObjectType(other);
+    }
   }
 
   /// Creates a new [HomeSelectionSet] with non-null values from [other] as attribute defaults
-  HomeSelectionSet mergedRightWith(covariant Home other) {
+  @override
+  HomeSelectionSet mergedRightWith(Home other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  HomeSelectionSet operator <<(Human other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  HomeSelectionSet operator >>(covariant Home other) => mergedRightWith(other);
 
   factory HomeSelectionSet.fromJson(Map<String, dynamic> json) =>
       _$HomeSelectionSetFromJson(json);
@@ -190,6 +210,11 @@ class DimensionsSelectionSet extends Human with Dimensions {
           mass: mass,
         );
 
+  DimensionsSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -223,20 +248,35 @@ class DimensionsSelectionSet extends Human with Dimensions {
       );
 
   /// Creates a new [DimensionsSelectionSet] with non-null values from [other] as attribute overrides
-  DimensionsSelectionSet mergedLeftWith(covariant Dimensions other) {
+  @override
+  DimensionsSelectionSet mergedLeftWith(Human other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      height: other.height,
-      mass: other.mass,
-    );
+    if (other is Dimensions) {
+      return copyWith(
+        typename: other.typename,
+        height: other.height,
+        mass: other.mass,
+      );
+    } else {
+      return this << DimensionsSelectionSet.fromObjectType(other);
+    }
   }
 
   /// Creates a new [DimensionsSelectionSet] with non-null values from [other] as attribute defaults
-  DimensionsSelectionSet mergedRightWith(covariant Dimensions other) {
+  @override
+  DimensionsSelectionSet mergedRightWith(Dimensions other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  DimensionsSelectionSet operator <<(Human other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  DimensionsSelectionSet operator >>(covariant Dimensions other) =>
+      mergedRightWith(other);
 
   factory DimensionsSelectionSet.fromJson(Map<String, dynamic> json) =>
       _$DimensionsSelectionSetFromJson(json);
@@ -299,6 +339,11 @@ class RelationshipsStarships extends Starship with HelloMixin {
           length: length,
         );
 
+  RelationshipsStarships.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -335,22 +380,35 @@ class RelationshipsStarships extends Starship with HelloMixin {
       );
 
   /// Creates a new [RelationshipsStarships] with non-null values from [other] as attribute overrides
-  RelationshipsStarships mergedLeftWith(
-      covariant RelationshipsStarships other) {
+  @override
+  RelationshipsStarships mergedLeftWith(Starship other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      name: other.name,
-      length: other.length,
-    );
+    if (other is RelationshipsStarships) {
+      return copyWith(
+        typename: other.typename,
+        name: other.name,
+        length: other.length,
+      );
+    } else {
+      return this << RelationshipsStarships.fromObjectType(other);
+    }
   }
 
   /// Creates a new [RelationshipsStarships] with non-null values from [other] as attribute defaults
-  RelationshipsStarships mergedRightWith(
-      covariant RelationshipsStarships other) {
+  @override
+  RelationshipsStarships mergedRightWith(RelationshipsStarships other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  RelationshipsStarships operator <<(Starship other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  RelationshipsStarships operator >>(covariant RelationshipsStarships other) =>
+      mergedRightWith(other);
 
   factory RelationshipsStarships.fromJson(Map<String, dynamic> json) =>
       _$RelationshipsStarshipsFromJson(json);
@@ -396,6 +454,11 @@ class RelationshipsFriends extends Character with HelloMixin {
           name: name,
         );
 
+  RelationshipsFriends.fromObjectType(
+    Character objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -428,19 +491,34 @@ class RelationshipsFriends extends Character with HelloMixin {
       );
 
   /// Creates a new [RelationshipsFriends] with non-null values from [other] as attribute overrides
-  RelationshipsFriends mergedLeftWith(covariant RelationshipsFriends other) {
+  @override
+  RelationshipsFriends mergedLeftWith(Character other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      name: other.name,
-    );
+    if (other is RelationshipsFriends) {
+      return copyWith(
+        typename: other.typename,
+        name: other.name,
+      );
+    } else {
+      return this << RelationshipsFriends.fromObjectType(other);
+    }
   }
 
   /// Creates a new [RelationshipsFriends] with non-null values from [other] as attribute defaults
-  RelationshipsFriends mergedRightWith(covariant RelationshipsFriends other) {
+  @override
+  RelationshipsFriends mergedRightWith(RelationshipsFriends other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  RelationshipsFriends operator <<(Character other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  RelationshipsFriends operator >>(covariant RelationshipsFriends other) =>
+      mergedRightWith(other);
 
   factory RelationshipsFriends.fromJson(Map<String, dynamic> json) =>
       _$RelationshipsFriendsFromJson(json);
@@ -510,6 +588,11 @@ class RelationshipsSelectionSet extends Human with Relationships {
           starships: starships,
         );
 
+  RelationshipsSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -543,20 +626,35 @@ class RelationshipsSelectionSet extends Human with Relationships {
       );
 
   /// Creates a new [RelationshipsSelectionSet] with non-null values from [other] as attribute overrides
-  RelationshipsSelectionSet mergedLeftWith(covariant Relationships other) {
+  @override
+  RelationshipsSelectionSet mergedLeftWith(Human other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      friends: other.friends,
-      starships: other.starships,
-    );
+    if (other is Relationships) {
+      return copyWith(
+        typename: other.typename,
+        friends: other.friends,
+        starships: other.starships,
+      );
+    } else {
+      return this << RelationshipsSelectionSet.fromObjectType(other);
+    }
   }
 
   /// Creates a new [RelationshipsSelectionSet] with non-null values from [other] as attribute defaults
-  RelationshipsSelectionSet mergedRightWith(covariant Relationships other) {
+  @override
+  RelationshipsSelectionSet mergedRightWith(Relationships other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  RelationshipsSelectionSet operator <<(Human other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  RelationshipsSelectionSet operator >>(covariant Relationships other) =>
+      mergedRightWith(other);
 
   factory RelationshipsSelectionSet.fromJson(Map<String, dynamic> json) =>
       _$RelationshipsSelectionSetFromJson(json);
@@ -652,6 +750,12 @@ class InfoSelectionSet extends Human with Info {
           homePlanet: home,
         );
 
+  InfoSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -693,22 +797,36 @@ class InfoSelectionSet extends Human with Info {
       );
 
   /// Creates a new [InfoSelectionSet] with non-null values from [other] as attribute overrides
-  InfoSelectionSet mergedLeftWith(covariant Info other) {
+  @override
+  InfoSelectionSet mergedLeftWith(Human other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      height: other.height,
-      mass: other.mass,
-      home: other.home,
-      planet: other.planet,
-    );
+    if (other is Info) {
+      return copyWith(
+        typename: other.typename,
+        height: other.height,
+        mass: other.mass,
+        home: other.home,
+        planet: other.planet,
+      );
+    } else {
+      return this << InfoSelectionSet.fromObjectType(other);
+    }
   }
 
   /// Creates a new [InfoSelectionSet] with non-null values from [other] as attribute defaults
-  InfoSelectionSet mergedRightWith(covariant Info other) {
+  @override
+  InfoSelectionSet mergedRightWith(Info other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  InfoSelectionSet operator <<(Human other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  InfoSelectionSet operator >>(covariant Info other) => mergedRightWith(other);
 
   factory InfoSelectionSet.fromJson(Map<String, dynamic> json) =>
       _$InfoSelectionSetFromJson(json);

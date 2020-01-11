@@ -111,6 +111,16 @@ class {{ className }} {{
       {{/eachUniqueBy~}}
     );
 
+  {{ className }}.fromObjectType({{typeName }} objectType, {
+    this.{{dartName @root.config.typenameField}},
+    {{#each inlineFragments~}}
+    this.{{ inlineFragmentName name}},
+    {{/each}}
+    {{~#eachDuplicateBy allFields uniqueField='schemaFieldName'}}
+    this.{{dartName name}},
+    {{/eachDuplicateBy ~}}
+  }): super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -182,24 +192,38 @@ class {{ className }} {{
   );
 
   /// Creates a new [{{ className }}] with non-null values from [other] as attribute overrides
-  {{ className }} mergedLeftWith(covariant {{ takeFirst selectionSetOf className }} other) {
+  @override
+  {{ className }} mergedLeftWith({{ typeName }} other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      {{dartName @root.config.typenameField}}: other.{{dartName @root.config.typenameField}},
-      {{#each inlineFragments~}}
-      {{ inlineFragmentName name}}: other.{{ inlineFragmentName name}},
-      {{~/each}}
-      {{#emptySafeEach allFields required='name' excluding='__typename' }}
-      {{ dartName name }}: other.{{ dartName name }},
-      {{/emptySafeEach}}
-    );
+    if (other is {{ takeFirst selectionSetOf className }}){
+      return copyWith(
+        {{dartName @root.config.typenameField}}: other.{{dartName @root.config.typenameField}},
+        {{#each inlineFragments~}}
+        {{ inlineFragmentName name}}: other.{{ inlineFragmentName name}},
+        {{~/each}}
+        {{#emptySafeEach allFields required='name' excluding='__typename' }}
+        {{ dartName name }}: other.{{ dartName name }},
+        {{/emptySafeEach}}
+      );
+    } else {
+      return this << {{className}}.fromObjectType(other);
+    }
   }
 
   /// Creates a new [{{ className }}] with non-null values from [other] as attribute defaults
-  {{ className }} mergedRightWith(covariant {{ takeFirst selectionSetOf className }} other) {
+  @override
+  {{ className }} mergedRightWith({{ takeFirst selectionSetOf className }} other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  {{ className }} operator <<({{ typeName }} other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  {{ className }} operator >>(covariant {{ takeFirst selectionSetOf className }} other) => mergedRightWith(other);
 
   factory {{className}}.fromJson(Map<String, dynamic> json) =>
      _${{className}}FromJson(json){{#if hasInlineFragments~}}

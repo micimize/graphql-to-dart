@@ -54,6 +54,11 @@ class Search_StarshipInlineFragment extends Starship {
           id: id,
         );
 
+  Search_StarshipInlineFragment.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -86,21 +91,37 @@ class Search_StarshipInlineFragment extends Starship {
       );
 
   /// Creates a new [Search_StarshipInlineFragment] with non-null values from [other] as attribute overrides
-  Search_StarshipInlineFragment mergedLeftWith(
-      covariant Search_StarshipInlineFragment other) {
+  @override
+  Search_StarshipInlineFragment mergedLeftWith(Starship other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      id: other.id,
-    );
+    if (other is Search_StarshipInlineFragment) {
+      return copyWith(
+        typename: other.typename,
+        id: other.id,
+      );
+    } else {
+      return this << Search_StarshipInlineFragment.fromObjectType(other);
+    }
   }
 
   /// Creates a new [Search_StarshipInlineFragment] with non-null values from [other] as attribute defaults
+  @override
   Search_StarshipInlineFragment mergedRightWith(
-      covariant Search_StarshipInlineFragment other) {
+      Search_StarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  Search_StarshipInlineFragment operator <<(Starship other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  Search_StarshipInlineFragment operator >>(
+          covariant Search_StarshipInlineFragment other) =>
+      mergedRightWith(other);
 
   factory Search_StarshipInlineFragment.fromJson(Map<String, dynamic> json) =>
       _$Search_StarshipInlineFragmentFromJson(json);
@@ -143,6 +164,12 @@ class SearchSearchCopyForTesting extends SearchResult {
     this.onStarship,
   }) : super();
 
+  SearchSearchCopyForTesting.fromObjectType(
+    SearchResult objectType, {
+    this.typename,
+    this.onStarship,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -174,21 +201,36 @@ class SearchSearchCopyForTesting extends SearchResult {
       );
 
   /// Creates a new [SearchSearchCopyForTesting] with non-null values from [other] as attribute overrides
-  SearchSearchCopyForTesting mergedLeftWith(
-      covariant SearchSearchCopyForTesting other) {
+  @override
+  SearchSearchCopyForTesting mergedLeftWith(SearchResult other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      onStarship: other.onStarship,
-    );
+    if (other is SearchSearchCopyForTesting) {
+      return copyWith(
+        typename: other.typename,
+        onStarship: other.onStarship,
+      );
+    } else {
+      return this << SearchSearchCopyForTesting.fromObjectType(other);
+    }
   }
 
   /// Creates a new [SearchSearchCopyForTesting] with non-null values from [other] as attribute defaults
-  SearchSearchCopyForTesting mergedRightWith(
-      covariant SearchSearchCopyForTesting other) {
+  @override
+  SearchSearchCopyForTesting mergedRightWith(SearchSearchCopyForTesting other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  SearchSearchCopyForTesting operator <<(SearchResult other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  SearchSearchCopyForTesting operator >>(
+          covariant SearchSearchCopyForTesting other) =>
+      mergedRightWith(other);
 
   factory SearchSearchCopyForTesting.fromJson(Map<String, dynamic> json) =>
       _$SearchSearchCopyForTestingFromJson(json).copyWith(
@@ -243,6 +285,11 @@ class SearchStarshipInlineFragment extends Starship {
           id: id,
         );
 
+  SearchStarshipInlineFragment.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -275,21 +322,37 @@ class SearchStarshipInlineFragment extends Starship {
       );
 
   /// Creates a new [SearchStarshipInlineFragment] with non-null values from [other] as attribute overrides
-  SearchStarshipInlineFragment mergedLeftWith(
-      covariant SearchStarshipInlineFragment other) {
+  @override
+  SearchStarshipInlineFragment mergedLeftWith(Starship other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      id: other.id,
-    );
+    if (other is SearchStarshipInlineFragment) {
+      return copyWith(
+        typename: other.typename,
+        id: other.id,
+      );
+    } else {
+      return this << SearchStarshipInlineFragment.fromObjectType(other);
+    }
   }
 
   /// Creates a new [SearchStarshipInlineFragment] with non-null values from [other] as attribute defaults
+  @override
   SearchStarshipInlineFragment mergedRightWith(
-      covariant SearchStarshipInlineFragment other) {
+      SearchStarshipInlineFragment other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  SearchStarshipInlineFragment operator <<(Starship other) =>
+      mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  SearchStarshipInlineFragment operator >>(
+          covariant SearchStarshipInlineFragment other) =>
+      mergedRightWith(other);
 
   factory SearchStarshipInlineFragment.fromJson(Map<String, dynamic> json) =>
       _$SearchStarshipInlineFragmentFromJson(json);
@@ -332,6 +395,12 @@ class SearchSearch extends SearchResult {
     this.onStarship,
   }) : super();
 
+  SearchSearch.fromObjectType(
+    SearchResult objectType, {
+    this.typename,
+    this.onStarship,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -363,19 +432,34 @@ class SearchSearch extends SearchResult {
       );
 
   /// Creates a new [SearchSearch] with non-null values from [other] as attribute overrides
-  SearchSearch mergedLeftWith(covariant SearchSearch other) {
+  @override
+  SearchSearch mergedLeftWith(SearchResult other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      onStarship: other.onStarship,
-    );
+    if (other is SearchSearch) {
+      return copyWith(
+        typename: other.typename,
+        onStarship: other.onStarship,
+      );
+    } else {
+      return this << SearchSearch.fromObjectType(other);
+    }
   }
 
   /// Creates a new [SearchSearch] with non-null values from [other] as attribute defaults
-  SearchSearch mergedRightWith(covariant SearchSearch other) {
+  @override
+  SearchSearch mergedRightWith(SearchSearch other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  SearchSearch operator <<(SearchResult other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  SearchSearch operator >>(covariant SearchSearch other) =>
+      mergedRightWith(other);
 
   factory SearchSearch.fromJson(Map<String, dynamic> json) =>
       _$SearchSearchFromJson(json).copyWith(
@@ -438,6 +522,12 @@ class SearchQuery extends Query {
           search: search,
         );
 
+  SearchQuery.fromObjectType(
+    query objectType, {
+    this.typename,
+    this.searchCopyForTesting,
+  }) : super.fromFields(objectType.fields);
+
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -472,20 +562,35 @@ class SearchQuery extends Query {
       );
 
   /// Creates a new [SearchQuery] with non-null values from [other] as attribute overrides
-  SearchQuery mergedLeftWith(covariant SearchQuery other) {
+  @override
+  SearchQuery mergedLeftWith(query other) {
     assert(other != null, "$this Cannot be merged with null");
-    return copyWith(
-      typename: other.typename,
-      search: other.search,
-      searchCopyForTesting: other.searchCopyForTesting,
-    );
+    if (other is SearchQuery) {
+      return copyWith(
+        typename: other.typename,
+        search: other.search,
+        searchCopyForTesting: other.searchCopyForTesting,
+      );
+    } else {
+      return this << SearchQuery.fromObjectType(other);
+    }
   }
 
   /// Creates a new [SearchQuery] with non-null values from [other] as attribute defaults
-  SearchQuery mergedRightWith(covariant SearchQuery other) {
+  @override
+  SearchQuery mergedRightWith(SearchQuery other) {
     assert(other != null, "$this Cannot be merged with null");
     return other.mergedLeftWith(this);
   }
+
+  /// Alias for [mergedLeftWith]
+  @override
+  SearchQuery operator <<(query other) => mergedLeftWith(other);
+
+  /// Alias for [mergedRightWith]
+  @override
+  SearchQuery operator >>(covariant SearchQuery other) =>
+      mergedRightWith(other);
 
   factory SearchQuery.fromJson(Map<String, dynamic> json) =>
       _$SearchQueryFromJson(json);
