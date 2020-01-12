@@ -38,12 +38,6 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
       {{/if}}{{/each~}}
     );
   }
-
-  /// Creates a new [{{ className }}] with non-null values from [other] as attribute defaults
-  {{ className }} mergedRightWith(covariant {{ className }} other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
     
 }
 {{~/inline~}}
@@ -117,15 +111,8 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
   {{ name }} mergedLeftWith(covariant {{ name }} other) =>
     {{ name }}.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
-  {{ name }} mergedRightWith(covariant {{ name }} other) =>
-    {{ name }}.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  {{ name }} operator >>(covariant {{ name }} other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {

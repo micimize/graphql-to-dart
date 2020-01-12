@@ -24,6 +24,15 @@ enum LengthUnit {
 // unions in dart seem ugly by necessity atm
 @immutable
 class SearchResult extends Equatable {
+  // just to make fromObjectType work with unions
+  @protected
+  SearchResult get fields => this;
+  @protected
+  SearchResult.fromFields(SearchResult other)
+      : onHuman = other.onHuman,
+        onDroid = other.onDroid,
+        onStarship = other.onStarship;
+
   static const possibleTypes = const {Human, Droid, Starship};
 
   final Human onHuman;
@@ -62,12 +71,9 @@ class SearchResult extends Equatable {
     return other;
   }
 
-  /// Creates a new [SearchResult] with non-null values from [other] as attribute defaults
-  SearchResult mergedRightWith(covariant SearchResult other) {
-    assert(other?.value != null,
-        "$this Cannot be merged with null value from $other");
-    return other.mergedLeftWith(this);
-  }
+  /// Alias for [mergedLeftWith]
+  SearchResult operator <<(covariant SearchResult other) =>
+      mergedLeftWith(other);
 }
 
 /* Input Types */
@@ -156,18 +162,8 @@ class ReviewInput extends Equatable {
     );
   }
 
-  /// Creates a new [ReviewInput] with non-null values from [other] as attribute defaults
-  ReviewInput mergedRightWith(covariant ReviewInput other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
-
   /// Alias for [mergedLeftWith]
   ReviewInput operator <<(covariant ReviewInput other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  ReviewInput operator >>(covariant ReviewInput other) =>
-      mergedRightWith(other);
 
   factory ReviewInput.fromJson(Map<String, dynamic> json) =>
       _$ReviewInputFromJson(json);
@@ -260,17 +256,8 @@ class ColorInput extends Equatable {
     );
   }
 
-  /// Creates a new [ColorInput] with non-null values from [other] as attribute defaults
-  ColorInput mergedRightWith(covariant ColorInput other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
-
   /// Alias for [mergedLeftWith]
   ColorInput operator <<(covariant ColorInput other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  ColorInput operator >>(covariant ColorInput other) => mergedRightWith(other);
 
   factory ColorInput.fromJson(Map<String, dynamic> json) =>
       _$ColorInputFromJson(json);
@@ -326,12 +313,6 @@ class _CharacterFields extends Equatable {
       appearsIn: other.appearsIn ?? appearsIn,
     );
   }
-
-  /// Creates a new [_CharacterFields] with non-null values from [other] as attribute defaults
-  _CharacterFields mergedRightWith(covariant _CharacterFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// A character from the Star Wars universe
@@ -366,15 +347,8 @@ class Character extends Equatable {
   Character mergedLeftWith(covariant Character other) =>
       Character.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Character] with non-null values from [other] as attribute defaults
-  Character mergedRightWith(covariant Character other) =>
-      Character.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Character operator <<(covariant Character other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Character operator >>(covariant Character other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -450,12 +424,6 @@ class _QueryFields extends Equatable {
       starship: other.starship ?? starship,
     );
   }
-
-  /// Creates a new [_QueryFields] with non-null values from [other] as attribute defaults
-  _QueryFields mergedRightWith(covariant _QueryFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// The query type, represents all of the entry points into our object graph
@@ -494,15 +462,8 @@ class Query extends Equatable {
   Query mergedLeftWith(covariant Query other) =>
       Query.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Query] with non-null values from [other] as attribute defaults
-  Query mergedRightWith(covariant Query other) =>
-      Query.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Query operator <<(covariant Query other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Query operator >>(covariant Query other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -560,13 +521,6 @@ class _FriendsConnectionFields extends Equatable {
       pageInfo: other.pageInfo ?? pageInfo,
     );
   }
-
-  /// Creates a new [_FriendsConnectionFields] with non-null values from [other] as attribute defaults
-  _FriendsConnectionFields mergedRightWith(
-      covariant _FriendsConnectionFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// A connection object for a character's friends
@@ -599,17 +553,9 @@ class FriendsConnection extends Equatable {
   FriendsConnection mergedLeftWith(covariant FriendsConnection other) =>
       FriendsConnection.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [FriendsConnection] with non-null values from [other] as attribute defaults
-  FriendsConnection mergedRightWith(covariant FriendsConnection other) =>
-      FriendsConnection.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   FriendsConnection operator <<(covariant FriendsConnection other) =>
       mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  FriendsConnection operator >>(covariant FriendsConnection other) =>
-      mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -657,12 +603,6 @@ class _FriendsEdgeFields extends Equatable {
       node: other.node ?? node,
     );
   }
-
-  /// Creates a new [_FriendsEdgeFields] with non-null values from [other] as attribute defaults
-  _FriendsEdgeFields mergedRightWith(covariant _FriendsEdgeFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// An edge object for a character's friends
@@ -691,16 +631,8 @@ class FriendsEdge extends Equatable {
   FriendsEdge mergedLeftWith(covariant FriendsEdge other) =>
       FriendsEdge.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [FriendsEdge] with non-null values from [other] as attribute defaults
-  FriendsEdge mergedRightWith(covariant FriendsEdge other) =>
-      FriendsEdge.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   FriendsEdge operator <<(covariant FriendsEdge other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  FriendsEdge operator >>(covariant FriendsEdge other) =>
-      mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -749,12 +681,6 @@ class _PageInfoFields extends Equatable {
       hasNextPage: other.hasNextPage ?? hasNextPage,
     );
   }
-
-  /// Creates a new [_PageInfoFields] with non-null values from [other] as attribute defaults
-  _PageInfoFields mergedRightWith(covariant _PageInfoFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// Information for paginating this connection
@@ -785,15 +711,8 @@ class PageInfo extends Equatable {
   PageInfo mergedLeftWith(covariant PageInfo other) =>
       PageInfo.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [PageInfo] with non-null values from [other] as attribute defaults
-  PageInfo mergedRightWith(covariant PageInfo other) =>
-      PageInfo.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   PageInfo operator <<(covariant PageInfo other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  PageInfo operator >>(covariant PageInfo other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -847,12 +766,6 @@ class _ReviewFields extends Equatable {
       commentary: other.commentary ?? commentary,
     );
   }
-
-  /// Creates a new [_ReviewFields] with non-null values from [other] as attribute defaults
-  _ReviewFields mergedRightWith(covariant _ReviewFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// Represents a review for a movie
@@ -883,15 +796,8 @@ class Review extends Equatable {
   Review mergedLeftWith(covariant Review other) =>
       Review.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Review] with non-null values from [other] as attribute defaults
-  Review mergedRightWith(covariant Review other) =>
-      Review.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Review operator <<(covariant Review other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Review operator >>(covariant Review other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -981,12 +887,6 @@ class _HumanFields extends Equatable implements _CharacterFields {
       starships: other.starships ?? starships,
     );
   }
-
-  /// Creates a new [_HumanFields] with non-null values from [other] as attribute defaults
-  _HumanFields mergedRightWith(covariant _HumanFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// A humanoid creature from the Star Wars universe
@@ -1029,15 +929,8 @@ class Human extends Equatable implements Character {
   Human mergedLeftWith(covariant Human other) =>
       Human.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Human] with non-null values from [other] as attribute defaults
-  Human mergedRightWith(covariant Human other) =>
-      Human.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Human operator <<(covariant Human other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Human operator >>(covariant Human other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1104,12 +997,6 @@ class _StarshipFields extends Equatable {
       coordinates: other.coordinates ?? coordinates,
     );
   }
-
-  /// Creates a new [_StarshipFields] with non-null values from [other] as attribute defaults
-  _StarshipFields mergedRightWith(covariant _StarshipFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 ///
@@ -1142,15 +1029,8 @@ class Starship extends Equatable {
   Starship mergedLeftWith(covariant Starship other) =>
       Starship.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Starship] with non-null values from [other] as attribute defaults
-  Starship mergedRightWith(covariant Starship other) =>
-      Starship.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Starship operator <<(covariant Starship other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Starship operator >>(covariant Starship other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1225,12 +1105,6 @@ class _DroidFields extends Equatable implements _CharacterFields {
       primaryFunction: other.primaryFunction ?? primaryFunction,
     );
   }
-
-  /// Creates a new [_DroidFields] with non-null values from [other] as attribute defaults
-  _DroidFields mergedRightWith(covariant _DroidFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// An autonomous mechanical character in the Star Wars universe
@@ -1267,15 +1141,8 @@ class Droid extends Equatable implements Character {
   Droid mergedLeftWith(covariant Droid other) =>
       Droid.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Droid] with non-null values from [other] as attribute defaults
-  Droid mergedRightWith(covariant Droid other) =>
-      Droid.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Droid operator <<(covariant Droid other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Droid operator >>(covariant Droid other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1325,12 +1192,6 @@ class _MutationFields extends Equatable {
       createReview: other.createReview ?? createReview,
     );
   }
-
-  /// Creates a new [_MutationFields] with non-null values from [other] as attribute defaults
-  _MutationFields mergedRightWith(covariant _MutationFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// The mutation type, represents all updates we can make to our data
@@ -1357,15 +1218,8 @@ class Mutation extends Equatable {
   Mutation mergedLeftWith(covariant Mutation other) =>
       Mutation.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Mutation] with non-null values from [other] as attribute defaults
-  Mutation mergedRightWith(covariant Mutation other) =>
-      Mutation.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Mutation operator <<(covariant Mutation other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Mutation operator >>(covariant Mutation other) => mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {
@@ -1403,12 +1257,6 @@ class _SubscriptionFields extends Equatable {
       reviewAdded: other.reviewAdded ?? reviewAdded,
     );
   }
-
-  /// Creates a new [_SubscriptionFields] with non-null values from [other] as attribute defaults
-  _SubscriptionFields mergedRightWith(covariant _SubscriptionFields other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
 }
 
 /// The subscription type, represents all subscriptions we can make to our data
@@ -1435,17 +1283,9 @@ class Subscription extends Equatable {
   Subscription mergedLeftWith(covariant Subscription other) =>
       Subscription.fromFields(fields.mergedLeftWith(other.fields));
 
-  /// Creates a new [Subscription] with non-null values from [other] as attribute defaults
-  Subscription mergedRightWith(covariant Subscription other) =>
-      Subscription.fromFields(fields.mergedRightWith(other.fields));
-
   /// Alias for [mergedLeftWith]
   Subscription operator <<(covariant Subscription other) =>
       mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  Subscription operator >>(covariant Subscription other) =>
-      mergedRightWith(other);
 
   @protected
   Set<String> get missingRequiredFields {

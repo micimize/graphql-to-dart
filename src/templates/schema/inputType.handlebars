@@ -171,17 +171,8 @@ class {{ name }} {{
     );
   }
 
-  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
-  {{ name }} mergedRightWith(covariant {{ name }} other) {
-    assert(other != null, "$this Cannot be merged with null");
-    return other.mergedLeftWith(this);
-  }
-
   /// Alias for [mergedLeftWith]
   {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);
-
-  /// Alias for [mergedRightWith]
-  {{ name }} operator >>(covariant {{ name }} other) => mergedRightWith(other);
 
   {{#each (addInputHelpers name) ~}}
   {{> inputTypeHelpers .. objectType=this }}

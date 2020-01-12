@@ -5,6 +5,15 @@ class {{ className }} extends Equatable {
   static final String schemaTypeName = "{{ typeName }}";
   {{/if}}
 
+  // just to make fromObjectType work with unions
+  @protected
+  {{ className }} get fields => this;
+  @protected
+  {{ className }}.fromFields({{ className }} other):
+    {{#each possibleTypes~}}
+    {{inlineFragmentName this}} = other.{{inlineFragmentName this}}{{#unless @last}},{{/unless}}
+    {{~/each}};
+
   static const possibleTypes = const {
     {{#each possibleTypes~}}
     {{this}}{{#unless @last}},
@@ -16,12 +25,12 @@ class {{ className }} extends Equatable {
   final {{ this }} {{inlineFragmentName this}};
   {{/each}}
 
-
   const {{ className }}({
     {{#each possibleTypes~}}
     this.{{inlineFragmentName this}},
     {{/each}}
   });
+
 
   /// The wrapped value. Will be one of the `possibleTypes`
   Object get value => {{#each possibleTypes~}}
@@ -45,10 +54,7 @@ class {{ className }} extends Equatable {
     return other;
   }
 
-  /// Creates a new [{{ name }}] with non-null values from [other] as attribute defaults
-  {{ name }} mergedRightWith(covariant {{ name }} other) {
-    assert(other?.value != null, "$this Cannot be merged with null value from $other");
-    return other.mergedLeftWith(this);
-  }
+  /// Alias for [mergedLeftWith]
+  {{ className }} operator <<(covariant {{ className }} other) => mergedLeftWith(other);
 
 }
