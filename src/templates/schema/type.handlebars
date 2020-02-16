@@ -59,8 +59,9 @@ class {{ className }}Results extends FieldResults<{{ className }}Arguments, {{re
       @root.config.irreducibleTypes
 )}}
 
-{{#each fields}}{{#if type}}{{#if name}}{{#if arguments}}
-
+{{#each fields}}
+{{~#if type}}{{#if name}}{{#if arguments}}
+{{~#if (shouldGenerateField ../name name ../interfaces) }}
 {{> complexFieldClass this
     resultType=(
       resolveType
@@ -74,8 +75,9 @@ class {{ className }}Results extends FieldResults<{{ className }}Arguments, {{re
     )
     className=(concat ../name (toPascalCase name))
 }}
-
-{{~/if}}{{~/if}}{{/if}}{{/each}}
+{{~/if}}
+{{~/if}}{{~/if}}{{/if}}
+{{/each}}
 
 {{ multilineComment description }}
 @immutable
@@ -91,11 +93,17 @@ class {{ name }} extends GraphQLObjectType {{
     {{/if}}{{/each}}
   });
 
+  {{ name }}.partial({
+    {{#each fields}}{{#if name}}
+      this.{{ dartName name }},
+    {{/if}}{{/each}}
+  });
+
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   {{#if arguments}}
-  final {{../name}}{{ toPascalCase name }}Results {{ dartName name }};
+  final {{ resolveFieldType ../name name ../interfaces }}Results {{ dartName name }};
   {{else}}
   {{ resolveType type
       "final"

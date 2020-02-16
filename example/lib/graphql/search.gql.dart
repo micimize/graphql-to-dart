@@ -21,8 +21,25 @@ class SearchVariables {
 }
 
 @JsonSerializable()
-class Search_StarshipInlineFragment extends Starship {
-  static final String schemaTypeName = "Starship";
+class Search_StarshipInlineFragment extends Partial<Starship> {
+  Search_StarshipInlineFragment({
+    this.typename,
+    @required String id,
+  }) : super.of(Starship.partial(
+          id: id,
+        ));
+
+  Search_StarshipInlineFragment.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  Search_StarshipInlineFragment.partial({
+    this.typename,
+    String id,
+  }) : super.of(Starship.partial(
+          id: id,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -32,6 +49,8 @@ class Search_StarshipInlineFragment extends Starship {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // id  ID!
+
   @JsonKey(name: r'id', required: true, disallowNullValue: true)
   String get id => fields.id;
 
@@ -39,25 +58,6 @@ class Search_StarshipInlineFragment extends Starship {
   List<Object> get props => [
         ...super.props,
       ];
-
-  Search_StarshipInlineFragment({
-    this.typename,
-    @required String id,
-  }) : super(
-          id: id,
-        );
-
-  Search_StarshipInlineFragment.fromObjectType(
-    Starship objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  Search_StarshipInlineFragment.partial({
-    this.typename,
-    String id,
-  }) : super(
-          id: id,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -114,11 +114,27 @@ class Search_StarshipInlineFragment extends Starship {
 
     return json;
   }
+
+  static final String schemaTypeName = "Starship";
 }
 
 @JsonSerializable()
-class SearchSearchCopyForTesting extends SearchResult {
-  static final String schemaTypeName = "SearchResult";
+class SearchSearchCopyForTesting extends Partial<SearchResult> {
+  SearchSearchCopyForTesting({
+    this.typename,
+    this.onStarship,
+  }) : super.of(SearchResult.partial());
+
+  SearchSearchCopyForTesting.fromObjectType(
+    SearchResult objectType, {
+    this.typename,
+    this.onStarship,
+  }) : super.of(objectType);
+
+  SearchSearchCopyForTesting.partial({
+    this.typename,
+    this.onStarship,
+  }) : super.of(SearchResult.partial());
 
   /// The `__typename` meta-field
   ///
@@ -136,22 +152,6 @@ class SearchSearchCopyForTesting extends SearchResult {
         ...super.props,
         onStarship,
       ];
-
-  SearchSearchCopyForTesting({
-    this.typename,
-    this.onStarship,
-  }) : super();
-
-  SearchSearchCopyForTesting.fromObjectType(
-    SearchResult objectType, {
-    this.typename,
-    this.onStarship,
-  }) : super.fromFields(objectType.fields);
-
-  SearchSearchCopyForTesting.partial({
-    this.typename,
-    this.onStarship,
-  }) : super();
 
   @protected
   Set<String> get missingRequiredFields {
@@ -216,11 +216,30 @@ class SearchSearchCopyForTesting extends SearchResult {
 
     return json;
   }
+
+  static final String schemaTypeName = "SearchResult";
 }
 
 @JsonSerializable()
-class SearchStarshipInlineFragment extends Starship {
-  static final String schemaTypeName = "Starship";
+class SearchStarshipInlineFragment extends Partial<Starship> {
+  SearchStarshipInlineFragment({
+    this.typename,
+    @required String id,
+  }) : super.of(Starship.partial(
+          id: id,
+        ));
+
+  SearchStarshipInlineFragment.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  SearchStarshipInlineFragment.partial({
+    this.typename,
+    String id,
+  }) : super.of(Starship.partial(
+          id: id,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -230,6 +249,8 @@ class SearchStarshipInlineFragment extends Starship {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // id  ID!
+
   @JsonKey(name: r'id', required: true, disallowNullValue: true)
   String get id => fields.id;
 
@@ -237,25 +258,6 @@ class SearchStarshipInlineFragment extends Starship {
   List<Object> get props => [
         ...super.props,
       ];
-
-  SearchStarshipInlineFragment({
-    this.typename,
-    @required String id,
-  }) : super(
-          id: id,
-        );
-
-  SearchStarshipInlineFragment.fromObjectType(
-    Starship objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  SearchStarshipInlineFragment.partial({
-    this.typename,
-    String id,
-  }) : super(
-          id: id,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -312,11 +314,27 @@ class SearchStarshipInlineFragment extends Starship {
 
     return json;
   }
+
+  static final String schemaTypeName = "Starship";
 }
 
 @JsonSerializable()
-class SearchSearch extends SearchResult {
-  static final String schemaTypeName = "SearchResult";
+class SearchSearch extends Partial<SearchResult> {
+  SearchSearch({
+    this.typename,
+    this.onStarship,
+  }) : super.of(SearchResult.partial());
+
+  SearchSearch.fromObjectType(
+    SearchResult objectType, {
+    this.typename,
+    this.onStarship,
+  }) : super.of(objectType);
+
+  SearchSearch.partial({
+    this.typename,
+    this.onStarship,
+  }) : super.of(SearchResult.partial());
 
   /// The `__typename` meta-field
   ///
@@ -334,22 +352,6 @@ class SearchSearch extends SearchResult {
         ...super.props,
         onStarship,
       ];
-
-  SearchSearch({
-    this.typename,
-    this.onStarship,
-  }) : super();
-
-  SearchSearch.fromObjectType(
-    SearchResult objectType, {
-    this.typename,
-    this.onStarship,
-  }) : super.fromFields(objectType.fields);
-
-  SearchSearch.partial({
-    this.typename,
-    this.onStarship,
-  }) : super();
 
   @protected
   Set<String> get missingRequiredFields {
@@ -412,11 +414,33 @@ class SearchSearch extends SearchResult {
 
     return json;
   }
+
+  static final String schemaTypeName = "SearchResult";
 }
 
 @JsonSerializable()
-class SearchQuery extends Query {
-  static final String schemaTypeName = "query";
+class SearchQuery extends Partial<Query> {
+  SearchQuery({
+    this.typename,
+    List<SearchSearch> search,
+    this.searchCopyForTesting,
+  }) : super.of(Query.partial(
+          search: search,
+        ));
+
+  SearchQuery.fromObjectType(
+    Query objectType, {
+    this.typename,
+    this.searchCopyForTesting,
+  }) : super.of(objectType);
+
+  SearchQuery.partial({
+    this.typename,
+    List<SearchSearch> search,
+    this.searchCopyForTesting,
+  }) : super.of(Query.partial(
+          search: search,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -425,6 +449,8 @@ class SearchQuery extends Query {
   /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
+
+  // search  [SearchResult]
 
   @JsonKey(name: r'search', required: false, disallowNullValue: false)
   List<SearchSearch> get search => fields.search;
@@ -439,28 +465,6 @@ class SearchQuery extends Query {
         ...super.props,
         searchCopyForTesting,
       ];
-
-  SearchQuery({
-    this.typename,
-    List<SearchSearch> search,
-    this.searchCopyForTesting,
-  }) : super(
-          search: search,
-        );
-
-  SearchQuery.fromObjectType(
-    Query objectType, {
-    this.typename,
-    this.searchCopyForTesting,
-  }) : super.fromFields(objectType.fields);
-
-  SearchQuery.partial({
-    this.typename,
-    List<SearchSearch> search,
-    this.searchCopyForTesting,
-  }) : super(
-          search: search,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -517,4 +521,6 @@ class SearchQuery extends Query {
 
     return json;
   }
+
+  static final String schemaTypeName = "query";
 }

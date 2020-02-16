@@ -9,6 +9,11 @@
 
 {{#if fields}}
 {{#eachUniqueBy fields uniqueField='schemaFieldName'}}
+{{#if arguments}}
+  // {{#each arguments }} {{ defaultValue }} {{ raw }} {{/each}}
+final {{ resolveFieldType ../name name ../interfaces }}Results {{ dartName name }};
+{{else}}
+  // {{schemaFieldName}} {{isAliased}} {{raw}}
 {{> exposeField
     this
     description=description
@@ -25,9 +30,13 @@
             ../name
     )
 }}
+{{/if}}
 {{else}}
 {{#unless ../excludeDupes}}
 {{#each this}}
+  {{#if arguments}}
+  final {{ resolveFieldType ../name name ../interfaces }}Results {{ dartName name }};
+  {{else}}
   @JsonKey(name: r'{{name}}', required: {{isRequired}}, disallowNullValue: {{isRequired}})
   {{ resolveType type
       (takeFirst ../../dupeQualifier 'final')
@@ -37,6 +46,7 @@
       raw
       ../name
   }} {{ dartName name }};
+  {{~/if}}
 {{/each}}
 {{/unless}}
 {{/eachUniqueBy}}

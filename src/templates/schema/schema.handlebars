@@ -42,22 +42,22 @@ abstract class GraphQLObjectType {
 }
 
 
-abstract class Fragment<ObjectType extends GraphQLObjectType> extends Equatable {
+abstract class Partial<ObjectType extends GraphQLObjectType> extends Equatable {
   @protected
-  const Fragment.of(this.fields);
+  const Partial.of(this.fields);
 
   final ObjectType fields;
 
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new [Fragment<ObjectType>] with non-null values from [other] as attribute overrides
-  Fragment<ObjectType> mergedLeftWith(covariant Fragment<ObjectType> other);
-  //Fragment<ObjectType> mergedLeftWith(covariant Fragment<ObjectType> other);
-  //    Fragment.of(fields.mergedLeftWith(other.fields));
+  /// Creates a new [Partial<ObjectType>] with non-null values from [other] as attribute overrides
+  Partial<ObjectType> mergedLeftWith(covariant Partial<ObjectType> other);
+  //Partial<ObjectType> mergedLeftWith(covariant Partial<ObjectType> other);
+  //    Partial.of(fields.mergedLeftWith(other.fields));
 
   /// Alias for [mergedLeftWith]
-  Fragment<ObjectType> operator <<(covariant Fragment<ObjectType> other) =>
+  Partial<ObjectType> operator <<(covariant Partial<ObjectType> other) =>
       mergedLeftWith(other);
 
   @protected

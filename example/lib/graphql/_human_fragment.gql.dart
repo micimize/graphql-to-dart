@@ -8,17 +8,18 @@ part '_human_fragment.gql.g.dart';
 ///
 /// See [HomeSelectionSet] for the full stand-alone class
 @JsonSerializable(createFactory: false)
-mixin Home on Human {
+mixin Home on Partial<Human> {
   static final String schemaTypeName = "Human";
 
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   String get typename;
 
+  // homePlanet home String
+
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
   String get planet;
-
   static HomeSelectionSet fromJson(Map<String, dynamic> json) =>
       HomeSelectionSet.fromJson(json);
 }
@@ -28,8 +29,28 @@ mixin Home on Human {
 /// Gives access to all the usual selection set helpers
 
 @JsonSerializable()
-class HomeSelectionSet extends Human with Home {
-  static final String schemaTypeName = "Human";
+class HomeSelectionSet extends Partial<Human> with Home {
+  HomeSelectionSet({
+    this.typename,
+    String home,
+    this.planet,
+  }) : super.of(Human.partial(
+          homePlanet: home,
+        ));
+
+  HomeSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.of(objectType);
+
+  HomeSelectionSet.partial({
+    this.typename,
+    String home,
+    this.planet,
+  }) : super.of(Human.partial(
+          homePlanet: home,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -47,28 +68,6 @@ class HomeSelectionSet extends Human with Home {
         ...super.props,
         planet,
       ];
-
-  HomeSelectionSet({
-    this.typename,
-    String home,
-    this.planet,
-  }) : super(
-          homePlanet: home,
-        );
-
-  HomeSelectionSet.fromObjectType(
-    Human objectType, {
-    this.typename,
-    this.planet,
-  }) : super.fromFields(objectType.fields);
-
-  HomeSelectionSet.partial({
-    this.typename,
-    String home,
-    this.planet,
-  }) : super(
-          homePlanet: home,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -134,19 +133,24 @@ class HomeSelectionSet extends Human with Home {
       planet: source.planet,
     );
   }
+
+  static final String schemaTypeName = "Human";
 }
 
 ///
 /// See [DimensionsSelectionSet] for the full stand-alone class
 @JsonSerializable(createFactory: false)
-mixin Dimensions on Human {
+mixin Dimensions on Partial<Human> {
   static final String schemaTypeName = "Human";
 
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   String get typename;
 
+  // height  Float
+
   @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
+  // mass  Float
 
   @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
@@ -160,8 +164,29 @@ mixin Dimensions on Human {
 /// Gives access to all the usual selection set helpers
 
 @JsonSerializable()
-class DimensionsSelectionSet extends Human with Dimensions {
-  static final String schemaTypeName = "Human";
+class DimensionsSelectionSet extends Partial<Human> with Dimensions {
+  DimensionsSelectionSet({
+    this.typename,
+    double height,
+    double mass,
+  }) : super.of(Human.partial(
+          height: height,
+          mass: mass,
+        ));
+
+  DimensionsSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  DimensionsSelectionSet.partial({
+    this.typename,
+    double height,
+    double mass,
+  }) : super.of(Human.partial(
+          height: height,
+          mass: mass,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -175,29 +200,6 @@ class DimensionsSelectionSet extends Human with Dimensions {
   List<Object> get props => [
         ...super.props,
       ];
-
-  DimensionsSelectionSet({
-    this.typename,
-    double height,
-    double mass,
-  }) : super(
-          height: height,
-          mass: mass,
-        );
-
-  DimensionsSelectionSet.fromObjectType(
-    Human objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  DimensionsSelectionSet.partial({
-    this.typename,
-    double height,
-    double mass,
-  }) : super(
-          height: height,
-          mass: mass,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -264,11 +266,34 @@ class DimensionsSelectionSet extends Human with Dimensions {
       mass: source.mass,
     );
   }
+
+  static final String schemaTypeName = "Human";
 }
 
 @JsonSerializable()
-class RelationshipsStarships extends Starship with HelloMixin {
-  static final String schemaTypeName = "Starship";
+class RelationshipsStarships extends Partial<Starship> with HelloMixin {
+  RelationshipsStarships({
+    this.typename,
+    @required String name,
+    double length,
+  }) : super.of(Starship.partial(
+          name: name,
+          length: length,
+        ));
+
+  RelationshipsStarships.fromObjectType(
+    Starship objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  RelationshipsStarships.partial({
+    this.typename,
+    String name,
+    double length,
+  }) : super.of(Starship.partial(
+          name: name,
+          length: length,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -278,8 +303,11 @@ class RelationshipsStarships extends Starship with HelloMixin {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // name  String!
+
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
+  // length  Float
 
   @JsonKey(name: r'length', required: false, disallowNullValue: false)
   double get length => fields.length;
@@ -288,29 +316,6 @@ class RelationshipsStarships extends Starship with HelloMixin {
   List<Object> get props => [
         ...super.props,
       ];
-
-  RelationshipsStarships({
-    this.typename,
-    @required String name,
-    double length,
-  }) : super(
-          name: name,
-          length: length,
-        );
-
-  RelationshipsStarships.fromObjectType(
-    Starship objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  RelationshipsStarships.partial({
-    this.typename,
-    String name,
-    double length,
-  }) : super(
-          name: name,
-          length: length,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -371,11 +376,30 @@ class RelationshipsStarships extends Starship with HelloMixin {
 
     return json;
   }
+
+  static final String schemaTypeName = "Starship";
 }
 
 @JsonSerializable()
-class RelationshipsFriends extends Character with HelloMixin {
-  static final String schemaTypeName = "Character";
+class RelationshipsFriends extends Partial<Character> with HelloMixin {
+  RelationshipsFriends({
+    this.typename,
+    @required String name,
+  }) : super.of(Character.partial(
+          name: name,
+        ));
+
+  RelationshipsFriends.fromObjectType(
+    Character objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  RelationshipsFriends.partial({
+    this.typename,
+    String name,
+  }) : super.of(Character.partial(
+          name: name,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -385,6 +409,8 @@ class RelationshipsFriends extends Character with HelloMixin {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // name  String!
+
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
 
@@ -392,25 +418,6 @@ class RelationshipsFriends extends Character with HelloMixin {
   List<Object> get props => [
         ...super.props,
       ];
-
-  RelationshipsFriends({
-    this.typename,
-    @required String name,
-  }) : super(
-          name: name,
-        );
-
-  RelationshipsFriends.fromObjectType(
-    Character objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  RelationshipsFriends.partial({
-    this.typename,
-    String name,
-  }) : super(
-          name: name,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -465,19 +472,24 @@ class RelationshipsFriends extends Character with HelloMixin {
 
     return json;
   }
+
+  static final String schemaTypeName = "Character";
 }
 
 ///
 /// See [RelationshipsSelectionSet] for the full stand-alone class
 @JsonSerializable(createFactory: false)
-mixin Relationships on Human {
+mixin Relationships on Partial<Human> {
   static final String schemaTypeName = "Human";
 
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   String get typename;
 
+  // friends  [Character]
+
   @JsonKey(name: r'friends', required: false, disallowNullValue: false)
   List<RelationshipsFriends> get friends => fields.friends;
+  // starships  [Starship]
 
   @JsonKey(name: r'starships', required: false, disallowNullValue: false)
   List<RelationshipsStarships> get starships => fields.starships;
@@ -491,8 +503,29 @@ mixin Relationships on Human {
 /// Gives access to all the usual selection set helpers
 
 @JsonSerializable()
-class RelationshipsSelectionSet extends Human with Relationships {
-  static final String schemaTypeName = "Human";
+class RelationshipsSelectionSet extends Partial<Human> with Relationships {
+  RelationshipsSelectionSet({
+    this.typename,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+  }) : super.of(Human.partial(
+          friends: friends,
+          starships: starships,
+        ));
+
+  RelationshipsSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  RelationshipsSelectionSet.partial({
+    this.typename,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+  }) : super.of(Human.partial(
+          friends: friends,
+          starships: starships,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -506,29 +539,6 @@ class RelationshipsSelectionSet extends Human with Relationships {
   List<Object> get props => [
         ...super.props,
       ];
-
-  RelationshipsSelectionSet({
-    this.typename,
-    List<RelationshipsFriends> friends,
-    List<RelationshipsStarships> starships,
-  }) : super(
-          friends: friends,
-          starships: starships,
-        );
-
-  RelationshipsSelectionSet.fromObjectType(
-    Human objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  RelationshipsSelectionSet.partial({
-    this.typename,
-    List<RelationshipsFriends> friends,
-    List<RelationshipsStarships> starships,
-  }) : super(
-          friends: friends,
-          starships: starships,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -596,28 +606,33 @@ class RelationshipsSelectionSet extends Human with Relationships {
       starships: source.starships,
     );
   }
+
+  static final String schemaTypeName = "Human";
 }
 
 ///
 /// See [InfoSelectionSet] for the full stand-alone class
 @JsonSerializable(createFactory: false)
-mixin Info on Human implements Dimensions, Home {
+mixin Info on Partial<Human> implements Dimensions, Home {
   static final String schemaTypeName = "Human";
 
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   String get typename;
 
+  // height  Float
+
   @JsonKey(name: r'height', required: false, disallowNullValue: false)
   double get height => fields.height;
+  // mass  Float
 
   @JsonKey(name: r'mass', required: false, disallowNullValue: false)
   double get mass => fields.mass;
+  // homePlanet home String
 
   @JsonKey(name: r'home', required: false, disallowNullValue: false)
   String get home => fields.homePlanet;
   @JsonKey(name: r'planet', required: false, disallowNullValue: false)
   String get planet;
-
   static InfoSelectionSet fromJson(Map<String, dynamic> json) =>
       InfoSelectionSet.fromJson(json);
 }
@@ -627,8 +642,36 @@ mixin Info on Human implements Dimensions, Home {
 /// Gives access to all the usual selection set helpers
 
 @JsonSerializable()
-class InfoSelectionSet extends Human with Info {
-  static final String schemaTypeName = "Human";
+class InfoSelectionSet extends Partial<Human> with Info {
+  InfoSelectionSet({
+    this.typename,
+    double height,
+    double mass,
+    String home,
+    this.planet,
+  }) : super.of(Human.partial(
+          height: height,
+          mass: mass,
+          homePlanet: home,
+        ));
+
+  InfoSelectionSet.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.of(objectType);
+
+  InfoSelectionSet.partial({
+    this.typename,
+    double height,
+    double mass,
+    String home,
+    this.planet,
+  }) : super.of(Human.partial(
+          height: height,
+          mass: mass,
+          homePlanet: home,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -646,36 +689,6 @@ class InfoSelectionSet extends Human with Info {
         ...super.props,
         planet,
       ];
-
-  InfoSelectionSet({
-    this.typename,
-    double height,
-    double mass,
-    String home,
-    this.planet,
-  }) : super(
-          height: height,
-          mass: mass,
-          homePlanet: home,
-        );
-
-  InfoSelectionSet.fromObjectType(
-    Human objectType, {
-    this.typename,
-    this.planet,
-  }) : super.fromFields(objectType.fields);
-
-  InfoSelectionSet.partial({
-    this.typename,
-    double height,
-    double mass,
-    String home,
-    this.planet,
-  }) : super(
-          height: height,
-          mass: mass,
-          homePlanet: home,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -753,4 +766,6 @@ class InfoSelectionSet extends Human with Info {
       planet: source.planet,
     );
   }
+
+  static final String schemaTypeName = "Human";
 }

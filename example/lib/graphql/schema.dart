@@ -23,7 +23,7 @@ class FieldResults<Arguments, Result> extends Equatable {
 }
 
 abstract class GraphQLObjectType {
-  /// Creates a new [GraphQLObjectType] [T] with non-null values from [other] as attribute overrides
+  /// Creates a new [GraphQLObjectType] with non-null values from [other] as attribute overrides
   GraphQLObjectType mergedLeftWith(covariant GraphQLObjectType other);
 
   /// Alias for [mergedLeftWith]
@@ -41,23 +41,22 @@ abstract class GraphQLObjectType {
   bool get isValid => missingRequiredFields.isEmpty;
 }
 
-abstract class Fragment<ObjectType extends GraphQLObjectType>
-    extends Equatable {
+abstract class Partial<ObjectType extends GraphQLObjectType> extends Equatable {
   @protected
-  const Fragment.of(this.fields);
+  const Partial.of(this.fields);
 
   final ObjectType fields;
 
   @override
   List<Object> get props => [fields];
 
-  /// Creates a new [Fragment<ObjectType>] with non-null values from [other] as attribute overrides
-  Fragment<ObjectType> mergedLeftWith(covariant Fragment<ObjectType> other);
-  //Fragment<ObjectType> mergedLeftWith(covariant Fragment<ObjectType> other);
-  //    Fragment.of(fields.mergedLeftWith(other.fields));
+  /// Creates a new [Partial<ObjectType>] with non-null values from [other] as attribute overrides
+  Partial<ObjectType> mergedLeftWith(covariant Partial<ObjectType> other);
+  //Partial<ObjectType> mergedLeftWith(covariant Partial<ObjectType> other);
+  //    Partial.of(fields.mergedLeftWith(other.fields));
 
   /// Alias for [mergedLeftWith]
-  Fragment<ObjectType> operator <<(covariant Fragment<ObjectType> other) =>
+  Partial<ObjectType> operator <<(covariant Partial<ObjectType> other) =>
       mergedLeftWith(other);
 
   @protected
@@ -377,6 +376,14 @@ class Character extends GraphQLObjectType with EquatableMixin {
     this.appearsIn,
   });
 
+  Character.partial({
+    this.id,
+    this.name,
+    this.friends,
+    this.friendsConnection,
+    this.appearsIn,
+  });
+
   /// The ID of the character
   final String id;
 
@@ -643,6 +650,16 @@ class Query extends GraphQLObjectType with EquatableMixin {
     this.starship,
   });
 
+  Query.partial({
+    this.hero,
+    this.reviews,
+    this.search,
+    this.character,
+    this.droid,
+    this.human,
+    this.starship,
+  });
+
   final QueryHeroResults hero;
 
   final QueryReviewsResults reviews;
@@ -701,6 +718,13 @@ class FriendsConnection extends GraphQLObjectType with EquatableMixin {
     this.pageInfo,
   });
 
+  FriendsConnection.partial({
+    this.totalCount,
+    this.edges,
+    this.friends,
+    this.pageInfo,
+  });
+
   /// The total number of friends
   final int totalCount;
 
@@ -752,6 +776,11 @@ class FriendsEdge extends GraphQLObjectType with EquatableMixin {
     this.node,
   });
 
+  FriendsEdge.partial({
+    this.cursor,
+    this.node,
+  });
+
   /// A cursor used for pagination
   final String cursor;
 
@@ -789,6 +818,12 @@ class FriendsEdge extends GraphQLObjectType with EquatableMixin {
 @immutable
 class PageInfo extends GraphQLObjectType with EquatableMixin {
   PageInfo({
+    this.startCursor,
+    this.endCursor,
+    this.hasNextPage,
+  });
+
+  PageInfo.partial({
     this.startCursor,
     this.endCursor,
     this.hasNextPage,
@@ -833,6 +868,12 @@ class PageInfo extends GraphQLObjectType with EquatableMixin {
 @immutable
 class Review extends GraphQLObjectType with EquatableMixin {
   Review({
+    this.episode,
+    this.stars,
+    this.commentary,
+  });
+
+  Review.partial({
     this.episode,
     this.stars,
     this.commentary,
@@ -903,44 +944,22 @@ class HumanHeightResults extends FieldResults<HumanHeightArguments, double> {
       )];
 }
 
-/// The friends of the human exposed as a connection with edges
-class HumanFriendsConnectionArguments extends Equatable {
-  const HumanFriendsConnectionArguments({
-    this.first,
-    this.after,
-  });
-
-  final int first;
-  final String after;
-
-  @override
-  List<Object> get props => [
-        first,
-        after,
-      ];
-}
-
-@immutable
-class HumanFriendsConnectionResults
-    extends FieldResults<HumanFriendsConnectionArguments, FriendsConnection> {
-  const HumanFriendsConnectionResults(
-      Map<HumanFriendsConnectionArguments, FriendsConnection> results)
-      : super(results);
-
-  FriendsConnection call({
-    int first,
-    String after,
-  }) =>
-      results[HumanFriendsConnectionArguments(
-        first: first,
-        after: after,
-      )];
-}
-
 /// A humanoid creature from the Star Wars universe
 @immutable
 class Human extends GraphQLObjectType with EquatableMixin implements Character {
   Human({
+    this.id,
+    this.name,
+    this.homePlanet,
+    this.height,
+    this.mass,
+    this.friends,
+    this.friendsConnection,
+    this.appearsIn,
+    this.starships,
+  });
+
+  Human.partial({
     this.id,
     this.name,
     this.homePlanet,
@@ -971,7 +990,7 @@ class Human extends GraphQLObjectType with EquatableMixin implements Character {
   final List<Character> friends;
 
   /// The friends of the human exposed as a connection with edges
-  final HumanFriendsConnectionResults friendsConnection;
+  final CharacterFriendsConnectionResults friendsConnection;
 
   /// The movies this human appears in
   final List<Episode> appearsIn;
@@ -1067,6 +1086,13 @@ class Starship extends GraphQLObjectType with EquatableMixin {
     this.coordinates,
   });
 
+  Starship.partial({
+    this.id,
+    this.name,
+    this.length,
+    this.coordinates,
+  });
+
   /// The ID of the starship
   final String id;
 
@@ -1112,44 +1138,19 @@ class Starship extends GraphQLObjectType with EquatableMixin {
   static final String schemaTypeName = "Starship";
 }
 
-/// The friends of the droid exposed as a connection with edges
-class DroidFriendsConnectionArguments extends Equatable {
-  const DroidFriendsConnectionArguments({
-    this.first,
-    this.after,
-  });
-
-  final int first;
-  final String after;
-
-  @override
-  List<Object> get props => [
-        first,
-        after,
-      ];
-}
-
-@immutable
-class DroidFriendsConnectionResults
-    extends FieldResults<DroidFriendsConnectionArguments, FriendsConnection> {
-  const DroidFriendsConnectionResults(
-      Map<DroidFriendsConnectionArguments, FriendsConnection> results)
-      : super(results);
-
-  FriendsConnection call({
-    int first,
-    String after,
-  }) =>
-      results[DroidFriendsConnectionArguments(
-        first: first,
-        after: after,
-      )];
-}
-
 /// An autonomous mechanical character in the Star Wars universe
 @immutable
 class Droid extends GraphQLObjectType with EquatableMixin implements Character {
   Droid({
+    this.id,
+    this.name,
+    this.friends,
+    this.friendsConnection,
+    this.appearsIn,
+    this.primaryFunction,
+  });
+
+  Droid.partial({
     this.id,
     this.name,
     this.friends,
@@ -1168,7 +1169,7 @@ class Droid extends GraphQLObjectType with EquatableMixin implements Character {
   final List<Character> friends;
 
   /// The friends of the droid exposed as a connection with edges
-  final DroidFriendsConnectionResults friendsConnection;
+  final CharacterFriendsConnectionResults friendsConnection;
 
   /// The movies this droid appears in
   final List<Episode> appearsIn;
@@ -1261,6 +1262,10 @@ class Mutation extends GraphQLObjectType with EquatableMixin {
     this.createReview,
   });
 
+  Mutation.partial({
+    this.createReview,
+  });
+
   final MutationCreateReviewResults createReview;
 
   @override
@@ -1318,6 +1323,10 @@ class SubscriptionReviewAddedResults
 @immutable
 class Subscription extends GraphQLObjectType with EquatableMixin {
   Subscription({
+    this.reviewAdded,
+  });
+
+  Subscription.partial({
     this.reviewAdded,
   });
 

@@ -41,6 +41,11 @@ import {
   deepMergeOnKeys
 } from "./utils";
 
+import {
+  resolveFieldType,
+  shouldGenerateField
+} from "./complex-field-resolver";
+
 function wrapHelpers<T>(helpers: T) {
   return Object.keys(helpers).reduce(
     (wrapped, h) => ((wrapped[h] = _logErrors(helpers[h])), wrapped),
@@ -86,6 +91,8 @@ const helpers = wrapHelpers({
   eachUniqueBy,
   eachDuplicateBy,
   callMethod,
+  resolveFieldType,
+  shouldGenerateField,
   //registerFragmentPaths,
   //withFragmentPaths,
   deepMergeOnKeys: deepMergeOnKeys as any

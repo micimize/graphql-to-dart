@@ -10,10 +10,9 @@
 {{ multilineComment description }}
 /// See [{{ className }}SelectionSet] for the full stand-alone class
 @JsonSerializable(createFactory: false)
-mixin {{className}} {{
+mixin {{className}} on Partial<{{ toPascalCase typeName }}> {{
   classExtends
     onMixin="true"
-    baseType=typeName
     mixins=(resolveMixins fields)
     fragments=fragmentsSpread
 }} {

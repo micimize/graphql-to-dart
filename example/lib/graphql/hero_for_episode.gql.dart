@@ -24,8 +24,49 @@ class HeroForEpisodeVariables {
 }
 
 @JsonSerializable()
-class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
-  static final String schemaTypeName = "Human";
+class HeroForEpisodeHumanInlineFragment extends Partial<Human>
+    with Info, Relationships {
+  HeroForEpisodeHumanInlineFragment({
+    this.typename,
+    @required List<Episode> appearsIn,
+    double height,
+    double mass,
+    String home,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+    this.planet,
+  }) : super.of(Human.partial(
+          appearsIn: appearsIn,
+          height: height,
+          mass: mass,
+          homePlanet: home,
+          friends: friends,
+          starships: starships,
+        ));
+
+  HeroForEpisodeHumanInlineFragment.fromObjectType(
+    Human objectType, {
+    this.typename,
+    this.planet,
+  }) : super.of(objectType);
+
+  HeroForEpisodeHumanInlineFragment.partial({
+    this.typename,
+    List<Episode> appearsIn,
+    double height,
+    double mass,
+    String home,
+    List<RelationshipsFriends> friends,
+    List<RelationshipsStarships> starships,
+    this.planet,
+  }) : super.of(Human.partial(
+          appearsIn: appearsIn,
+          height: height,
+          mass: mass,
+          homePlanet: home,
+          friends: friends,
+          starships: starships,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -34,6 +75,8 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
   /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
+
+  // appearsIn  [Episode]!
 
   @JsonKey(name: r'appearsIn', required: true, disallowNullValue: true)
   List<Episode> get appearsIn => fields.appearsIn;
@@ -45,48 +88,6 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
         ...super.props,
         planet,
       ];
-
-  HeroForEpisodeHumanInlineFragment({
-    this.typename,
-    @required List<Episode> appearsIn,
-    double height,
-    double mass,
-    String home,
-    List<RelationshipsFriends> friends,
-    List<RelationshipsStarships> starships,
-    this.planet,
-  }) : super(
-          appearsIn: appearsIn,
-          height: height,
-          mass: mass,
-          homePlanet: home,
-          friends: friends,
-          starships: starships,
-        );
-
-  HeroForEpisodeHumanInlineFragment.fromObjectType(
-    Human objectType, {
-    this.typename,
-    this.planet,
-  }) : super.fromFields(objectType.fields);
-
-  HeroForEpisodeHumanInlineFragment.partial({
-    this.typename,
-    List<Episode> appearsIn,
-    double height,
-    double mass,
-    String home,
-    List<RelationshipsFriends> friends,
-    List<RelationshipsStarships> starships,
-    this.planet,
-  }) : super(
-          appearsIn: appearsIn,
-          height: height,
-          mass: mass,
-          homePlanet: home,
-          friends: friends,
-          starships: starships,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -174,11 +175,30 @@ class HeroForEpisodeHumanInlineFragment extends Human with Info, Relationships {
 
     return json;
   }
+
+  static final String schemaTypeName = "Human";
 }
 
 @JsonSerializable()
-class HeroForEpisodeDroidInlineFragment extends Droid {
-  static final String schemaTypeName = "Droid";
+class HeroForEpisodeDroidInlineFragment extends Partial<Droid> {
+  HeroForEpisodeDroidInlineFragment({
+    this.typename,
+    String primaryFunction,
+  }) : super.of(Droid.partial(
+          primaryFunction: primaryFunction,
+        ));
+
+  HeroForEpisodeDroidInlineFragment.fromObjectType(
+    Droid objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  HeroForEpisodeDroidInlineFragment.partial({
+    this.typename,
+    String primaryFunction,
+  }) : super.of(Droid.partial(
+          primaryFunction: primaryFunction,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -188,6 +208,8 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // primaryFunction  String
+
   @JsonKey(name: r'primaryFunction', required: false, disallowNullValue: false)
   String get primaryFunction => fields.primaryFunction;
 
@@ -195,25 +217,6 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
   List<Object> get props => [
         ...super.props,
       ];
-
-  HeroForEpisodeDroidInlineFragment({
-    this.typename,
-    String primaryFunction,
-  }) : super(
-          primaryFunction: primaryFunction,
-        );
-
-  HeroForEpisodeDroidInlineFragment.fromObjectType(
-    Droid objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  HeroForEpisodeDroidInlineFragment.partial({
-    this.typename,
-    String primaryFunction,
-  }) : super(
-          primaryFunction: primaryFunction,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -268,11 +271,36 @@ class HeroForEpisodeDroidInlineFragment extends Droid {
 
     return json;
   }
+
+  static final String schemaTypeName = "Droid";
 }
 
 @JsonSerializable()
-class HeroForEpisodeHero extends Character with HelloMixin {
-  static final String schemaTypeName = "Character";
+class HeroForEpisodeHero extends Partial<Character> with HelloMixin {
+  HeroForEpisodeHero({
+    this.typename,
+    this.onDroid,
+    this.onHuman,
+    @required String name,
+  }) : super.of(Character.partial(
+          name: name,
+        ));
+
+  HeroForEpisodeHero.fromObjectType(
+    Character objectType, {
+    this.typename,
+    this.onDroid,
+    this.onHuman,
+  }) : super.of(objectType);
+
+  HeroForEpisodeHero.partial({
+    this.typename,
+    this.onDroid,
+    this.onHuman,
+    String name,
+  }) : super.of(Character.partial(
+          name: name,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -281,6 +309,8 @@ class HeroForEpisodeHero extends Character with HelloMixin {
   /// [spec]: https://github.com/graphql/graphql-spec/blob/c7bface58bf6f58cc809f279cba1b6245de914b4/spec/Section%204%20--%20Introspection.md#type-name-introspection)
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
+
+  // name  String!
 
   @JsonKey(name: r'name', required: true, disallowNullValue: true)
   String get name => fields.name;
@@ -296,31 +326,6 @@ class HeroForEpisodeHero extends Character with HelloMixin {
         onDroid,
         onHuman,
       ];
-
-  HeroForEpisodeHero({
-    this.typename,
-    this.onDroid,
-    this.onHuman,
-    @required String name,
-  }) : super(
-          name: name,
-        );
-
-  HeroForEpisodeHero.fromObjectType(
-    Character objectType, {
-    this.typename,
-    this.onDroid,
-    this.onHuman,
-  }) : super.fromFields(objectType.fields);
-
-  HeroForEpisodeHero.partial({
-    this.typename,
-    this.onDroid,
-    this.onHuman,
-    String name,
-  }) : super(
-          name: name,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -405,11 +410,30 @@ class HeroForEpisodeHero extends Character with HelloMixin {
 
     return json;
   }
+
+  static final String schemaTypeName = "Character";
 }
 
 @JsonSerializable()
-class HeroForEpisodeQuery extends Query {
-  static final String schemaTypeName = "query";
+class HeroForEpisodeQuery extends Partial<Query> {
+  HeroForEpisodeQuery({
+    this.typename,
+    HeroForEpisodeHero hero,
+  }) : super.of(Query.partial(
+          hero: hero,
+        ));
+
+  HeroForEpisodeQuery.fromObjectType(
+    Query objectType, {
+    this.typename,
+  }) : super.of(objectType);
+
+  HeroForEpisodeQuery.partial({
+    this.typename,
+    HeroForEpisodeHero hero,
+  }) : super.of(Query.partial(
+          hero: hero,
+        ));
 
   /// The `__typename` meta-field
   ///
@@ -419,6 +443,8 @@ class HeroForEpisodeQuery extends Query {
   @JsonKey(name: r'__typename', required: false, disallowNullValue: true)
   final String typename;
 
+  // hero  Character
+
   @JsonKey(name: r'hero', required: false, disallowNullValue: false)
   HeroForEpisodeHero get hero => fields.hero;
 
@@ -426,25 +452,6 @@ class HeroForEpisodeQuery extends Query {
   List<Object> get props => [
         ...super.props,
       ];
-
-  HeroForEpisodeQuery({
-    this.typename,
-    HeroForEpisodeHero hero,
-  }) : super(
-          hero: hero,
-        );
-
-  HeroForEpisodeQuery.fromObjectType(
-    Query objectType, {
-    this.typename,
-  }) : super.fromFields(objectType.fields);
-
-  HeroForEpisodeQuery.partial({
-    this.typename,
-    HeroForEpisodeHero hero,
-  }) : super(
-          hero: hero,
-        );
 
   @protected
   Set<String> get missingRequiredFields {
@@ -496,4 +503,6 @@ class HeroForEpisodeQuery extends Query {
 
     return json;
   }
+
+  static final String schemaTypeName = "query";
 }
