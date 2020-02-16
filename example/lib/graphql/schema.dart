@@ -22,12 +22,13 @@ class FieldResults<Arguments, Result> extends Equatable {
       results.entries.expand((e) => [e.key, e.value]).toList();
 }
 
-abstract class GraphQLObjectType<T extends GraphQLObjectType<T>> {
+abstract class GraphQLObjectType {
   /// Creates a new [GraphQLObjectType] [T] with non-null values from [other] as attribute overrides
-  T mergedLeftWith(covariant T other);
+  GraphQLObjectType mergedLeftWith(covariant GraphQLObjectType other);
 
   /// Alias for [mergedLeftWith]
-  T operator <<(covariant T other) => mergedLeftWith(other);
+  GraphQLObjectType operator <<(covariant GraphQLObjectType other) =>
+      mergedLeftWith(other);
 
   Set<String> get missingRequiredFields;
 
@@ -40,7 +41,7 @@ abstract class GraphQLObjectType<T extends GraphQLObjectType<T>> {
   bool get isValid => missingRequiredFields.isEmpty;
 }
 
-abstract class Fragment<ObjectType extends GraphQLObjectType<ObjectType>>
+abstract class Fragment<ObjectType extends GraphQLObjectType>
     extends Equatable {
   @protected
   const Fragment.of(this.fields);
@@ -367,7 +368,7 @@ class CharacterFriendsConnectionResults extends FieldResults<
 
 /// A character from the Star Wars universe
 @immutable
-class Character extends GraphQLObjectType<Character> with EquatableMixin {
+class Character extends GraphQLObjectType with EquatableMixin {
   Character({
     this.id,
     this.name,
@@ -631,7 +632,7 @@ class QueryStarshipResults
 
 /// The query type, represents all of the entry points into our object graph
 @immutable
-class Query extends GraphQLObjectType<Query> with EquatableMixin {
+class Query extends GraphQLObjectType with EquatableMixin {
   Query({
     this.hero,
     this.reviews,
@@ -692,8 +693,7 @@ class Query extends GraphQLObjectType<Query> with EquatableMixin {
 
 /// A connection object for a character's friends
 @immutable
-class FriendsConnection extends GraphQLObjectType<FriendsConnection>
-    with EquatableMixin {
+class FriendsConnection extends GraphQLObjectType with EquatableMixin {
   FriendsConnection({
     this.totalCount,
     this.edges,
@@ -746,7 +746,7 @@ class FriendsConnection extends GraphQLObjectType<FriendsConnection>
 
 /// An edge object for a character's friends
 @immutable
-class FriendsEdge extends GraphQLObjectType<FriendsEdge> with EquatableMixin {
+class FriendsEdge extends GraphQLObjectType with EquatableMixin {
   FriendsEdge({
     this.cursor,
     this.node,
@@ -787,7 +787,7 @@ class FriendsEdge extends GraphQLObjectType<FriendsEdge> with EquatableMixin {
 
 /// Information for paginating this connection
 @immutable
-class PageInfo extends GraphQLObjectType<PageInfo> with EquatableMixin {
+class PageInfo extends GraphQLObjectType with EquatableMixin {
   PageInfo({
     this.startCursor,
     this.endCursor,
@@ -831,7 +831,7 @@ class PageInfo extends GraphQLObjectType<PageInfo> with EquatableMixin {
 
 /// Represents a review for a movie
 @immutable
-class Review extends GraphQLObjectType<Review> with EquatableMixin {
+class Review extends GraphQLObjectType with EquatableMixin {
   Review({
     this.episode,
     this.stars,
@@ -939,9 +939,7 @@ class HumanFriendsConnectionResults
 
 /// A humanoid creature from the Star Wars universe
 @immutable
-class Human extends GraphQLObjectType<Human>
-    with EquatableMixin
-    implements Character {
+class Human extends GraphQLObjectType with EquatableMixin implements Character {
   Human({
     this.id,
     this.name,
@@ -1061,7 +1059,7 @@ class StarshipLengthResults
 
 ///
 @immutable
-class Starship extends GraphQLObjectType<Starship> with EquatableMixin {
+class Starship extends GraphQLObjectType with EquatableMixin {
   Starship({
     this.id,
     this.name,
@@ -1150,9 +1148,7 @@ class DroidFriendsConnectionResults
 
 /// An autonomous mechanical character in the Star Wars universe
 @immutable
-class Droid extends GraphQLObjectType<Droid>
-    with EquatableMixin
-    implements Character {
+class Droid extends GraphQLObjectType with EquatableMixin implements Character {
   Droid({
     this.id,
     this.name,
@@ -1260,7 +1256,7 @@ class MutationCreateReviewResults
 
 /// The mutation type, represents all updates we can make to our data
 @immutable
-class Mutation extends GraphQLObjectType<Mutation> with EquatableMixin {
+class Mutation extends GraphQLObjectType with EquatableMixin {
   Mutation({
     this.createReview,
   });
@@ -1320,7 +1316,7 @@ class SubscriptionReviewAddedResults
 
 /// The subscription type, represents all subscriptions we can make to our data
 @immutable
-class Subscription extends GraphQLObjectType<Subscription> with EquatableMixin {
+class Subscription extends GraphQLObjectType with EquatableMixin {
   Subscription({
     this.reviewAdded,
   });

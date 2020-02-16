@@ -79,7 +79,7 @@ class {{ className }}Results extends FieldResults<{{ className }}Arguments, {{re
 
 {{ multilineComment description }}
 @immutable
-class {{ name }} extends GraphQLObjectType<{{ name }}> {{
+class {{ name }} extends GraphQLObjectType {{
   classExtends
     interfaces=interfaces
     mixins=(arrayify 'EquatableMixin')

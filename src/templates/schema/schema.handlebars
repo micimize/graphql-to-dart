@@ -23,24 +23,26 @@ class FieldResults<Arguments, Result> extends Equatable {
 }
 
 
-abstract class GraphQLObjectType<T extends GraphQLObjectType<T>> {
-  /// Creates a new [GraphQLObjectType] [T] with non-null values from [other] as attribute overrides
-  T mergedLeftWith(covariant T other);
+abstract class GraphQLObjectType {
+  /// Creates a new [GraphQLObjectType] with non-null values from [other] as attribute overrides
+  GraphQLObjectType mergedLeftWith(covariant GraphQLObjectType other);
 
   /// Alias for [mergedLeftWith]
-  T operator <<(covariant T other) => mergedLeftWith(other);
+  GraphQLObjectType operator <<(covariant GraphQLObjectType other) => mergedLeftWith(other);
 
   Set<String> get missingRequiredFields;
 
-  void validate(){
+  void validate() {
     final missing = missingRequiredFields;
-    assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
+    assert(missing.isEmpty,
+        "$runtimeType#$hashCode is missing required fields $missing");
   }
 
   bool get isValid => missingRequiredFields.isEmpty;
 }
 
-abstract class Fragment<ObjectType extends GraphQLObjectType<ObjectType>> extends Equatable {
+
+abstract class Fragment<ObjectType extends GraphQLObjectType> extends Equatable {
   @protected
   const Fragment.of(this.fields);
 
