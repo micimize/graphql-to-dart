@@ -1,8 +1,8 @@
 {{~#*inline "complexFieldClass" ~}}
 {{ multilineComment description }}
 class {{ className }}Arguments extends Equatable {
-  const {{ name }}({
-    {{#each fields}}{{#if name}}
+  const {{ className }}Arguments({
+    {{#each arguments}}{{#if name}}
       this.{{ dartName name }},
     {{/if}}{{/each}}
   });
@@ -22,18 +22,17 @@ class {{ className }}Arguments extends Equatable {
 
   @override
   List<Object> get props => [
-    {{~#each fields}}{{#if name}}
-    {{ dartName name }},
+    {{~#each arguments}}{{#if name}}{{ dartName name }},
     {{/if}}{{/each~}}
   ];
 }
 
 @immutable
-class {{ className }}Results extends FieldResults<{{ className }}Arguments, resultType> {
+class {{ className }}Results extends FieldResults<{{ className }}Arguments, {{resultType}}> {
 
-  const {{ className }}Results(<{{ className }}Arguments, resultType> results): super(results);
+  const {{ className }}Results(Map<{{ className }}Arguments, {{resultType}}> results): super(results);
 
-  result call({
+  {{resultType}} call({
     {{#each arguments}}{{#if name}}
       {{ resolveType type
           'inline'
@@ -43,7 +42,7 @@ class {{ className }}Results extends FieldResults<{{ className }}Arguments, resu
           raw
           ../name
       }} {{dartName name}},
-    {{/if}}{{/each}}
+    {{~/if}}{{/each}}
   }) => results[{{ className }}Arguments(
     {{#emptySafeEach arguments required='name' }}
       {{ dartName name }}: {{ dartName name }},
@@ -80,14 +79,13 @@ class {{ className }}Results extends FieldResults<{{ className }}Arguments, resu
 
 {{ multilineComment description }}
 @immutable
-class {{ name }} {{
+class {{ name }} extends GraphQLObjectType<{{ name }}> {{
   classExtends
-    baseType=(concat 'GraphQLObjectType<' name '>')
     interfaces=interfaces
-    mixins=['EquatableMixin']
+    mixins=(arrayify 'EquatableMixin')
   }} {
 
-  const {{ name }}.partial({
+  {{ name }}({
     {{#each fields}}{{#if name}}
       this.{{ dartName name }},
     {{/if}}{{/each}}
@@ -97,7 +95,7 @@ class {{ name }} {{
   {{#if description }}{{ multilineComment description }}
   {{/if}}
   {{#if arguments}}
-  {{../name}}{{ toPascalCase name }}Results {{ dartName name }};
+  final {{../name}}{{ toPascalCase name }}Results {{ dartName name }};
   {{else}}
   {{ resolveType type
       "final"
@@ -132,7 +130,7 @@ class {{ name }} {{
     Set<String> missingFields = Set();
     {{#each fields}}
     {{~#if isRequired}}
-    if (fields.{{ dartName name }} == null){
+    if ({{ dartName name }} == null){
         missingFields.add("{{ dartName name }}");
     }
     {{/if}}
