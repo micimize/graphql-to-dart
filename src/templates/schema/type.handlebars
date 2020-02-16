@@ -1,7 +1,25 @@
-{{~#*inline "fieldsClass" ~}}
+{{#unless (
+  ignoreType
+    name
+      @root.config.replaceTypes
+      typeName
+      @root.config.irreducibleTypes
+)}}
+
 {{ multilineComment description }}
 @immutable
-class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapFields interfaces) }} {
+class {{ name }} {{
+  classExtends
+    baseType=(concat 'GraphQLObjectType<' name '>')
+    interfaces=interfaces
+    mixins=['EquatableMixin']
+  }} {
+
+  const {{ name }}.partial({
+    {{#each fields}}{{#if name}}
+      this.{{ dartName name }},
+    {{/if}}{{/each}}
+  });
 
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
@@ -16,12 +34,6 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
   }} {{ dartName name }};
   {{~/if}}{{/if}}{{/each}}
 
-  const {{ className }}({
-    {{#each fields}}{{#if name}}
-      this.{{ dartName name }},
-    {{/if}}{{/each}}
-  });
-
   @override
   List<Object> get props => [
     {{~#each fields}}{{#if name}}
@@ -29,91 +41,16 @@ class {{ className }} {{ classExtends baseType='Equatable' interfaces=(wrapField
     {{/if}}{{/each~}}
   ];
 
-  /// Creates a new [{{ className }}] with non-null values from [other] as attribute overrides
-  {{ className }} mergedLeftWith(covariant {{ className }} other) {
+  /// Creates a new [{{ name }}] with non-null values from [other] as attribute overrides
+  {{ name }} mergedLeftWith(covariant {{ name }} other) {
     assert(other != null, "$this Cannot be merged with null");
-    return {{ className }}(
+    return {{ name }}(
       {{~#each fields}}{{#if name}}
       {{ dartName name }}: other.{{ dartName name }} ?? {{ dartName name }},
       {{/if}}{{/each~}}
     );
   }
     
-}
-{{~/inline~}}
-
-{{#unless (
-  ignoreType
-    name
-      @root.config.replaceTypes
-      typeName
-      @root.config.irreducibleTypes
-)}}
-
-{{> fieldsClass this className=(concat "_" name "Fields") }}
-
-{{ multilineComment description }}
-@immutable
-class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
-  static final String schemaTypeName = "{{ takeFirst typeName name }}";
-
-  @protected
-  final _{{ name }}Fields fields;
-
-  @protected
-  const {{name}}.fromFields(this.fields);
-
-  {{name}}(
-    {{#emptySafeEach fields
-      required='name'
-      prefix='{'
-      delimiter=','
-      suffix=', }'
-    }}
-      {{ resolveType type
-        "inline"
-        (takeFirst contextName ../contextName)
-        (takeFirst contextModels ../contextModels)
-        isArray
-        raw
-        ../name
-      }} {{ dartName name }}
-    {{/emptySafeEach}}
-  ): fields = _{{ name }}Fields(
-    {{#each fields}}
-    {{ dartName name }}: {{ dartName name }},
-    {{/each}}
-  );
-
-  @override
-  List<Object> get props => [fields];
-
-  {{!-- not sure why but this breaks things 
-  /// Creates a new [{{ name }}] with the given non-null values overridden
-  {{ name }} copyWith({{#emptySafeEach fields required='name' excluding='__typename' prefix='{' suffix='}'}}
-      {{ resolveType type
-          "inline"
-          (takeFirst contextName ../contextName)
-          (takeFirst contextModels ../contextModels)
-          isArray
-          raw
-          ../name
-      }} {{ dartName name }},
-  {{/emptySafeEach}}) => {{ name }}(
-    {{~#each fields}}
-    {{ dartName name }}: {{ dartName name }} ?? this.{{ dartName name }},
-    {{/each~}}
-  );
-  --}}
-
-
-  /// Creates a new [{{ name }}] with non-null values from [other] as attribute overrides
-  {{ name }} mergedLeftWith(covariant {{ name }} other) =>
-    {{ name }}.fromFields(fields.mergedLeftWith(other.fields));
-
-  /// Alias for [mergedLeftWith]
-  {{ name }} operator <<(covariant {{ name }} other) => mergedLeftWith(other);
-
   @protected
   Set<String> get missingRequiredFields {
     Set<String> missingFields = Set();
@@ -127,13 +64,7 @@ class {{ name }} {{ classExtends baseType='Equatable' interfaces=interfaces }} {
     return missingFields;
   }
 
-  void validate(){
-    final missing = missingRequiredFields;
-    assert(missing.isEmpty, "$runtimeType#$hashCode is missing required fields $missing"); 
-  }
-
-  bool get isValid => missingRequiredFields.isEmpty;
-
+  static final String schemaTypeName = "{{ takeFirst typeName name }}";
 }
 
 {{/unless}}

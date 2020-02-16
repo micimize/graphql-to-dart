@@ -123,10 +123,6 @@ export function inputBaseType(name) {
   return stripSuffix(name, "Input");
 }
 
-export function wrapFields(interfaces = []) {
-  return interfaces.map(i => `_${i}Fields`);
-}
-
 function _eachInner<I = any>(
   context: I[],
   fn: (item: I) => string,
