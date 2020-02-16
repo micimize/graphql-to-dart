@@ -8,6 +8,21 @@
 part '{{ expectedGeneratedFileFor outputFile }}';
 
 
+@immutable
+// TODO this could just be a built map?
+class FieldResults<Arguments, Result> extends Equatable {
+  const FieldResults(this.results);
+
+  @protected
+  final Map<Arguments, Result> results;
+
+  Result operator [](Arguments arguments) => results[arguments];
+
+  @override
+  List<Object> get props => results.entries.expand((e) => [e.key, e.value]).toList();
+}
+
+
 abstract class GraphQLObjectType<T extends GraphQLObjectType<T>> {
   /// Creates a new [GraphQLObjectType] with non-null values from [other] as attribute overrides
   T mergedLeftWith(covariant T other);

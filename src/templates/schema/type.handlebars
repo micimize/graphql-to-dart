@@ -1,3 +1,57 @@
+{{~#*inline "complexFieldClass" ~}}
+{{ multilineComment description }}
+class {{ className }}Arguments extends Equatable {
+  const {{ name }}({
+    {{#each fields}}{{#if name}}
+      this.{{ dartName name }},
+    {{/if}}{{/each}}
+  });
+
+  {{#each arguments}}{{#if type}}{{#if name}}
+  {{#if description }}{{ multilineComment description }}
+  {{/if}}
+  {{ resolveType type
+      "final"
+      (takeFirst contextName ../contextName)
+      (takeFirst contextModels ../contextModels)
+      isArray
+      raw
+      ../name
+  }} {{ dartName name }};
+  {{~/if}}{{/if}}{{/each}}
+
+  @override
+  List<Object> get props => [
+    {{~#each fields}}{{#if name}}
+    {{ dartName name }},
+    {{/if}}{{/each~}}
+  ];
+}
+
+@immutable
+class {{ className }}Results extends FieldResults<{{ className }}Arguments, resultType> {
+
+  const {{ className }}Results(<{{ className }}Arguments, resultType> results): super(results);
+
+  result call({
+    {{#each arguments}}{{#if name}}
+      {{ resolveType type
+          'inline'
+          (takeFirst contextName ../contextName)
+          (takeFirst contextModels ../contextModels)
+          isArray
+          raw
+          ../name
+      }} {{dartName name}},
+    {{/if}}{{/each}}
+  }) => results[{{ className }}Arguments(
+    {{#emptySafeEach arguments required='name' }}
+      {{ dartName name }}: {{ dartName name }},
+    {{/emptySafeEach}}
+  )];
+}
+{{~/inline~}}
+
 {{#unless (
   ignoreType
     name
@@ -5,6 +59,24 @@
       typeName
       @root.config.irreducibleTypes
 )}}
+
+{{#each fields}}{{#if type}}{{#if name}}{{#if arguments}}
+
+{{> complexFieldClass this
+    resultType=(
+      resolveType
+        type
+        'inline'
+        (takeFirst contextName ../contextName)
+        (takeFirst contextModels ../contextModels)
+        isArray
+        raw
+        ../name
+    )
+    className=(concat ../name (toPascalCase name))
+}}
+
+{{~/if}}{{~/if}}{{/if}}{{/each}}
 
 {{ multilineComment description }}
 @immutable
@@ -24,6 +96,9 @@ class {{ name }} {{
   {{#each fields}}{{#if type}}{{#if name}}
   {{#if description }}{{ multilineComment description }}
   {{/if}}
+  {{#if arguments}}
+  {{../name}}{{ toPascalCase name }}Results {{ dartName name }};
+  {{else}}
   {{ resolveType type
       "final"
       (takeFirst contextName ../contextName)
@@ -32,6 +107,7 @@ class {{ name }} {{
       raw
       ../name
   }} {{ dartName name }};
+  {{/if}}
   {{~/if}}{{/if}}{{/each}}
 
   @override
