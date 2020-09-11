@@ -1,3 +1,6 @@
+# :warning: Deprecated :warning:
+This project has been superseded by [`major_graphql`](https://github.com/micimize/major) which uses `build_runner` and generates [`built_value`](http://pub.dev/packages/built_value) types, and is no longer maintained
+
 # graphql-to-dart
 [Custom templates](https://github.com/dotansimha/graphql-code-generator/blob/master/packages/graphql-codegen-generators/CUSTOM_TEMPLATES.md) for [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator) for generating dart PODOs and json_serializable classes
 
